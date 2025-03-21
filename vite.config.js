@@ -6,6 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   plugins: [
     react(),
+
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: false,
@@ -36,7 +37,7 @@ export default defineConfig({
       },
     }),
   ],
-  
+
   test: {
     globals: true,
     environment: 'jsdom',
