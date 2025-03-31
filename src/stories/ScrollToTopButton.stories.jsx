@@ -9,8 +9,8 @@ export default {
     layout: 'centered',
   },
   args: {
-    icon: arrowUpIcon, // 아이콘 경로 설정
-    onClick: action('클릭액션'), // 클릭 액션 설정
+    icon: arrowUpIcon,
+    onClick: action('클릭액션'),
   },
 }
 
@@ -18,6 +18,6 @@ const Template = (args) => <ScrollTopButton {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  icon: arrowUpIcon, // 아이콘 경로 설정
-  onClick: action('클릭액션'), // 클릭 액션 설정
+  icon: arrowUpIcon,
+  onClick: action('클릭액션'),
 }
