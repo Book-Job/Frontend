@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import MainTab from '../components/web/MainTab'
+import { action } from '@storybook/addon-actions'
 
 export default {
   title: 'Components/web/MainTab',
@@ -12,7 +13,7 @@ export default {
     bgColor: { control: 'color' },
     isSelected: { control: 'boolean' },
     onClick: {
-      action: 'onClick',
+      onClick: action('클릭액션'),
     },
   },
 }
