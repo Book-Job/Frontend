@@ -5,7 +5,7 @@ const Header = ({ login, onClick }) => {
   return (
     <div className='flex w-full h-[123px] items-center justify-between'>
       <div className='flex'>
-        <span onClick={onClick} className='ml-[128px] text-[#E36397] text-[60px]'>
+        <span onClick={onClick} className='ml-[128px] text-[#E36397] text-[60px] font-logo'>
           bookjob
         </span>
         <span className='flex justify-around ml-[86px] gap-16 text-[25px]'>
