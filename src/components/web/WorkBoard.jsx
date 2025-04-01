@@ -17,7 +17,7 @@ const WorkBoard = ({ title, name, date, like, onClick }) => {
       <img
         src={bookmarkIcon}
         alt='bookmark'
-        onClick={onClick} 
+        onClick={onClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
       />
       <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[16px] justify-between'>
@@ -30,13 +30,15 @@ const WorkBoard = ({ title, name, date, like, onClick }) => {
             {/* <TagIcon label='외부 사이트' icon={othersite} /> */}
             <TagIcon label='정규직' icon={worktype} />
           </div>
-          <div onClick={onClick} className='text-[18px] font-bold'>{title}</div>
-        </div>
-        <div className='flex-row  text-[#8E8E8E] text-[14px]'>
-          <div onClick={onClick} className='flex justify-end font-bold '>
-          {name}
+          <div onClick={onClick} className='text-[18px] font-bold'>
+            {title}
           </div>
-          <hr className='border-[#8E8E8E] my-2' />
+        </div>
+        <div className='flex-row  text-gray-8e8e8e text-[14px]'>
+          <div onClick={onClick} className='flex justify-end font-bold '>
+            {name}
+          </div>
+          <hr className='border-gray-8e8e8e my-2' />
           <div className='flex items-end justify-between'>
             {date}
             <ShareViews label='123' textColor='text-[#E36397]' icon={viewPink} />
