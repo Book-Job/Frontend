@@ -51,7 +51,7 @@ const MobileWorkBoard = ({
           <div onClick={onClick} className='flex justify-end font-bold '>
             {name}
           </div>
-          <hr className='border-[#8E8E8E] my-2' />
+          <hr className='border-[#8E8E8E] my-1' />
           <div className='flex items-end justify-between'>
             {date}
             <MobileShare label={view} textColor='text-[#E36397]' icon={viewPink} />

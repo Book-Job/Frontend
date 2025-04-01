@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import TagIcon from './TagIcon'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -9,6 +8,7 @@ import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
 import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
+import TagIcon from './TagIcon'
 import ShareViews from './ShareViews'
 const WorkBoard = ({
   title,
@@ -33,7 +33,7 @@ const WorkBoard = ({
         onClick={onClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
       />
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[16px] justify-between'>
+      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
@@ -51,7 +51,7 @@ const WorkBoard = ({
           <div onClick={onClick} className='flex justify-end font-bold '>
             {name}
           </div>
-          <hr className='border-[#8E8E8E] my-2' />
+          <hr className='border-[#8E8E8E] my-1' />
           <div className='flex items-end justify-between'>
             {date}
             <ShareViews label={view} textColor='text-[#E36397]' icon={viewPink} />
