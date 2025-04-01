@@ -11,6 +11,8 @@ export default {
     onClick: action('클릭액션'),
     name: '하하호호', 
     date: '2020-11-11', 
+    comment1: 11, 
+    view1: 11, 
   },
 }
 
@@ -22,6 +24,8 @@ Test.args = {
   title: '경력직 이직 관력 질문이여ㅇㅇㅇㅇ',
   content:'무하하하하하하ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ하',
   onClick: action('클릭액션'),
-  name: '하하호호', 
+  name: '하하호호',
   date: '2020-11-11', 
+  comment1: 11, 
+  view1: 11, 
 }
