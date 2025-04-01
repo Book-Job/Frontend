@@ -10,7 +10,20 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
 import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
 import ShareViews from './ShareViews'
-const WorkBoard = ({ title, name, date, like, onClick,popular1,joboffer1,history1 ,jobsearch1,othersite1,worktype1}) => {
+const WorkBoard = ({
+  title,
+  name,
+  date,
+  like,
+  onClick,
+  popular1,
+  joboffer1,
+  history1,
+  jobsearch1,
+  othersite1,
+  worktype1,
+  view,
+}) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
     <div className='w-[300px] h-[200px]'>
@@ -23,14 +36,14 @@ const WorkBoard = ({ title, name, date, like, onClick,popular1,joboffer1,history
       <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[16px] justify-between'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-2 mb-2'>
-            {popular1 === true ?(<TagIcon label='인기 글' icon={popular} />):("")}
-            {joboffer1 === true ?(<TagIcon label='구인' icon={joboffer} />):("")}
-            {history1 === true ?(<TagIcon label='경력 1~3년' icon={history} />):("")}
-            {jobsearch1 === true ?(<TagIcon label='구직' icon={jobsearch} />):("")}
-            {othersite1 === true ?(<TagIcon label='외부 사이트' icon={othersite} />):("")}
-            {worktype1 === true ?(<TagIcon label='정규직' icon={worktype} />):("")}
+            {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
+            {joboffer1 === true ? <TagIcon label='구인' icon={joboffer} /> : ''}
+            {history1 === true ? <TagIcon label='경력 1~3년' icon={history} /> : ''}
+            {jobsearch1 === true ? <TagIcon label='구직' icon={jobsearch} /> : ''}
+            {othersite1 === true ? <TagIcon label='외부 사이트' icon={othersite} /> : ''}
+            {worktype1 === true ? <TagIcon label='정규직' icon={worktype} /> : ''}
           </div>
-          <div onClick={onClick} className='text-[18px] font-bold'>
+          <div onClick={onClick} className='text-[18px] font-bold line-clamp-2'>
             {title}
           </div>
         </div>
@@ -41,7 +54,7 @@ const WorkBoard = ({ title, name, date, like, onClick,popular1,joboffer1,history
           <hr className='border-[#8E8E8E] my-2' />
           <div className='flex items-end justify-between'>
             {date}
-            <ShareViews label='123' textColor='text-[#E36397]' icon={viewPink} />
+            <ShareViews label={view} textColor='text-[#E36397]' icon={viewPink} />
           </div>
         </div>
       </div>
@@ -52,6 +65,7 @@ const WorkBoard = ({ title, name, date, like, onClick,popular1,joboffer1,history
 WorkBoard.propTypes = {
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  view: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
   like: PropTypes.bool.isRequired,
   popular1: PropTypes.bool.isRequired,
@@ -61,6 +75,5 @@ WorkBoard.propTypes = {
   othersite1: PropTypes.bool.isRequired,
   worktype1: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-  
 }
 export default WorkBoard
