@@ -4,6 +4,9 @@ import SearchBar from '../components/web/SearchBar'
 export default {
   title: 'components/web/SearchBar',
   component: SearchBar,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     placeholder: { control: 'text' },
     value: { control: 'text' },
@@ -25,7 +28,7 @@ const Template = (args) => {
       {...args}
       value={value}
       onChange={(e) => setValue(e.target.value)} // 입력 필드에서 텍스트가 바뀔 때마다 상태를 업데이트
-      onSearch={handleSearch}    // 엔터 키를 눌렀을 때 검색어를 전달
+      onSearch={handleSearch} // 엔터 키를 눌렀을 때 검색어를 전달
     />
   )
 }

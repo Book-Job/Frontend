@@ -7,7 +7,13 @@ export default {
     './src/stories/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'gray-8e8e8e': '#8e8e8e',
+        'gray-d9d9d9': '#d9d9d9',
+        'main-E36397': '#E36397',
+      },
+    },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [],
 }

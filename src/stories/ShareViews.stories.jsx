@@ -7,10 +7,13 @@ import comment from '../assets/icons/common/comment.svg'
 export default {
   title: 'Components/web/Share',
   component: ShareViews,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     icon: {
       control: 'select',
-      options: [viewPink, viewGray, share,comment],
+      options: [viewPink, viewGray, share, comment],
     },
     label: { control: 'text' },
     textColor: { control: 'text' },

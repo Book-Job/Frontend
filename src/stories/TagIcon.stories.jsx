@@ -8,6 +8,9 @@ import worktype from '../assets/icons/common/common_tag_worktype.svg'
 export default {
   title: 'components/web/TagIcon',
   component: TagIcon,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     icon: {
       control: 'select',
