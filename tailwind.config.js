@@ -13,6 +13,9 @@ export default {
         'gray-d9d9d9': '#d9d9d9',
         'main-E36397': '#E36397',
       },
+      fontFamily: {
+        logo: ['TTLaundryGothicB', 'sans-serif'],
+      },
     },
   },
   plugins: [],
