@@ -10,31 +10,33 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
 import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
 import ShareViews from './ShareViews'
-const WorkBoard = ({ title, name, date, like, onClick }) => {
+const WorkBoard = ({ title, name, date, like, onClick,popular1,joboffer1,history1 ,jobsearch1,othersite1,worktype1}) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
     <div className='w-[300px] h-[200px]'>
       <img
         src={bookmarkIcon}
         alt='bookmark'
-        onClick={onClick} 
+        onClick={onClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
       />
       <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[16px] justify-between'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-2 mb-2'>
-            <TagIcon label='인기 글' icon={popular} />
-            {/* <TagIcon label='구인' icon={joboffer} /> */}
-            <TagIcon label='경력 1~3년' icon={history} />
-            {/* <TagIcon label='구직' icon={jobsearch} /> */}
-            {/* <TagIcon label='외부 사이트' icon={othersite} /> */}
-            <TagIcon label='정규직' icon={worktype} />
+            {popular1 === true ?(<TagIcon label='인기 글' icon={popular} />):("")}
+            {joboffer1 === true ?(<TagIcon label='구인' icon={joboffer} />):("")}
+            {history1 === true ?(<TagIcon label='경력 1~3년' icon={history} />):("")}
+            {jobsearch1 === true ?(<TagIcon label='구직' icon={jobsearch} />):("")}
+            {othersite1 === true ?(<TagIcon label='외부 사이트' icon={othersite} />):("")}
+            {worktype1 === true ?(<TagIcon label='정규직' icon={worktype} />):("")}
           </div>
-          <div onClick={onClick} className='text-[18px] font-bold'>{title}</div>
+          <div onClick={onClick} className='text-[18px] font-bold'>
+            {title}
+          </div>
         </div>
         <div className='flex-row  text-[#8E8E8E] text-[14px]'>
           <div onClick={onClick} className='flex justify-end font-bold '>
-          {name}
+            {name}
           </div>
           <hr className='border-[#8E8E8E] my-2' />
           <div className='flex items-end justify-between'>
@@ -52,6 +54,13 @@ WorkBoard.propTypes = {
   name: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   like: PropTypes.bool.isRequired,
+  popular1: PropTypes.bool.isRequired,
+  joboffer1: PropTypes.bool.isRequired,
+  history1: PropTypes.bool.isRequired,
+  jobsearch1: PropTypes.bool.isRequired,
+  othersite1: PropTypes.bool.isRequired,
+  worktype1: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
+  
 }
 export default WorkBoard
