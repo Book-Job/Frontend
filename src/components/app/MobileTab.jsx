@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const MobileTab = ({ icon, label, onClick, active }) => {
   return (
     <button
-      className={`flex items-center ${active ? 'text-[#000000]' : 'text-[#8e8e8e]'}`}
+      className={`flex items-center ${active ? 'text-black' : 'text-gray-8e8e8e'}`}
       onClick={onClick}
     >
       <img src={icon} alt='mobile tab icon' className='w-[20px] h-[20px] mr-[13px]' />

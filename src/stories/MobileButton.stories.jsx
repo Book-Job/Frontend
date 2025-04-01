@@ -26,7 +26,7 @@ export const Small = Template.bind({})
 Small.args = {
   label: '작은 버튼',
   size: 'small',
-  bgColor: '#d9d9d9',
+  bgColor: 'gray-d9d9d9',
   onClick: action('클릭액션'),
 }
 
@@ -34,6 +34,6 @@ export const Big = Template.bind({})
 Big.args = {
   label: '큰 버튼',
   size: 'big',
-  bgColor: '#d9d9d9',
+  bgColor: 'gray-d9d9d9',
   onClick: action('클릭액션'),
 }

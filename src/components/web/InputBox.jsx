@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const InputBox = ({ placeholder, size = 'medium', active }) => {
   const inputSize = {
     medium: 'w-[424px] h-[58px]',
-    large: 'w-[656px] h-[58px]',
+    large: 'w-[565px] h-[58px]',
   }
 
   return (
@@ -11,12 +11,11 @@ const InputBox = ({ placeholder, size = 'medium', active }) => {
       <input
         type='text'
         placeholder={placeholder}
-        className={`${inputSize[size]} border border-gray-300 rounded px-4 text-[18px] text-gray-600 placeholder:text-[#8e8e8e]`}
+        className={`${inputSize[size]} border border-gray-8e8e8e rounded px-4 text-[18px] text-black placeholder:text-gray-8e8e8e`}
       />
     </div>
   )
 }
-
 InputBox.propTypes = {
   placeholder: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['medium', 'large']),
