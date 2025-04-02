@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types'
 import search from '../../assets/icons/common/common_search.svg'
 
-const SearchBar = ({ value, onChange, placeholder }) => {
+const SearchBar = ({ value, onChange, placeholder, className }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       onSearch(value) // 엔터 키를 눌렀을 때, 검색어를 전달
     }
   }
   return (
-    <div className='flex items-center border border-gray-8e8e8e bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px]'>
+    <div
+      className={`flex items-center border border-gray-8e8e8e bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px] ${className}`}
+    >
       <img src={search} alt='search' className='ml-[30px] w-[31px] h-[31px]' />
       <input
         type='text'
@@ -26,5 +28,6 @@ SearchBar.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired, // onSearch 함수 prop 추가
+  className: PropTypes.string,
 }
 export default SearchBar
