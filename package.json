@@ -10,7 +10,8 @@
     "test": "vitest",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_bca879eca6336d3"
   },
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
