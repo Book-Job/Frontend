@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 
-const JobLabel = ({ label, dot }) => {
+const JobLabel = ({ label, dot, className }) => {
   return (
-    <div className='flex'>
-      {dot && <span className='text-red-500 text font-semibold'>*</span>}
+    <div className={`flex ${className}`}>
+      {dot && <span className='text-red-500 font-semibold'>*</span>}
       <span className='text-[24px] font-semibold'>{label}</span>
     </div>
   )
@@ -12,10 +12,12 @@ const JobLabel = ({ label, dot }) => {
 JobLabel.propTypes = {
   label: PropTypes.string.isRequired,
   dot: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 JobLabel.defaultProps = {
   dot: false,
+  className: '',
 }
 
 export default JobLabel

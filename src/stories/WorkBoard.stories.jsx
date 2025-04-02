@@ -10,9 +10,9 @@ export default {
   args: {
     title: '외주 줍니다...',
     onClick: action('클릭액션'),
-    name: '하하호호', 
-    view: 122 ,
-    date: '2020-11-11', 
+    name: '하하호호',
+    view: 122,
+    date: '2020-11-11',
     like: true,
     popular1: true,
     joboffer1: true,
@@ -20,7 +20,6 @@ export default {
     jobsearch1: true,
     othersite1: true,
     worktype1: true,
-    
   },
 }
 
@@ -31,9 +30,9 @@ export const Test = Template.bind({})
 Test.args = {
   title: '외주 줍니다...',
   onClick: action('클릭액션'),
-  name: '하하호호', 
-  view: 122 , 
-  date: '2020-11-11', 
+  name: '하하호호',
+  view: 122,
+  date: '2020-11-11',
   like: true,
   popular1: true,
   joboffer1: true,

@@ -10,8 +10,11 @@ export default {
     extend: {
       colors: {
         'gray-8e8e8e': '#8e8e8e',
-        'gray-d9d9d9': '#d9d9d9',
-        'main-E36397': '#E36397',
+        'light-gray': '#d9d9d9',
+        'main-color-pink': '#E36397',
+      },
+      fontFamily: {
+        logo: ['TTLaundryGothicB', 'sans-serif'],
       },
     },
   },

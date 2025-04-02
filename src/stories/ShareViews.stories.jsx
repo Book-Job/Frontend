@@ -14,7 +14,7 @@ export default {
   argTypes: {
     icon: {
       control: 'select',
-      options: [viewPink, viewGray, share,comment,link],
+      options: [viewPink, viewGray, share, comment, link],
     },
     label: { control: 'text' },
     textColor: { control: 'text' },
@@ -47,5 +47,5 @@ link1.args = {
   label: '북에디터',
   textColor: 'text-[#8E8E8E]',
   icon: link,
-  weblink: "http://bookeditor.org/main/main.php",
+  weblink: 'http://bookeditor.org/main/main.php',
 }
