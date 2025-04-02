@@ -10,23 +10,9 @@ export default {
   args: {
     title: '외주 줍니다...',
     onClick: action('클릭액션'),
-<<<<<<< HEAD
-    name: '하하호호', 
-    view: 122 ,
-    date: '2020-11-11', 
-    like: true,
-    popular1: true,
-    joboffer1: true,
-    history1: true,
-    jobsearch1: true,
-    othersite1: true,
-    worktype1: true,
-    
-=======
     name: '하하호호',
     date: '2020-11-11',
     like: true,
->>>>>>> 66500cf (style: 1차 설정)
   },
 }
 
@@ -37,20 +23,7 @@ export const Test = Template.bind({})
 Test.args = {
   title: '외주 줍니다...',
   onClick: action('클릭액션'),
-<<<<<<< HEAD
-  name: '하하호호', 
-  view: 122 , 
-  date: '2020-11-11', 
-  like: true,
-  popular1: true,
-  joboffer1: true,
-  history1: true,
-  jobsearch1: true,
-  othersite1: true,
-  worktype1: true,
-=======
   name: '하하호호',
   date: '2020-11-11',
   like: true,
->>>>>>> 66500cf (style: 1차 설정)
 }
