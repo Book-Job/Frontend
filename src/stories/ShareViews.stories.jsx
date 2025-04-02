@@ -8,6 +8,9 @@ import comment from '../assets/icons/common/comment.svg'
 export default {
   title: 'Components/web/Share',
   component: ShareViews,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     icon: {
       control: 'select',

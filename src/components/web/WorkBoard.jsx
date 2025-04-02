@@ -47,11 +47,11 @@ const WorkBoard = ({
             {title}
           </div>
         </div>
-        <div className='flex-row  text-[#8E8E8E] text-[14px]'>
+        <div className='flex-row  text-gray-8e8e8e text-[14px]'>
           <div onClick={onClick} className='flex justify-end font-bold '>
             {name}
           </div>
-          <hr className='border-[#8E8E8E] my-1' />
+          <hr className='my-1 border-gray-8e8e8e' />
           <div className='flex items-end justify-between'>
             {date}
             <ShareViews label={view} textColor='text-[#E36397]' icon={viewPink} />
