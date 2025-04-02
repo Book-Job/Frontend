@@ -8,6 +8,9 @@ import MobileShare from '../components/app/MobileShare'
 export default {
   title: 'Components/web/MobileShare',
   component: MobileShare,
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     icon: {
       control: 'select',

@@ -4,6 +4,9 @@ import MobileFreeBoard from '../components/app/MobileFreeBoard';
 export default {
   title: 'components/web/MobileFreeBoard',
   component: MobileFreeBoard,
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     title: '경력직 이직 관력 질문이여',
     content:'무하하하하하하하',

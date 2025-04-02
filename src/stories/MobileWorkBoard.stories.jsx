@@ -5,6 +5,9 @@ import MobileWorkBoard from '../components/app/MobileWorkBoard';
 export default {
   title: 'components/web/MobileWorkBoard',
   component: MobileWorkBoard,
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     title: '외주 줍니다...',
     onClick: action('클릭액션'),
