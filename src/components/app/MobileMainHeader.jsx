@@ -5,7 +5,7 @@ import mobileMenu from '../../assets/icons/mobile/mobile_menu.svg'
 const MobileMainHeader = ({ login, onClick }) => {
   return (
     <div className='flex w-full h-[50px] px-5 items-center justify-between'>
-      <div onClick={onClick} className='flex text-[#E36397] font-bold text-2xl'>
+      <div onClick={onClick} className='flex text-2xl font-bold text-main-E36397'>
         bookjob
       </div>
       <div className='flex text-base'>
