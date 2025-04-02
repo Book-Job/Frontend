@@ -6,20 +6,20 @@ import MobileShare from './MobileShare'
 const MobileFreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => {
   return (
     <div className='w-[336px] h-[160px]'>
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
+      <div className='flex flex-col h-full  border border-gray-d9d9d9 rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
         <div className='flex-row' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
           <div className='mt-[5px] text-[14px] line-clamp-1'>{content}</div>
         </div>
-        <div className='flex-row  text-[#8E8E8E] text-[14px]'>
+        <div className='flex-row  text-gray-8e8e8e text-[14px]'>
           <div onClick={onClick} className='flex justify-between font-bold '>
-            <MobileShare label={comment1} textColor='text-[#8E8E8E]' icon={comment} />
+            <MobileShare label={comment1} textColor='text-gray-8e8e8e' icon={comment} />
             <div>{name}</div>
           </div>
           <hr className='border-[#8E8E8E] my-1' />
           <div className='flex items-end justify-between'>
             {date}
-            <MobileShare label={view1} textColor='text-[#E36397]' icon={viewPink} />
+            <MobileShare label={view1} textColor='text-main-E36397' icon={viewPink} />
           </div>
         </div>
       </div>

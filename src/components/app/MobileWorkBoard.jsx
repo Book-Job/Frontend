@@ -33,7 +33,7 @@ const MobileWorkBoard = ({
         onClick={onClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[293px] '
       />
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
+      <div className='flex flex-col h-full  border border-gray-d9d9d9 rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-1 mb-2'>
             {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
@@ -47,14 +47,14 @@ const MobileWorkBoard = ({
             {title}
           </div>
         </div>
-        <div className='flex-row  text-[#8E8E8E] text-[14px]'>
+        <div className='flex-row  text-gray-8e8e8e text-[14px]'>
           <div onClick={onClick} className='flex justify-end font-bold '>
             {name}
           </div>
-          <hr className='border-[#8E8E8E] my-1' />
+          <hr className='my-1 border-gray-8e8e8e' />
           <div className='flex items-end justify-between'>
             {date}
-            <MobileShare label={view} textColor='text-[#E36397]' icon={viewPink} />
+            <MobileShare label={view} textColor='text-main-E36397' icon={viewPink} />
           </div>
         </div>
       </div>
