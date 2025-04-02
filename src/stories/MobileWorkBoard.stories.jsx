@@ -1,9 +1,10 @@
-import WorkBoard from '../components/web/WorkBoard'
-import { action } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions';
+import MobileWorkBoard from '../components/app/MobileWorkBoard';
+
 
 export default {
-  title: 'components/web/WorkBoard',
-  component: WorkBoard,
+  title: 'components/web/MobileWorkBoard',
+  component: MobileWorkBoard,
   parameters: {
     layout: 'centered',
   },
@@ -25,7 +26,7 @@ export default {
 }
 
 // export const Default = (args) => <WorkBoard {...args} />
-const Template = (args) => <WorkBoard {...args} />
+const Template = (args) => <MobileWorkBoard {...args} />
 
 export const Test = Template.bind({})
 Test.args = {

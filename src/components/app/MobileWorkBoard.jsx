@@ -8,9 +8,9 @@ import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
 import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
-import TagIcon from './TagIcon'
-import ShareViews from './ShareViews'
-const WorkBoard = ({
+import TagIcon from '../web/TagIcon'
+import MobileShare from './MobileShare'
+const MobileWorkBoard = ({
   title,
   name,
   date,
@@ -26,16 +26,16 @@ const WorkBoard = ({
 }) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
-    <div className='w-[300px] h-[200px]'>
+    <div className='w-[336px] h-[160px]'>
       <img
         src={bookmarkIcon}
         alt='bookmark'
         onClick={onClick}
-        className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
+        className='w-[23px] h-[23px] relative absolute top-[20px] left-[293px] '
       />
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
+      <div className='flex flex-col h-full  border border-gray-d9d9d9 rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
         <div className='flex-row'>
-          <div className='flex flex-wrap gap-2 mb-2'>
+          <div className='flex flex-wrap gap-1 mb-2'>
             {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
             {joboffer1 === true ? <TagIcon label='구인' icon={joboffer} /> : ''}
             {history1 === true ? <TagIcon label='경력 1~3년' icon={history} /> : ''}
@@ -54,7 +54,7 @@ const WorkBoard = ({
           <hr className='my-1 border-gray-8e8e8e' />
           <div className='flex items-end justify-between'>
             {date}
-            <ShareViews label={view} textColor='text-[#E36397]' icon={viewPink} />
+            <MobileShare label={view} textColor='text-main-E36397' icon={viewPink} />
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ const WorkBoard = ({
   )
 }
 
-WorkBoard.propTypes = {
+MobileWorkBoard.propTypes = {
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   view: PropTypes.number.isRequired,
@@ -76,4 +76,4 @@ WorkBoard.propTypes = {
   worktype1: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
 }
-export default WorkBoard
+export default MobileWorkBoard
