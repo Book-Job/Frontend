@@ -5,10 +5,10 @@ const Header = ({ login, onClick }) => {
   return (
     <div className='flex w-full h-[123px] items-center justify-between'>
       <div className='flex'>
-        <span onClick={onClick} className='ml-[128px] text-[#E36397] text-[60px] font-logo'>
+        <span onClick={onClick} className='ml-[101px] text-[#E36397] text-[45px] font-logo'>
           bookjob
         </span>
-        <span className='flex justify-around ml-[86px] gap-16 text-[25px]'>
+        <span className='flex justify-around ml-[86px] gap-16 text-[18px]'>
           <button onClick={onClick} className=''>
             자유게시판
           </button>
@@ -20,14 +20,14 @@ const Header = ({ login, onClick }) => {
       {login ? (
         <button
           onClick={onClick}
-          className='inline-flex bg-[#F4F6FA] mr-[128px] text-[20px] h-[52px] rounded-full items-center px-8'
+          className='inline-flex bg-[#F4F6FA] mr-[128px] text-[18px] h-[52px] rounded-full items-center px-8'
         >
           <img src={babyChick} alt='arrowDown' className='mr-4 w-7 h-7' />
           <span className='font-bold'>{login}님</span>
           <img src={arrowDown} alt='arrowDown' className='w-5 h-5 ml-3' />
         </button>
       ) : (
-        <span className='flex mr-[128px] gap-8 text-[20px]'>
+        <span className='flex mr-[128px] gap-8 text-[18px]'>
           <button onClick={onClick} className='font-bold row text-[#E36397]'>
             로그인
           </button>
