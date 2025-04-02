@@ -2,7 +2,10 @@ import ShareViews from '../components/web/ShareViews'
 import viewPink from '../assets/icons/common/common_view_pink.svg'
 import viewGray from '../assets/icons/common/common_view_gray.svg'
 import share from '../assets/icons/common/common_share.svg'
+<<<<<<< HEAD
 import link from '../assets/icons/common/common_link.svg'
+=======
+>>>>>>> 66500cf (style: 1차 설정)
 import comment from '../assets/icons/common/comment.svg'
 
 export default {
@@ -14,11 +17,18 @@ export default {
   argTypes: {
     icon: {
       control: 'select',
+<<<<<<< HEAD
       options: [viewPink, viewGray, share,comment,link],
     },
     label: { control: 'text' },
     textColor: { control: 'text' },
     weblink: { control: 'text' },
+=======
+      options: [viewPink, viewGray, share, comment],
+    },
+    label: { control: 'text' },
+    textColor: { control: 'text' },
+>>>>>>> 66500cf (style: 1차 설정)
   },
 }
 
@@ -42,6 +52,7 @@ comment1.args = {
   textColor: 'text-[#8E8E8E]',
   icon: comment,
 }
+<<<<<<< HEAD
 export const link1 = Template.bind({})
 link1.args = {
   label: '북에디터',
@@ -49,3 +60,5 @@ link1.args = {
   icon: link,
   weblink: "http://bookeditor.org/main/main.php",
 }
+=======
+>>>>>>> 66500cf (style: 1차 설정)
