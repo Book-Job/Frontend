@@ -1,13 +1,13 @@
-import ShareViews from '../components/web/ShareViews'
 import viewPink from '../assets/icons/common/common_view_pink.svg'
 import viewGray from '../assets/icons/common/common_view_gray.svg'
 import share from '../assets/icons/common/common_share.svg'
 import link from '../assets/icons/common/common_link.svg'
 import comment from '../assets/icons/common/comment.svg'
+import MobileShare from '../components/app/MobileShare'
 
 export default {
-  title: 'Components/web/Share',
-  component: ShareViews,
+  title: 'Components/web/MobileShare',
+  component: MobileShare,
   parameters: {
     layout: 'centered',
   },
@@ -22,7 +22,7 @@ export default {
   },
 }
 
-const Template = (args) => <ShareViews {...args} />
+const Template = (args) => <MobileShare {...args} />
 
 export const share1 = Template.bind({})
 share1.args = {

@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
+import MobileShare from './MobileShare'
 
-import ShareViews from './ShareViews'
-const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => {
+const MobileFreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => {
   return (
-    <div className='w-[300px] h-[200px]'>
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
+    <div className='w-[336px] h-[160px]'>
+      <div className='flex flex-col h-full  border border-gray-d9d9d9 rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
         <div className='flex-row' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
-          <div className='mt-[10px] text-[16px] line-clamp-2'>{content}</div>
+          <div className='mt-[5px] text-[14px] line-clamp-1'>{content}</div>
         </div>
         <div className='flex-row  text-gray-8e8e8e text-[14px]'>
           <div onClick={onClick} className='flex justify-between font-bold '>
-            <ShareViews label={comment1} textColor='text-gray-8e8e8e' icon={comment} />
+            <MobileShare label={comment1} textColor='text-gray-8e8e8e' icon={comment} />
             <div>{name}</div>
           </div>
-          <hr className='my-1 border-gray-8e8e8e' />
+          <hr className='border-[#8E8E8E] my-1' />
           <div className='flex items-end justify-between'>
             {date}
-            <ShareViews label={view1} textColor='text-[#E36397]' icon={viewPink} />
+            <MobileShare label={view1} textColor='text-main-E36397' icon={viewPink} />
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@ const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => 
   )
 }
 
-FreeBoard.propTypes = {
+MobileFreeBoard.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -36,4 +36,4 @@ FreeBoard.propTypes = {
   view1: PropTypes.number.isRequired,
   onClick: PropTypes.func,
 }
-export default FreeBoard
+export default MobileFreeBoard
