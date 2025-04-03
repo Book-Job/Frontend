@@ -7,8 +7,8 @@ export default {
     layout: 'centered',
   },
   args: {
-    placeholder: '이메일로 전송된 임시비밀번호를 입력해주세요',
-    width: 580,
+    placeholder: { control: '이메일로 전송된 임시비밀번호를 입력해주세요' },
+    width: { control: 'number' },
   },
 }
 

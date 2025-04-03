@@ -35,6 +35,7 @@ PwInputBox.displayName = 'PwInputBox' // forwardRef 사용 시 필요
 PwInputBox.propTypes = {
   placeholder: PropTypes.string.isRequired,
   width: PropTypes.number,
+  
 }
 
 export default PwInputBox
