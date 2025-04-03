@@ -1,11 +1,11 @@
-import React from 'react'
-import WriteJobSearchPosting from './domains/job/job-search/WriteJobSearchPosting'
+import { BrowserRouter } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (
-    <>
-      <WriteJobSearchPosting />
-    </>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
 
