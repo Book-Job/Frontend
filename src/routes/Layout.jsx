@@ -3,11 +3,11 @@ import Footer from './../components/web/Footer'
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <Header />
-      <main>{children}</main>
-      <Footer />
-    </>
+      <main className='flex flex-col justify-center flex-1'>{children}</main>
+      <Footer email='bookjob@gmail.com'/>
+    </div>
   )
 }
 
