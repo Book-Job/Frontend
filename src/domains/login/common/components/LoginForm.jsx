@@ -30,7 +30,6 @@ const LoginForm = () => {
         )}
         <div className='flex mt-7'>
           <PwInputBox
-            // type='password'
             placeholder='비밀번호'
             width={532}
             {...register('password', { required: '비밀번호를 입력하세요' })}
