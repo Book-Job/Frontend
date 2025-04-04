@@ -44,7 +44,7 @@ const DetailJobSearchPost = () => {
         <LastFormLine />
         <div className='ml-[832px] mt-[13px]'>
           <ShareViews icon={share} label='공유' textColor='text-dark-gray' />
-          <ShareViews icon={viewPink} label='134' textColor='text-main-color-pink' />
+          <ShareViews icon={viewPink} label='134' textColor='text-main-pink' />
         </div>
 
         <LastFormLine />
