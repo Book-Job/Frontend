@@ -4,7 +4,8 @@ name: 'Chromatic'
 on:
   push:
     branches:
-      - main # main 브랜치에 푸시할 때 실행
+      - main 
+      - develop  # main ,develop 브랜치에 푸시할 때 실행
 
 jobs:
   chromatic:
