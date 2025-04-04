@@ -25,8 +25,8 @@ const LoginForm = () => {
             {...register('userID', { required: '아이디를 입력하세요' })}
           />
         </div>
-        {errors.username && (
-          <p className='flex items-start ml-4 text-red-500'>{errors.username.message}</p>
+        {errors.userID && (
+          <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
         )}
         <div className='flex mt-7'>
           <PwInputBox
@@ -55,7 +55,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div className='mt-6'>
-          <Button label='로그인' size='big' bgColor='#d9d9d9' onClick={handleSubmit(onSubmit)} />
+          <Button label='로그인' size='big' bgColor='light-gray' onClick={handleSubmit(onSubmit)} />
         </div>
       </form>
     </div>
