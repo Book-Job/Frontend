@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <div className='flex text-4xl font-bold'>로그인</div>
+      <div className='flex text-[38px] font-bold'>로그인</div>
       <form>
         <div className='flex mt-11'>
           <InputBox

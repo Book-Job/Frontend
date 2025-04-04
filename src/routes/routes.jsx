@@ -1,6 +1,6 @@
 import Join from "../domains/login/main/Join";
-import JoinInfoData from "../domains/login/main/JoinInfoData";
 import LoginMain from "../domains/login/main/LoginMain";
+import MemberDataEntry from "../domains/login/main/MemberDataEntry";
 import MainPage from "../domains/main/main/MainPage";
 import ROUTER_PATHS from "./RouterPath";
 
@@ -18,8 +18,8 @@ const routes = [
     element: <Join />,
   },
   {
-    path: ROUTER_PATHS.JOIN_INFO_DATA,
-    element: <JoinInfoData />,
+    path: ROUTER_PATHS.MEMBER_DATA_ENTRY,
+    element: <MemberDataEntry />,
   },
 ];
 
