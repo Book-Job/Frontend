@@ -1,20 +1,52 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
-
 import ShareViews from './ShareViews'
+
 const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => {
+  const [showButton, setShowButton] = useState(false)
+  const navigate = useNavigate()
+
+  const handleNameClick = (e) => {
+    e.stopPropagation()
+    setShowButton((prev) => !prev)
+  }
+
+  const goToAuthorPosts = () => {
+    navigate(`/user-posts/${name}`)
+  }
+
   return (
-    <div className='w-[300px] h-[200px]'>
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
-        <div className='flex-row' onClick={onClick}>
+    <div className='w-[300px]'>
+      <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
+        <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
           <div className='mt-[10px] text-[16px] line-clamp-2'>{content}</div>
         </div>
-        <div className='flex-row  text-gray-8e8e8e text-[14px]'>
-          <div onClick={onClick} className='flex justify-between font-bold '>
+
+        <div className='text-gray-8e8e8e text-[14px] mt-[15px]'>
+          <div className='flex justify-between font-bold'>
             <ShareViews label={comment1} textColor='text-gray-8e8e8e' icon={comment} />
-            <div>{name}</div>
+            <div className='relative inline-block'>
+              <span
+                onClick={handleNameClick}
+                className='cursor-pointer hover:underline z-10 text-sm font-medium'
+              >
+                {name}
+              </span>
+
+              {showButton && (
+                <button
+                  onClick={goToAuthorPosts}
+                  className='absolute left-1/2 -translate-x-1/2 top-[100%] mt-[1px] bg-white text-xs text-black px-2 py-[2px] rounded-md border border-gray-300 whitespace-nowrap shadow-md'
+                >
+                  작성글 보기
+                </button>
+              )}
+            </div>
           </div>
           <hr className='my-1 border-gray-8e8e8e' />
           <div className='flex items-end justify-between'>
@@ -36,4 +68,5 @@ FreeBoard.propTypes = {
   view1: PropTypes.number.isRequired,
   onClick: PropTypes.func,
 }
+
 export default FreeBoard
