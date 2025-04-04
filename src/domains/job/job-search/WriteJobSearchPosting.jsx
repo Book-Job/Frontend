@@ -1,10 +1,7 @@
 //구직글 작성
-
-import Header from '../../../components/web/Header'
 import WriteFormLine from '../common/components/WriteFormLine'
 import WriteJobSearchPostingForm from './components/WriteJobSearchPostingForm'
 import GetEmailAndNickName from '../common/components/GetEmailAndNickName'
-import Footer from '../../../components/web/Footer'
 import LastFormLine from '../common/components/LastFormLine'
 import Button from '../../../components/web/Button'
 import PinkButton from '../../../components/web/PinkButton'
@@ -12,7 +9,6 @@ import PinkButton from '../../../components/web/PinkButton'
 const WriteJobSearchPosting = () => {
   return (
     <>
-      <Header />
       <div className='flex flex-col gap-4 mx-[250px]'>
         <h1 className='text-[28px] font-bold self-start mt-[50px]'>구직 글 등록</h1>
         <div className='text-[15px] font-bold text-red-500 self-end'>
@@ -27,7 +23,6 @@ const WriteJobSearchPosting = () => {
           <PinkButton label='저장' />
         </div>
       </div>
-      <Footer />
     </>
   )
 }
