@@ -24,7 +24,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'big', 'biggest']),
   bgColor: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  className: PropTypes.string, // ✅ 추가됨
+  className: PropTypes.string,
 }
 
 export default Button
