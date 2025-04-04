@@ -27,9 +27,9 @@ const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => 
           <div className='mt-[10px] text-[16px] line-clamp-2'>{content}</div>
         </div>
 
-        <div className='text-gray-8e8e8e text-[14px] mt-[15px]'>
+        <div className='text-dark-gray text-[14px] mt-[15px]'>
           <div className='flex justify-between font-bold'>
-            <ShareViews label={comment1} textColor='text-gray-8e8e8e' icon={comment} />
+            <ShareViews label={comment1} textColor='text-dark-gray' icon={comment} />
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
@@ -48,10 +48,10 @@ const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => 
               )}
             </div>
           </div>
-          <hr className='my-1 border-gray-8e8e8e' />
+          <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
             {date}
-            <ShareViews label={view1} textColor='text-[#E36397]' icon={viewPink} />
+            <ShareViews label={view1} textColor='text-main-pink' icon={viewPink} />
           </div>
         </div>
       </div>

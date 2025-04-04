@@ -7,7 +7,7 @@ const LabelWithInput = ({ label, placeholder }) => {
       <input
         type='text'
         placeholder={placeholder}
-        className='w-[580px] h-[58px] border border-gray-8e8e8e rounded px-4 text-[18px] text-black placeholder:text-gray-8e8e8e'
+        className='w-[580px] h-[58px] border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray'
       />
     </div>
   )

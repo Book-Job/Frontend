@@ -9,7 +9,7 @@ const SearchBar = ({ value, onChange, placeholder, className }) => {
   }
   return (
     <div
-      className={`flex items-center border border-gray-8e8e8e bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px] ${className}`}
+      className={`flex items-center border border-dark-gray bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px] ${className}`}
     >
       <img src={search} alt='search' className='ml-[30px] w-[31px] h-[31px]' />
       <input

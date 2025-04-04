@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'gray-8e8e8e': '#8e8e8e',
+        'dark-gray': '#8e8e8e',
         'light-gray': '#d9d9d9',
-        'main-color-pink': '#E36397',
+        'main-pink': '#E36397',
       },
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],

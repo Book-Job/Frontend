@@ -27,7 +27,7 @@ const WriteCommunityPostForm = () => {
             <input
               {...register('nickname', { required: true })}
               placeholder='닉네임을 입력하세요'
-              className='border border-gray-8e8e8e rounded-md px-3 py-2 w-[171px] h-[58px] focus:outline-none focus:border-main-color-pink'
+              className='border border-dark-gray rounded-md px-3 py-2 w-[171px] h-[58px] focus:outline-none focus:border-main-color-pink'
             />
             {errors.nickname && (
               <span className='self-start text-red-500 text-xs mt-1'>닉네임은 필수입니다</span>
@@ -56,7 +56,7 @@ const WriteCommunityPostForm = () => {
             <textarea
               {...register('text', { required: true })}
               placeholder='내용을 입력하세요'
-              className='w-[686px] h-[360px] border border-gray-8e8e8e rounded-md px-4 py-4 focus:outline-none focus:border-main-color-pink'
+              className='w-[686px] h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-color-pink'
             />
             {errors.text && (
               <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>
