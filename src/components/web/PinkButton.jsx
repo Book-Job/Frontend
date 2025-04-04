@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
 
-const PinkButton = ({ label, onClick }) => {
+const PinkButton = ({ label, ...props }) => {
   return (
-    <button className='w-[226px] h-[58px] rounded-[5px] bg-[#E36397]' onClick={onClick}>
+    <button className='w-[226px] h-[58px] rounded-[5px] bg-main-color-pink' {...props}>
       <span className='font-bold text-[20px] text-white'>{label}</span>
     </button>
   )
 }
 
-PinkButton.PropTypes = {
+PinkButton.propTypes = {
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  type: PropTypes.string,
+  form: PropTypes.string,
 }
 
 export default PinkButton
