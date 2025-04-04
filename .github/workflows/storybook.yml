@@ -1,27 +1,37 @@
 name: 'Chromatic'
 
-# on: push
 on:
   push:
     branches:
-      - main # main 브랜치에 푸시할 때 실행
+      - main
+      - develop  # main, develop 브랜치에서만 실행
 
 jobs:
   chromatic:
     name: Run Chromatic
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # 최신 안정적인 환경 사용
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 모든 Git 히스토리를 가져옴 (Chromatic이 변경사항을 감지하는 데 필요)
+          fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 18 # Yarn과 호환성이 좋은 LTS 버전
+          node-version: 20
+          cache: 'yarn'  # Yarn 캐시 활성화
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.yarn
+          key: yarn-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            yarn-${{ runner.os }}-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile # Yarn을 사용하는 경우 적절한 설치 방식
+        run: yarn install --frozen-lockfile --network-timeout 100000
 
       - name: Run Chromatic
         uses: chromaui/action@latest
