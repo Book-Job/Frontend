@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ label, size = 'medium', bgColor = '#d9d9d9', onClick, className = '' }) => {
+const Button = ({ label, size = 'medium', bgColor = 'light-gray', onClick, className = '' }) => {
   const buttonSize = {
     small: 'w-[148px] h-[58px]',
     medium: 'w-[332px] h-[58px]',

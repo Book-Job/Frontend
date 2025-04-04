@@ -55,7 +55,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div className='mt-6'>
-          <Button label='로그인' size='big' bgColor='#d9d9d9' onClick={handleSubmit(onSubmit)} />
+          <Button label='로그인' size='big' bgColor='light-gray' onClick={handleSubmit(onSubmit)} />
         </div>
       </form>
     </div>

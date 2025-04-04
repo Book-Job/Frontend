@@ -11,7 +11,7 @@ const MobileInput = ({ placeholder, size = 'big' }) => {
       <input
         type='text'
         placeholder={placeholder}
-        className={`${inputSize[size]} border border-gray-8e8e8e rounded px-4 text-[18px] text-black placeholder:text-gray-8e8e8e`}
+        className={`${inputSize[size]} border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray`}
       />
     </div>
   )

@@ -5,7 +5,7 @@ const Header = ({ login, onClick }) => {
   return (
     <div className='flex w-full h-[123px] items-center justify-between'>
       <div className='flex'>
-        <span onClick={onClick} className='ml-[101px] text-[#E36397] text-[45px] font-logo'>
+        <span onClick={onClick} className='ml-[101px] text-main-pink text-[45px] font-logo'>
           bookjob
         </span>
         <span className='flex justify-around ml-[86px] gap-16 text-[18px]'>
@@ -28,7 +28,7 @@ const Header = ({ login, onClick }) => {
         </button>
       ) : (
         <span className='flex mr-[128px] gap-8 text-[18px]'>
-          <button onClick={onClick} className='font-bold row text-[#E36397]'>
+          <button onClick={onClick} className='font-bold row text-main-pink'>
             로그인
           </button>
           <button onClick={onClick} className=''>

@@ -28,7 +28,7 @@ const DetailJobSearchPost = () => {
         </div>
         <div className='flex justify-between items-center mt-[12px]'>
           <span className='text-[40px] font-bold'>편집자 프리랜서 해드립니다.</span>
-          <span className='text-[20px] font-bold text-gray-8e8e8e'>[구인/구직]</span>
+          <span className='text-[20px] font-bold text-dark-gray'>[구인/구직]</span>
         </div>
         <DetailPostLine />
         <div className='flex flex-col mt-4'>
@@ -43,7 +43,7 @@ const DetailJobSearchPost = () => {
         </div>
         <LastFormLine />
         <div className='ml-[832px] mt-[13px]'>
-          <ShareViews icon={share} label='공유' textColor='text-gray-8e8e8e' />
+          <ShareViews icon={share} label='공유' textColor='text-dark-gray' />
           <ShareViews icon={viewPink} label='134' textColor='text-main-color-pink' />
         </div>
 

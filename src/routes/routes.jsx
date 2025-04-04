@@ -1,8 +1,11 @@
-import Join from "../domains/login/main/Join";
-import LoginMain from "../domains/login/main/LoginMain";
-import MemberDataEntry from "../domains/login/main/MemberDataEntry";
-import MainPage from "../domains/main/main/MainPage";
-import ROUTER_PATHS from "./RouterPath";
+import Join from '../domains/login/main/Join'
+import LoginMain from '../domains/login/main/LoginMain'
+import MemberDataEntry from '../domains/login/main/MemberDataEntry'
+import MainPage from '../domains/main/main/MainPage'
+import ROUTER_PATHS from './RouterPath'
+import JobMainPage from '../domains/job/main/JobMainPage'
+import CommunityMainPage from '../domains/community/main/CommunityMainPage'
+import WriteCommunityPost from '../domains/community/write/page/WriteCommunityPost'
 
 const routes = [
   {
@@ -21,6 +24,18 @@ const routes = [
     path: ROUTER_PATHS.MEMBER_DATA_ENTRY,
     element: <MemberDataEntry />,
   },
-];
+  {
+    path: ROUTER_PATHS.JOB_MAIN,
+    element: <JobMainPage />,
+  },
+  {
+    path: ROUTER_PATHS.COMMUNITY,
+    element: <CommunityMainPage />,
+  },
+  {
+    path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
+    element: <WriteCommunityPost />,
+  },
+]
 
-export default routes;
+export default routes
