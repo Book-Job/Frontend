@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 
-const JobOption = ({ optionTitle, optionAnswer }) => {
+const JobOption = ({ optionTitle, optionAnswer, className }) => {
   return (
-    <div className='flex'>
-      <span className='text-[16px] text-gray-8e8e8e mr-[44px] font-medium'>{optionTitle}</span>
-      <span className='text-[16px] text-black font-medium'>{optionAnswer}</span>
+    <div className={`grid grid-cols-[150px_1fr] ${className}`}>
+      <span className='text-[16px] text-gray-8e8e8e font-medium text-left'>{optionTitle}</span>
+      <span className='text-[16px] text-black font-medium text-left'>{optionAnswer}</span>
     </div>
   )
 }
@@ -12,6 +12,7 @@ const JobOption = ({ optionTitle, optionAnswer }) => {
 JobOption.propTypes = {
   optionTitle: PropTypes.string.isRequired,
   optionAnswer: PropTypes.string.isRequired,
+  className: PropTypes.string,
 }
 
 export default JobOption

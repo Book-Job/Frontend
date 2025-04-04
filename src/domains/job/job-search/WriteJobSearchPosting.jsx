@@ -3,6 +3,11 @@
 import Header from '../../../components/web/Header'
 import WriteFormLine from '../common/components/WriteFormLine'
 import WriteJobSearchPostingForm from './components/WriteJobSearchPostingForm'
+import GetEmailAndNickName from '../common/components/GetEmailAndNickName'
+import Footer from '../../../components/web/Footer'
+import LastFormLine from '../common/components/LastFormLine'
+import Button from '../../../components/web/Button'
+import PinkButton from '../../../components/web/PinkButton'
 
 const WriteJobSearchPosting = () => {
   return (
@@ -14,8 +19,15 @@ const WriteJobSearchPosting = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
+        <GetEmailAndNickName />
         <WriteJobSearchPostingForm />
+        <LastFormLine />
+        <div className='flex justify-end mb-[131px]'>
+          <Button size='small' label='임시저장' className='mr-[14px]' />
+          <PinkButton label='저장' />
+        </div>
       </div>
+      <Footer />
     </>
   )
 }

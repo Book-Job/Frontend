@@ -26,14 +26,14 @@ const WorkBoard = ({
 }) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
-    <div className='w-[300px] h-[200px]'>
+    <div className='w-[300px] h-[200px] mb-[20px]'>
       <img
         src={bookmarkIcon}
         alt='bookmark'
         onClick={onClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
       />
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
+      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
@@ -43,7 +43,7 @@ const WorkBoard = ({
             {othersite1 === true ? <TagIcon label='외부 사이트' icon={othersite} /> : ''}
             {worktype1 === true ? <TagIcon label='정규직' icon={worktype} /> : ''}
           </div>
-          <div onClick={onClick} className='text-[18px] font-bold line-clamp-2'>
+          <div onClick={onClick} className='flex text-[18px] font-bold line-clamp-2'>
             {title}
           </div>
         </div>
@@ -75,5 +75,6 @@ WorkBoard.propTypes = {
   othersite1: PropTypes.bool.isRequired,
   worktype1: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 }
 export default WorkBoard
