@@ -10,8 +10,8 @@ const Button = ({ label, size = 'medium', bgColor = '#d9d9d9', onClick }) => {
 
   return (
     <button
-      className={`${buttonSize[size]} rounded-[5px]`}
-      style={{ backgroundColor: bgColor }}
+      className={`${buttonSize[size]} rounded-[5px] bg-${bgColor}`}
+      // style={{ backgroundColor: bgColor }}
       onClick={onClick}
     >
       <span className='font-bold text-[20px] text-white'>{label}</span>
