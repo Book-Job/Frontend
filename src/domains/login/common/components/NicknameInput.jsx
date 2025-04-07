@@ -8,7 +8,7 @@ const NicknameInput = ({ register, errors }) => {
         <LabelWithInput
           label='닉네임'
           placeholder='특수문자를 제외하고 최소2~ 8자까지 입력'
-          width={324}
+          size='medium'
           {...register('Nickname', { required: '닉네임을 입력하세요' })}
         />
         <div className='flex items-end'>

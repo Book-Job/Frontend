@@ -22,16 +22,18 @@ const JoinForm = () => {
   return (
     <div className='flex flex-col items-center'>
       <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1>
-      <IDInput register={register} errors={errors} />
-      <NicknameInput register={register} errors={errors} />
-      <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
-      <PasswordInput register={register} errors={errors} watch={watch} />
-      <Button
-        label='회원가입'
-        size='biggest'
-        bgColor='light-gray'
-        onClick={handleSubmit(onSubmit)}
-      />
+      <div className='flex flex-col gap-4'>
+        <IDInput register={register} errors={errors} />
+        <NicknameInput register={register} errors={errors} />
+        <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
+        <PasswordInput register={register} errors={errors} watch={watch} />
+        <Button
+          label='회원가입'
+          size='biggest'
+          bgColor='light-gray'
+          onClick={handleSubmit(onSubmit)}
+        />
+      </div>
     </div>
   )
 }
