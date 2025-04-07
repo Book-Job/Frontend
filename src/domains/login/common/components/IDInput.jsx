@@ -8,7 +8,7 @@ const IDInput = ({ register, errors }) => {
         <LabelWithInput
           label='아이디'
           placeholder='영문,숫자만 사용이 가능합니다. 최소4~12자까지'
-          width={324}
+          size='medium'
           {...register('userID', { required: '아이디를 입력하세요' })}
         />
         <div className='flex items-end'>

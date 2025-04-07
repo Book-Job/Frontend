@@ -1,7 +1,11 @@
+import BestList from "../common/components/BestList"
+import BoardButton from "../common/components/BoardButton"
+
 const MainPage = () => {
   return (
     <div>
-      <h1>메인 페이지</h1> 
+      <BoardButton/>
+      <BestList/>
     </div>
   )
 }

@@ -8,7 +8,7 @@ const PasswordInput = ({ register, errors, watch }) => {
         <div>
           <PwInputBox
             placeholder='비밀번호는 영문 숫자 포함 최소 8자 이상을 입력해주세요'
-            width={424}
+            size='biggest'
             {...register('password', { required: '비밀번호를 입력하세요' })}
           />
           <div className='flex items-start'>
@@ -18,7 +18,7 @@ const PasswordInput = ({ register, errors, watch }) => {
         <div>
           <PwInputBox
             placeholder='비밀번호 재입력'
-            width={424}
+            size='biggest'
             {...register('passwordCheck', {
               required: '비밀번호를 재입력하세요',
               validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.'
