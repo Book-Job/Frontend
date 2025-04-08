@@ -9,10 +9,10 @@ const SnsLogin = () => {
         <hr className='w-1/3 border-1 border-gray-8e8e8e' />
       </div>
       <div className='flex justify-center gap-12 mt-9'>
-        <button>
+        <button className='w-20 h-20'>
           <img src={navericon} />
         </button>
-        <button>
+        <button className='w-20 h-20'>
           <img src={kakaoicon} />
         </button>
       </div>
