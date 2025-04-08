@@ -9,6 +9,8 @@ const ROUTER_PATHS = {
   WRITE_RECRUITMENT_POST: '/job/recruitment/post',
   WRITE_JOB_SEARCH_POST: '/job/job-search/post',
   JOB_SEARCH_POST_DETAIL: '/job/job-search/post/:id',
+  FIND_ID: '/find/id',
+  FIND_PW: '/find/PW',
 }
 
 export default ROUTER_PATHS

@@ -1,16 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../../components/web/Button'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
+import PageTitle from '../../../Find/common/components/PageTitle'
 
 const JoinButton = () => {
   const navigate = useNavigate()
 
   return (
     <div className='mb-16'>
-      <h1 className='mb-12 text-[38px] font-bold'>회원가입 </h1>
+      <div className='mb-20'>
+        <PageTitle title={'회원가입'} subTitle={'아직 bookjob 회원이 아니신가요?'} />
+      </div>
+      {/* <h1 className='mb-12 text-[38px] font-bold'>회원가입 </h1>
       <div className='mb-20 text-2xl font-medium text-dark-gray'>
         아직 bookjob 회원이 아니신가요?
-      </div>
+      </div> */}
       <Button
         size='big'
         label='회원가입'

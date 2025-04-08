@@ -4,6 +4,7 @@ import IDInput from './IDInput'
 import NicknameInput from './NicknameInput'
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
+import PageTitle from './../../../Find/common/components/PageTitle';
 
 const JoinForm = () => {
   const {
@@ -21,7 +22,8 @@ const JoinForm = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1>
+      {/* <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1> */}
+      <PageTitle title={'회원정보 입력'}/>
       <div className='flex flex-col gap-4'>
         <IDInput register={register} errors={errors} />
         <NicknameInput register={register} errors={errors} />
