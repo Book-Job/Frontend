@@ -9,6 +9,8 @@ import WriteCommunityPost from '../domains/community/write/page/WriteCommunityPo
 import WriteRecruitmentPosting from '../domains/job/recruitment/WriteRecruitmentPosting'
 import WriteJobSearchPosting from '../domains/job/job-search/WriteJobSearchPosting'
 import DetailJobSearchPost from '../domains/job/job-search/DetailJobSearchPost'
+import FindIDPage from '../domains/Find/main/FindIDPage'
+import FindPwPage from '../domains/Find/main/FindPwPage'
 
 const routes = [
   {
@@ -50,6 +52,14 @@ const routes = [
   {
     path: ROUTER_PATHS.JOB_SEARCH_POST_DETAIL,
     element: <DetailJobSearchPost />,
+  },
+  {
+    path: ROUTER_PATHS.FIND_ID,
+    element: <FindIDPage />,
+  },
+  {
+    path: ROUTER_PATHS.FIND_PW,
+    element: <FindPwPage />,
   },
 ]
 
