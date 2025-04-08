@@ -21,7 +21,7 @@ const LoginForm = () => {
         <div className='flex mt-11'>
           <InputBox
             placeholder='아이디'
-            width={532}
+            size = 'big'
             {...register('userID', { required: '아이디를 입력하세요' })}
           />
         </div>
@@ -31,7 +31,7 @@ const LoginForm = () => {
         <div className='flex mt-7'>
           <PwInputBox
             placeholder='비밀번호'
-            width={532}
+            size ='big'
             {...register('password', { required: '비밀번호를 입력하세요' })}
           />
         </div>
