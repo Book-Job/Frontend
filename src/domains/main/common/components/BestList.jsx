@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import issueFire from '../../../../assets/icons/common/common_issue_fire.svg'
 import comment from '../../../../assets/icons/common/comment.svg'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
-const BestList = () => {
+const BestList = ({boardName}) => {
   const bestList = [
     {
       title: '오늘 회사에서 제안 받았어요',
@@ -70,7 +70,7 @@ const BestList = () => {
     <div className='flex flex-col w-[940px]'>
       <div className='flex mb-12'>
         <img src={issueFire} alt='issueFire' className='mr-5 w-11 h-11' />
-        <div className='text-3xl font-bold'>자유게시판 베스트</div>
+        <div className='text-3xl font-bold'>{boardName} 베스트</div>
       </div>
       <div className='grid grid-cols-2 gap-y-4 gap-x-20'>
         {bestList.map(({ title, path, commentNum }, index) => {
