@@ -1,5 +1,5 @@
 //구직글 작성
-import WriteFormLine from '../common/components/WriteFormLine'
+import WriteFormLine from '../../../components/web/WriteFormLine'
 import WriteJobSearchPostingForm from './components/WriteJobSearchPostingForm'
 import GetEmailAndNickName from '../common/components/GetEmailAndNickName'
 import LastFormLine from '../common/components/LastFormLine'

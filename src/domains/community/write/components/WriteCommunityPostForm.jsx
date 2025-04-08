@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { createPost } from '../service/createCommunityPost'
+import { createPost } from '../../service/postService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
