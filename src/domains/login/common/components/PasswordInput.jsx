@@ -12,7 +12,7 @@ const PasswordInput = ({ register, errors, watch }) => {
             {...register('password', { required: '비밀번호를 입력하세요' })}
           />
           <div className='flex items-start'>
-            {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+            {errors.password && <p className='text-red-500 text-[14px]'>{errors.password.message}</p>}
           </div>
         </div>
         <div>
@@ -25,7 +25,7 @@ const PasswordInput = ({ register, errors, watch }) => {
             })}
           />
           <div className='flex items-start'>
-            {errors.passwordCheck && <p className='text-red-500'>{errors.passwordCheck.message}</p>}
+            {errors.passwordCheck && <p className='text-red-500 text-[14px]'>{errors.passwordCheck.message}</p>}
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ const NicknameInput = ({ register, errors }) => {
         </div>
       </div>
       <div className='flex items-start'>
-        {errors.Nickname && <p className='text-red-500'>{errors.Nickname.message}</p>}
+        {errors.Nickname && <p className='text-red-500 text-[14px]'>{errors.Nickname.message}</p>}
       </div>
     </div>
   )

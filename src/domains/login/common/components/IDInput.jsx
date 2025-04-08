@@ -16,7 +16,7 @@ const IDInput = ({ register, errors }) => {
         </div>
       </div>
       <div className='flex items-start'>
-        {errors.userID && <p className='text-red-500'>{errors.userID.message}</p>}
+        {errors.userID && <p className='text-red-500 text-[14px]'>{errors.userID.message}</p>}
       </div>
     </div>
   )
