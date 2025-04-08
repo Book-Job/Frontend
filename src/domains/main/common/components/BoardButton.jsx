@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
+// import ROUTER_PATHS from '../../../../routes/RouterPath'
 import commonTime from '../../../../assets/icons/common/common_time.svg'
 
 const BoardButton = ({ onBoardSelect, selectedBoard }) => {
@@ -20,7 +20,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
 
   const handleClick = (path, name) => {
     navigate(path)
-    onBoardSelect(name === '자유' ? '자유게시판' : '구인구직') // 버튼 이름에 따라 보드 이름 설정
+    onBoardSelect(name === '자유' ? '자유게시판' : '구인구직')
   }
   return (
     <div className='w-[940px] '>
@@ -36,7 +36,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
                 // onClick={() => navigate(path)}
                 onClick={() => handleClick(path, name)}
                 className={`w-[157px] h-[47px] border rounded-full text-2xl ${
-                  isSelected ? 'bg-main-color-pink text-white' : 'bg-light-gray text-black'
+                  isSelected ? 'bg-main-pink text-white' : 'bg-light-gray text-black'
                 }`}
               >
                 {name}
@@ -48,7 +48,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
           <div className='w-5 h-5 mr-1'>
             <img src={commonTime} alt='commonTime' />
           </div>
-          <p className='text-base font-semibold text-gray-8e8e8e'>{formattedDate} 기준</p>
+          <p className='text-base font-semibold text-dark-gray'>{formattedDate} 기준</p>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import MobileWorkBoard from '../components/app/MobileWorkBoard';
 
 
 export default {
-  title: 'components/web/MobileWorkBoard',
+  title: 'components/app/MobileWorkBoard',
   component: MobileWorkBoard,
   parameters: {
     layout: 'centered',

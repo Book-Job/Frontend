@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import MobileFreeBoard from '../components/app/MobileFreeBoard';
 
 export default {
-  title: 'components/web/MobileFreeBoard',
+  title: 'components/app/MobileFreeBoard',
   component: MobileFreeBoard,
   parameters: {
     layout: 'centered',
