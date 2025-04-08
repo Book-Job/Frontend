@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 
-const MainTab = ({ label, bgColor = '#D9d9d9', isSelected, onClick }) => {
+const MainTab = ({ label, bgColor = 'light-gray', isSelected, onClick }) => {
   return (
     <button
       className='w-[157px] h-[57px] rounded-[30px]'
-      style={{ backgroundColor: isSelected ? '#E36397' : bgColor }}
+      style={{ backgroundColor: isSelected ? 'main-pink' : bgColor }}
       onClick={() => onClick(label)}
     >
       <span className='font-medium text-[25px] text-white'>{label}</span>

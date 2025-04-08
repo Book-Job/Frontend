@@ -7,7 +7,7 @@ const GetEmailAndNickName = () => {
   return (
     <>
       {labels.map((label, index) => (
-        <div key={index} className={`flex flex-col ${index === 0 ? 'mt-[35px]' : ''}`}>
+        <div key={index} className={`flex flex-col ${index === 0 ? '' : ''}`}>
           <JobLabel label={label} />
           <JobFormLine />
         </div>

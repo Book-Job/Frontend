@@ -16,7 +16,7 @@ const LabelWithInput = forwardRef(({ placeholder, label, size, ...rest }, ref) =
         type='text'
         placeholder={placeholder}
         // style={{ width: `${width}px`, height: '58px' }}
-        className={`${LabelWithInputBoxSize[size]} border border-gray-8e8e8e rounded px-4 text-[16px] text-black placeholder:text-gray-8e8e8e focus:border-main-color-pink focus:outline-none`}
+        className={`${LabelWithInputBoxSize[size]} border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray focus:border-main-color-pink focus:outline-none`}
         ref={ref} // react-hook-form에서 사용할 ref 추가
         {...rest} // 기타 속성 전달
       />
