@@ -1,9 +1,17 @@
 import Header from '../components/web/Header'
 import { action } from '@storybook/addon-actions'
+import { MemoryRouter } from 'react-router-dom'
 
 export default {
-  title: 'components/web/Header',
+  title: 'Components/web/Header',
   component: Header,
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
   parameters: {
     layout: 'centered',
   },
