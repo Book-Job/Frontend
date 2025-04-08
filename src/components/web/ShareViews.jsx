@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const ShareViews = ({ label, icon, textColor, weblink }) => {
+const ShareViews = ({ label, icon, textColor = 'text-black', weblink }) => {
   return (
     <div className='inline-flex items-center gap-1 w-auto h-[24px] bg-none px-1'>
       {icon && <img src={icon} alt={label} className='w-[18px] h-[18px]' />}
@@ -17,9 +17,9 @@ const ShareViews = ({ label, icon, textColor, weblink }) => {
 
 ShareViews.propTypes = {
   label: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  weblink: PropTypes.string.isRequired,
-  textColor: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  weblink: PropTypes.string,
+  textColor: PropTypes.string,
 }
 
 export default ShareViews
