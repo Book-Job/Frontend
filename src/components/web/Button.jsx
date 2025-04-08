@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ label, size = 'medium', bgColor = '#d9d9d9', onClick }) => {
+const Button = ({ label, size = 'medium', onClick, className = '' }) => {
   const buttonSize = {
     small: 'w-[148px] h-[58px]',
     medium: 'w-[332px] h-[58px]',
@@ -10,20 +10,19 @@ const Button = ({ label, size = 'medium', bgColor = '#d9d9d9', onClick }) => {
 
   return (
     <button
-      className={`${buttonSize[size]} rounded-[5px] bg-${bgColor}`}
-      // style={{ backgroundColor: bgColor }}
+      className={`${buttonSize[size]} bg-light-gray rounded-[5px] ${className}`}
       onClick={onClick}
     >
       <span className='font-bold text-[20px] text-white'>{label}</span>
     </button>
   )
 }
-
 Button.propTypes = {
   label: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'big', 'biggest']),
   bgColor: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
 }
 
 export default Button
