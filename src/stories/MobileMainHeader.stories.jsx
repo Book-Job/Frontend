@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions'
 import MobileMainHeader from '../components/app/MobileMainHeader'
 
 export default {
-  title: 'components/web/MobileMainHeader',
+  title: 'components/app/MobileMainHeader',
   component: MobileMainHeader,
   args: {
     login: '',
