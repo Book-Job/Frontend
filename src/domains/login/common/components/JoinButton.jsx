@@ -7,14 +7,14 @@ const JoinButton = () => {
 
   return (
     <div className='mb-16'>
-      <h1 className='mb-10 text-[38px] font-bold'>회원가입 </h1>
-      <div className='mb-24 text-2xl font-medium text-dark-gray'>
+      <h1 className='mb-12 text-[38px] font-bold'>회원가입 </h1>
+      <div className='mb-20 text-2xl font-medium text-dark-gray'>
         아직 bookjob 회원이 아니신가요?
       </div>
       <Button
         size='big'
         label='회원가입'
-        bgColor='main-pink'
+        className='bg-main-pink'
         onClick={() => navigate(ROUTER_PATHS.MEMBER_DATA_ENTRY)}
       />
     </div>
