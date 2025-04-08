@@ -1,4 +1,4 @@
-import WriteFormLine from '../common/components/WriteFormLine'
+import WriteFormLine from '../../../components/web/WriteFormLine'
 import GetEmailAndNickName from '../common/components/GetEmailAndNickName'
 import LastFormLine from '../common/components/LastFormLine'
 import Button from '../../../components/web/Button'
@@ -13,7 +13,6 @@ const WriteRecruitmentPosting = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <GetEmailAndNickName />
         <WriteRecruitmentPostingForm />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>

@@ -1,12 +1,24 @@
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import search from '../../assets/icons/common/common_search.svg'
+import useDebounce from '../../hooks/search/useDebounce'
 
-const SearchBar = ({ value, onChange, placeholder, className }) => {
+const SearchBar = ({ onSearch, placeholder, className }) => {
+  const [input, setInput] = useState('')
+  const debouncedValue = useDebounce(input, 500)
+
+  useEffect(() => {
+    if (debouncedValue.trim() !== '') {
+      onSearch(debouncedValue)
+    }
+  }, [debouncedValue])
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      onSearch(value) // 엔터 키를 눌렀을 때, 검색어를 전달
+      onSearch(input)
     }
   }
+
   return (
     <div
       className={`flex items-center border border-dark-gray bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px] ${className}`}
@@ -15,19 +27,19 @@ const SearchBar = ({ value, onChange, placeholder, className }) => {
       <input
         type='text'
         className='w-full outline-none text-[20px] p-2 ml-4 bg-transparent'
-        value={value}
-        onChange={onChange}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
         placeholder={placeholder}
-        onKeyDown={handleKeyDown} // 엔터키 이벤트 핸들러 추가
+        onKeyDown={handleKeyDown}
       />
     </div>
   )
 }
+
 SearchBar.propTypes = {
   placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired, // onSearch 함수 prop 추가
+  onSearch: PropTypes.func.isRequired,
   className: PropTypes.string,
 }
+
 export default SearchBar

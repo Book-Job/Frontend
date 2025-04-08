@@ -1,7 +1,7 @@
 import JobLabel from '../../../../components/web/JobLabel'
 import JobFormLine from '../../common/components/JobFormLine'
 import JobInputBox from '../../../../components/web/JobInputBox'
-
+import { useForm } from 'react-hook-form'
 const FormItem = ({ label, dot }) => (
   <>
     <div className='flex'>
@@ -14,6 +14,12 @@ const FormItem = ({ label, dot }) => (
 const WriteRecruitmentPostingForm = () => {
   return (
     <>
+      <FormItem label='닉네임' dot={false}>
+        <JobInputBox placeholder='ex) 아이들나라 편집자 구해요' />
+      </FormItem>
+      <FormItem label='이메일' dot={false}>
+        <JobInputBox placeholder='ex) 아이들나라 편집자 구해요' />
+      </FormItem>
       <FormItem label='구인 / 구직' dot={true}>
         <select className='border p-2 rounded-md w-[157px] h-[58px] cursor-pointer'>
           <option value='구인'>구인</option>
