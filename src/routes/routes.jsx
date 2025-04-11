@@ -3,12 +3,12 @@ import LoginMain from '../domains/login/main/LoginMain'
 import MemberDataEntry from '../domains/login/main/MemberDataEntry'
 import MainPage from '../domains/main/main/MainPage'
 import ROUTER_PATHS from './RouterPath'
-import JobMainPage from '../domains/job/main/JobMainPage'
+import JobMainPage from '../domains/job/main/page/JobMainPage'
 import CommunityMainPage from '../domains/community/main/page/CommunityMainPage'
 import WriteCommunityPost from '../domains/community/write/page/WriteCommunityPost'
 import WriteRecruitmentPosting from '../domains/job/recruitment/WriteRecruitmentPosting'
-import WriteJobSearchPosting from '../domains/job/job-search/WriteJobSearchPosting'
-import DetailJobSearchPost from '../domains/job/job-search/DetailJobSearchPost'
+import WriteJobSearchPosting from '../domains/job/search/WriteJobSearchPosting'
+import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
 
 const routes = [
   {

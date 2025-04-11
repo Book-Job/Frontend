@@ -15,6 +15,5 @@ export const postComment = async (boardId, { content, nickname, password }) => {
       },
     },
   )
-  // 응답은 { message, timestamp } 형태
   return response.data
 }
