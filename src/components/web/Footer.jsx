@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 const Footer = ({ email, onClick }) => {
   const navigate = useNavigate()
   return (
-    <div className='flex w-full h-[130px] bg-[#FDF8FA] justify-center gap-24 items-center px-10 mt-[40px]'>
+    <div className='flex w-full h-[130px] bg-[#FDF8FA] justify-center gap-24 items-center px-10'>
       <div
         className='text-[35px] font-bold text-main-pink cursor-pointer'
         onClick={() => navigate('/')}
