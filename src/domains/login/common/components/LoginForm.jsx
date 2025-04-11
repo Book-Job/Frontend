@@ -22,8 +22,8 @@ const LoginForm = () => {
   return (
     <div className='flex flex-col items-center'>
       <PageTitle title={'로그인'}/>
-      <form>
-        <div className='flex mt-11'>
+      <form className='w-full max-w-[532px]'>
+        <div className='flex w-full mt-11'>
           <InputBox
             placeholder='아이디'
             size='big'
@@ -33,7 +33,7 @@ const LoginForm = () => {
         {errors.userID && (
           <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
         )}
-        <div className='flex mt-7'>
+        <div className='flex w-full mt-7'>
           <PwInputBox
             placeholder='비밀번호'
             size='big'

@@ -37,15 +37,17 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
     'custom',
   ]
   return (
-    <div>
-      <div className='flex flex-row gap-2'>
-        <LabelWithInput
-          label='이메일'
-          type='email'
-          placeholder='ex) bookjob'
-          size='small'
-          {...register('emailId', { required: '이메일을 입력하세요' })}
-        />
+    <div className='w-full'>
+      <div className='flex w-full gap-2'>
+        <div className='flex-auto'>
+          <LabelWithInput
+            label='이메일'
+            type='email'
+            placeholder='ex) bookjob'
+            size='medium'
+            {...register('emailId', { required: '이메일을 입력하세요' })}
+          />
+        </div>
         <span className='flex items-end text-2xl'>@</span>
         <div className='flex items-end'>
           {isCustom ? (
@@ -54,7 +56,7 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
               placeholder='직접 입력'
               value={customDomain}
               onChange={(e) => setCustomDomain(e.target.value)}
-              className='border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray h-[58px] w-[148px] focus:border-main-color-pink focus:outline-none'
+              className='border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-32'
             />
           ) : (
             <select
@@ -69,7 +71,7 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
                   setCustomDomain('')
                 }
               }}
-              className='border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray h-[58px] w-[150px] focus:border-main-color-pink focus:outline-none'
+              className='border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-32'
             >
               {domainOptions.map((option) => (
                 <option key={option} value={option}>
@@ -79,7 +81,7 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
             </select>
           )}
         </div>
-        <div className='flex items-end'>
+        <div className='flex items-end w-[148px]'>
           <Button size='small' label='인증' bgColor='light-gray' />
         </div>
       </div>
