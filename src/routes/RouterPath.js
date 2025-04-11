@@ -3,7 +3,7 @@ const ROUTER_PATHS = {
   LOGIN_MAIN: '/loginMain',
   JOIN: '/join',
   MEMBER_DATA_ENTRY: '/MemberDataEntry',
-  JOB_MAIN: '/job-main',
+  JOB_MAIN: '/job',
   COMMUNITY: '/community',
   WRITE_COMMUNITY_POST: '/community/post',
   WRITE_RECRUITMENT_POST: '/job/recruitment/post',
