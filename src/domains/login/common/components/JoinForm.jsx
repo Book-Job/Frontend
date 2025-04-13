@@ -28,13 +28,15 @@ const JoinForm = () => {
         <IDInput register={register} errors={errors} />
         <NicknameInput register={register} errors={errors} />
         <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
-        <PasswordInput register={register} errors={errors} watch={watch} />
-        <Button
-          label='회원가입'
-          size='biggest'
-          bgColor='light-gray'
-          onClick={handleSubmit(onSubmit)}
-        />
+        <div className='flex flex-col gap-8'>
+          <PasswordInput register={register} errors={errors} watch={watch} />
+          <Button
+            label='회원가입'
+            size='biggest'
+            bgColor='light-gray'
+            onClick={handleSubmit(onSubmit)}
+          />
+        </div>
       </div>
     </div>
   )
