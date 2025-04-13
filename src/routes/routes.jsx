@@ -11,6 +11,8 @@ import WriteJobSearchPosting from '../domains/job/job-search/WriteJobSearchPosti
 import DetailJobSearchPost from '../domains/job/job-search/DetailJobSearchPost'
 import FindIDPage from '../domains/Find/main/FindIDPage'
 import FindPwPage from '../domains/Find/main/FindPwPage'
+import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
+import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 
 const routes = [
   {
@@ -61,6 +63,15 @@ const routes = [
     path: ROUTER_PATHS.FIND_PW,
     element: <FindPwPage />,
   },
+  {
+    path: ROUTER_PATHS.FIND_PW_CHECK_ID_PAGE,
+    element: <FindPwCheckIDPage/>,
+  },
+  {
+    path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
+    element: <ChangePwPage/>,
+  },
+  
 ]
 
 export default routes
