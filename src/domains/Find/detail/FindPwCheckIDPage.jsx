@@ -12,8 +12,8 @@ const FindPwCheckIDPage = () => {
     handleSubmit,
     // watch,
     // setValue,
-    trigger, // ✨ 추가
-    getValues, // ✨ 필요한 경우 이메일 값 확인용
+    trigger, // 추가
+    getValues, // 필요한 경우 이메일 값 확인용
     formState: { errors },
   } = useForm()
 

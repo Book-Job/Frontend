@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import Button from '../../../../components/web/Button'
+import { useNavigate } from 'react-router-dom'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 
 const OTPInput = () => {
   const [code, setCode] = useState('')
@@ -34,6 +36,9 @@ const OTPInput = () => {
     // TODO: 인증번호 검증 로직 추가
     console.log('입력된 인증번호:', code)
   }
+
+  const navigate = useNavigate()
+
   return (
     <div className='w-full max-w-[575px]'>
       <div className='relative flex items-center w-full mt-6'>
@@ -48,7 +53,12 @@ const OTPInput = () => {
         <p className='absolute items-center text-red-500 right-6'>{formatTime(timeLeft)}</p>
       </div>
       <div className='mt-6 '>
-        <Button size='biggest' label='확인' bgColor='light-gray' />
+        <Button
+          size='biggest'
+          label='확인'
+          bgColor='light-gray'
+          onClick={() => navigate(ROUTER_PATHS.FIND_ID_COMPLETE_PAGE)}
+        />
       </div>
     </div>
   )

@@ -10,9 +10,10 @@ const ROUTER_PATHS = {
   WRITE_JOB_SEARCH_POST: '/job/job-search/post',
   JOB_SEARCH_POST_DETAIL: '/job/job-search/post/:id',
   FIND_ID: '/find/id',
+  FIND_ID_COMPLETE_PAGE: '/find/id/complete-page',
   FIND_PW: '/find/pW',
-  FIND_PW_CHECK_ID_PAGE: '/find/pw/CheckIDPage',
-  FIND_PW_CHANGE_PW: '/find/pw/Change-pw',
+  FIND_PW_CHECK_ID_PAGE: '/find/pw/check-id-page',
+  FIND_PW_CHANGE_PW: '/find/pw/change-pw',
 
 }
 
