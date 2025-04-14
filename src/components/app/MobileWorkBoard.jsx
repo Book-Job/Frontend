@@ -23,10 +23,11 @@ const MobileWorkBoard = ({
   othersite1,
   worktype1,
   view,
+  className,
 }) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
-    <div className='w-[336px] h-[160px]'>
+    <div className={`w-[336px] h-[160px] ${className}`}>
       <img
         src={bookmarkIcon}
         alt='bookmark'
