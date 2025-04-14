@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
+import ROUTER_PATHS from '../../routes/RouterPath'
 
 const Header = ({ login, onClick }) => {
   const navigate = useNavigate()
@@ -33,7 +34,7 @@ const Header = ({ login, onClick }) => {
         </button>
       ) : (
         <span className='flex mr-[128px] gap-8 text-[16px]'>
-          <button onClick={() => navigate('/loginMain')} className='font-bold row text-main-pink'>
+          <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold row text-main-pink'>
             로그인
           </button>
           <button onClick={() => navigate('/join')}>회원가입</button>
