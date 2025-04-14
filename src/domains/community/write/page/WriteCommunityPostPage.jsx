@@ -5,9 +5,13 @@ import PinkButton from '../../../../components/web/PinkButton'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 const WriteCommunityPost = () => {
   return (
-    <div className='flex flex-col gap-4 mx-[250px]'>
-      <h1 className='text-[28px] font-bold self-start mt-[50px]'>자유게시판 글 등록</h1>
-      <div className='text-[15px] font-bold text-red-500 self-end'>닉네임 수정이 가능합니다.</div>
+    <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
+      <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>
+        자유게시판 글 등록
+      </h1>
+      <div className='text-[14px] sm:text-base font-bold text-red-500 self-end'>
+        닉네임 수정이 가능합니다.
+      </div>
       <WriteFormLine />
       <WriteCommunityPostForm />
       <LastFormLine />
@@ -18,4 +22,5 @@ const WriteCommunityPost = () => {
     </div>
   )
 }
+
 export default WriteCommunityPost

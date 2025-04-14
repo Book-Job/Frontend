@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import FreeBoard from '../components/web/FreeBoard'
-import { MemoryRouter } from 'react-router-dom' // MemoryRouter import 추가
+import { MemoryRouter } from 'react-router-dom'
 
 export default {
   title: 'components/web/Freeboard',
