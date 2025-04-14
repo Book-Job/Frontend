@@ -4,6 +4,7 @@ import IDInput from './IDInput'
 import NicknameInput from './NicknameInput'
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
+import PageTitle from './../../../Find/common/components/PageTitle'
 
 const JoinForm = () => {
   const {
@@ -20,19 +21,22 @@ const JoinForm = () => {
   }
 
   return (
-    <div className='flex flex-col items-center'>
-      <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1>
-      <div className='flex flex-col gap-4'>
+    <div className='flex flex-col items-center w-full'>
+      {/* <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1> */}
+      <PageTitle title={'회원정보 입력'} />
+      <div className='flex flex-col w-full max-w-[575px] gap-4'>
         <IDInput register={register} errors={errors} />
         <NicknameInput register={register} errors={errors} />
         <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
-        <PasswordInput register={register} errors={errors} watch={watch} />
-        <Button
-          label='회원가입'
-          size='biggest'
-          bgColor='light-gray'
-          onClick={handleSubmit(onSubmit)}
-        />
+        <div className='flex flex-col gap-8'>
+          <PasswordInput register={register} errors={errors} watch={watch} />
+          <Button
+            label='회원가입'
+            size='biggest'
+            bgColor='light-gray'
+            onClick={handleSubmit(onSubmit)}
+          />
+        </div>
       </div>
     </div>
   )

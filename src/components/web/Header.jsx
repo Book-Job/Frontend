@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
+import ROUTER_PATHS from '../../routes/RouterPath'
 
 const Header = ({ login, onClick }) => {
   const navigate = useNavigate()
@@ -16,8 +17,8 @@ const Header = ({ login, onClick }) => {
           bookjob
         </span>
         <span className='flex gap-6 md:gap-10 text-sm md:text-[15px]'>
-          <button onClick={() => navigate('/community')}>자유게시판</button>
-          <button onClick={() => navigate('/job')}>구인/구직</button>
+          <button onClick={() => navigate(ROUTER_PATHS.COMMUNITY)}>자유게시판</button>
+          <button onClick={() => navigate(ROUTER_PATHS.JOB_MAIN)}>구인/구직</button>
           <button onClick={onClick}>오픈채팅</button>
           <button onClick={onClick}>문의</button>
         </span>
@@ -32,11 +33,14 @@ const Header = ({ login, onClick }) => {
           <img src={arrowDown} alt='arrowDown' className='w-4 h-4 md:w-5 md:h-5 ml-2 md:ml-3' />
         </button>
       ) : (
-        <span className='flex gap-6 md:gap-10 text-sm md:text-[15px]'>
-          <button onClick={() => navigate('/loginMain')} className='font-bold text-main-pink'>
+        <span className='flex mr-[128px] gap-8 text-[16px]'>
+          <button
+            onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
+            className='font-bold row text-main-pink'
+          >
             로그인
           </button>
-          <button onClick={() => navigate('/join')}>회원가입</button>
+          <button onClick={() => navigate(ROUTER_PATHS.JOIN)}>회원가입</button>
         </span>
       )}
     </div>
