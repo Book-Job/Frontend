@@ -3,6 +3,7 @@ import { createPost } from '../../service/postService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
+
 const WriteCommunityPostForm = () => {
   const {
     register,
@@ -21,14 +22,15 @@ const WriteCommunityPostForm = () => {
 
   return (
     <form id='community-post-form' onSubmit={handleSubmit(onSubmit)}>
-      <div className='my-[30px]'>
-        <FormItem label='닉네임' dot={false}>
+      <div className='my-[10px]'>
+        <FormItem label='닉네임' dot={true}>
           <div className='flex flex-col w-full'>
-            <input
+            <JobInputBox
               {...register('nickname', { required: true })}
               placeholder='닉네임을 입력하세요'
-              className='border border-dark-gray rounded-md px-3 py-2 w-[171px] h-[58px] focus:outline-none focus:border-main-pink'
+              className='w-full sm:w-[171px]'
             />
+
             {errors.nickname && (
               <span className='self-start text-red-500 text-xs mt-1'>닉네임은 필수입니다</span>
             )}
@@ -42,6 +44,7 @@ const WriteCommunityPostForm = () => {
             <JobInputBox
               {...register('title', { required: true })}
               placeholder='글 제목을 입력하세요'
+              className='w-full sm:w-[400px]'
             />
             {errors.title && (
               <span className='self-start text-red-500 text-xs mt-1'>제목은 필수입니다</span>
@@ -56,7 +59,7 @@ const WriteCommunityPostForm = () => {
             <textarea
               {...register('text', { required: true })}
               placeholder='내용을 입력하세요'
-              className='w-[686px] h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
+              className='w-full sm:w-[686px] h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
             />
             {errors.text && (
               <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>

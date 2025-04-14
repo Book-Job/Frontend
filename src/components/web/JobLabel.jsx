@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 
 const JobLabel = ({ label, dot, className }) => {
   return (
-    <div className={`flex ${className}`}>
+    <div className='flex items-center'>
       {dot && <span className='text-red-500 font-semibold'>*</span>}
-      <span className='text-[24px] font-semibold'>{label}</span>
+      <span className={`font-semibold ${className} mr-[20px] inline-block`}>{label}</span>
     </div>
   )
 }

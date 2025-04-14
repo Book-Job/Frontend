@@ -8,17 +8,17 @@ const Header = ({ login, onClick }) => {
   const navigate = useNavigate()
 
   return (
-    <div className='flex w-full h-[123px] items-center justify-between'>
-      <div className='flex'>
+    <div className='flex w-full h-auto md:h-[123px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
+      <div className='flex flex-col md:flex-row items-center gap-4 md:gap-20'>
         <span
           onClick={() => navigate('/')}
-          className='ml-[101px] text-main-pink text-[35px] font-logo cursor-pointer'
+          className='text-main-pink text-2xl md:text-[35px] font-logo cursor-pointer'
         >
           bookjob
         </span>
-        <span className='flex justify-around ml-[86px] gap-16 text-[15px]'>
-          <button onClick={() => navigate('/community')}>자유게시판</button>
-          <button onClick={() => navigate('/job')}>구인/구직</button>
+        <span className='flex gap-6 md:gap-10 text-sm md:text-[15px]'>
+          <button onClick={() => navigate(ROUTER_PATHS.COMMUNITY)}>자유게시판</button>
+          <button onClick={() => navigate(ROUTER_PATHS.JOB_MAIN)}>구인/구직</button>
           <button onClick={onClick}>오픈채팅</button>
           <button onClick={onClick}>문의</button>
         </span>
@@ -26,18 +26,21 @@ const Header = ({ login, onClick }) => {
       {login ? (
         <button
           onClick={onClick}
-          className='inline-flex bg-[#F4F6FA] mr-[128px] text-[16px] h-[52px] rounded-full items-center px-8'
+          className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center px-6 md:px-8'
         >
-          <img src={babyChick} alt='arrowDown' className='mr-4 w-7 h-7' />
+          <img src={babyChick} alt='babyChick' className='mr-2 md:mr-4 w-6 h-6 md:w-7 md:h-7' />
           <span className='font-bold'>{login}님</span>
-          <img src={arrowDown} alt='arrowDown' className='w-5 h-5 ml-3' />
+          <img src={arrowDown} alt='arrowDown' className='w-4 h-4 md:w-5 md:h-5 ml-2 md:ml-3' />
         </button>
       ) : (
         <span className='flex mr-[128px] gap-8 text-[16px]'>
-          <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold row text-main-pink'>
+          <button
+            onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
+            className='font-bold row text-main-pink'
+          >
             로그인
           </button>
-          <button onClick={() => navigate('/join')}>회원가입</button>
+          <button onClick={() => navigate(ROUTER_PATHS.JOIN)}>회원가입</button>
         </span>
       )}
     </div>
