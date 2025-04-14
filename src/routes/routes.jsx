@@ -14,6 +14,7 @@ import FindPwPage from '../domains/Find/main/FindPwPage'
 import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
+import MyPage from '../domains/my/main/MyPage'
 
 const routes = [
   {
@@ -75,6 +76,11 @@ const routes = [
   {
     path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
     element: <ChangePwPage />,
+  },
+  {
+    path: ROUTER_PATHS.MY_PAGE,
+    element: <MyPage />,
+    noMargin: true,
   },
 ]
 

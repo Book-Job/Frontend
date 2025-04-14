@@ -4,13 +4,15 @@ import Layout from './Layout'
 
 const AppRoutes = () => {
   return (
-    <Layout>
-      <Routes>
-        {routes.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
-        ))}
-      </Routes>
-    </Layout>
+    <Routes>
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          element={<Layout noMargin={route.noMargin}>{route.element}</Layout>}
+        />
+      ))}
+    </Routes>
   )
 }
 
