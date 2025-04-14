@@ -27,29 +27,30 @@ const MobileWorkBoard = ({
 }) => {
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
-    <div className={`w-[336px] h-[160px] ${className}`}>
-      <img
-        src={bookmarkIcon}
-        alt='bookmark'
-        onClick={onClick}
-        className='w-[23px] h-[23px] relative absolute top-[20px] left-[293px] '
-      />
-      <div className='flex flex-col h-full  border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
+    <div className={`w-[336px] h-[160px] ${className} mt-3`}>
+      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
+        <img
+          src={bookmarkIcon}
+          alt='bookmark'
+          onClick={onClick}
+          className='w-[23px] h-[23px] absolute top-[-2px] right-4 z-10'
+        />
+
         <div className='flex-row'>
           <div className='flex flex-wrap gap-1 mb-2'>
-            {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
-            {joboffer1 === true ? <TagIcon label='구인' icon={joboffer} /> : ''}
-            {history1 === true ? <TagIcon label='경력 1~3년' icon={history} /> : ''}
-            {jobsearch1 === true ? <TagIcon label='구직' icon={jobsearch} /> : ''}
-            {othersite1 === true ? <TagIcon label='외부 사이트' icon={othersite} /> : ''}
-            {worktype1 === true ? <TagIcon label='정규직' icon={worktype} /> : ''}
+            {popular1 && <TagIcon label='인기 글' icon={popular} />}
+            {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
+            {history1 && <TagIcon label='경력 1~3년' icon={history} />}
+            {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
+            {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
+            {worktype1 && <TagIcon label='정규직' icon={worktype} />}
           </div>
           <div onClick={onClick} className='text-[18px] font-bold line-clamp-2'>
             {title}
           </div>
         </div>
-        <div className='flex-row  text-dark-gray text-[14px]'>
-          <div onClick={onClick} className='flex justify-end font-bold '>
+        <div className='flex-row text-dark-gray text-[14px]'>
+          <div onClick={onClick} className='flex justify-end font-bold'>
             {name}
           </div>
           <hr className='my-1 border-dark-gray' />
