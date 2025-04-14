@@ -13,6 +13,7 @@ import FindPwPage from '../domains/Find/main/FindPwPage'
 import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
+import UserPosts from '../domains/community/detail/page/UserPosts'
 
 const routes = [
   {
@@ -34,6 +35,10 @@ const routes = [
   {
     path: ROUTER_PATHS.COMMUNITY,
     element: <CommunityMainPage />,
+  },
+  {
+    path: ROUTER_PATHS.USER_POST,
+    element: <UserPosts />,
   },
   {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
