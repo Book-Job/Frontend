@@ -15,6 +15,8 @@ import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
 import MyPage from '../domains/my/main/MyPage'
+import MyDataEdit from '../domains/my/detail/EditProfile'
+import EditProfile from '../domains/my/detail/EditProfile'
 
 const routes = [
   {
@@ -81,6 +83,10 @@ const routes = [
     path: ROUTER_PATHS.MY_PAGE,
     element: <MyPage />,
     noMargin: true,
+  },
+  {
+    path: ROUTER_PATHS.MY_EDIT_PROFILE,
+    element: <EditProfile />,
   },
 ]
 
