@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import search from '../../assets/icons/common/common_search.svg'
 import useDebounce from '../../hooks/search/useDebounce'
 
-const SearchBar = ({ onSearch, placeholder, className }) => {
+const SearchBar = ({ onSearch, placeholder }) => {
   const [input, setInput] = useState('')
   const debouncedValue = useDebounce(input, 500)
 
@@ -21,12 +21,18 @@ const SearchBar = ({ onSearch, placeholder, className }) => {
 
   return (
     <div
-      className={`flex items-center border border-dark-gray bg-[#F6F6F6] w-[912px] h-[60px] rounded-[30px] ${className}`}
+      className={`flex items-center border border-dark-gray bg-[#F6F6F6]
+    w-[336px] h-[40px] sm:w-[700px] sm:h-[60px] md:w-[800px] lg:w-[912px] 
+    rounded-[30px]`}
     >
-      <img src={search} alt='search' className='ml-[30px] w-[31px] h-[31px]' />
+      <img
+        src={search}
+        alt='search'
+        className='ml-4 w-[24px] h-[24px] md:ml-[30px] md:w-[31px] md:h-[31px]'
+      />
       <input
         type='text'
-        className='w-full outline-none text-[20px] p-2 ml-4 bg-transparent'
+        className='w-full outline-none text-base md:text-[20px] p-2 ml-2 md:ml-4 bg-transparent'
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder={placeholder}

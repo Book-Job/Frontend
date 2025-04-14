@@ -7,28 +7,23 @@ const JobDropDown = () => {
     setSelectedJobTabs(tab)
   }
 
+  const tabs = [
+    { value: 'job list', label: '구인' },
+    { value: 'job search', label: '구직' },
+  ]
+
   return (
-    <div>
-      <button
-        onClick={() => handleToggle('job list')}
-        className={`px-4 py-2 rounded-full border transition duration-200 ${
-          selectedJobTabs === 'job list'
-            ? 'bg-main-pink text-white'
-            : 'bg-white text-black border-gray-300'
-        }`}
-      >
-        구인
-      </button>
-      <button
-        onClick={() => handleToggle('job search')}
-        className={`px-4 py-2 rounded-full border transition duration-200 ${
-          selectedJobTabs === 'job search'
-            ? 'bg-main-pink text-white'
-            : 'bg-white text-black border-gray-300'
-        }`}
-      >
-        구직
-      </button>
+    <div className='flex mt-3 mr-2 gap-x-3'>
+      {tabs.map((tab) => (
+        <button
+          key={tab.value}
+          onClick={() => handleToggle(tab.value)}
+          className={`text-xs sm:text-sm md:text-[15px] transition-all duration-200 
+          ${selectedJobTabs === tab.value ? 'text-main-pink font-semibold' : 'text-gray-600 font-medium'} bg-white`}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
   )
 }
