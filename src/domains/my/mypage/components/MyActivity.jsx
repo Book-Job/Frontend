@@ -1,11 +1,13 @@
 import pencil from '../../../../assets/icons/common/common_pencil.svg'
 import scrap from '../../../../assets/icons/common/common_scrap.svg'
 import latest from '../../../../assets/icons/common/common_latest.svg'
+import hand from '../../../../assets/icons/common/common_hand.svg'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { useNavigate } from 'react-router-dom'
 const MyActivity = () => {
   const activities = [
     { icon: pencil, text: '내가 작성한 글', alt: 'pencil', link: ROUTER_PATHS.FIND_PW },
+    { icon: hand, text: '임시 저장 글글', alt: 'hand', link: ROUTER_PATHS.FIND_PW },
     { icon: scrap, text: '스크랩', alt: 'scrap', link: ROUTER_PATHS.FIND_PW },
     { icon: latest, text: '최근본 목록', alt: 'latest', link: ROUTER_PATHS.FIND_PW },
   ]
