@@ -14,8 +14,8 @@ import FindPwPage from '../domains/Find/main/FindPwPage'
 import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
+import UserPosts from '../domains/community/detail/page/UserPosts'
 import MyPage from '../domains/my/main/MyPage'
-import MyDataEdit from '../domains/my/detail/EditProfile'
 import EditProfile from '../domains/my/detail/EditProfile'
 
 const routes = [
@@ -42,6 +42,10 @@ const routes = [
   {
     path: ROUTER_PATHS.COMMUNITY,
     element: <CommunityMainPage />,
+  },
+  {
+    path: ROUTER_PATHS.USER_POST,
+    element: <UserPosts />,
   },
   {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,

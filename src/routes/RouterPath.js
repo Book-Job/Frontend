@@ -5,6 +5,7 @@ const ROUTER_PATHS = {
   MEMBER_DATA_ENTRY: '/member-data-entry',
   JOB_MAIN: '/job-main',
   COMMUNITY: '/community',
+  USER_POST: '/user-post',
   WRITE_COMMUNITY_POST: '/community/post',
   WRITE_RECRUITMENT_POST: '/job/recruitment/post',
   WRITE_JOB_SEARCH_POST: '/job/job-search/post',
