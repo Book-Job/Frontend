@@ -5,10 +5,9 @@ import MainPage from '../domains/main/main/MainPage'
 import ROUTER_PATHS from './RouterPath'
 import JobMainPage from '../domains/job/main/page/JobMainPage'
 import CommunityMainPage from '../domains/community/main/page/CommunityMainPage'
-import WriteCommunityPost from '../domains/community/write/page/WriteCommunityPost'
-import WriteRecruitmentPosting from '../domains/job/recruitment/WriteRecruitmentPosting'
-import WriteJobSearchPosting from '../domains/job/search/WriteJobSearchPosting'
-import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
+import WriteCommunityPostPage from '../domains/community/write/page/WriteCommunityPostPage'
+import WriteRecruitmentPostPage from '../domains/job/recruitment/page/WriteRecruitmentPostPage'
+import WriteJobSearchPostPage from '../domains/job/search/page/WriteJobSearchPostPage'
 
 const routes = [
   {
@@ -28,28 +27,24 @@ const routes = [
     element: <MemberDataEntry />,
   },
   {
-    path: ROUTER_PATHS.JOB_MAIN,
-    element: <JobMainPage />,
-  },
-  {
     path: ROUTER_PATHS.COMMUNITY,
     element: <CommunityMainPage />,
   },
   {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
-    element: <WriteCommunityPost />,
+    element: <WriteCommunityPostPage />,
+  },
+  {
+    path: ROUTER_PATHS.JOB_MAIN,
+    element: <JobMainPage />,
   },
   {
     path: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
-    element: <WriteRecruitmentPosting />,
+    element: <WriteRecruitmentPostPage />,
   },
   {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
-    element: <WriteJobSearchPosting />,
-  },
-  {
-    path: ROUTER_PATHS.JOB_SEARCH_POST_DETAIL,
-    element: <DetailJobSearchPost />,
+    element: <WriteJobSearchPostPage />,
   },
 ]
 
