@@ -4,7 +4,7 @@ const JobLabel = ({ label, dot, className }) => {
   return (
     <div className='flex items-center'>
       {dot && <span className='text-red-500 font-semibold'>*</span>}
-      <span className={`font-semibold ${className} mr-[100px] inline-block`}>{label}</span>
+      <span className={`font-semibold ${className} mr-[20px] inline-block`}>{label}</span>
     </div>
   )
 }

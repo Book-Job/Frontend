@@ -73,8 +73,10 @@ const WriteRecruitmentPostingForm = () => {
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='구인마감' dot={false} register={register} name='endDate'>
-          <JobInputBox
+        <FormItem label='구인마감' dot={false} register={register} name='endDate '>
+          <input
+            type='date'
+            className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
             placeholder='미선택시 채용시 마감으로 자동 입력됩니다.'
             {...register('endDate')}
           />
@@ -119,7 +121,7 @@ const WriteRecruitmentPostingForm = () => {
           <textarea
             placeholder='내용을 입력하세요'
             {...register('content', { required: '내용은 필수입니다' })}
-            className='w-full sm:w-[686px] h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
+            className='w-full  h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
           />
           {errors.text && (
             <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>

@@ -1,9 +1,9 @@
-import WriteFormLine from '../../../components/web/WriteFormLine'
-import LastFormLine from '../common/components/LastFormLine'
-import Button from '../../../components/web/Button'
-import PinkButton from '../../../components/web/PinkButton'
-import WriteRecruitmentPostingForm from './components/WriteRecruitmentPostingForm'
-const WriteRecruitmentPosting = () => {
+import WriteFormLine from '../../../../components/web/WriteFormLine'
+import LastFormLine from '../../common/components/LastFormLine'
+import Button from '../../../../components/web/Button'
+import PinkButton from '../../../../components/web/PinkButton'
+import WriteRecruitmentPostingForm from '../components/WriteRecruitmentPostingForm'
+const WriteRecruitmentPostPage = () => {
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -23,4 +23,4 @@ const WriteRecruitmentPosting = () => {
   )
 }
 
-export default WriteRecruitmentPosting
+export default WriteRecruitmentPostPage
