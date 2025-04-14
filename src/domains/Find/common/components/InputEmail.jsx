@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
-import Button from '../../../../components/web/Button'
-import DomainSelector from './DomainSelector' // DomainSelector 컴포넌트 import
+import DomainSelector from '../../../login/common/components/DomainSelector'
+import Button from './../../../../components/web/Button'
 
-const EmailInput = ({ register, errors, watch, setValue }) => {
+const InputEmail = ({ register, errors, watch, setValue }) => {
   const [domain, setDomain] = useState('naver.com')
   const [customDomain, setCustomDomain] = useState('')
   const [isCustom, setIsCustom] = useState(false)
@@ -20,10 +20,9 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
     setValue('email', emailFull)
   }, [emailId, domainValue, setValue])
 
-
   return (
-    <div className='w-full'>
-      <div className='flex w-full gap-2'>
+    <div className='w-full max-w-[575px]'>
+      <div className='flex gap-2'>
         <div className='flex-auto'>
           <LabelWithInput
             label='이메일'
@@ -42,15 +41,15 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
           setCustomDomain={setCustomDomain}
           setIsCustom={setIsCustom}
         />
-        <div className='flex items-end w-[148px]'>
-          <Button size='small' label='인증' bgColor='light-gray' />
-        </div>
       </div>
-      <div className='flex items-start'>
+      <div className='flex items-end mt-6'>
+        <Button size='biggest' label='인증' bgColor='light-gray'  />
+      </div>
+      <div className='flex items-start '>
         {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
       </div>
     </div>
   )
 }
 
-export default EmailInput
+export default InputEmail
