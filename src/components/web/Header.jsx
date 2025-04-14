@@ -15,7 +15,7 @@ const Header = ({ login, onClick }) => {
         >
           bookjob
         </span>
-        <span className='flex gap-6 md:gap-16 text-sm md:text-[15px]'>
+        <span className='flex gap-6 md:gap-10 text-sm md:text-[15px]'>
           <button onClick={() => navigate('/community')}>자유게시판</button>
           <button onClick={() => navigate('/job')}>구인/구직</button>
           <button onClick={onClick}>오픈채팅</button>
@@ -32,7 +32,7 @@ const Header = ({ login, onClick }) => {
           <img src={arrowDown} alt='arrowDown' className='w-4 h-4 md:w-5 md:h-5 ml-2 md:ml-3' />
         </button>
       ) : (
-        <span className='flex gap-6 md:gap-8 text-sm md:text-[16px]'>
+        <span className='flex gap-6 md:gap-10 text-sm md:text-[15px]'>
           <button onClick={() => navigate('/loginMain')} className='font-bold text-main-pink'>
             로그인
           </button>
