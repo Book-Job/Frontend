@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 const Button = ({ label, size = 'medium', onClick, className = '' }) => {
   const buttonSize = {
     small: 'w-full max-w-[148px] h-[58px]',
+    semiMedium: 'w-full max-w-[251px] h-[58px]',
     medium: 'w-full max-w-[332px] h-[58px]',
     big: 'w-full max-w-[532px] h-[58px]',
     biggest: 'w-full max-w-[575px] h-[58px]',
