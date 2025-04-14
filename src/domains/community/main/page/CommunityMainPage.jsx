@@ -23,13 +23,11 @@ const CommunityMainPage = () => {
   return (
     <>
       <BannerExample />
-      <SearchBar
-        className='mt-[45px] ml-[264px]'
-        onSearch={handleSearch}
-        placeholder='검색어를 입력하세요'
-      />
-      <div className='mx-[250px] flex flex-col'>
-        <div className='flex justify-end mt-[20px]'>
+      <div className='flex justify-center mt-7'>
+        <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
+      </div>
+      <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
+        <div className='w-full flex justify-end px-4 mt-7'>
           <JobPostSortDropDown />
         </div>
         <div className='mt-[15px]'>

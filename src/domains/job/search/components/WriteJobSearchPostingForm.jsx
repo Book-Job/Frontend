@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { createPost } from '../service/postService'
+import JobLabel from '../../../../components/web/JobLabel'
 import JobFormLine from '../../common/components/JobFormLine'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import FormItem from '../../common/components/FormItem'
 
-const WriteRecruitmentPostingForm = () => {
+const WriteJobSearchPostingForm = () => {
   const {
     register,
     handleSubmit,
@@ -21,7 +22,7 @@ const WriteRecruitmentPostingForm = () => {
   }
 
   return (
-    <form id='recruitment-post-form' onSubmit={handleSubmit(onSubmit)}>
+    <form id='job-search-post-form' onSubmit={handleSubmit(onSubmit)}>
       <div className='my-[10px]'>
         <FormItem label='닉네임' dot={false} register={register} name='nickname'>
           <div className='flex flex-col w-full'>
@@ -53,7 +54,7 @@ const WriteRecruitmentPostingForm = () => {
         <FormItem label='구인 / 구직' dot={true} register={register} name='type' required={true}>
           <div className='w-full flex justify-start'>
             <select
-              className='border border-dark-gray w-[157px] h-[58px] p-2 rounded-md cursor-pointer'
+              className='border border-dark-gray w-full  h-[58px] p-2 rounded-md cursor-pointer focus:outline-none focus:border-main-pink'
               {...register('type', { required: '구인/구직은 필수 선택입니다' })}
             >
               <option value='구인'>구인</option>
@@ -64,72 +65,92 @@ const WriteRecruitmentPostingForm = () => {
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='글 제목' dot={true} register={register} name='title' required={true}>
+        <FormItem label='글 제목' dot={true}>
           <JobInputBox
             placeholder='ex) 아이들나라 편집자 구해요'
             {...register('title', { required: '글 제목은 필수입니다' })}
           />
+          {errors.title && <span className='text-red-500 text-xs'>{errors.title.message}</span>}
         </FormItem>
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='구인마감' dot={false} register={register} name='endDate '>
-          <input
-            type='date'
-            className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
-            placeholder='미선택시 채용시 마감으로 자동 입력됩니다.'
-            {...register('endDate')}
-          />
+        <FormItem label='근무형태' dot={false}>
+          <div className='w-full flex justify-start flex-col'>
+            <select
+              className='border border-dark-gray w-full h-[58px] p-2 rounded-md cursor-pointer focus:outline-none focus:border-main-pink'
+              {...register('workType', { required: '근무형태를 선택하세요' })}
+            >
+              <option value='정규직'>정규직</option>
+              <option value='계약직'>계약직</option>
+              <option value='인턴'>인턴</option>
+            </select>
+            {errors.workType && (
+              <span className='text-red-500 text-xs mt-1'>{errors.workType.message}</span>
+            )}
+          </div>
         </FormItem>
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='근무지역' dot={true} register={register} name='location' required={true}>
+        <FormItem label='직군' dot={true}>
+          <div className='w-full flex justify-start'>
+            <select
+              className='border border-dark-gray w-full h-[58px] p-2 rounded-md cursor-pointer focus:outline-none focus:border-main-pink'
+              {...register('jobCategory', { required: '직군을 선택하세요' })}
+            >
+              <option value='편집자'>편집자</option>
+              <option value='디자이너'>디자이너</option>
+              <option value='일러스트레이터'>일러스트레이터</option>
+            </select>
+            {errors.jobCategory && (
+              <span className='text-red-500 text-xs'>{errors.jobCategory.message}</span>
+            )}
+          </div>
+        </FormItem>
+      </div>
+      <JobFormLine />
+
+      <div className='my-[30px]'>
+        <FormItem label='경력' dot={false}>
           <JobInputBox
-            placeholder='ex) 강남구~ xxx'
-            {...register('location', { required: '근무지역은 필수입니다' })}
+            placeholder='ex) 신입 / 경력 3~5 년'
+            {...register('experience', { required: '경력을 입력하세요' })}
           />
-        </FormItem>
-      </div>
-      <JobFormLine />
-      <div className='my-[30px]'>
-        <FormItem label='근무형태' dot={false} register={register} name='workType'>
-          <JobInputBox placeholder='ex) 신입 / 경력 3~5 년' {...register('workType')} />
-        </FormItem>
-      </div>
-      <JobFormLine />
-      <div className='my-[30px]'>
-        <FormItem label='직군' dot={true} register={register} name='jobCategory' required={true}>
-          <JobInputBox
-            placeholder='gildong@naver.com'
-            {...register('jobCategory', { required: '직군은 필수입니다' })}
-          />
+          {errors.experience && (
+            <span className='text-red-500 text-xs'>{errors.experience.message}</span>
+          )}
         </FormItem>{' '}
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='경력' dot={true} register={register} name='experience' required={true}>
+        <FormItem label='연락 가능한 이메일' dot={true}>
           <JobInputBox
             placeholder='gildong@naver.com'
-            {...register('experience', { required: '경력은 필수입니다' })}
+            {...register('email', {
+              required: '이메일은 필수입니다',
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: '유효한 이메일을 입력해주세요',
+              },
+            })}
           />
+          {errors.email && <span className='text-red-500 text-xs'>{errors.email.message}</span>}
         </FormItem>
       </div>
       <JobFormLine />
       <div className='my-[30px]'>
-        <FormItem label='내용' dot={true} register={register} name='content' required={true}>
+        <FormItem label='내용' dot={true}>
           <textarea
             placeholder='내용을 입력하세요'
             {...register('content', { required: '내용은 필수입니다' })}
-            className='w-full  h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
+            className='w-full h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
           />
-          {errors.text && (
-            <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>
-          )}
+          {errors.content && <span className='text-red-500 text-xs'>{errors.content.message}</span>}
         </FormItem>
       </div>
     </form>
   )
 }
 
-export default WriteRecruitmentPostingForm
+export default WriteJobSearchPostingForm
