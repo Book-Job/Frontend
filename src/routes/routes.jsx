@@ -1,5 +1,3 @@
-import Join from '../domains/login/main/Join'
-import LoginMain from '../domains/login/main/LoginMain'
 import MemberDataEntry from '../domains/login/main/MemberDataEntry'
 import MainPage from '../domains/main/main/MainPage'
 import ROUTER_PATHS from './RouterPath'
