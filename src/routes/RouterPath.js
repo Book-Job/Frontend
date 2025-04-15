@@ -15,6 +15,9 @@ const ROUTER_PATHS = {
   FIND_PW: '/find/pW',
   FIND_PW_CHECK_ID_PAGE: '/find/pw/check-id-page',
   FIND_PW_CHANGE_PW: '/find/pw/change-pw',
+  MY_PAGE: '/my-page',
+  MY_EDIT_PROFILE: '/my-page/edit-profile',
+  MY_EDIT_PW:'/my-page/edit-password',
 }
 
 export default ROUTER_PATHS

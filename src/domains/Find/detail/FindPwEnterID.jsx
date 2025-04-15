@@ -22,7 +22,6 @@ const FindPwEnterID = () => {
   const navigate = useNavigate()
   return (
     <div>
-      pw찾기 - id입력
       <div className='flex flex-col items-center'>
         <PageTitle
           title={'비밀번호 찾기'}
@@ -34,8 +33,8 @@ const FindPwEnterID = () => {
             <div className='flex-auto mt-8'>
               <LabelWithInput
                 label='아이디'
-                type='text'
-                placeholder='ex) bookjob'
+                type='email'
+                placeholder='가입했던 이메일을 입력해주세요'
                 size='biggest'
                 {...register('userId', { required: '이메일을 입력하세요' })}
               />
