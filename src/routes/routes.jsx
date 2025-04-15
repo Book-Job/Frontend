@@ -43,6 +43,7 @@ const routes = [
   {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
     element: <WriteCommunityPostPage />,
+    label: '자유게시판 글 작성',
   },
   {
     path: ROUTER_PATHS.JOB_MAIN,
@@ -51,10 +52,12 @@ const routes = [
   {
     path: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
     element: <WriteRecruitmentPostPage />,
+    label: '구인 글 작성',
   },
   {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
+    label: '구직 글 작성',
   },
   {
     path: ROUTER_PATHS.FIND_ID,

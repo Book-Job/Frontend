@@ -1,12 +1,27 @@
 import Header from '../components/web/Header'
+import MobileHeader from '../components/app/MobileHeader'
+import MobileMainHeader from '../components/app/MobileMainHeader'
+import useIsMobile from '../hooks/header/useIsMobile'
 import Footer from './../components/web/Footer'
 
-const Layout = ({ children }) => {
+const Layout = ({ children, headerType, label }) => {
+  const isMobile = useIsMobile()
+
   return (
     <div className='flex flex-col min-h-screen'>
-      <Header />
-      <main className='flex flex-col justify-center flex-1 mx-4 my-4 sm:my-10 sm:mx-10'>{children}</main>
-      <Footer email='bookjob@gmail.com'/>
+      {isMobile ? (
+        headerType === 'main' ? (
+          <MobileMainHeader />
+        ) : (
+          <MobileHeader label={label} onClick={() => window.history.back()} />
+        )
+      ) : (
+        <Header />
+      )}
+      <main className='flex flex-col justify-center flex-1 mx-4 my-4 sm:my-10 sm:mx-10'>
+        {children}
+      </main>
+      <Footer email='bookjob@gmail.com' />
     </div>
   )
 }
