@@ -19,6 +19,7 @@ const ROUTER_PATHS = {
   MY_EDIT_PROFILE: '/my-page/edit-profile',
   MY_EDIT_PW:'/my-page/edit-password',
   MY_PW_MIS:'/my-page/password-mis',
+  MY_SCRAP:'/my-page/my-scrap',
 
 }
 
