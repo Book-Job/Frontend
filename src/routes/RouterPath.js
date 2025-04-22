@@ -18,6 +18,8 @@ const ROUTER_PATHS = {
   MY_PAGE: '/my-page',
   MY_EDIT_PROFILE: '/my-page/edit-profile',
   MY_EDIT_PW:'/my-page/edit-password',
+  MY_PW_MIS:'/my-page/password-mis',
+
 }
 
 export default ROUTER_PATHS
