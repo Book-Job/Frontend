@@ -17,6 +17,8 @@ import FindPwPage from './../domains/Find/page/FindPwPage';
 import MyPage from './../domains/my/page/MyPage';
 import EditProfile from './../domains/my/detail/EditProfile';
 import EditPassword from '../domains/my/detail/EditPassword'
+import PasswordMis from '../domains/my/detail/PasswordMis'
+import MyScrap from '../domains/my/detail/MyScrap'
 
 const routes = [
   {
@@ -111,6 +113,14 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_EDIT_PW,
     element: <EditPassword />,
+  },
+  {
+    path: ROUTER_PATHS.MY_PW_MIS,
+    element: <PasswordMis />,
+  },
+  {
+    path: ROUTER_PATHS.MY_SCRAP,
+    element: <MyScrap />,
   },
 ]
 
