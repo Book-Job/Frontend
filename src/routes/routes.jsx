@@ -19,6 +19,7 @@ import EditProfile from './../domains/my/detail/EditProfile';
 import EditPassword from '../domains/my/detail/EditPassword'
 import PasswordMis from '../domains/my/detail/PasswordMis'
 import MyScrap from '../domains/my/detail/MyScrap'
+import MyPost from '../domains/my/detail/MyPost'
 
 const routes = [
   {
@@ -121,6 +122,10 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_SCRAP,
     element: <MyScrap />,
+  },
+  {
+    path: ROUTER_PATHS.MY_POST,
+    element: <MyPost />,
   },
 ]
 
