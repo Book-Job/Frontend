@@ -8,7 +8,7 @@ const MyActivity = () => {
   const activities = [
     { icon: pencil, text: '내가 작성한 글', alt: 'pencil', link: ROUTER_PATHS.FIND_PW },
     { icon: hand, text: '임시 저장 글', alt: 'hand', link: ROUTER_PATHS.FIND_PW },
-    { icon: scrap, text: '스크랩', alt: 'scrap', link: ROUTER_PATHS.FIND_PW },
+    { icon: scrap, text: '스크랩', alt: 'scrap', link: ROUTER_PATHS.MY_SCRAP },
     { icon: latest, text: '최근본 목록', alt: 'latest', link: ROUTER_PATHS.FIND_PW },
   ]
 
