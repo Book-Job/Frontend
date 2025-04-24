@@ -5,7 +5,7 @@ import ROUTER_PATHS from '../../routes/RouterPath'
 const Footer = ({ email, onClick }) => {
   const navigate = useNavigate()
   return (
-    <div className='flex w-full h-auto bg-[#FDF8FA] justify-center items-center px-4 py-6 mt-10 flex-col gap-4 md:flex-row md:gap-24 md:h-[130px]'>
+    <footer className='flex w-full h-auto bg-[#FDF8FA] justify-center items-center px-4 py-6 mt-10 flex-col gap-4 md:flex-row md:gap-24 md:h-[130px]'>
       <div
         className='text-2xl md:text-[35px] font-bold text-main-pink cursor-pointer font-logo'
         onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
@@ -17,7 +17,7 @@ const Footer = ({ email, onClick }) => {
         <div>팀원 | 김영철, 이은석, 송수빈</div>
         <div onClick={onClick}>이메일 | {email}</div>
       </div>
-    </div>
+    </footer>
   )
 }
 

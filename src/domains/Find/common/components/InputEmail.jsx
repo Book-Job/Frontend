@@ -43,7 +43,7 @@ const InputEmail = ({ register, errors, watch, setValue }) => {
         />
       </div>
       <div className='flex items-end mt-6'>
-        <Button size='biggest' label='인증' bgColor='light-gray'  />
+        <Button size='biggest' label='인증' />
       </div>
       <div className='flex items-start '>
         {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}

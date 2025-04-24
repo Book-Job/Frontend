@@ -14,7 +14,11 @@ const AppRoutes = () => {
             key={index}
             path={route.path}
             element={
-              <Layout headerType={isMain ? 'main' : 'sub'} label={route.label}>
+              <Layout
+                headerType={isMain ? 'main' : 'sub'}
+                label={route.label}
+                noMargin={route.noMargin}
+              >
                 {route.element}
               </Layout>
             }
