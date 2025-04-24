@@ -8,10 +8,10 @@ const Header = ({ login, onClick }) => {
   const navigate = useNavigate()
 
   return (
-    <div className='flex w-full h-auto md:h-[123px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
+    <header className='flex w-full h-auto md:h-[123px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
       <div className='flex flex-col md:flex-row items-center gap-4 md:gap-20'>
         <span
-          onClick={() => navigate('/')}
+          onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
           className='text-main-pink text-2xl md:text-[35px] font-logo cursor-pointer'
         >
           bookjob
@@ -43,7 +43,7 @@ const Header = ({ login, onClick }) => {
           <button onClick={() => navigate(ROUTER_PATHS.JOIN)}>회원가입</button>
         </span>
       )}
-    </div>
+    </header>
   )
 }
 

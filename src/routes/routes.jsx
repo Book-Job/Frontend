@@ -8,14 +8,14 @@ import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
 import UserPosts from '../domains/community/detail/page/UserPosts'
-import Join from './../domains/login/page/Join';
-import MainPage from './../domains/main/main/MainPage';
-import LoginMain from './../domains/login/page/LoginMain';
-import MemberDataEntry from './../domains/login/page/MemberDataEntry';
-import FindIDPage from './../domains/Find/page/FindIDPage';
-import FindPwPage from './../domains/Find/page/FindPwPage';
-import MyPage from './../domains/my/page/MyPage';
-import EditProfile from './../domains/my/detail/EditProfile';
+import Join from './../domains/login/page/Join'
+import MainPage from './../domains/main/main/MainPage'
+import LoginMain from './../domains/login/page/LoginMain'
+import MemberDataEntry from './../domains/login/page/MemberDataEntry'
+import FindIDPage from './../domains/Find/page/FindIDPage'
+import FindPwPage from './../domains/Find/page/FindPwPage'
+import MyPage from './../domains/my/page/MyPage'
+import EditProfile from './../domains/my/detail/EditProfile'
 import EditPassword from '../domains/my/detail/EditPassword'
 import PasswordMis from '../domains/my/detail/PasswordMis'
 import MyScrap from '../domains/my/detail/MyScrap'
@@ -40,6 +40,7 @@ const routes = [
   {
     path: ROUTER_PATHS.COMMUNITY,
     element: <CommunityMainPage />,
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.USER_POST,
@@ -48,18 +49,22 @@ const routes = [
   {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
     element: <WriteCommunityPostPage />,
+    label: '자유게시판 글 작성',
   },
   {
     path: ROUTER_PATHS.JOB_MAIN,
     element: <JobMainPage />,
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
     element: <WriteRecruitmentPostPage />,
+    label: '구인 글 작성',
   },
   {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
+    label: '구직 글 작성',
   },
   {
     path: ROUTER_PATHS.FIND_ID,
@@ -104,7 +109,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_PAGE,
     element: <MyPage />,
-    noMargin:true ,
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.MY_EDIT_PROFILE,

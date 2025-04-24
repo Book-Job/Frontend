@@ -7,12 +7,13 @@ const MainPage = () => {
   const handleBoardSelect = (boardName) => {
     setSelectedBoard(boardName)
   }
+
   return (
     <div className='flex flex-col items-center w-full'>
       <div className='mb-10'>
-        <BoardButton onBoardSelect={handleBoardSelect} selectedBoard={selectedBoard}/>
+        <BoardButton onBoardSelect={handleBoardSelect} selectedBoard={selectedBoard} />
       </div>
-      <div className=''>
+      <div>
         {selectedBoard === '자유게시판' && <BestList boardName='자유게시판' />}
         {selectedBoard === '구인구직' && <BestList boardName='구인구직' />}
       </div>
