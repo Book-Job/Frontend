@@ -1,8 +1,10 @@
 import commentImg from '../../../../assets/icons/common/comment.svg'
 import { useState } from 'react'
+import useBoardStore from '../../../../store/mypage/useBoardStore'
 
 const PostList = ({ mockData }) => {
   const [checkedItems, setCheckedItems] = useState([])
+  const { choiceBoard } = useBoardStore()
 
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
@@ -22,7 +24,7 @@ const PostList = ({ mockData }) => {
   return (
     <div>
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
-        구인 | 구직
+        {choiceBoard === 'job' ? '구인 | 구직' : '자유게시판' }
       </div>
       <div className='flex flex-row justify-between my-3'>
         <div className='flex gap-3'>
