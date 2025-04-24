@@ -1,6 +1,7 @@
 import commentImg from '../../../../assets/icons/common/comment.svg'
 import { useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
+import BoardCategory from '../../../../components/web/BoardCategory'
 
 const PostList = ({ mockData }) => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -24,7 +25,7 @@ const PostList = ({ mockData }) => {
   return (
     <div>
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
-        {choiceBoard === 'job' ? '구인 | 구직' : '자유게시판' }
+        {choiceBoard === 'job' ? '구인 | 구직' : '자유게시판'}
       </div>
       <div className='flex flex-row justify-between my-3'>
         <div className='flex gap-3'>
@@ -69,17 +70,23 @@ const PostList = ({ mockData }) => {
               <td>{item.title}</td>
               <td>{item.date}</td>
               {item.category !== undefined &&
-                ('구인' ? (
+                ( item.category === '구인'? (
                   <td>
-                    <span className='px-2 text-sm text-blue-500 border border-blue-500 rounded'>
-                      구인
-                    </span>
+                    <BoardCategory
+                      label={'구인'}
+                      bgColor={'#EBF7FF'}
+                      labelColor={'#2563EB'}
+                      width={'60px'}
+                    />
                   </td>
                 ) : (
                   <td>
-                    <span className='px-2 text-sm text-red-500 border border-red-500 rounded'>
-                      구직
-                    </span>
+                    <BoardCategory
+                      label={'구직'}
+                      bgColor={'#FFEFEB'}
+                      labelColor={'#DC2626'}
+                      width={'60px'}
+                    />
                   </td>
                 ))}
               {item.comment !== undefined && (
