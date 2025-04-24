@@ -2,16 +2,31 @@ import PropTypes from 'prop-types'
 import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
 import mobileMenu from '../../assets/icons/mobile/mobile_menu.svg'
-const MobileMainHeader = ({ login, onClick }) => {
+import { useNavigate } from 'react-router-dom'
+import ROUTER_PATHS from '../../routes/RouterPath'
+import { useState } from 'react'
+import MobileSidebar from './MobileSidebar'
+
+const MobileMainHeader = ({ login }) => {
+  const navigate = useNavigate()
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
   return (
     <div className='flex w-full h-[50px] px-5 items-center justify-between'>
-      <div onClick={onClick} className='flex text-2xl font-bold text-main-E36397'>
+      <div
+        onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
+        className='flex text-2xl font-bold text-main-pink font-logo'
+      >
         bookjob
       </div>
       <div className='flex text-base'>
         {login ? (
           <button
-            onClick={onClick}
+            onClick={toggleSidebar}
             className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'
           >
             <img src={babyChick} alt='arrowDown' className='w-5 h-5 mr-4' />
@@ -20,22 +35,23 @@ const MobileMainHeader = ({ login, onClick }) => {
           </button>
         ) : (
           <div className='flex gap-5'>
-            <button onClick={onClick} className='font-bold row'>
+            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold row'>
               로그인
             </button>
-            <button onClick={onClick}>
+            <button onClick={toggleSidebar}>
               <img src={mobileMenu} alt='mobileMenu' className='w-5 h-5' />
             </button>
           </div>
         )}
       </div>
+
+      {isSidebarOpen && <MobileSidebar onClose={toggleSidebar} />}
     </div>
   )
 }
 
 MobileMainHeader.propTypes = {
   login: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
 }
 
 export default MobileMainHeader
