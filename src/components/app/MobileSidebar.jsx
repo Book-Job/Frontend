@@ -56,28 +56,31 @@ const MobileSidebar = ({ onClose }) => {
         >
           <img src={cancel} alt='닫기' />
         </button>
-        <div className='flex flex-col gap-2 text-left p-6 mt-[97px]'>
+        <div className='flex flex-col gap-2 text-left mt-[97px]'>
           {menus.map((menu) => {
             const isActive = activeMenu === menu.label
             const isHovered = hoveredMenu === menu.label
+
             return (
               <div
                 key={menu.label}
                 onClick={() => handleMenuClick(menu)}
-                onMouseEnter={() => setHoveredMenu(menu.label)}
-                onMouseLeave={() => setHoveredMenu(null)}
+                onMouseEnter={() => {
+                  setHoveredMenu(menu.label)
+                }}
+                onMouseLeave={() => {
+                  setHoveredMenu(null)
+                }}
                 className={`
-        px-6 -mx-6 h-[52px] flex items-center gap-x-2 text-lg font-semibold cursor-pointer 
-        transition-all duration-300 ease-in-out
-        ${isActive || isHovered ? 'bg-[rgba(253,236,249,0.43)] text-main-pink' : 'text-gray-800'}
-        hover:bg-[rgba(253,236,249,0.43)] hover:text-main-pink
-        w-full
-      `}
+                  group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300
+                  ${isHovered || isActive ? 'bg-[rgba(253,236,249,0.43)] text-main-pink' : 'text-gray-800'}
+                  hover:bg-[rgba(253,236,249,0.43)] hover:text-main-pink
+                `}
               >
                 <img
-                  src={isActive || isHovered ? menu.icon.active : menu.icon.inactive}
+                  src={isHovered || isActive ? menu.icon.active : menu.icon.inactive}
                   alt={`${menu.label} 아이콘`}
-                  className='w-[20px] h-[20px]'
+                  className='w-[20px] h-[20px] ml-3'
                 />
                 <span>{menu.label}</span>
               </div>
