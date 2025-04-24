@@ -20,6 +20,8 @@ const ROUTER_PATHS = {
   MY_EDIT_PW:'/my-page/edit-password',
   MY_PW_MIS:'/my-page/password-mis',
   MY_SCRAP:'/my-page/my-scrap',
+  MY_POST:'/my-page/my-post',
+  MY_DRAFTS:'/my-page/my-drafts',
 
 }
 
