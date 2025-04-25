@@ -12,8 +12,12 @@ const JoinForm = () => {
     handleSubmit,
     watch,
     setValue,
+    trigger, // trigger 추가
+    getValues, // getValues 추가
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    mode: 'onChange', // 선택사항: 실시간 유효성 검사를 원할 경우 추가
+  })
 
   const onSubmit = (data) => {
     const { emailId, passwordCheck, ...filteredData } = data // passwordCheck 필터링
@@ -24,8 +28,20 @@ const JoinForm = () => {
     <div className='flex flex-col items-center w-full'>
       <PageTitle title={'회원정보 입력'} />
       <div className='flex flex-col w-full max-w-[575px] gap-4'>
-        <IDInput register={register} errors={errors} />
-        <NicknameInput register={register} errors={errors} />
+        <IDInput
+          register={register}
+          errors={errors}
+          trigger={trigger}
+          getValues={getValues}
+          watch={watch}
+        />
+        <NicknameInput
+          register={register}
+          errors={errors}
+          trigger={trigger}
+          getValues={getValues}
+          watch={watch}
+        />
         <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
         <div className='flex flex-col gap-8'>
           <PasswordInput register={register} errors={errors} watch={watch} />

@@ -3,7 +3,7 @@ import PwInputBox from '../../../../components/web/PwInputBox'
 const PasswordInput = ({ register, errors, watch }) => {
   return (
     <div className='flex flex-col items-start justify-center w-full'>
-      <div className='mb-[11px] text-[20px] font-bold items-start'>비밀번호</div>
+      <div className='mb-[11px] sm:text-[20px] text-base font-bold items-start'>비밀번호</div>
       <div className='flex flex-col w-full gap-3'>
         <div>
           <PwInputBox
