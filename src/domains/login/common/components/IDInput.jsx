@@ -14,7 +14,7 @@ const IDInput = ({ register, errors }) => {
           />
         </div>
         <div className='flex items-end w-[148px]'>
-          <Button size='small' label='중복확인' bgColor='light-gray' onClick={()=>} />
+          <Button size='small' label='중복확인' bgColor='light-gray' onClick={()=>{}} />
         </div>
       </div>
       <div className='flex items-start'>
