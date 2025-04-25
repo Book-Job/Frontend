@@ -42,7 +42,13 @@ const JoinForm = () => {
           getValues={getValues}
           watch={watch}
         />
-        <EmailInput register={register} errors={errors} watch={watch} setValue={setValue} />
+        <EmailInput
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          trigger={trigger}
+        />
         <div className='flex flex-col gap-8'>
           <PasswordInput register={register} errors={errors} watch={watch} />
           <Button
