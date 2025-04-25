@@ -20,6 +20,7 @@ const EmailInput = ({ register, errors, watch, setValue }) => {
     setValue('email', emailFull)
   }, [emailId, domainValue, setValue])
 
+  
 
   return (
     <div className='w-full'>

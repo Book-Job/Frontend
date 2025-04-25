@@ -11,7 +11,7 @@ const LabelWithInput = forwardRef(({ placeholder, label, size, ...rest }, ref) =
 
   return (
     <div className='flex flex-col items-start justify-center w-full'>
-      <span className='mb-[11px] text-[20px] font-bold'>{label}</span>
+      <span className='mb-[11px] sm:text-[20px] text-base font-bold'>{label}</span>
       <input
         type='text'
         placeholder={placeholder}
