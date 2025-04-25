@@ -22,7 +22,6 @@ const JoinForm = () => {
 
   return (
     <div className='flex flex-col items-center w-full'>
-      {/* <h1 className='flex text-[28px] font-bold'>회원정보 입력</h1> */}
       <PageTitle title={'회원정보 입력'} />
       <div className='flex flex-col w-full max-w-[575px] gap-4'>
         <IDInput register={register} errors={errors} />
