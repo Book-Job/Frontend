@@ -43,9 +43,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
       setIsCheckingEmail(false)
       return
     }
-
     // 3. 유효성 검사 통과 시 현재 아이디 값 가져오기
-
     // 4. 백엔드 API 호출
     try {
       console.log('Email :', fullEmail)
@@ -81,7 +79,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
   return (
     <div className='w-full'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex flex-row justify-between gap-2'>
+        <div className='flex flex-row justify-between w-full gap-2'>
           <div className='flex-auto'>
             <LabelWithInput
               label='이메일'
@@ -110,7 +108,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
             />
           </div>
         </div>
-        <div className='flex items-end sm:w-[148px] '>
+        <div className='flex items-end sm:min-w-[148px] '>
           <Button
             size='biggest'
             label={buttonLabel}
