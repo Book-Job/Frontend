@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/Axios'
+import { authApi } from '../../../services/api/Axios'
 
 //가입 아이디 중복 확인인
 export const getJoinCheckId = async (nowUserID) => {
