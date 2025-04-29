@@ -1,9 +1,9 @@
-import { baseAip } from '../../../services/Axios'
+import { baseApi } from '../../../services/Axios'
 
 //가입 아이디 중복 확인인
 export const getJoinCheckId = async (nowUserID) => {
   try {
-    const response = await baseAip.get('/auth/check-id', {
+    const response = await baseApi.get('/auth/check-id', {
       params: { loginId: nowUserID },
       headers: {
         Accept: 'application/json',
@@ -19,7 +19,7 @@ export const getJoinCheckId = async (nowUserID) => {
 //가입 닉네임 중복 확인인
 export const getJoinCheckNickname = async (nowUserNickname) => {
   try {
-    const response = await baseAip.get('/auth/check-nickname', {
+    const response = await baseApi.get('/auth/check-nickname', {
       params: { nickname: nowUserNickname },
       headers: {
         Accept: 'application/json',
@@ -35,7 +35,7 @@ export const getJoinCheckNickname = async (nowUserNickname) => {
 //가입 이메일 인증 요청
 export const postJoinCheckEmail = async (fullEmail) => {
   try {
-    const response = await baseAip.post('/auth/emails', {
+    const response = await baseApi.post('/auth/emails', {
       params: { email: fullEmail },
       headers: {
         Accept: 'application/json',
@@ -51,7 +51,7 @@ export const postJoinCheckEmail = async (fullEmail) => {
 //가입 이메일 인증 번호 확인
 export const postJoinCheckEmailNum = async ({ nowUseremail, code, reason }) => {
   try {
-    const response = await baseAip.post('/auth/emails', {
+    const response = await baseApi.post('/auth/emails', {
       params: { email: nowUseremail, code: code, reason: reason },
       headers: {
         Accept: 'application/json',
