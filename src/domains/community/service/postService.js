@@ -1,4 +1,4 @@
-import { publicApi } from '../../../services/api/Axios'
+import { publicApi, authApi } from '../../../services/api/Axios'
 
 // 전체 글 조회
 export const getAllPosts = async () => {
@@ -6,9 +6,9 @@ export const getAllPosts = async () => {
   return response.data.data
 }
 
-// 글 작성(누구나 작성가능)
+// 글 작성
 export const createPost = async (postData) => {
-  const response = await publicApi.post('/boards', postData)
+  const response = await authApi.post('/boards', postData)
   return response.data
 }
 
