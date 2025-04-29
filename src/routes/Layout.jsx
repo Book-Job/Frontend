@@ -3,6 +3,7 @@ import MobileHeader from '../components/app/MobileHeader'
 import MobileMainHeader from '../components/app/MobileMainHeader'
 import useIsMobile from '../hooks/header/useIsMobile'
 import Footer from './../components/web/Footer'
+import ScrollBtn from '../components/common/ScrollAndWriteButton'
 
 const Layout = ({ children, headerType, label, noMargin = false }) => {
   const isMobile = useIsMobile()
@@ -22,12 +23,12 @@ const Layout = ({ children, headerType, label, noMargin = false }) => {
       <main
         className={`flex flex-col flex-1 ${
           noMargin ? 'mb-4 sm:mb-10' : 'mx-4 my-4 sm:my-10 sm:mx-10 justify-center'
-        } ${!isMobile ? 'mt-[123px]' : ''}`}
+        } ${!isMobile ? 'pt-[100px]' : ''} `}
       >
         {children}
       </main>
-
       <Footer email='bookjob@gmail.com' />
+      <ScrollBtn />
     </div>
   )
 }
