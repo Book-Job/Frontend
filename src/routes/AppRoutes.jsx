@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
 import Layout from './Layout'
-
 const AppRoutes = () => {
   const mainPaths = ['/', '/community', '/user-post', '/job']
+
   return (
     <Routes>
       {routes.map((route, index) => {
