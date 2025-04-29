@@ -6,29 +6,39 @@ import CountPost from '../components/CountPost'
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
+import { useNavigate } from 'react-router-dom'
 
 const JobMainPage = () => {
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
-  const [lastId, setLastId] = useState(null) // 마지막 조회된 ID
-  const [order, setOrder] = useState('LATEST') // 기본 정렬 기준
+  const [lastId, setLastId] = useState(null)
+  const [order, setOrder] = useState('LATEST')
+  const navigate = useNavigate()
 
-  // 구인 또는 구직 글을 불러오는 함수
   const loadPosts = async () => {
     setLoading(true)
     try {
       let data
       if (selectedJobTabs === 'job list') {
-        data = await getAllRecruitmentPosts(lastId, order) // 구인 API 호출
+        data = await getAllRecruitmentPosts(lastId, order)
       } else {
-        data = await getJobPosts(lastId, order) // 구직 API 호출
+        data = await getJobPosts(lastId, order)
       }
 
-      const newPosts = data?.jobPostings || []
+      const handlePostClick = (postId) => {
+        navigate(`/post/${postId}`)
+      }
+
+      const newPosts = data?.jobSeekings || []
       if (newPosts.length > 0) {
-        setPosts((prev) => [...prev, ...newPosts])
-        setLastId(data.lastId) // 마지막 ID 갱신
+        setPosts((prev) => {
+          const uniquePosts = [...prev, ...newPosts].filter(
+            (post, index, self) => index === self.findIndex((p) => p.id === post.id),
+          )
+          return uniquePosts
+        })
+        setLastId(data.lastId)
       }
     } catch (err) {
       console.error('게시물 로딩 실패', err)
@@ -37,17 +47,15 @@ const JobMainPage = () => {
     }
   }
 
-  // 탭 클릭 시 선택된 탭에 맞는 글을 불러옴
   const handleTabChange = (tab) => {
     setSelectedJobTabs(tab)
-    setPosts([]) // 새로운 탭으로 변경 시 기존 게시물 초기화
-    setLastId(null) // 마지막 ID 초기화
+    setPosts([])
+    setLastId(null)
   }
 
-  // 페이지가 로드될 때 글을 불러옴
   useEffect(() => {
     loadPosts()
-  }, [selectedJobTabs, lastId, order]) // selectedJobTabs, lastId, order 변경 시마다 글을 로드
+  }, [selectedJobTabs, lastId, order])
 
   return (
     <>
@@ -63,11 +71,44 @@ const JobMainPage = () => {
           </div>
         </div>
 
-        <div className='flex gap-4 mt-4 mx-[27px]'>
+        <div className='flex flex-wrap gap-4 mt-4 mx-[27px]'>
           {posts.length > 0 ? (
             <>
-              <WorkBoard className='hidden sm:block' posts={posts} loading={loading} />
-              <MobileWorkBoard className='block sm:hidden' posts={posts} loading={loading} />
+              <div className='hidden sm:flex flex-wrap gap-4'>
+                {posts.map((post) => (
+                  <WorkBoard
+                    key={post.id}
+                    title={post.title}
+                    name={post.nickname}
+                    date={post.createdAt}
+                    view={post.viewCount}
+                    experience={post.experience}
+                    employmentType={post.employmentType}
+                    jobCategory={post.jobCategory}
+                  />
+                ))}
+              </div>
+              <div className='block sm:hidden'>
+                <div className='flex flex-wrap gap-4 mt-4'>
+                  {posts.map((post) => (
+                    <MobileWorkBoard
+                      key={post.id}
+                      title={post.title}
+                      name={post.nickname}
+                      date={post.createdAt}
+                      like={post.like}
+                      popular1={post.popular1}
+                      joboffer1={post.joboffer1}
+                      history1={post.history1}
+                      jobsearch1={post.jobsearch1}
+                      othersite1={post.othersite1}
+                      worktype1={post.worktype1}
+                      view={post.viewCount}
+                      onClick={() => handlePostClick(post.id)}
+                    />
+                  ))}
+                </div>
+              </div>
             </>
           ) : (
             <span>게시물이 없습니다.</span>
