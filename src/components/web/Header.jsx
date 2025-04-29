@@ -8,7 +8,7 @@ const Header = ({ login, onClick }) => {
   const navigate = useNavigate()
 
   return (
-    <header className='flex w-full h-auto md:h-[123px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
+    <header className='fixed top-0 left-0 z-50 w-full bg-white flex h-auto md:h-[100px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
       <div className='flex flex-col md:flex-row items-center gap-4 md:gap-20'>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
@@ -33,7 +33,7 @@ const Header = ({ login, onClick }) => {
           <img src={arrowDown} alt='arrowDown' className='w-4 h-4 md:w-5 md:h-5 ml-2 md:ml-3' />
         </button>
       ) : (
-        <span className='flex mr-[128px] gap-8 text-[16px]'>
+        <span className='flex mr-[128px] gap-8 text-[15px]'>
           <button
             onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
             className='font-bold row text-main-pink'
