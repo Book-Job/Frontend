@@ -2,7 +2,7 @@
 import { publicApi } from '../../../../services/api/Axios'
 export const getAllRecruitmentPosts = async (lastId, order) => {
   try {
-    const response = await publicApi.get('/api/v1/job-posting', {
+    const response = await publicApi.get('/job-posting', {
       params: {
         last: lastId,
         order: order,
@@ -18,7 +18,7 @@ export const getAllRecruitmentPosts = async (lastId, order) => {
 // 구직 전체 글 조회 및 검색
 export const getJobPosts = async (lastId, order) => {
   try {
-    const response = await publicApi.get('/api/v1/job-seeking', {
+    const response = await publicApi.get('/job-seeking', {
       params: {
         lastId: lastId,
         order: order,
