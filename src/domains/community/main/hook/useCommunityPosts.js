@@ -10,7 +10,8 @@ const useCommunityPosts = () => {
         setPosts(boards)
         setLoading(false)
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('전체 글 불러오기 실패:', error)
         setLoading(false)
       })
   }, [])
