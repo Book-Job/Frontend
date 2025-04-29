@@ -1,16 +1,17 @@
 import { useState } from 'react'
 
-const JobDropDown = () => {
-  const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
-
-  const handleToggle = (tab) => {
-    setSelectedJobTabs(tab)
-  }
+const JobDropDown = ({ handleTabChange }) => {
+  const [selectedJobTabs, setSelectedJobTabs] = useState('job list') // 기본적으로 '구인' 탭으로 설정
 
   const tabs = [
     { value: 'job list', label: '구인' },
     { value: 'job search', label: '구직' },
   ]
+
+  const handleToggle = (tab) => {
+    setSelectedJobTabs(tab)
+    handleTabChange(tab)
+  }
 
   return (
     <div className='flex mt-3 mr-2 gap-x-3'>
