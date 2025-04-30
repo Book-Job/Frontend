@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ label, size = 'medium', onClick, className = '' }) => {
+const Button = ({ label, size = 'medium', onClick, bgColor = 'light-gray', className = '' }) => {
   const buttonSize = {
     small: 'w-full max-w-[148px] h-[58px]',
     semiMedium: 'w-full max-w-[275px] h-[58px]',
@@ -11,7 +11,7 @@ const Button = ({ label, size = 'medium', onClick, className = '' }) => {
 
   return (
     <button
-      className={`${buttonSize[size]} bg-light-gray rounded-[5px] ${className}`}
+      className={`${buttonSize[size]} bg-${bgColor} rounded-[5px] ${className}`}
       onClick={onClick}
     >
       <span className='font-bold text-[20px] text-white'>{label}</span>
