@@ -25,14 +25,14 @@ const DomainSelector = ({
   ]
 
   return (
-    <div className='flex items-end '>
+    <div className='flex items-end w-full'>
       {isCustom ? (
         <input
           type='text'
           placeholder='직접 입력'
           value={customDomain}
           onChange={(e) => setCustomDomain(e.target.value)}
-          className='border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-32 sm:w-40'
+          className='border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
         />
       ) : (
         <select
@@ -47,7 +47,7 @@ const DomainSelector = ({
               setCustomDomain('')
             }
           }}
-          className='border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-32 sm:w-40'
+          className='border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
         >
           {domainOptions.map((option) => (
             <option key={option} value={option}>

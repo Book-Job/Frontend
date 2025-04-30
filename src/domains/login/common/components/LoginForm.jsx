@@ -44,7 +44,7 @@ const LoginForm = () => {
           <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between mt-6'>
-          <div className='flex gap-2 text-2xl'>
+          <div className='flex gap-2 text-lg sm:text-2xl'>
             <input
               type='checkbox'
               name='SaveEmail'
@@ -53,7 +53,7 @@ const LoginForm = () => {
             />
             이메일 저장
           </div>
-          <div className='flex gap-3 text-xl font-medium'>
+          <div className='flex gap-3 text-base font-medium sm:text-xl'>
             <button onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>아이디 찾기</button>
             <span>|</span>
             <button onClick={() => navigate(ROUTER_PATHS.FIND_PW)}>비밀번호 찾기</button>
