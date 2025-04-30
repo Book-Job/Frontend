@@ -8,6 +8,7 @@ const WriteCommunityPostForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm()
 
@@ -15,6 +16,7 @@ const WriteCommunityPostForm = () => {
     try {
       await createPost(data)
       console.log('게시글 작성 성공')
+      reset()
     } catch (err) {
       console.error('게시글 작성 실패', err)
     }
