@@ -5,23 +5,71 @@ import Button from '../../../../components/web/Button'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import PageTitle from '../../../Find/common/components/PageTitle'
+import Alert from '../../../../components/web/Alert'
+import { postLoginData } from '../../services/userLoginServices'
+import { useState } from 'react'
 
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm()
-
-  const onSubmit = (data) => {
-    console.log('폼 데이터:', data)
-  }
 
   const navigate = useNavigate()
 
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    title: '',
+    description: '',
+    buttonLabel: '',
+    onButtonClick: null,
+  })
+
+  const onSubmit = async (data) => {
+    console.log('로그인 데이터:', data)
+    try {
+      const response = await postLoginData(data)
+      console.log('로그인 데이터 확인:', response.data)
+
+      if (response.data && response.data.message === 'success') {
+        console.log('로그인 성공:', response.data)
+        setAlertState({
+          isOpen: true,
+          title: '로그인 성공',
+          description: '메인 페이지로 이동합니다.',
+          buttonLabel: '메인 페이지로',
+          onButtonClick: (navigate) => navigate(ROUTER_PATHS.MAIN_PAGE),
+        })
+      } else {
+        console.log('로그인 오류:', response.data)
+        setAlertState({
+          isOpen: true,
+          title: '로그인 실패',
+          description: '아이디 또는 비밀번호를 확인해주세요.',
+          buttonLabel: '확인',
+          onButtonClick: null, // 모달만 닫기
+        })
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error)
+      setAlertState({
+        isOpen: true,
+        title: '로그인 실패',
+        description: error.message,
+        buttonLabel: '확인',
+        onButtonClick: null,
+      })
+    }
+  }
+
+  const closeAlert = () => {
+    setAlertState((prev) => ({ ...prev, isOpen: false }))
+  }
+
   return (
     <div className='flex flex-col items-center'>
-      <PageTitle title={'로그인'}/>
+      <PageTitle title={'로그인'} />
       <form className='w-full max-w-[532px]'>
         <div className='flex w-full mt-11'>
           <InputBox
@@ -60,9 +108,23 @@ const LoginForm = () => {
           </div>
         </div>
         <div className='mt-6'>
-          <Button label='로그인' size='big' bgColor='light-gray' onClick={handleSubmit(onSubmit)} />
+          <Button
+            label='로그인'
+            size='big'
+            bgColor={isValid ? 'main-pink' : 'light-gray'}
+            disabled={!isValid}
+            onClick={handleSubmit(onSubmit)}
+          />
         </div>
       </form>
+      <Alert
+        isOpen={alertState.isOpen}
+        onClose={closeAlert}
+        title={alertState.title}
+        description={alertState.description}
+        buttonLabel={alertState.buttonLabel}
+        onButtonClick={alertState.onButtonClick}
+      />
     </div>
   )
 }

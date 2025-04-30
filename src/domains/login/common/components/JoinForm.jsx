@@ -5,6 +5,10 @@ import NicknameInput from './NicknameInput'
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 import PageTitle from './../../../Find/common/components/PageTitle'
+import { postJoinData } from '../../services/userJoinServices'
+import Alert from '../../../../components/web/Alert'
+import { useState } from 'react'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 
 const JoinForm = () => {
   const {
@@ -12,9 +16,9 @@ const JoinForm = () => {
     handleSubmit,
     watch,
     setValue,
-    trigger, // trigger 추가
-    getValues, // getValues 추가
-    formState: { errors },
+    trigger,
+    getValues,
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange', // 선택사항: 실시간 유효성 검사를 원할 경우 추가
   })
@@ -22,6 +26,48 @@ const JoinForm = () => {
   const onSubmit = (data) => {
     const { emailId, passwordCheck, ...filteredData } = data // passwordCheck 필터링
     console.log('폼 데이터:', filteredData)
+    handleJoinData(filteredData)
+  }
+
+  const handleJoinData = async (filteredData) => {
+    //  백엔드 API 호출
+    try {
+      const response = await postJoinData(filteredData)
+      console.log('가입 데이터 확인:', response.data)
+
+      if (response.data && response.data.message === 'success') {
+        console.log('가입 성공:', response.data)
+        setAlertState({
+          isOpen: true,
+          title: '회원가입입 성공',
+          description: '로그인페이지로 이동합니다.',
+          buttonLabel: '로그인인 페이지로',
+          onButtonClick: (navigate) => navigate(ROUTER_PATHS.LOGIN_MAIN),
+        })
+      } else {
+        console.log('가입 오류:', response.data)
+        setAlertState({
+          isOpen: true,
+          title: '회원가입 실패',
+          description: '아이디 또는 비밀번호를 확인해주세요.',
+          buttonLabel: '확인',
+          onButtonClick: null, // 모달만 닫기
+        })
+      }
+    } catch (error) {
+      console.error('가입중 오류:', error)
+    }
+  }
+
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    title: '',
+    description: '',
+    buttonLabel: '',
+    onButtonClick: null,
+  })
+  const closeAlert = () => {
+    setAlertState((prev) => ({ ...prev, isOpen: false }))
   }
 
   return (
@@ -54,11 +100,20 @@ const JoinForm = () => {
           <Button
             label='회원가입'
             size='biggest'
-            bgColor='light-gray'
+            bgColor={isValid ? 'main-pink' : 'light-gray'}
+            disabled={!isValid}
             onClick={handleSubmit(onSubmit)}
           />
         </div>
       </div>
+      <Alert
+        isOpen={alertState.isOpen}
+        onClose={closeAlert}
+        title={alertState.title}
+        description={alertState.description}
+        buttonLabel={alertState.buttonLabel}
+        onButtonClick={alertState.onButtonClick}
+      />
     </div>
   )
 }
