@@ -2,6 +2,7 @@ const Spinner = ({ size = 48, color = 'main-pink' }) => {
   const borderColorClass =
     {
       'main-pink': 'border-main-pink',
+      'light-gray': 'border-light-gray',
     }[color] || 'border-main-pink'
 
   return (

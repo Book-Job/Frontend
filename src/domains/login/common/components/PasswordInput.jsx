@@ -9,7 +9,13 @@ const PasswordInput = ({ register, errors, watch }) => {
           <PwInputBox
             placeholder='비밀번호는 영문 숫자 포함 최소 8자 이상을 입력해주세요'
             size='biggest'
-            {...register('password', { required: '비밀번호를 입력하세요' })}
+            {...register('password', {
+              required: '비밀번호를 입력하세요',
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                message: '비밀번호는 영문, 숫자 포함 8자 이상이어야 합니다.',
+              },
+            })}
           />
           <div className='flex items-start'>
             {errors.password && (
