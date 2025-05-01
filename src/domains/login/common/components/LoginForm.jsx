@@ -17,7 +17,8 @@ const LoginForm = () => {
   } = useForm()
 
   const navigate = useNavigate()
-
+  const [saveLoginID, setSaveLoginID] = useState(false)
+  
   const [alertState, setAlertState] = useState({
     isOpen: false,
     title: '',
@@ -33,6 +34,21 @@ const LoginForm = () => {
       console.log('로그인 데이터 확인:', response.data)
 
       if (response.data && response.data.message === 'success') {
+
+        // Authorization 헤더에서 access token 추출
+        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken)
+        } else {
+          throw new Error('Access token이 응답에 포함되지 않았습니다.')
+        }
+        // 이메일 저장 처리
+        if (saveLoginID) {
+          localStorage.setItem('saveLoginID', data.userID)
+        } else {
+          localStorage.removeItem('saveLoginID')
+        }
+
         console.log('로그인 성공:', response.data)
         setAlertState({
           isOpen: true,
@@ -66,6 +82,9 @@ const LoginForm = () => {
   const closeAlert = () => {
     setAlertState((prev) => ({ ...prev, isOpen: false }))
   }
+  const handleSaveLoginID = (e) => {
+    setSaveLoginID(e.target.checked)
+  }
 
   return (
     <div className='flex flex-col items-center'>
@@ -95,11 +114,13 @@ const LoginForm = () => {
           <div className='flex gap-2 text-lg sm:text-2xl'>
             <input
               type='checkbox'
-              name='SaveEmail'
-              value='SaveEmail'
+              name='SaveLoginID'
+              // value='SaveLoginID'
+              checked={saveLoginID}
+              onChange={handleSaveLoginID}
               className='flex w-6 h-6 mt-[5px]'
             />
-            이메일 저장
+            아이디 저장
           </div>
           <div className='flex gap-3 text-base font-medium sm:text-xl'>
             <button onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>아이디 찾기</button>

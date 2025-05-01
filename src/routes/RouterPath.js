@@ -17,12 +17,11 @@ const ROUTER_PATHS = {
   FIND_PW_CHANGE_PW: '/find/pw/change-pw',
   MY_PAGE: '/my-page',
   MY_EDIT_PROFILE: '/my-page/edit-profile',
-  MY_EDIT_PW:'/my-page/edit-password',
-  MY_PW_MIS:'/my-page/password-mis',
-  MY_SCRAP:'/my-page/my-scrap',
-  MY_POST:'/my-page/my-post',
-  MY_DRAFTS:'/my-page/my-drafts',
-
+  MY_EDIT_PW: '/my-page/edit-password',
+  MY_PW_MIS: '/my-page/password-mis',
+  MY_SCRAP: '/my-page/my-scrap',
+  MY_POST: '/my-page/my-post',
+  MY_DRAFTS: '/my-page/my-drafts',
 }
 
 export default ROUTER_PATHS
