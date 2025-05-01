@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import { useState } from 'react'
 import MobileSidebar from './MobileSidebar'
+import useAuthStore from '../../store/login/useAuthStore'
 
 const MobileMainHeader = ({ login }) => {
   const navigate = useNavigate()
@@ -14,7 +15,11 @@ const MobileMainHeader = ({ login }) => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
+  const { isAuthenticated, user, logout } = useAuthStore()
 
+  const handleUserClick = () => {
+    logout()
+  }
   return (
     <div className='flex w-full h-[50px] px-5 items-center justify-between'>
       <div
@@ -24,13 +29,13 @@ const MobileMainHeader = ({ login }) => {
         bookjob
       </div>
       <div className='flex text-base'>
-        {login ? (
+        {isAuthenticated && user ? (
           <button
             onClick={toggleSidebar}
             className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'
           >
             <img src={babyChick} alt='arrowDown' className='w-5 h-5 mr-4' />
-            <span className='font-bold '>{login}님</span>
+            <span className='font-bold '>{user.sub}님</span>
             <img src={arrowDown} alt='arrowDown' className='w-3 h-3 ml-2' />
           </button>
         ) : (

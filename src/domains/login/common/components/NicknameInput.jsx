@@ -1,19 +1,21 @@
 import { useState } from 'react'
 import Button from '../../../../components/web/Button'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
-import { getJoinCheckNickname } from '../../services/Join'
+import { getJoinCheckNickname } from '../../services/userJoinServices'
+import Spinner from '../../../../components/web/Spinner'
+
 
 const NicknameInput = ({ register, errors, trigger, getValues, watch }) => {
   const [isCheckingNickname, setIsCheckingNickname] = useState(false) // 중복 확인 중 로딩 상태
-  const [idCheckMessage, setIdCheckMessage] = useState('') // 중복 확인 결과 메시지
-  const [idCheckStatus, setIdCheckStatus] = useState(null) // 'success' or 'error'
+  const [nicknameCheckMessage, setNicknameCheckMessage] = useState('') // 중복 확인 결과 메시지
+  const [nicknameCheckStatus, setNicknameCheckStatus] = useState(null) // 'success' or 'error'
 
   const nowUserNicknameValue = watch('Nickname')
 
   // 중복 확인 버튼 클릭 핸들러
   const handleCheckNickname = async () => {
-    setIdCheckMessage('') // 이전 메시지 초기화
-    setIdCheckStatus(null)
+    setNicknameCheckMessage('') // 이전 메시지 초기화
+    setNicknameCheckStatus(null)
     setIsCheckingNickname(true) // 로딩 시작
 
     // 1. 'userID' 필드만 유효성 검사 실행
@@ -34,30 +36,37 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch }) => {
       console.log('닉네임 API 응답 데이터:', response.data)
 
       if (response.data && response.data.message === 'success') {
-        setIdCheckMessage('사용 가능한 닉네임임입니다.')
-        setIdCheckStatus('success')
+        setNicknameCheckMessage('사용 가능한 닉네임임입니다.')
+        setNicknameCheckStatus('success')
+        trigger('Nickname') // 유효성 검사 갱신
       } else {
-        setIdCheckMessage(response.data?.message || '이미 사용 중인 닉네임입니다.')
-        setIdCheckStatus('error')
+        setNicknameCheckMessage(response.data?.message || '이미 사용 중인 닉네임입니다.')
+        setNicknameCheckStatus('error')
+        trigger('Nickname')
       }
     } catch (error) {
-      console.error('Nickname 중복 확인 중 오류:', error)
+      console.error('Nickname 중복 확인 중 오류:', error.message)
+      setNicknameCheckMessage(error ?.message ||'닉네임 확인 중 오류가 발생했습니다.')
+      setNicknameCheckStatus('error')
+      trigger('Nickname')
     } finally {
       setIsCheckingNickname(false)
     }
   }
 
   // 버튼 라벨 결정 로직
-  const buttonLabel = isCheckingNickname
-    ? '확인 중...'
-    : idCheckStatus === 'success'
-      ? '사용가능'
-      : '중복확인'
+  const buttonLabel = isCheckingNickname ? (
+    <Spinner size={30} color={'light-gray'} />
+  ) : nicknameCheckStatus === 'success' ? (
+    '사용가능'
+  ) : (
+    '중복확인'
+  )
 
   // onChange 핸들러
   const handleInputChange = (e) => {
-    if (idCheckMessage) setIdCheckMessage('')
-    if (idCheckStatus) setIdCheckStatus(null)
+    if (nicknameCheckMessage) setNicknameCheckMessage('')
+    if (nicknameCheckStatus) setNicknameCheckStatus(null)
   }
   return (
     <div className='w-full'>
@@ -89,11 +98,11 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch }) => {
       </div>
       <div className='flex items-start'>
         {errors.Nickname && <p className='text-red-500 text-[14px]'>{errors.Nickname.message}</p>}
-        {idCheckMessage && (
+        {nicknameCheckMessage && (
           <p
-            className={`${idCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+            className={`${nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
           >
-            {idCheckMessage}
+            {nicknameCheckMessage}
           </p>
         )}
       </div>
