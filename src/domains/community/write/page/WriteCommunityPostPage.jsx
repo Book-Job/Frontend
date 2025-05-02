@@ -3,7 +3,17 @@ import LastFormLine from '../../../job/common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
 import PinkButton from '../../../../components/web/PinkButton'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
+import useAuthStore from '../../../../store/login/useAuthStore'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 const WriteCommunityPost = () => {
+  const navigate = useNavigate()
+  const { requireLogin } = useAuthStore()
+
+  useEffect(() => {
+    requireLogin(navigate)
+  }, [requireLogin, navigate])
+
   return (
     <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>
