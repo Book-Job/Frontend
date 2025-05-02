@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
+import { postLoginData } from '../../domains/login/services/userLoginServices'
 
 const parseJwt = (token) => {
   try {
@@ -32,22 +33,33 @@ const useAuthStore = create((set) => ({
       } else {
         set({ user: null, isAuthenticated: false, accessToken: null })
         localStorage.removeItem('accessToken')
-        localStorage.removeItem('saveLoginID')
+        // localStorage.removeItem('saveLoginID')
       }
     }
   },
 
-  login: (accessToken) => {
-    const decoded = parseJwt(accessToken)
-    if (decoded) {
-      localStorage.setItem('accessToken', accessToken)
-      set({ user: decoded, isAuthenticated: true, accessToken })
+  // 로그인 액션
+  login: async (loginData) => {
+    try {
+      const response = await postLoginData(loginData);
+      if (response.data && response.data.message === 'success') {
+        const accessToken = response.headers['authorization']?.replace('Bearer ', '');
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken);
+          // 사용자 정보와 인증 상태 업데이트
+          set({
+            user: { sub: loginData.userID }, // 서버에서 반환된 사용자 정보를 사용하거나 userID로 임시 설정
+            isAuthenticated: true,
+          });
+        }
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
     }
   },
 
   logout: () => {
     localStorage.removeItem('accessToken')
-    localStorage.removeItem('saveLoginID')
     set({ user: null, isAuthenticated: false, accessToken: null })
     window.location.href = ROUTER_PATHS.LOGIN
   },

@@ -6,19 +6,25 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import PageTitle from '../../../Find/common/components/PageTitle'
 import Alert from '../../../../components/web/Alert'
-import { postLoginData } from '../../services/userLoginServices'
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
+import useAuthStore from '../../../../store/login/useAuthStore'
+import DOMPurify from 'dompurify'
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm()
+    setValue, // useForm에서 setValue 가져오기
+  } = useForm({
+    defaultValues: {
+      userID: '', // 기본값 설정
+      password: '',
+    },
+  })
 
   const navigate = useNavigate()
+  const { login } = useAuthStore() // useAuthStore에서 login 액션 가져오기
   const [saveLoginID, setSaveLoginID] = useState(false)
-  
   const [alertState, setAlertState] = useState({
     isOpen: false,
     title: '',
@@ -27,46 +33,35 @@ const LoginForm = () => {
     onButtonClick: null,
   })
 
+  // 페이지 로드 시 localStorage에서 saveLoginID 가져오기
+  useEffect(() => {
+    const savedID = localStorage.getItem('saveLoginID')
+    if (typeof savedID === 'string' && savedID.length > 0) {
+      const sanitizedID = DOMPurify.sanitize(savedID, {
+        ALLOWED_TAGS: [], // 모든 HTML 태그 제거
+        ALLOWED_ATTR: [], // 모든 속성 제거
+      })
+      setValue('userID', sanitizedID)
+      setSaveLoginID(true)
+    }
+  }, [setValue])
+
   const onSubmit = async (data) => {
     console.log('로그인 데이터:', data)
     try {
-      const response = await postLoginData(data)
-      console.log('로그인 데이터 확인:', response.data)
-
-      if (response.data && response.data.message === 'success') {
-
-        // Authorization 헤더에서 access token 추출
-        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
-        if (accessToken) {
-          localStorage.setItem('accessToken', accessToken)
-        } else {
-          throw new Error('Access token이 응답에 포함되지 않았습니다.')
-        }
-        // 이메일 저장 처리
-        if (saveLoginID) {
-          localStorage.setItem('saveLoginID', data.userID)
-        } else {
-          localStorage.removeItem('saveLoginID')
-        }
-
-        console.log('로그인 성공:', response.data)
-        setAlertState({
-          isOpen: true,
-          title: '로그인 성공',
-          description: '메인 페이지로 이동합니다.',
-          buttonLabel: '메인 페이지로',
-          onButtonClick: (navigate) => navigate(ROUTER_PATHS.MAIN_PAGE),
-        })
+      await login(data) // useAuthStore의 login 액션 호출
+      if (saveLoginID) {
+        localStorage.setItem('saveLoginID', data.userID)
       } else {
-        console.log('로그인 오류:', response.data)
-        setAlertState({
-          isOpen: true,
-          title: '로그인 실패',
-          description: '아이디 또는 비밀번호를 확인해주세요.',
-          buttonLabel: '확인',
-          onButtonClick: null, // 모달만 닫기
-        })
+        localStorage.removeItem('saveLoginID')
       }
+      setAlertState({
+        isOpen: true,
+        title: '로그인 성공',
+        description: '메인 페이지로 이동합니다.',
+        buttonLabel: '메인 페이지로',
+        onButtonClick: () => navigate(ROUTER_PATHS.MAIN_PAGE),
+      })
     } catch (error) {
       console.error('로그인 오류:', error)
       setAlertState({
@@ -95,6 +90,7 @@ const LoginForm = () => {
             placeholder='아이디'
             size='big'
             {...register('userID', { required: '아이디를 입력하세요' })}
+            aria-label='아이디 입력'
           />
         </div>
         {errors.userID && (
@@ -105,6 +101,7 @@ const LoginForm = () => {
             placeholder='비밀번호'
             size='big'
             {...register('password', { required: '비밀번호를 입력하세요' })}
+            aria-label='비밀번호 입력'
           />
         </div>
         {errors.password && (
@@ -115,7 +112,6 @@ const LoginForm = () => {
             <input
               type='checkbox'
               name='SaveLoginID'
-              // value='SaveLoginID'
               checked={saveLoginID}
               onChange={handleSaveLoginID}
               className='flex w-6 h-6 mt-[5px]'
@@ -135,6 +131,7 @@ const LoginForm = () => {
             bgColor={isValid ? 'main-pink' : 'light-gray'}
             disabled={!isValid}
             onClick={handleSubmit(onSubmit)}
+            type='submit'
           />
         </div>
       </form>
