@@ -1,25 +1,14 @@
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
-import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useAuthStore from '../../store/login/useAuthStore'
 import { useState } from 'react'
 
-const Header = ({ login, onClick }) => {
+const Header = ({ onClick }) => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuthStore()
   console.log('user:', user)
-
-  const handleUserClick = () => {
-    if (onClick) {
-      onClick()
-    } else {
-      // 기본적으로 로그아웃 처리
-      logout()
-    }
-  }
-
   const [selectedOption, setSelectedOption] = useState('default')
   // 드롭다운 옵션
   const options = [
@@ -47,7 +36,7 @@ const Header = ({ login, onClick }) => {
     } else if (value === 'mypage') {
       navigate(ROUTER_PATHS.MY_PAGE)
     } else if (value === 'logout') {
-      logout()
+      logout(ROUTER_PATHS.MAIN_PAGE)
     }
     setSelectedOption('default')
   }
@@ -67,36 +56,14 @@ const Header = ({ login, onClick }) => {
           bookjob
         </span>
         <span className='inline-flex gap-6 sm:gap-10 sm:text-[18px] text-[15px]  sm:flex '>
-          {/* <button onClick={() => navigate(ROUTER_PATHS.COMMUNITY)}>자유게시판</button>
-          <button onClick={() => navigate(ROUTER_PATHS.JOB_MAIN)}>구인/구직</button>
-          <button onClick={onClick}>오픈채팅</button>
-          <button onClick={onClick}>문의</button> */}
-          {Bt.map((item) => (
-            <button key={item.value} onClick={() => navigate(item.nav)} value={item.value}>
+          {Bt.map((item, index) => (
+            <button key={index} onClick={() => navigate(item.nav)} value={item.value}>
               {item.label}
             </button>
           ))}
         </span>
       </div>
-      <div className='flex items-center'>
-        {/* {isAuthenticated && user && (
-          <div className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center px-6 md:px-8'>
-            <img src={babyChick} alt='babyChick' className='w-6 h-6 mr-2 md:mr-4 md:w-7 md:h-7' />
-            <span className='font-bold text-sm md:text-[16px]'>{user.sub}님</span>
-          </div>
-        )}
-        <select
-          value={selectedOption}
-          onChange={(e) => handleOptionChange(e.target.value)}
-          className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center px-6 md:px-8'
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select> */}
-      </div>
+      <div className='flex items-center'></div>
       {isAuthenticated && user ? (
         <button
           onClick={onClick}
@@ -106,7 +73,7 @@ const Header = ({ login, onClick }) => {
           <select
             value={selectedOption}
             onChange={(e) => handleOptionChange(e.target.value)}
-            className='font-bold inline-flex bg-[#F4F6FA] items-center  h-[44px] md:h-[52px] px-2 md:px-3'
+            className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3'
           >
             {options.map((option) => (
               <option key={option.value} value={option.value}>
@@ -114,8 +81,6 @@ const Header = ({ login, onClick }) => {
               </option>
             ))}
           </select>
-          {/* <span className='font-bold'>{user.sub}님</span> */}
-          {/* <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-2 md:w-5 md:h-5 md:ml-3' /> */}
         </button>
       ) : (
         <span className='flex mr-[128px] gap-8 text-[15px]'>
@@ -133,7 +98,6 @@ const Header = ({ login, onClick }) => {
 }
 
 Header.propTypes = {
-  login: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }
 
