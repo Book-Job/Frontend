@@ -40,23 +40,23 @@ const Header = ({ onClick }) => {
     }
     setSelectedOption('default')
   }
-  const Bt = [
+  const navButtons = [
     { label: '자유게시판', nav: `${ROUTER_PATHS.COMMUNITY}` },
     { label: '구인/구직', nav: `${ROUTER_PATHS.JOB_MAIN}` },
     { label: '오픈채팅', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
     { label: '문의', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
   ]
   return (
-    <header className='fixed top-0 left-0 z-50 w-full bg-white flex h-auto md:h-[100px] items-center justify-between px-6 md:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
-      <div className='flex flex-col items-center gap-4 md:flex-row md:gap-20'>
+    <header className=' w-full bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
+      <div className='flex flex-col items-center gap-10 md:flex-row xl:gap-20'>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
           className='text-main-pink text-2xl md:text-[35px] font-logo cursor-pointer'
         >
           bookjob
         </span>
-        <span className='inline-flex gap-6 sm:gap-10 sm:text-[18px] text-[15px]  sm:flex '>
-          {Bt.map((item, index) => (
+        <span className='flex gap-6 sm:gap-10 sm:text-[18px] text-[15px] sm:flex '>
+          {navButtons.map((item, index) => (
             <button key={index} onClick={() => navigate(item.nav)} value={item.value}>
               {item.label}
             </button>
@@ -67,9 +67,9 @@ const Header = ({ onClick }) => {
       {isAuthenticated && user ? (
         <button
           onClick={onClick}
-          className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center px-6 sm:px-8'
+          className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center md:px-5 sm:px-3'
         >
-          <img src={babyChick} alt='babyChick' className='w-6 h-6 mr-2 md:mr-4 md:w-7 md:h-7' />
+          <img src={babyChick} alt='babyChick' className='w-6 h-6 md:w-7 md:h-7' />
           <select
             value={selectedOption}
             onChange={(e) => handleOptionChange(e.target.value)}
