@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-
 const parseJwt = (token) => {
   try {
     const base64Url = token.split('.')[1]
@@ -9,7 +8,7 @@ const parseJwt = (token) => {
       atob(base64)
         .split('')
         .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
+        .join(''),
     )
     return JSON.parse(jsonPayload)
   } catch (error) {
@@ -37,19 +36,14 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  login: (accessToken) => {
-    const decoded = parseJwt(accessToken)
-    if (decoded) {
-      localStorage.setItem('accessToken', accessToken)
-      set({ user: decoded, isAuthenticated: true, accessToken })
-    }
-  },
+  //로그인을 해야지 접근 가능하게 하는 로직
 
-  logout: () => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('saveLoginID')
-    set({ user: null, isAuthenticated: false, accessToken: null })
-    window.location.href = ROUTER_PATHS.LOGIN
+  requireLogin: (navigate) => {
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+      alert('로그인 후 이용 가능합니다.')
+      navigate(ROUTER_PATHS.LOGIN_MAIN)
+    }
   },
 }))
 
