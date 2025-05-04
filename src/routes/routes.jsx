@@ -21,6 +21,7 @@ import PasswordMis from '../domains/my/detail/PasswordMis'
 import MyScrap from '../domains/my/detail/MyScrap'
 import MyPost from '../domains/my/detail/MyPost'
 import MyDrafts from '../domains/my/detail/MyDrafts'
+import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
 
 const routes = [
   {
@@ -45,14 +46,15 @@ const routes = [
     noMargin: true,
   },
   {
-    path: ROUTER_PATHS.USER_POST,
-    element: <UserPosts />,
-  },
-  {
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
     element: <WriteCommunityPostPage />,
     label: '자유게시판 글 작성',
   },
+  {
+    path: ROUTER_PATHS.USER_POST,
+    element: <UserPosts />,
+  },
+
   {
     path: ROUTER_PATHS.JOB_MAIN,
     element: <JobMainPage />,
@@ -67,6 +69,11 @@ const routes = [
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
     label: '구직 글 작성',
+  },
+  {
+    path: '/job/job-search/post/:id',
+    element: <DetailJobSearchPost />,
+    label: '구직 글',
   },
   {
     path: ROUTER_PATHS.FIND_ID,
