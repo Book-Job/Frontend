@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -14,7 +15,7 @@ const WorkBoard = ({
   title,
   name,
   date,
-  like,
+  like: initialLike,
   onClick,
   popular1,
   joboffer1,
@@ -25,14 +26,20 @@ const WorkBoard = ({
   view,
   className,
 }) => {
-  const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
+  const [isLiked, setIsLiked] = useState(initialLike)
+
+  const handleBookmarkClick = (e) => {
+    e.stopPropagation()
+    setIsLiked((prev) => !prev)
+  }
+  const bookmarkIcon = isLiked ? bookmarkPink : bookmarkGray
   return (
     <div className={`w-[300px] h-[200px] mb-[20px] ${className}`}>
       <img
         src={bookmarkIcon}
         alt='bookmark'
-        onClick={onClick}
-        className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] '
+        onClick={handleBookmarkClick}
+        className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] cursor-pointer'
       />
       <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
         <div className='flex-row'>
