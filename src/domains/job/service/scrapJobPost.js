@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/Axios'
+import { authApi } from '../../../services/api/axios'
 
 export const scrapJobPost = async ({ id, type }) => {
   const response = await authApi.post('/bookmarks', {
