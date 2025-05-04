@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import SearchBar from '../../../../components/web/SearchBar'
-import WorkBoard from '../../../../components/web/WorkBoard'
-import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
 import CountPost from '../components/CountPost'
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
