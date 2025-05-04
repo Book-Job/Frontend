@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import useScrapStore from '../../domains/job/common/store/scrap/useScrapStore'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -16,6 +17,8 @@ const WorkBoard = ({
   name,
   date,
   like: initialLike,
+  userId,
+  postId,
   onClick,
   popular1,
   joboffer1,
@@ -26,13 +29,22 @@ const WorkBoard = ({
   view,
   className,
 }) => {
-  const [isLiked, setIsLiked] = useState(initialLike)
+  const { scraps, toggleScrap, fetchScraps } = useScrapStore()
+
+  useEffect(() => {
+    if (userId) {
+      fetchScraps(userId)
+    }
+  }, [userId])
+
+  const isScrapped = scraps.has(postId)
+  const bookmarkIcon = isScrapped ? bookmarkPink : bookmarkGray
 
   const handleBookmarkClick = (e) => {
     e.stopPropagation()
-    setIsLiked((prev) => !prev)
+    toggleScrap(userId, postId)
   }
-  const bookmarkIcon = isLiked ? bookmarkPink : bookmarkGray
+
   return (
     <div className={`w-[300px] h-[200px] mb-[20px] ${className}`}>
       <img
@@ -71,6 +83,7 @@ const WorkBoard = ({
 }
 
 WorkBoard.propTypes = {
+  postId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   view: PropTypes.number.isRequired,
@@ -84,5 +97,6 @@ WorkBoard.propTypes = {
   worktype1: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   className: PropTypes.string,
+  userId: PropTypes.number.isRequired,
 }
 export default WorkBoard

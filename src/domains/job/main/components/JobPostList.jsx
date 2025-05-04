@@ -1,6 +1,11 @@
 import WorkBoard from '../../../../components/web/WorkBoard'
 import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
+import useAuthStore from '../../../../store/login/useAuthStore'
 const JobPostList = ({ posts, navigate }) => {
+  const { user } = useAuthStore()
+
+  const loggedInUserId = user ? user.userId : null
+
   return (
     <>
       <div className='hidden sm:flex flex-wrap gap-4'>
@@ -18,6 +23,7 @@ const JobPostList = ({ posts, navigate }) => {
             othersite1={post.othersite1}
             worktype1={post.worktype1}
             view={post.viewCount}
+            userId={loggedInUserId}
             onClick={() => {
               if (post.joboffer1) {
                 navigate(`/job-offer/${post.id}`)
@@ -41,6 +47,7 @@ const JobPostList = ({ posts, navigate }) => {
             like={post.like}
             popular1={post.popular1}
             joboffer1={post.joboffer1}
+            userId={loggedInUserId}
             history1={post.history1}
             jobsearch1={post.jobsearch1}
             othersite1={post.othersite1}
