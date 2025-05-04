@@ -1,6 +1,6 @@
 // 구인 전체 글 조회 및 검색
-import { publicApi } from '../../../../services/api/Axios'
-// 구인 전체 글 조회 및 검색
+import { publicApi } from '../../../../services/api/axios'
+
 export const getAllRecruitmentPosts = async (lastId, order) => {
   try {
     const response = await publicApi.get('/job-posting', {
