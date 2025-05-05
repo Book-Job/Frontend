@@ -55,7 +55,7 @@ const useAuthStore = create((set) => ({
       if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
-          localStorage.setItem('accessToken', accessToken)
+          localStorage.setItem('accessToken:', accessToken)
           // 사용자 정보와 인증 상태 업데이트
           set({
             user: { sub: loginData.userID }, // 서버에서 반환된 사용자 정보를 사용하거나 userID로 임시 설정
@@ -71,7 +71,7 @@ const useAuthStore = create((set) => ({
   logout: () => {
     localStorage.removeItem('accessToken')
     set({ user: null, isAuthenticated: false, accessToken: null })
-    window.location.href = ROUTER_PATHS.LOGIN
+    // window.location.href = ROUTER_PATHS.MAIN_PAGE
   },
 }))
 

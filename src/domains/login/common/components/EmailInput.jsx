@@ -5,7 +5,7 @@ import DomainSelector from './DomainSelector'
 import { postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/userJoinServices'
 import OTPInput from '../../../Find/common/components/OTPInput'
 
-const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
+const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationStatus }) => {
   const [domain, setDomain] = useState('naver.com')
   const [customDomain, setCustomDomain] = useState('')
   const [isCustom, setIsCustom] = useState(false)
@@ -29,19 +29,16 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
 
   // 중복 확인 버튼 클릭 핸들러
   const handleCheckEmail = async () => {
-    setEmailCheckMessage('') // 이전 메시지 초기화
+    setEmailCheckMessage('')
     setEmailCheckStatus(null)
-    setIsCheckingEmail(true) // 로딩 시작
+    setIsCheckingEmail(true)
 
-    // 1. 'userID' 필드만 유효성 검사 실행
-    const isValEmail = await trigger('emailId') // true 또는 false 반환
-    // 2. 유효성 검사 실패 시 함수 종료 (오류 메시지는 react-hook-form이 표시)
+    const isValEmail = await trigger('emailId')
     if (!isValEmail) {
       setIsCheckingEmail(false)
       return
     }
-    // 3. 유효성 검사 통과 시 현재 아이디 값 가져오기
-    // 4. 백엔드 API 호출
+
     try {
       console.log('Email :', fullEmail)
       const response = await postJoinCheckEmail(fullEmail)
@@ -54,12 +51,14 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
       } else {
         setEmailCheckMessage(response.data?.message || '이미 사용 중인 이메일일입니다.')
         setEmailCheckStatus('error')
+        setValidationStatus('error')
         trigger('emailId')
       }
     } catch (error) {
       console.error('Email 중복 확인 중 오류:', error)
       setEmailCheckMessage(error?.message || '이메일 확인 중 오류가 발생했습니다.')
       setEmailCheckStatus('error')
+      setValidationStatus('error')
       trigger('emailId')
     } finally {
       setIsCheckingEmail(false)
@@ -76,28 +75,30 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
       if (response.data && response.data.message === 'success') {
         setEmailCheckMessage('사용 가능한 이메일일입니다.')
         setEmailCheckStatus('success')
+        setValidationStatus('success')
         setStartTimer(false) // 인증 성공 시 타이머 중지
         trigger('emailId') // 유효성 검사 갱신
       } else {
         setEmailCheckMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
         setEmailCheckStatus('error')
+        setValidationStatus('error')
         trigger('emailId')
       }
     } catch (error) {
       console.error('인증번호 확인 중 오류:', error)
       setEmailCheckMessage('인증번호가 일치하지 않습니다.')
       setEmailCheckStatus('error')
+      setValidationStatus('error')
       trigger('emailId')
     }
   }
 
-  // 버튼 라벨 결정 로직
   const buttonLabel = isCheckingEmail
     ? '확인 중...'
     : emailCheckStatus === 'success'
       ? '사용가능'
       : '인증확인'
-  // onChange 핸들러
+
   const handleInputChange = (e) => {
     if (emailCheckMessage) setEmailCheckMessage('')
     if (emailCheckStatus) setEmailCheckStatus(null)
@@ -147,7 +148,8 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
         </div>
       </div>
       <div className='mt-3'>
-        {/* {emailCheckStatus === 'success' && ( */}
+        {/* {emailCheckStatus === 'success' && (
+          <div> */}
         <div className='mt-3'>
           <OTPInput
             size='biggest'
@@ -167,7 +169,8 @@ const EmailInput = ({ register, errors, watch, setValue, trigger }) => {
             </p>
           )}
         </div>
-        {/* )}  */}
+        {/* </div>
+        )} */}
         {/* <div className='flex items-start'>
           {errors.OTPInput && <p className='text-red-500 text-[14px]'>{errors.OTPInput.message}</p>}
         </div> */}

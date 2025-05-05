@@ -17,13 +17,13 @@ const LoginForm = () => {
     setValue, // useForm에서 setValue 가져오기
   } = useForm({
     defaultValues: {
-      userID: '', // 기본값 설정
+      userID: '', 
       password: '',
     },
   })
 
   const navigate = useNavigate()
-  const { login } = useAuthStore() // useAuthStore에서 login 액션 가져오기
+  const { login } = useAuthStore() 
   const [saveLoginID, setSaveLoginID] = useState(false)
   const [alertState, setAlertState] = useState({
     isOpen: false,
