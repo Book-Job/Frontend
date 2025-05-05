@@ -9,6 +9,7 @@ import JobCategory from '../../common/components/form/JobCategory'
 import ClosingDate from './form/ClosingDate'
 import CompanyWebsite from './form/CompanyWebsite'
 import WorkPlace from './form/WorkPlace'
+import Experience from './form/Experience'
 
 const WriteRecruitmentPostingForm = () => {
   const {
@@ -61,7 +62,10 @@ const WriteRecruitmentPostingForm = () => {
       <div className='my-[30px]'>
         <EmploymentType register={register} errors={errors} />
       </div>
-
+      <JobFormLine />
+      <div className='my-[30px]'>
+        <Experience register={register} errors={errors} />
+      </div>
       <JobFormLine />
 
       <div className='my-[30px]'>

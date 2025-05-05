@@ -28,7 +28,7 @@ const MobileWorkBoard = ({
   const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
   return (
     <div className={`w-[336px] h-[160px] ${className} mt-3`}>
-      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between'>
+      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer'>
         <img
           src={bookmarkIcon}
           alt='bookmark'
