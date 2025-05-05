@@ -36,7 +36,8 @@ const Header = ({ onClick }) => {
     } else if (value === 'mypage') {
       navigate(ROUTER_PATHS.MY_PAGE)
     } else if (value === 'logout') {
-      logout(ROUTER_PATHS.MAIN_PAGE)
+      logout()
+      navigate(ROUTER_PATHS.MAIN_PAGE)
     }
     setSelectedOption('default')
   }

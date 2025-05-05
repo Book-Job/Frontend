@@ -14,6 +14,7 @@ export const postLoginData = async (data) => {
       },
     )
     console.log('response:', response)
+    // 백엔드 반환값 유저 닉네임 받아서 저장하기 
     return response
   } catch (error) {
     console.error('로그인 확인 중 오류:', error.response.data.message)
