@@ -23,9 +23,9 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
     onBoardSelect(name === '자유' ? '자유게시판' : '구인구직')
   }
   return (
-    <div className='w-[940px] '>
-      <div className='relative flex items-end justify-center'>
-        <p className='flex gap-3'>
+    <div className='flex justify-center w-full max-w-[940px] mx-auto'>
+      <div className='items-end w-full'>
+        <p className='flex justify-center w-full gap-3'>
           {boardButton.map(({ name, path }, index) => {
             const isSelected =
               (name === '자유' && selectedBoard === '자유게시판') ||
@@ -35,7 +35,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
                 key={index}
                 // onClick={() => navigate(path)}
                 onClick={() => handleClick(path, name)}
-                className={`w-[157px] h-[47px] border rounded-full text-2xl ${
+                className={`sm:w-[157px] w-[100px] sm:h-[47px] h-[37px] border rounded-full sm:text-2xl text-lg ${
                   isSelected ? 'bg-main-pink text-white' : 'bg-light-gray text-black'
                 }`}
               >
@@ -44,11 +44,12 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
             )
           })}
         </p>
-        <div className='absolute right-0 flex'>
-          <div className='w-5 h-5 mr-1'>
+        {/* <div className='absolute right-0 flex'> */}
+        <div className='flex justify-end mt-1 '>
+          <div className='w-4 h-4 mr-1 sm:w-5 sm:h-5'>
             <img src={commonTime} alt='commonTime' />
           </div>
-          <p className='text-base font-semibold text-dark-gray'>{formattedDate} 기준</p>
+          <p className='text-sm font-semibold sm:text-base text-dark-gray'>{formattedDate} 기준</p>
         </div>
       </div>
     </div>
