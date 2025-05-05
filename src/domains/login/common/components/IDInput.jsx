@@ -3,8 +3,7 @@ import Button from '../../../../components/web/Button'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
 import { getJoinCheckId } from '../../services/userJoinServices'
 
-
-const IDInput = ({ register, errors, trigger, getValues, watch }) => {
+const IDInput = ({ register, errors, trigger, getValues, watch, setValidationStatus }) => {
   const [isCheckingId, setIsCheckingId] = useState(false) // 중복 확인 중 로딩 상태
   const [idCheckMessage, setIdCheckMessage] = useState('') // 중복 확인 결과 메시지
   const [idCheckStatus, setIdCheckStatus] = useState(null) // 'success' or 'error'
@@ -13,23 +12,19 @@ const IDInput = ({ register, errors, trigger, getValues, watch }) => {
 
   // 중복 확인 버튼 클릭 핸들러
   const handleCheckId = async () => {
-    setIdCheckMessage('') // 이전 메시지 초기화
+    setIdCheckMessage('')
     setIdCheckStatus(null)
-    setIsCheckingId(true) // 로딩 시작
+    setIsCheckingId(true)
 
-    // 1. 'userID' 필드만 유효성 검사 실행
-    const isValid = await trigger('userID') // true 또는 false 반환
+    const isValid = await trigger('userID')
 
-    // 2. 유효성 검사 실패 시 함수 종료 (오류 메시지는 react-hook-form이 표시)
     if (!isValid) {
       setIsCheckingId(false)
       return
     }
 
-    // 3. 유효성 검사 통과 시 현재 아이디 값 가져오기
     const nowUserID = getValues('userID')
 
-    // 4. 백엔드 API 호출
     try {
       const response = await getJoinCheckId(nowUserID)
       console.log('ID API 응답 데이터:', response.data)
@@ -37,16 +32,19 @@ const IDInput = ({ register, errors, trigger, getValues, watch }) => {
       if (response.data && response.data.message === 'success') {
         setIdCheckMessage('사용 가능한 아이디입니다.')
         setIdCheckStatus('success')
+        setValidationStatus('success')
         trigger('userID') // 유효성 검사 갱신
       } else {
         setIdCheckMessage(response.data?.message || '이미 사용 중인 아이디입니다.')
         setIdCheckStatus('error')
+        setValidationStatus('error')
         trigger('userID') // 유효성 검사 갱신
       }
     } catch (error) {
       console.error('ID 중복 확인 중 오류:', error)
-      setIdCheckMessage(error ?.message || '아이디 확인 중 오류가 발생했습니다.')
+      setIdCheckMessage(error?.message || '아이디 확인 중 오류가 발생했습니다.')
       setIdCheckStatus('error')
+      setValidationStatus('error')
       trigger('userID')
     } finally {
       setIsCheckingId(false)
