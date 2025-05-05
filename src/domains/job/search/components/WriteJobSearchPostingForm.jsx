@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { createJobSeekPost } from '../../service/postService'
 import JobFormLine from '../../common/components/JobFormLine'
-import FormItem from '../../common/components/FormItem'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
 import PostTitle from '../../common/components/form/PostTitle'
 import PostContent from '../../common/components/form/PostContent'
@@ -31,19 +30,7 @@ const WriteJobSearchPostingForm = () => {
   return (
     <form id='job-search-post-form' onSubmit={handleSubmit(onSubmit)}>
       <PersonalInfo register={register} />
-      <div className='my-[30px]'>
-        <FormItem label='구인 / 구직' dot={true} register={register} name='type' required={true}>
-          <div className='w-full flex justify-start'>
-            <select
-              className='border border-dark-gray w-full  h-[58px] p-2 rounded-md cursor-pointer focus:outline-none focus:border-main-pink'
-              {...register('type', { required: '구인/구직은 필수 선택입니다' })}
-            >
-              <option value='구인'>구인</option>
-              <option value='구직'>구직</option>
-            </select>
-          </div>
-        </FormItem>
-      </div>
+
       <JobFormLine />
       <div className='my-[30px]'>
         <PostTitle register={register} errors={errors} />

@@ -13,6 +13,7 @@ export const postLoginData = async (data) => {
         },
       },
     )
+    console.log('response:', response)
     return response
   } catch (error) {
     console.error('로그인 확인 중 오류:', error.response.data.message)

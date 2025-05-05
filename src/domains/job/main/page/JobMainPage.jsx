@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import SearchBar from '../../../../components/web/SearchBar'
-import WorkBoard from '../../../../components/web/WorkBoard'
-import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
 import CountPost from '../components/CountPost'
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
 import { useNavigate } from 'react-router-dom'
+//import ROUTER_PATHS from '../../../../routes/RouterPath'
+import JobPostList from '../components/JobPostList'
 
 const JobMainPage = () => {
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
@@ -26,11 +26,13 @@ const JobMainPage = () => {
         data = await getJobPosts(lastId, order)
       }
 
-      const handlePostClick = (postId) => {
-        navigate(`/post/${postId}`)
-      }
+      const newPostsRaw = data?.jobSeekings || []
+      const newPosts = newPostsRaw.map((post) => ({
+        ...post,
+        joboffer1: selectedJobTabs === 'job list',
+        jobsearch1: selectedJobTabs !== 'job list',
+      }))
 
-      const newPosts = data?.jobSeekings || []
       if (newPosts.length > 0) {
         setPosts((prev) => {
           const uniquePosts = [...prev, ...newPosts].filter(
@@ -72,47 +74,13 @@ const JobMainPage = () => {
         </div>
 
         <div className='flex flex-wrap gap-4 mt-4 mx-[27px]'>
-          {posts.length > 0 ? (
-            <>
-              <div className='hidden sm:flex flex-wrap gap-4'>
-                {posts.map((post) => (
-                  <WorkBoard
-                    key={post.id}
-                    title={post.title}
-                    name={post.nickname}
-                    date={post.createdAt}
-                    view={post.viewCount}
-                    experience={post.experience}
-                    employmentType={post.employmentType}
-                    jobCategory={post.jobCategory}
-                  />
-                ))}
-              </div>
-              <div className='block sm:hidden'>
-                <div className='flex flex-wrap gap-4 mt-4'>
-                  {posts.map((post) => (
-                    <MobileWorkBoard
-                      key={post.id}
-                      title={post.title}
-                      name={post.nickname}
-                      date={post.createdAt}
-                      like={post.like}
-                      popular1={post.popular1}
-                      joboffer1={post.joboffer1}
-                      history1={post.history1}
-                      jobsearch1={post.jobsearch1}
-                      othersite1={post.othersite1}
-                      worktype1={post.worktype1}
-                      view={post.viewCount}
-                      onClick={() => handlePostClick(post.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <span>게시물이 없습니다.</span>
-          )}
+          <div className='flex flex-wrap gap-4 mt-4 mx-[27px]'>
+            {posts.length > 0 ? (
+              <JobPostList posts={posts} navigate={navigate} />
+            ) : (
+              <span>게시물이 없습니다.</span>
+            )}
+          </div>
         </div>
       </div>
     </>

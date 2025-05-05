@@ -10,7 +10,7 @@ const parseJwt = (token) => {
       atob(base64)
         .split('')
         .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
+        .join(''),
     )
     return JSON.parse(jsonPayload)
   } catch (error) {
@@ -38,23 +38,33 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  //로그인을 해야지 접근 가능하게 하는 로직
+
+  requireLogin: (navigate) => {
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+      alert('로그인 후 이용 가능합니다.')
+      navigate(ROUTER_PATHS.LOGIN_MAIN)
+    }
+  },
+
   // 로그인 액션
   login: async (loginData) => {
     try {
-      const response = await postLoginData(loginData);
+      const response = await postLoginData(loginData)
       if (response.data && response.data.message === 'success') {
-        const accessToken = response.headers['authorization']?.replace('Bearer ', '');
+        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
-          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('accessToken', accessToken)
           // 사용자 정보와 인증 상태 업데이트
           set({
             user: { sub: loginData.userID }, // 서버에서 반환된 사용자 정보를 사용하거나 userID로 임시 설정
             isAuthenticated: true,
-          });
+          })
         }
       }
     } catch (error) {
-      console.error('로그인 실패:', error);
+      console.error('로그인 실패:', error)
     }
   },
 

@@ -6,10 +6,12 @@ const ROUTER_PATHS = {
   JOB_MAIN: '/job',
   COMMUNITY: '/community',
   USER_POST: '/user-post',
-  WRITE_COMMUNITY_POST: '/community/post',
-  WRITE_RECRUITMENT_POST: '/job/recruitment/post',
-  WRITE_JOB_SEARCH_POST: '/job/job-search/post',
-  JOB_SEARCH_POST_DETAIL: '/job/job-search/post/:id',
+  WRITE_COMMUNITY_POST: '/community/post', //자유게시판 글 작성
+  COMMUNITY_POST_DETAIL: '/community/post/:id', //자유게시판 글 작성
+  WRITE_RECRUITMENT_POST: '/job/recruitment/post', //구인 글 작성
+  WRITE_JOB_SEARCH_POST: '/job/job-search/post', //구직 글 작성
+  JOB_SEARCH_POST_DETAIL: '/job/job-search/post/:id', //구직 글 상세 조회
+  RECRUITMENT_POST_DETAIL: '//job/recruitment/post/:id', //구인 글 상세 조회
   FIND_ID: '/find/id',
   FIND_ID_COMPLETE_PAGE: '/find/id/complete-page',
   FIND_PW: '/find/pW',
