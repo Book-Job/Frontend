@@ -17,13 +17,13 @@ const LoginForm = () => {
     setValue, // useForm에서 setValue 가져오기
   } = useForm({
     defaultValues: {
-      userID: '', 
+      userID: '',
       password: '',
     },
   })
 
   const navigate = useNavigate()
-  const { login } = useAuthStore() 
+  const { login } = useAuthStore()
   const [saveLoginID, setSaveLoginID] = useState(false)
   const [alertState, setAlertState] = useState({
     isOpen: false,
@@ -67,7 +67,10 @@ const LoginForm = () => {
       setAlertState({
         isOpen: true,
         title: '로그인 실패',
-        description: error.message,
+        description:
+          error.message === '인증 과정 중 오류 발생'
+            ? '아이디 또는 비밀번호가 올바르지 않습니다.'
+            : error.message,
         buttonLabel: '확인',
         onButtonClick: null,
       })
@@ -84,7 +87,7 @@ const LoginForm = () => {
   return (
     <div className='flex flex-col items-center'>
       <PageTitle title={'로그인'} />
-      <form className='w-full max-w-[532px]'>
+      <form className='w-full max-w-[532px]' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex w-full mt-11'>
           <InputBox
             placeholder='아이디'
@@ -119,9 +122,13 @@ const LoginForm = () => {
             아이디 저장
           </div>
           <div className='flex gap-3 text-base font-medium sm:text-xl'>
-            <button onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>아이디 찾기</button>
+            <button type='button' onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>
+              아이디 찾기
+            </button>
             <span>|</span>
-            <button onClick={() => navigate(ROUTER_PATHS.FIND_PW)}>비밀번호 찾기</button>
+            <button type='button' onClick={() => navigate(ROUTER_PATHS.FIND_PW)}>
+              비밀번호 찾기
+            </button>
           </div>
         </div>
         <div className='mt-6'>
@@ -130,7 +137,6 @@ const LoginForm = () => {
             size='big'
             bgColor={isValid ? 'main-pink' : 'light-gray'}
             disabled={!isValid}
-            onClick={handleSubmit(onSubmit)}
             type='submit'
           />
         </div>

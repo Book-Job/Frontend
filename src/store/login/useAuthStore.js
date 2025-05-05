@@ -55,23 +55,27 @@ const useAuthStore = create((set) => ({
       if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
-          localStorage.setItem('accessToken:', accessToken)
-          // 사용자 정보와 인증 상태 업데이트
+          localStorage.setItem('accessToken', accessToken)
           set({
-            user: { sub: loginData.userID }, // 서버에서 반환된 사용자 정보를 사용하거나 userID로 임시 설정
+            user: { sub: loginData.userID },
             isAuthenticated: true,
           })
+        } else {
+          throw new Error('액세스 토큰을 받지 못했습니다.')
         }
+      } else {
+        throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
     } catch (error) {
       console.error('로그인 실패:', error)
+      throw error
     }
   },
 
   logout: () => {
     localStorage.removeItem('accessToken')
     set({ user: null, isAuthenticated: false, accessToken: null })
-    // window.location.href = ROUTER_PATHS.MAIN_PAGE
+    window.location.href = ROUTER_PATHS.MAIN_PAGE
   },
 }))
 

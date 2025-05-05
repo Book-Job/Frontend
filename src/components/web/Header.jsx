@@ -37,7 +37,6 @@ const Header = ({ onClick }) => {
       navigate(ROUTER_PATHS.MY_PAGE)
     } else if (value === 'logout') {
       logout()
-      navigate(ROUTER_PATHS.MAIN_PAGE)
     }
     setSelectedOption('default')
   }
@@ -48,8 +47,8 @@ const Header = ({ onClick }) => {
     { label: '문의', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
   ]
   return (
-    <header className=' w-full bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 md:gap-0'>
-      <div className='flex flex-col items-center gap-10 md:flex-row xl:gap-20'>
+    <header className=' w-full bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 '>
+      <div className='flex flex-col items-center gap-5 xl:gap-20 md:gap-10 md:flex-row '>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
           className='text-main-pink text-2xl md:text-[35px] font-logo cursor-pointer'
@@ -64,36 +63,37 @@ const Header = ({ onClick }) => {
           ))}
         </span>
       </div>
-      <div className='flex items-center'></div>
-      {isAuthenticated && user ? (
-        <button
-          onClick={onClick}
-          className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center md:px-5 sm:px-3'
-        >
-          <img src={babyChick} alt='babyChick' className='w-6 h-6 md:w-7 md:h-7' />
-          <select
-            value={selectedOption}
-            onChange={(e) => handleOptionChange(e.target.value)}
-            className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3'
-          >
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </button>
-      ) : (
-        <span className='flex mr-[128px] gap-8 text-[15px]'>
+      <div className='flex justify-end'>
+        {isAuthenticated && user ? (
           <button
-            onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
-            className='font-bold row text-main-pink'
+            onClick={onClick}
+            className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center md:px-5 sm:px-3'
           >
-            로그인
+            <img src={babyChick} alt='babyChick' className='w-6 h-6 md:w-7 md:h-7' />
+            <select
+              value={selectedOption}
+              onChange={(e) => handleOptionChange(e.target.value)}
+              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3'
+            >
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </button>
-          <button onClick={() => navigate(ROUTER_PATHS.JOIN)}>회원가입</button>
-        </span>
-      )}
+        ) : (
+          <span className='flex gap-8 text-[15px]'>
+            <button
+              onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
+              className='font-bold row text-main-pink'
+            >
+              로그인
+            </button>
+            <button onClick={() => navigate(ROUTER_PATHS.JOIN)}>회원가입</button>
+          </span>
+        )}
+      </div>
     </header>
   )
 }
