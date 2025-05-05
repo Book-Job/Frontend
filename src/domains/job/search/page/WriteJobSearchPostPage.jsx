@@ -4,8 +4,20 @@ import WriteJobSearchPostingForm from '../components/WriteJobSearchPostingForm'
 import LastFormLine from '../../common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
 import PinkButton from '../../../../components/web/PinkButton'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import useAuthStore from '../../../../store/login/useAuthStore'
 
 const WriteJobSearchPostPage = () => {
+  const navigate = useNavigate()
+  const { requireLogin, isAuthenticated } = useAuthStore()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      requireLogin(navigate)
+    }
+  }, [requireLogin, navigate, isAuthenticated])
+
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
