@@ -10,10 +10,10 @@ const MainPage = () => {
 
   return (
     <div className='flex flex-col items-center w-full'>
-      <div className='mb-10'>
+      <div className='w-full mb-6 sm:mb-10'>
         <BoardButton onBoardSelect={handleBoardSelect} selectedBoard={selectedBoard} />
       </div>
-      <div>
+      <div className='flex justify-center w-full'>
         {selectedBoard === '자유게시판' && <BestList boardName='자유게시판' />}
         {selectedBoard === '구인구직' && <BestList boardName='구인구직' />}
       </div>

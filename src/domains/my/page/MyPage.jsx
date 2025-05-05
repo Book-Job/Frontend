@@ -7,7 +7,6 @@ const MyPage = () => {
   const [userData, setUserData] = useState()
 
   const handleMyData = async () => {
-    //  백엔드 API 호출
     const token = localStorage.getItem('accessToken')
     try {
       const response = await getMyData(token)
