@@ -1,8 +1,16 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import routes from './routes'
 import Layout from './Layout'
+import useAuthStore from '../store/login/useAuthStore'
+
 const AppRoutes = () => {
   const mainPaths = ['/', '/community', '/user-post', '/job']
+  const initialize = useAuthStore((state) => state.initialize)
+
+  useEffect(() => {
+    initialize()
+  }, [])
 
   return (
     <Routes>
