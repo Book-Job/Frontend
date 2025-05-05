@@ -1,5 +1,7 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
+import { postLoginData } from '../../domains/login/services/userLoginServices'
+
 const parseJwt = (token) => {
   try {
     const base64Url = token.split('.')[1]
@@ -31,7 +33,7 @@ const useAuthStore = create((set) => ({
       } else {
         set({ user: null, isAuthenticated: false, accessToken: null })
         localStorage.removeItem('accessToken')
-        localStorage.removeItem('saveLoginID')
+        // localStorage.removeItem('saveLoginID')
       }
     }
   },
@@ -44,6 +46,36 @@ const useAuthStore = create((set) => ({
       alert('로그인 후 이용 가능합니다.')
       navigate(ROUTER_PATHS.LOGIN_MAIN)
     }
+  },
+
+  // 로그인 액션
+  login: async (loginData) => {
+    try {
+      const response = await postLoginData(loginData)
+      if (response.data && response.data.message === 'success') {
+        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken)
+          set({
+            user: { sub: loginData.userID },
+            isAuthenticated: true,
+          })
+        } else {
+          throw new Error('액세스 토큰을 받지 못했습니다.')
+        }
+      } else {
+        throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error)
+      throw error
+    }
+  },
+
+  logout: () => {
+    localStorage.removeItem('accessToken')
+    set({ user: null, isAuthenticated: false, accessToken: null })
+    window.location.href = ROUTER_PATHS.MAIN_PAGE
   },
 }))
 
