@@ -2,26 +2,29 @@ import { useEffect, useState } from 'react'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
 import DomainSelector from '../../../login/common/components/DomainSelector'
 import Button from './../../../../components/web/Button'
+import { postFindIDEmail, postFindIDEmailNum } from '../../services/useFindIDServices'
+import OTPInput from './OTPInput'
+import useFindIDStore from '../../../../store/find/useFindIDStore'
 
 const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationStatus }) => {
   const [domain, setDomain] = useState('naver.com')
   const [customDomain, setCustomDomain] = useState('')
   const [isCustom, setIsCustom] = useState(false)
   const [fullEmail, setFullEmail] = useState()
-  const [startTimer, setStartTimer] = useState(false) // 타이머 시작 상태
-  const [isCheckingEmail, setIsCheckingEmail] = useState(false) // 중복 확인 중 로딩
-  const [emailCheckMessage, setEmailCheckMessage] = useState('') // 중복 확인 결과 메시지
-  const [emailCheckStatus, setEmailCheckStatus] = useState(null) // 'success' or 'error'
-  // 이메일 입력 값
-  const emailId = watch('emailId') || ''
+  const [startTimer, setStartTimer] = useState(false)
+  const [isCheckingEmail, setIsCheckingEmail] = useState(false)
+  const [emailCheckMessage, setEmailCheckMessage] = useState('')
+  const [emailCodeMessage, setEmailCodeMessage] = useState('')
+  const [emailCheckStatus, setEmailCheckStatus] = useState(null)
+  const { findID, setFindID } = useFindIDStore()
 
-  // 도메인 값 결정 (직접 입력 vs 선택)
+  const emailId = watch('emailId') || ''
   const domainValue = isCustom ? customDomain : domain
 
-  // emailFull 값 자동 업데이트
   useEffect(() => {
     const emailFull = `${emailId}@${domainValue}`
     setValue('email', emailFull)
+    setFullEmail(emailFull)
   }, [emailId, domainValue, setValue])
 
   // 중복 확인 버튼 클릭 핸들러
@@ -36,12 +39,9 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
       return
     }
     try {
-      console.log('Email :', fullEmail)
-      const response = await postJoinCheckEmail(fullEmail)
-      console.log('Email API 응답 데이터:', response.data)
-
+      const response = await postFindIDEmail(fullEmail)
       if (response.data && response.data.message === 'success') {
-        setEmailCheckMessage('인증번호가 전송되었습니다.')
+        setEmailCodeMessage('인증번호가 전송되었습니다.')
         setEmailCheckStatus('pending') // 인증 대기 상태
         setStartTimer(true) // 타이머 시작
       } else {
@@ -63,26 +63,23 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
 
   const handleIsExpiredEmail = async (code) => {
     try {
-      console.log('Email :', fullEmail)
-      console.log('code :', code)
-      const response = await postJoinCheckEmailNum({ fullEmail, code })
-      console.log('인증번호 확인 API 응답 데이터:', response.data)
-
+      const response = await postFindIDEmailNum({ fullEmail, code })
       if (response.data && response.data.message === 'success') {
-        setEmailCheckMessage('사용 가능한 이메일일입니다.')
+        setFindID(response.data.data)
+        setEmailCheckMessage('가입한 이메일입니다.')
         setEmailCheckStatus('success')
         setValidationStatus('success')
         setStartTimer(false) // 인증 성공 시 타이머 중지
         trigger('emailId') // 유효성 검사 갱신
       } else {
-        setEmailCheckMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
+        setEmailCodeMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
         setEmailCheckStatus('error')
         setValidationStatus('error')
         trigger('emailId')
       }
     } catch (error) {
-      console.error('인증번호 확인 중 오류:', error)
-      setEmailCheckMessage('인증번호가 일치하지 않습니다.')
+      console.error('ID 찾기 인증번호 확인 중 오류:', error.name)
+      setEmailCodeMessage(error === 'Error' ? '서버오류 입니다.' : '인증번호가 일치하지 않습니다.')
       setEmailCheckStatus('error')
       setValidationStatus('error')
       trigger('emailId')
@@ -95,6 +92,7 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
       : '인증확인'
   const handleInputChange = (e) => {
     if (emailCheckMessage) setEmailCheckMessage('')
+    if (emailCodeMessage) setEmailCodeMessage('')
     if (emailCheckStatus) setEmailCheckStatus(null)
     setStartTimer(false)
   }
@@ -105,7 +103,7 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
         <div className='flex-auto'>
           <LabelWithInput
             label='이메일'
-            type='email'
+            type='text'
             placeholder='ex) bookjob'
             size='medium'
             {...register('emailId', {
@@ -128,6 +126,17 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
           setIsCustom={setIsCustom}
         />
       </div>
+      <div className='flex items-start'>
+        {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
+        {emailCheckMessage && (
+          <p
+            className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+            aria-live='polite'
+          >
+            {emailCheckMessage}
+          </p>
+        )}
+      </div>
       <div className='flex items-end mt-6'>
         <Button
           size='biggest'
@@ -137,15 +146,25 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
           disabled={!emailId || isCheckingEmail}
         />
       </div>
-      <div className='flex items-start'>
-        {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
-        {emailCheckMessage && (
-          <p
-            className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-          >
-            {emailCheckMessage}
-          </p>
-        )}
+      <div className='mt-3'>
+        <div className='mt-3'>
+          <OTPInput
+            size='biggest'
+            placeholder='이메일로 전송된 인증코드를 입력해주세요'
+            startTimer={startTimer}
+            onVerify={handleIsExpiredEmail}
+          />
+        </div>
+        <div className='flex items-start'>
+          {emailCodeMessage && (
+            <p
+              className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              aria-live='polite'
+            >
+              {emailCodeMessage}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )
