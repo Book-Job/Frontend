@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Button from '../../../../components/web/Button'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
-import { getJoinCheckNickname } from '../../services/userJoinServices'
 import Spinner from '../../../../components/web/Spinner'
+import { getJoinCheckNickname } from '../../services/useJoinServices'
 
 const NicknameInput = ({ register, errors, trigger, getValues, watch, setValidationStatus }) => {
   const [isCheckingNickname, setIsCheckingNickname] = useState(false) // 중복 확인 중 로딩 상태

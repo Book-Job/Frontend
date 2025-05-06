@@ -5,10 +5,10 @@ import NicknameInput from './NicknameInput'
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 import PageTitle from './../../../Find/common/components/PageTitle'
-import { postJoinData } from '../../services/userJoinServices'
 import Alert from '../../../../components/web/Alert'
 import { useState } from 'react'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
+import { postJoinData } from '../../services/useJoinServices'
 
 const JoinForm = () => {
   const {

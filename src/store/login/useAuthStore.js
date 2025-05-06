@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { postLoginData } from '../../domains/login/services/userLoginServices'
+import { postLoginData } from './../../domains/login/services/useLoginServices';
 
 const parseJwt = (token) => {
   try {
