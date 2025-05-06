@@ -1,15 +1,181 @@
-const ProfileInfo = ({title,content,edit,text}) => {
+import { useState } from 'react'
+import Button from '../../../../components/web/Button'
+import Spinner from '../../../../components/web/Spinner'
+import { useForm } from 'react-hook-form'
+
+const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckNickname }) => {
+  const [isEditing, setIsEditing] = useState(false)
+  const [isCheckingNickname, setIsCheckingNickname] = useState(false)
+  const [nicknameCheckMessage, setNicknameCheckMessage] = useState('')
+  const [nicknameCheckStatus, setNicknameCheckStatus] = useState(null)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    trigger,
+    getValues,
+    reset,
+    watch,
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      nickname: content,
+    },
+  })
+
+  const nowNickname = watch('nickname')
+
+  const onSubmit = (data) => {
+    if (onSave && nicknameCheckStatus === 'success') {
+      onSave(data.nickname)
+      setIsEditing(false)
+      reset({ nickname: data.nickname })
+      setNicknameCheckMessage('')
+      setNicknameCheckStatus(null)
+    }
+  }
+
+  const handleCancel = () => {
+    setIsEditing(false)
+    reset({ nickname: content })
+    setNicknameCheckMessage('')
+    setNicknameCheckStatus(null)
+  }
+
+  const handleCheckNickname = async () => {
+    setNicknameCheckMessage('')
+    setNicknameCheckStatus(null)
+    setIsCheckingNickname(true)
+
+    const isValidNickname = await trigger('nickname')
+    if (!isValidNickname) {
+      setIsCheckingNickname(false)
+      return
+    }
+
+    const nickname = getValues('nickname')
+    try {
+      const response = await onCheckNickname(nickname)
+      if (response.data && response.data.message === 'success') {
+        setNicknameCheckMessage('사용 가능한 닉네임입니다.')
+        setNicknameCheckStatus('success')
+      } else {
+        setNicknameCheckMessage(response.data?.message || '이미 사용 중인 닉네임입니다.')
+        setNicknameCheckStatus('error')
+      }
+    } catch (error) {
+      setNicknameCheckMessage(error.message || '닉네임 확인 중 오류가 발생했습니다.')
+      setNicknameCheckStatus('error')
+    } finally {
+      setIsCheckingNickname(false)
+      trigger('nickname')
+    }
+  }
+
+  const handleInputChange = () => {
+    if (nicknameCheckMessage) setNicknameCheckMessage('')
+    if (nicknameCheckStatus) setNicknameCheckStatus(null)
+  }
+
   return (
     <div>
       <div className='text-[22px] font-semibold flex mb-5'>{title}</div>
       <div className='flex justify-between py-2 text-lg border-b border-dark-gray'>
-        <span>{content}</span>
-        {edit ? (
-          <button className="font-bold text-main-pink">{edit}</button>
+        {isEditing ? (
+          <form onSubmit={handleSubmit(onSubmit)} className='flex items-center w-full gap-2'>
+            <div className='flex-1'>
+              <input
+                type='text'
+                {...register('nickname', {
+                  required: '닉네임은 필수입니다.',
+                  minLength: {
+                    value: 2,
+                    message: '닉네임은 최소 2자 이상이어야 합니다.',
+                  },
+                  maxLength: {
+                    value: 8,
+                    message: '닉네임은 최대 8자까지 가능합니다.',
+                  },
+                  pattern: {
+                    value: /^[A-Za-z0-9가-힣]+$/,
+                    message: '닉네임은 영문, 숫자, 한글만 사용 가능합니다.',
+                  },
+                  onChange: handleInputChange,
+                })}
+                className='w-full bg-transparent border-none outline-none focus:ring-0'
+                placeholder='새 닉네임을 입력하세요'
+              />
+              {(errors.nickname || serverError || nicknameCheckMessage) && (
+                <div className='mt-1'>
+                  {errors.nickname && (
+                    <p className='text-sm text-red-500' aria-live='polite'>
+                      {errors.nickname.message}
+                    </p>
+                  )}
+                  {serverError && (
+                    <p className='text-sm text-red-500' aria-live='polite'>
+                      {serverError}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className='flex gap-2'>
+              <button
+                onClick={handleCheckNickname}
+                disabled={!nowNickname || isCheckingNickname}
+                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold hover:text-pink-600`}
+              >
+                {isCheckingNickname ? (
+                  <Spinner size={20} color='light-gray' />
+                ) : nicknameCheckStatus === 'success' ? (
+                  '사용가능'
+                ) : (
+                  '중복확인'
+                )}
+              </button>
+              <button
+                type='submit'
+                disabled={!isValid || nicknameCheckStatus !== 'success'}
+                className={`font-bold text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} hover:text-pink-600`}
+              >
+                저장
+              </button>
+              <button
+                type='button'
+                onClick={handleCancel}
+                className='font-bold text-dark-gray hover:text-gray-600'
+              >
+                취소
+              </button>
+            </div>
+          </form>
         ) : (
-          <span className="font-bold text-main-pink">{text || ''}</span>
+          <>
+            <span>{content}</span>
+            {edit ? (
+              <button
+                onClick={() => setIsEditing(true)}
+                className='font-bold text-main-pink hover:text-pink-600'
+              >
+                {edit}
+              </button>
+            ) : (
+              <span className='font-bold text-main-pink'>{text || ''}</span>
+            )}
+          </>
         )}
       </div>
+      {nicknameCheckMessage && (
+        <p
+          className={`text-sm flex justify-start ${
+            nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'
+          }`}
+          aria-live='polite'
+        >
+          {nicknameCheckMessage}
+        </p>
+      )}
     </div>
   )
 }
