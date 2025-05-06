@@ -6,7 +6,7 @@ import ProfileInfo from './components/ProfileInfo'
 import { useEffect, useState } from 'react'
 import { getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
 import Spinner from './../../../components/web/Spinner.jsx'
-import { getJoinCheckNickname } from '../../login/services/userJoinServices.jsx'
+import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()

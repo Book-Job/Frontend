@@ -30,8 +30,14 @@ const FindIDPage = () => {
       <div className='flex justify-center w-full justify-evenly'>
         <PageBox>
           <InputEmail register={register} errors={errors} watch={watch} setValue={setValue} />
+          
           <div className='mt-6'>
-            <OTPInput />
+            <OTPInput
+              size='biggest'
+              placeholder='이메일로 전송된 인증코드를 입력해주세요'
+              startTimer={startTimer}
+              onVerify={(code) => handleIsExpiredEmail(code)}
+            />
           </div>
           <div className='mt-6 '>
             <Button
