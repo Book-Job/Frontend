@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Button from '../../../../components/web/Button'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
-import { getJoinCheckId } from '../../services/userJoinServices'
+import { getJoinCheckId } from '../../services/useJoinServices'
 
 const IDInput = ({ register, errors, trigger, getValues, watch, setValidationStatus }) => {
   const [isCheckingId, setIsCheckingId] = useState(false) // 중복 확인 중 로딩 상태

@@ -73,7 +73,7 @@ const Header = ({ onClick }) => {
             <select
               value={selectedOption}
               onChange={(e) => handleOptionChange(e.target.value)}
-              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3'
+              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3 outline-none'
             >
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
