@@ -5,12 +5,20 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import PinkButton from './../../../components/web/PinkButton'
 import FindLink from '../common/components/FindLink'
+import useFindIDStore from '../../../store/find/useFindIDStore'
 
 const FindIDCompletePage = () => {
+  const { findID } = useFindIDStore()
+  console.log('findID 타입:', typeof findID, findID)
+  console.log('findID 아이디:', findID.loginId)
+
   const navigate = useNavigate()
+
+  // findID가 객체인지 문자열인지 확인하여 렌더링
+  const displayID = findID?.loginId || findID || 'ID를 찾을 수 없습니다.'
+
   return (
     <div>
-      ID 찾기 완료
       <div className='flex flex-col items-center'>
         <PageTitle title={'아이디 찾기'} subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'} />
         <div className='flex justify-center w-full'>
@@ -18,9 +26,11 @@ const FindIDCompletePage = () => {
             <div className='flex justify-start text-3xl font-bold'>
               회원님의 아이디를 확인해주세요
             </div>
-            <div className='flex justify-start text-[28px] mt-14 mb-16 font-medium'>dkdlel**</div>
+            <div className='flex justify-start text-[28px] mt-14 mb-16 font-medium'>
+              {displayID}
+            </div>
             <div className='flex gap-3'>
-              <PinkButton label='로그인' />
+              <PinkButton label='로그인' onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} />
               <Button
                 size='medium'
                 label='비밀번호 찾기'

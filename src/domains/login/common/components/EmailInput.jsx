@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
 import Button from '../../../../components/web/Button'
 import DomainSelector from './DomainSelector'
-import { postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/userJoinServices'
 import OTPInput from '../../../Find/common/components/OTPInput'
+import { postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/useJoinServices'
 
 const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationStatus }) => {
   const [domain, setDomain] = useState('naver.com')
@@ -49,7 +49,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
         setEmailCheckStatus('pending') // 인증 대기 상태
         setStartTimer(true) // 타이머 시작
       } else {
-        setEmailCheckMessage(response.data?.message || '이미 사용 중인 이메일일입니다.')
+        setEmailCheckMessage(response.data?.message || '이미 사용 중인 이메일입니다.')
         setEmailCheckStatus('error')
         setValidationStatus('error')
         trigger('emailId')
@@ -112,7 +112,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
           <div className='flex-auto'>
             <LabelWithInput
               label='이메일'
-              type='email'
+              type='text'
               placeholder='ex) bookjob'
               size='medium'
               {...register('emailId', {
@@ -148,14 +148,11 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
         </div>
       </div>
       <div className='mt-3'>
-        {/* {emailCheckStatus === 'success' && (
-          <div> */}
         <div className='mt-3'>
           <OTPInput
             size='biggest'
             placeholder='이메일로 전송된 인증코드를 입력해주세요'
             startTimer={startTimer}
-            // onVerify={(code) => console.log('인증번호 검증:', code)}
             onVerify={(code) => handleIsExpiredEmail(code)}
           />
         </div>
@@ -169,11 +166,6 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
             </p>
           )}
         </div>
-        {/* </div>
-        )} */}
-        {/* <div className='flex items-start'>
-          {errors.OTPInput && <p className='text-red-500 text-[14px]'>{errors.OTPInput.message}</p>}
-        </div> */}
       </div>
     </div>
   )
