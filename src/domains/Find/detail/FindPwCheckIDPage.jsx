@@ -5,16 +5,20 @@ import InputBox from '../../../components/web/InputBox'
 import Button from '../../../components/web/Button'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../routes/RouterPath'
+import useFindPWStore from '../../../store/find/useFindPWStore'
+import OTPInput from '../common/components/OTPInput'
+import { useState } from 'react'
 
 const FindPwCheckIDPage = () => {
+  const [startTimer, setStartTimer] = useState(false)
+  const { findPWMaskEmail, setFindPWMaskEmail } = useFindPWStore()
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
-    // watch,
-    // setValue,
-    trigger, // 추가
-    getValues, // 필요한 경우 이메일 값 확인용
-    formState: { errors },
+    trigger,
+    getValues,
+    formState: { errors, isValid },
   } = useForm()
 
   // 인증 버튼 클릭 핸들러 (이메일만 유효성 검사)
@@ -28,11 +32,10 @@ const FindPwCheckIDPage = () => {
   }
   // 전체 인증 버튼 클릭 (두 개 필드 다 검사)
   const onSubmit = (data) => {
-    console.log('폼 데이터:', data)
+    console.log('이메일, 임시비밀번호 :', data)
     navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
   }
 
-  const navigate = useNavigate()
 
   return (
     <div>
@@ -43,19 +46,22 @@ const FindPwCheckIDPage = () => {
           <div>
             <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
             <div className='flex my-5 text-xl'>
-              <p>본인확인 이메일로 인증</p>
-              <p className='text-main-pink'>
-                {'('}ddc***@n****.com{')'}
-              </p>
+              <span>본인확인 이메일로 인증 </span>{' '}
+              <span className='text-main-pink'>
+                {'('}
+                {findPWMaskEmail}
+                {')'}
+              </span>
             </div>
             <div className='flex flex-col text-dark-gray'>
               <p className='flex'>본인확인 이메일 주소와 이력한 이메일 주소가 같아야,</p>
               <p className='flex'>임시비밀번호를 받을 수 있습니다.</p>
             </div>
-            <div>
+            <form onClick={handleSubmit(onSubmit)}>
               <div className='flex flex-row gap-2 mt-7'>
                 <div className='w-full'>
                   <InputBox
+                    type='email'
                     placeholder='이메일 주소를 입려해주세요'
                     size='medium'
                     {...register('userEmail', { required: '이메일 주소를 입려해주세요' })}
@@ -67,26 +73,29 @@ const FindPwCheckIDPage = () => {
                 <Button label='인증' size='small' bgColor='light-gray' onClick={handleEmailAuth} />
               </div>
               <div className='mt-7'>
-                <InputBox
-                  placeholder='이메일로 전송된 임시비밀번호를 입력해주세요'
+                <OTPInput
                   size='biggest'
-                  {...register('userEmailCheck', {
+                  placeholder='이메일로 전송된 임시비밀번호를 입력해주세요'
+                  startTimer={startTimer}
+                  onVerify={(code) => handleIsExpiredEmail(code)}
+                  {...register('temporaryPW', {
                     required: '이메일로 전송된 임시비밀번호를 입력해주세요',
                   })}
                 />
-                {errors.userEmailCheck && (
-                  <p className='flex items-start text-red-500'>{errors.userEmailCheck.message}</p>
+                {errors.temporaryPW && (
+                  <p className='flex items-start text-red-500'>{errors.temporaryPW.message}</p>
                 )}
               </div>
               <div className='mt-7'>
                 <Button
+                  type='submit'
                   label='인증하기'
                   size='biggest'
-                  bgColor='light-gray'
-                  onClick={handleSubmit(onSubmit)}
+                  disabled={!isValid}
+                  bgColor={isValid ? 'main-pink' : 'light-gray'}
                 />
               </div>
-            </div>
+            </form>
           </div>
         </PageBox>
       </div>
