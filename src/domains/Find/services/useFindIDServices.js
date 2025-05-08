@@ -28,7 +28,7 @@ export const postFindIDEmail = async (fullEmail) => {
 }
 
 //아이디 찾기 이메일 인증 번호 확인
-export const postFindIDEmailNum = async ({ fullEmail, code }) => {
+export const postFindIDEmailCode = async ({ fullEmail, code }) => {
   try {
     const response = await authApi.post(
       '/auth/email-verification/id/code',

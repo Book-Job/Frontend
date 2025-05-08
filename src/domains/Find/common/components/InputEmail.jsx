@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import LabelWithInput from '../../../../components/web/LabelWithInput'
 import DomainSelector from '../../../login/common/components/DomainSelector'
 import Button from './../../../../components/web/Button'
-import { postFindIDEmail, postFindIDEmailNum } from '../../services/useFindIDServices'
+import { postFindIDEmail, postFindIDEmailCode } from '../../services/useFindIDServices'
 import OTPInput from './OTPInput'
 import useFindIDStore from '../../../../store/find/useFindIDStore'
 import { toast } from 'react-toastify'
@@ -74,7 +74,7 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
 
   const handleIsExpiredEmail = async (code) => {
     try {
-      const response = await postFindIDEmailNum({ fullEmail, code })
+      const response = await postFindIDEmailCode({ fullEmail, code })
       if (response.data && response.data.message === 'success') {
         setFindID(response.data.data)
         setEmailCheckMessage('가입한 이메일입니다.')
