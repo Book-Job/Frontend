@@ -1,5 +1,4 @@
 import { authApi } from '../../../services/api/Axios'
-import useFindIDStore from '../../../store/find/useFindIDStore'
 
 //아이디 찾기 이메일 인증 요청
 export const postFindIDEmail = async (fullEmail) => {
@@ -28,7 +27,7 @@ export const postFindIDEmail = async (fullEmail) => {
   }
 }
 
-//아이디 찾기기 이메일 인증 번호 확인
+//아이디 찾기 이메일 인증 번호 확인
 export const postFindIDEmailNum = async ({ fullEmail, code }) => {
   try {
     const response = await authApi.post(
