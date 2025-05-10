@@ -9,8 +9,8 @@ const PersonalInfo = ({ register }) => {
     <>
       <div className='my-[10px]'>
         <FormItem label='닉네임' dot={false} name='writer'>
-          <div className='flex sm:w-[171px] md:text-[14px]'>{user?.sub ?? '닉네임 없음'}</div>
-          <input type='hidden' value={user?.sub ?? ''} {...register('writer')} />
+          <div className='flex sm:w-[171px] md:text-[14px]'>{user?.nickname ?? '닉네임 없음'}</div>
+          <input type='hidden' value={user?.nickname ?? ''} {...register('writer')} />
         </FormItem>
       </div>
       <JobFormLine />
