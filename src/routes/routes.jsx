@@ -22,6 +22,7 @@ import MyScrap from '../domains/my/detail/MyScrap'
 import MyPost from '../domains/my/detail/MyPost'
 import MyDrafts from '../domains/my/detail/MyDrafts'
 import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
+import ErrorPage from '../domains/error/page/ErrorPage'
 
 const routes = [
   {
@@ -143,6 +144,10 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_DRAFTS,
     element: <MyDrafts />,
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ]
 
