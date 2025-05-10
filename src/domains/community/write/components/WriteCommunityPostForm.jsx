@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { createPost } from '../../service/postService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
@@ -8,6 +9,8 @@ import useAuthStore from '../../../../store/login/useAuthStore'
 
 const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -25,8 +28,10 @@ const WriteCommunityPostForm = () => {
   const onSubmit = async (data) => {
     try {
       await createPost(data)
+      alert('게시글이 등록되었습니다.')
       console.log('게시글 작성 성공')
       reset()
+      navigate('/community')
     } catch (err) {
       console.error('게시글 작성 실패', err)
     }
