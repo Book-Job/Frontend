@@ -1,16 +1,26 @@
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 import { createPost } from '../../service/postService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
+import useAuthStore from '../../../../store/login/useAuthStore'
 
 const WriteCommunityPostForm = () => {
+  const { user } = useAuthStore()
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm()
+
+  useEffect(() => {
+    if (user?.nickname) {
+      setValue('nickname', user.nickname)
+    }
+  }, [user, setValue])
 
   const onSubmit = async (data) => {
     try {
@@ -32,7 +42,6 @@ const WriteCommunityPostForm = () => {
               placeholder='닉네임을 입력하세요'
               className='w-full sm:w-[171px]'
             />
-
             {errors.nickname && (
               <span className='self-start text-red-500 text-xs mt-1'>닉네임은 필수입니다</span>
             )}
@@ -46,7 +55,7 @@ const WriteCommunityPostForm = () => {
             <JobInputBox
               {...register('title', { required: true })}
               placeholder='글 제목을 입력하세요'
-              className='w-full sm:w-[400px]'
+              className='w-full'
             />
             {errors.title && (
               <span className='self-start text-red-500 text-xs mt-1'>제목은 필수입니다</span>
@@ -57,12 +66,13 @@ const WriteCommunityPostForm = () => {
       <JobFormLine />
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
-          <div className='flex flex-col'>
+          <div className='flex flex-col w-full'>
             <textarea
               {...register('text', { required: true })}
               placeholder='내용을 입력하세요'
-              className='w-full sm:w-[686px] h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink'
+              className='w-full mx-auto h-[360px] border border-dark-gray rounded-md px-4 py-4 focus:outline-none focus:border-main-pink resize-none'
             />
+
             {errors.text && (
               <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>
             )}

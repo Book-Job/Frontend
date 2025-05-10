@@ -25,7 +25,7 @@ const WriteCommunityPost = () => {
       <WriteFormLine />
       <WriteCommunityPostForm />
       <LastFormLine />
-      <div className='flex justify-end mb-[131px]'>
+      <div className='flex justify-end'>
         <Button size='small' label='임시저장' className='mr-[14px]' />
         <PinkButton label='등록' type='submit' form='community-post-form' />
       </div>
