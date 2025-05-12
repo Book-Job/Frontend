@@ -3,6 +3,8 @@ import AppRoutes from './routes/AppRoutes'
 import PageScrollToTop from './components/common/PageScrollToTop'
 import { useEffect } from 'react'
 import useAuthStore from './store/login/useAuthStore'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const initialize = useAuthStore((state) => state.initialize)
@@ -13,6 +15,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer position='top-center' autoClose={3000} theme='colored' />
       <PageScrollToTop />
       <AppRoutes />
     </BrowserRouter>
