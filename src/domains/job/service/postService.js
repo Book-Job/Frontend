@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/axios'
+import { authApi } from '../../../services/api/Axios'
 
 //구인 글 작성
 export const createRecruitmentPost = async (postData) => {

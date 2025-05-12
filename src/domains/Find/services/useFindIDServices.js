@@ -1,4 +1,5 @@
-import { authApi } from '../../../services/api/Axios'
+import { authApi } from '../../../services/api/axios'
+import useFindIDStore from '../../../store/find/useFindIDStore'
 
 //아이디 찾기 이메일 인증 요청
 export const postFindIDEmail = async (fullEmail) => {
