@@ -1,39 +1,55 @@
-import { useForm } from 'react-hook-form'
+import { useState, useEffect } from 'react'
+import useAuthStore from '../../../../store/login/useAuthStore'
+import { postComment } from '../../service/commentService'
 
-const CommentForm = ({ boardId }) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm()
+const CommentForm = ({ boardId, onCommentAdded }) => {
+  const { user } = useAuthStore()
+  const [content, setContent] = useState('')
+  const [nickname, setNickname] = useState('')
 
-  const onSubmit = async (data) => {
+  useEffect(() => {
+    if (user?.nickname) {
+      setNickname(user.nickname)
+    }
+  }, [user])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     try {
-      console.log('댓글 데이터:', data)
-      reset()
+      await postComment(boardId, { content, nickname })
+      alert('댓글이 등록되었습니다.')
+      setContent('')
+      setNickname(user?.nickname || '')
+      if (onCommentAdded) onCommentAdded()
     } catch (err) {
-      console.error(err)
+      console.error('댓글 등록 실패:', err)
+      alert('댓글 등록 중 오류가 발생했습니다.')
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
+    <form onSubmit={handleSubmit} className='flex flex-row gap-3 w-full mt-4 mb-4'>
       <input
-        {...register('nickname', { required: '닉네임은 필수입니다.' })}
-        placeholder='닉네임을 입력하세요'
-        className='border border-dark-gray rounded-md px-3 py-2 w-[171px] h-[58px] focus:outline-none focus:border-main-pink'
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+        placeholder='닉네임'
+        className='w-[150px] h-[50px] px-4 py-2 border border-dark-gray rounded-md
+      focus:outline-none focus:border-main-pink
+      transition
+      placeholder:text-gray-400
+      text-base'
       />
-      {errors.nickname && <p className='text-red-500 text-sm'>{errors.nickname.message}</p>}
-
-      <textarea
-        {...register('content', { required: '내용을 입력하세요.' })}
-        placeholder='자유게시판에서는 닉네임 수정이 가능합니다.'
-        className='border border-dark-gray rounded-md px-3 py-2 w-[754px] h-[58px] focus:outline-none focus:border-main-pink'
+      <input
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder='댓글 내용'
+        className='h-[50px] px-4 py-2 border border-dark-gray rounded-md
+      focus:outline-none focus:border-main-pink
+      transition
+      placeholder:text-gray-400
+      text-base'
       />
-      {errors.content && <p className='text-red-500 text-sm'>{errors.content.message}</p>}
-
-      <button type='submit' className='bg-main-pink text-white px-4 py-2 rounded-md'>
+      <button type='submit' className='text-main-pink font-semibold'>
         등록
       </button>
     </form>
