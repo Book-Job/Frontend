@@ -1,11 +1,11 @@
 import WriteFormLine from '../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../job/common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
-import PinkButton from '../../../../components/web/PinkButton'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PinkButton from '../../../../components/web/PinkButton'
 const WriteCommunityPost = () => {
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
