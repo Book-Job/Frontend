@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useFindPWStore from '../../../store/find/useFindPWStore'
 import OTPInput from '../common/components/OTPInput'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { postFindPWEmail, postTemPW } from '../services/useFindPWServices'
 import { toast } from 'react-toastify'
 
@@ -16,6 +16,7 @@ const FindPwCheckIDPage = () => {
   const [userEmail, setUserEmail] = useState('')
   const { findPWMaskEmail } = useFindPWStore()
   const [isCheckingEmail, setIsCheckingEmail] = useState(false)
+  const [isEmailValid, setIsEmailValid] = useState(false)
   const [emailCheckMessage, setEmailCheckMessage] = useState('')
   const [emailCodeMessage, setEmailCodeMessage] = useState('')
   const [validationStatusTemPW, setValidationStatusTemPW] = useState(null)
@@ -25,11 +26,32 @@ const FindPwCheckIDPage = () => {
     handleSubmit,
     trigger,
     getValues,
+    watch,
     formState: { errors },
   } = useForm()
 
+  // 이메일 입력값 실시간 감지
+  const emailValue = watch('userEmail')
+  // 이메일 유효성 검사
+  useEffect(() => {
+    const validateEmail = async () => {
+      const isValid = await trigger('userEmail')
+      setIsEmailValid(isValid)
+      console.log('Email Valid:', isValid, 'Email Value:', emailValue)
+    }
+    if (emailValue) {
+      validateEmail()
+    } else {
+      setIsEmailValid(false)
+    }
+  }, [emailValue, trigger])
+
   // 임시 비밀번호 전송
   const handleEmailAuth = async () => {
+    if (isCheckingEmail) {
+      toast.info('잠시 기다려주세요. 요청이 진행 중입니다.')
+      return
+    }
     const isValid = await trigger('userEmail')
     if (isValid) {
       const email = getValues('userEmail')
@@ -60,7 +82,7 @@ const FindPwCheckIDPage = () => {
       }
     }
   }
-
+  // OTPInput에서 받은 코드 처리
   const handleTemporaryPW = async (code) => {
     try {
       const response = await postTemPW({ userEmail, code })
@@ -95,10 +117,13 @@ const FindPwCheckIDPage = () => {
     setStartTimer(false)
   }
 
-  // 전체 인증 버튼 클릭 (두 개 필드 다 검사)
-  const onSubmit = (data) => {
-    console.log('이메일, 임시비밀번호 :', data)
-    navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
+  const onSubmit = () => {
+    console.log('비밀번호 변경 성공여부 :', validationStatusTemPW)
+    if (validationStatusTemPW === 'success') {
+      navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
+    } else {
+      setEmailCodeMessage('임시 비밀번호 인증을 해주세요.')
+    }
   }
 
   return (
@@ -110,11 +135,11 @@ const FindPwCheckIDPage = () => {
           <div>
             <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
             <div className='flex my-5 text-xl'>
-              <span>본인확인 이메일로 인증 </span>{' '}
+              <span>본인확인 이메일로 인증</span>
               <span className='text-main-pink'>
-                {'('}
+                {'( '}
                 {findPWMaskEmail}
-                {')'}
+                {' )'}
               </span>
             </div>
             <div className='flex flex-col text-dark-gray'>
@@ -141,10 +166,10 @@ const FindPwCheckIDPage = () => {
                     <p className='flex text-[14px] items-start text-red-500'>
                       {errors.userEmail.message}
                     </p>
-                  )}{' '}
+                  )}
                   {emailCheckMessage && (
                     <p
-                      className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                      className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} flex items-start text-[14px]`}
                       aria-live='polite'
                     >
                       {emailCheckMessage}
@@ -155,40 +180,35 @@ const FindPwCheckIDPage = () => {
                   type='button'
                   label={buttonLabel}
                   size='small'
-                  bgColor='light-gray'
+                  bgColor={isEmailValid && !isCheckingEmail ? 'main-pink' : 'light-gray'}
+                  disabled={!isEmailValid && isCheckingEmail}
                   onClick={handleEmailAuth}
                 />
               </div>
               <div className='mt-7'>
                 <OTPInput
                   size='biggest'
-                  placeholder='이메일로 전송된 임시비밀번호를 입력해주세요'
+                  placeholder='임시비밀번호를 입력해주세요'
                   startTimer={startTimer}
                   onVerify={(code) => handleTemporaryPW(code)}
-                  {...register('temporaryPW', {
-                    required: '이메일로 전송된 임시비밀번호를 입력해주세요',
-                  })}
                 />
-                {(errors.temporaryPW || emailCodeMessage) && (
-                  <p
-                    className={`flex text-[14px] items-start ${
-                      errors.temporaryPW
-                        ? 'text-red-500'
-                        : validationStatusTemPW === 'success'
-                          ? 'text-blue-500'
-                          : 'text-red-500'
-                    }`}
-                    aria-live='polite'
-                  >
-                    {errors.temporaryPW?.message || emailCodeMessage}
-                  </p>
-                )}
+                <div className='flex items-start'>
+                  {emailCodeMessage && (
+                    <p
+                      className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                      aria-live='polite'
+                    >
+                      {emailCodeMessage}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className='mt-7'>
                 <Button
                   type='submit'
                   label='새로운 비밀번호 생성'
                   size='biggest'
+                  // onClick={() => onSubmit()}
                   disabled={validationStatusTemPW !== 'success'}
                   bgColor={validationStatusTemPW === 'success' ? 'main-pink' : 'light-gray'}
                 />

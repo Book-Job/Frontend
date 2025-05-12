@@ -57,7 +57,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
           type='text'
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder='인증번호 입력'
+          placeholder={placeholder}
           disabled={isExpired}
           className=' border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none w-full max-w-[575px] h-[58px]'
         />
