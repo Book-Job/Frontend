@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/Axios'
+import { authApi } from '../../../services/api/axios'
 
 //가입 아이디 중복 확인인
 export const getJoinCheckId = async (nowUserID) => {
@@ -105,7 +105,7 @@ export const postJoinData = async (filteredData) => {
         },
       },
     )
-  
+
     return response
   } catch (error) {
     console.error('회원가입 중 오류:', error)

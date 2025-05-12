@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import SortDropdown from '../../../../components/common/SortDropdown'
 
-const JobPostSortDropDown = ({ className = '' }) => {
+const JobPostSortDropDown = ({ className = '', onSortChange }) => {
   const [selectedSort, setSelectedSort] = useState('latest')
 
   const handleSortChange = (value) => {
     setSelectedSort(value)
+    onSortChange?.(value)
   }
 
   const sortOptions = [
