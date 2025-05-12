@@ -1,4 +1,4 @@
-import { publicApi, authApi } from '../../../services/api/Axios'
+import { publicApi, authApi } from '../../../services/api/axios'
 
 // 전체 글 조회
 export const getAllPosts = async () => {
