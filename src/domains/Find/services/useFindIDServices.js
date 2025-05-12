@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/Axios'
+import { authApi } from '../../../services/api/axios'
 
 //아이디 찾기 이메일 인증 요청
 export const postFindIDEmail = async (fullEmail) => {
