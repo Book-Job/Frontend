@@ -22,6 +22,8 @@ import MyScrap from '../domains/my/detail/MyScrap'
 import MyPost from '../domains/my/detail/MyPost'
 import MyDrafts from '../domains/my/detail/MyDrafts'
 import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
+import ErrorPage from '../domains/error/page/ErrorPage'
+import DetailCommunityPage from '../domains/community/detail/page/DetailCommunityPage'
 
 const routes = [
   {
@@ -49,6 +51,10 @@ const routes = [
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
     element: <WriteCommunityPostPage />,
     label: '자유게시판 글 작성',
+  },
+  {
+    path: '/community/post/:id',
+    element: <DetailCommunityPage />,
   },
   {
     path: ROUTER_PATHS.USER_POST,
@@ -143,6 +149,10 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_DRAFTS,
     element: <MyDrafts />,
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ]
 

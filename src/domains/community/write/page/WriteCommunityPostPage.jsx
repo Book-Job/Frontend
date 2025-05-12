@@ -1,11 +1,11 @@
 import WriteFormLine from '../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../job/common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
-import PinkButton from '../../../../components/web/PinkButton'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PinkButton from '../../../../components/web/PinkButton'
 const WriteCommunityPost = () => {
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
@@ -25,7 +25,7 @@ const WriteCommunityPost = () => {
       <WriteFormLine />
       <WriteCommunityPostForm />
       <LastFormLine />
-      <div className='flex justify-end mb-[131px]'>
+      <div className='flex justify-end'>
         <Button size='small' label='임시저장' className='mr-[14px]' />
         <PinkButton label='등록' type='submit' form='community-post-form' />
       </div>
