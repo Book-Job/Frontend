@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/Axios'
+import { authApi } from '../../../services/api/axios'
 
 //비밀번호 찾기 아이디 존재여부 확인
 export const getFindPW = async (ID) => {
