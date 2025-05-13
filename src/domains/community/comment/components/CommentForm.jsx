@@ -51,13 +51,13 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder='자유게시판에서는 닉네임 수정이 가능합니다.'
-          className='h-[50px] w-full px-4 py-2 pr-[70px] border border-dark-gray rounded-[5px] focus:border-main-pink
+          className='h-[50px] w-full px-4 py-2 pr-[70px] border border-dark-gray rounded-[5px] focus:outline-none focus:border-main-pink
         placeholder:text-dark-gray
         text-base'
         />
         <button
           type='submit'
-          className='absolute top-1/2 right-3 -translate-y-1/2 text-[14px] text-main-pink font-semibold px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+          className='absolute top-1/2 right-3 -translate-y-1/2 text-[15px] text-main-pink font-semibold px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
           style={{ height: '36px' }}
         >
           등록
