@@ -35,18 +35,15 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
         placeholder='닉네임'
         className='w-[150px] h-[50px] px-4 py-2 border border-dark-gray rounded-md
       focus:outline-none focus:border-main-pink
-      transition
-      placeholder:text-gray-400
+      placeholder:text-dark-gray
       text-base'
       />
       <input
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder='댓글 내용'
-        className='h-[50px] px-4 py-2 border border-dark-gray rounded-md
-      focus:outline-none focus:border-main-pink
-      transition
-      placeholder:text-gray-400
+        placeholder='자유게시판에서는 닉네임 수정이 가능합니다.'
+        className='h-[50px] w-full px-4 py-2 border border-dark-gray rounded-md focus:border-main-pink
+      placeholder:text-dark-gray
       text-base'
       />
       <button type='submit' className='text-main-pink font-semibold'>
