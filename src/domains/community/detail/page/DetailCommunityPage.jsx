@@ -22,6 +22,7 @@ const DetailCommunityPage = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [editedPost, setEditedPost] = useState('')
   const [comments, setComments] = useState([])
+  const [isCommentOpen, setIsCommentOpen] = useState(true)
 
   useEffect(() => {
     if (post) {
@@ -81,8 +82,6 @@ const DetailCommunityPage = () => {
   const handleBlockUserClick = () => {
     alert('이 사용자를 차단합니다.')
   }
-  console.log('post:', post)
-  console.log('post.isWriter:', post?.isWriter, typeof post?.isWriter)
 
   if (error) return <div className='text-center text-red-500 mt-10'>오류가 발생했어요.</div>
   if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
@@ -148,11 +147,19 @@ const DetailCommunityPage = () => {
       <div className='w-full sm:w-[870px] h-[1px] bg-light-gray mb-[20px]' />
 
       <div>
-        <CommentHeader />
+        <CommentHeader
+          isOpen={isCommentOpen}
+          toggleOpen={() => setIsCommentOpen((prev) => !prev)}
+          commentCount={comments.length}
+        />
+        <CommentForm boardId={id} onCommentAdded={fetchComments} />
+        {isCommentOpen && (
+          <>
+            <CommentList comments={comments} onCommentChanged={fetchComments} />
+          </>
+        )}
       </div>
 
-      <CommentForm boardId={id} onCommentAdded={fetchComments} />
-      <CommentList comments={comments} />
       <LastFormLine />
     </div>
   )
