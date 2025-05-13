@@ -46,7 +46,7 @@ const WorkBoard = ({
   }
 
   return (
-    <div className={`w-[300px] h-[200px] mb-[20px] ${className}`}>
+    <div className={`w-[290px] h-[200px] mb-[20px] ${className}`}>
       <img
         src={bookmarkIcon}
         alt='bookmark'

@@ -12,7 +12,7 @@ import CommentHeader from '../../comment/components/CommentHeader'
 import CommentForm from '../../comment/components/CommentForm'
 import CommentList from '../../comment/components/CommentList'
 import { deletePost, editPost } from '../../service/postService'
-import { getAllComment } from '../../service/commentService'
+import useCommentStore from '../../comment/store/useCommentStore'
 
 const DetailCommunityPage = () => {
   const { user } = useAuthStore()
@@ -21,28 +21,19 @@ const DetailCommunityPage = () => {
   const navigate = useNavigate()
   const [isEditing, setIsEditing] = useState(false)
   const [editedPost, setEditedPost] = useState('')
-  const [comments, setComments] = useState([])
+  const [isCommentOpen, setIsCommentOpen] = useState(true)
+
+  const comments = useCommentStore((state) => state.comments)
+  const fetchComments = useCommentStore((state) => state.fetchComments)
 
   useEffect(() => {
-    if (post) {
-      setEditedPost(post.text)
-    }
+    if (post) setEditedPost(post.text)
   }, [post])
 
-  const fetchComments = async () => {
-    try {
-      if (!id) return
-      const fetchedComments = await getAllComment(id)
-      console.log('불러온 댓글 목록:', fetchedComments)
-      setComments(fetchedComments)
-    } catch (err) {
-      console.error('댓글 불러오기 실패:', err)
-      setComments([])
-    }
-  }
-
   useEffect(() => {
-    if (id) fetchComments()
+    if (id) {
+      fetchComments(id)
+    }
   }, [id])
 
   if (loading) {
@@ -81,8 +72,6 @@ const DetailCommunityPage = () => {
   const handleBlockUserClick = () => {
     alert('이 사용자를 차단합니다.')
   }
-  console.log('post:', post)
-  console.log('post.isWriter:', post?.isWriter, typeof post?.isWriter)
 
   if (error) return <div className='text-center text-red-500 mt-10'>오류가 발생했어요.</div>
   if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
@@ -148,12 +137,16 @@ const DetailCommunityPage = () => {
       <div className='w-full sm:w-[870px] h-[1px] bg-light-gray mb-[20px]' />
 
       <div>
-        <CommentHeader />
+        <CommentHeader
+          isOpen={isCommentOpen}
+          toggleOpen={() => setIsCommentOpen((prev) => !prev)}
+          commentCount={comments.length}
+        />
+        <CommentForm boardId={id} onCommentAdded={() => fetchComments(id)} />
+        {isCommentOpen && <CommentList boardId={id} />}
+        <LastFormLine />
+        <h2 className='font-bold text-xl mb-4 flex self-start'>관련 글</h2>
       </div>
-
-      <CommentForm boardId={id} onCommentAdded={fetchComments} />
-      <CommentList comments={comments} />
-      <LastFormLine />
     </div>
   )
 }
