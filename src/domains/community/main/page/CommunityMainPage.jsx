@@ -49,7 +49,7 @@ const CommunityMainPage = () => {
               검색어와 일치하는 결과가 없습니다.
             </div>
           ) : (
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
               {displayedPosts.map((post) => (
                 <div key={post.boardId} className='min-w-[300px]'>
                   <FreeBoard
