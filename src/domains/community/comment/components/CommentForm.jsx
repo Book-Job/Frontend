@@ -15,14 +15,22 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!nickname.trim()) {
+      alert('닉네임을 입력해주세요.')
+      return
+    }
+    if (!content.trim()) {
+      alert('댓글 내용을 입력해주세요.')
+      return
+    }
     try {
       await postComment(boardId, { content, nickname })
       alert('댓글이 등록되었습니다.')
       setContent('')
       setNickname(user?.nickname || '')
       if (onCommentAdded) onCommentAdded()
-    } catch (err) {
-      console.error('댓글 등록 실패:', err)
+    } catch (error) {
+      console.error('댓글 등록 실패:', error)
       alert('댓글 등록 중 오류가 발생했습니다.')
     }
   }
@@ -33,25 +41,28 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
         placeholder='닉네임'
-        className='w-[150px] h-[50px] px-4 py-2 border border-dark-gray rounded-md
+        className='w-[150px] h-[50px] px-4 py-2 border border-dark-gray rounded-[5px]
       focus:outline-none focus:border-main-pink
-      transition
-      placeholder:text-gray-400
+      placeholder:text-dark-gray
       text-base'
       />
-      <input
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder='댓글 내용'
-        className='h-[50px] px-4 py-2 border border-dark-gray rounded-md
-      focus:outline-none focus:border-main-pink
-      transition
-      placeholder:text-gray-400
-      text-base'
-      />
-      <button type='submit' className='text-main-pink font-semibold'>
-        등록
-      </button>
+      <div className='relative w-full'>
+        <input
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder='자유게시판에서는 닉네임 수정이 가능합니다.'
+          className='h-[50px] w-full px-4 py-2 pr-[70px] border border-dark-gray rounded-[5px] focus:outline-none focus:border-main-pink
+        placeholder:text-dark-gray
+        text-base'
+        />
+        <button
+          type='submit'
+          className='absolute top-1/2 right-3 -translate-y-1/2 text-[15px] text-main-pink font-semibold px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+          style={{ height: '36px' }}
+        >
+          등록
+        </button>
+      </div>
     </form>
   )
 }

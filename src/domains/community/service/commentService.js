@@ -25,5 +25,13 @@ export const getAllComment = async (boardId, lastComment = null) => {
 }
 
 //댓글 수정
+export const editCommentService = async (boardId, commentId, content) => {
+  return authApi.patch(`/boards/${boardId}/comments/${commentId}`, {
+    content,
+  })
+}
 
 //댓글 삭제
+export const deleteCommentService = async (boardId, commentId) => {
+  return authApi.delete(`/boards/${boardId}/comments/${commentId}`)
+}

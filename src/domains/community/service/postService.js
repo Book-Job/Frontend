@@ -21,7 +21,7 @@ export const createPost = async (postData) => {
 
 // 글 상세 조회
 export const getDetailPost = async (id) => {
-  const response = await publicApi.get(`/boards/${id}`)
+  const response = await authApi.get(`/boards/${id}`)
   return response.data.data
 }
 
