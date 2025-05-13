@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PinkButton from '../../../../components/web/PinkButton'
 const WriteCommunityPost = () => {
+  const { user } = useAuthStore()
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
 
