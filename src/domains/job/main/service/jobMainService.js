@@ -46,10 +46,6 @@ export const getJobPosts = async (lastId, order, keyword) => {
       params,
     })
     const data = response.data.data
-
-    console.log('구직 data:', data)
-    console.log('구직 jobSeekings:', data.jobSeekings)
-
     const postsWithTag = (Array.isArray(data.jobSeekings) ? data.jobSeekings : []).map((post) => ({
       ...post,
       jobsearch1: true,
