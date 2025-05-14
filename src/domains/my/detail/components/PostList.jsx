@@ -3,7 +3,7 @@ import { useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
 import BoardCategory from '../../../../components/web/BoardCategory'
 
-const PostList = ({ mockData }) => {
+const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
   const { choiceBoard } = useBoardStore()
 
@@ -13,10 +13,10 @@ const PostList = ({ mockData }) => {
     )
   }
 
-  const isAllChecked = mockData.length === checkedItems.length
+  const isAllChecked = boardData.length === checkedItems.length
 
   const toggleAll = () => {
-    setCheckedItems(isAllChecked ? [] : mockData.map((item) => item.id))
+    setCheckedItems(isAllChecked ? [] : boardData.map((item) => item.boardId || item.recruitmentId))
   }
 
   const deleteItem = (id) => {
@@ -50,27 +50,27 @@ const PostList = ({ mockData }) => {
             <th>
               날짜 <span className='text-[10px]'>▲</span>
             </th>
-            {mockData.some((item) => item.category !== undefined) && <th>카테고리</th>}
-            {mockData.some((item) => item.comment !== undefined) && <th>댓글</th>}
-            {mockData.some((item) => item.view !== undefined) && <th>조회수</th>}
+            {boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
+            {boardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
+            {boardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>}
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {mockData.map((item, index) => (
-            <tr key={item.id} className='h-12 border-b'>
+          {boardData.map((item, index) => (
+            <tr key={index} className='h-12 border-b'>
               <td>
                 <input
                   type='checkbox'
-                  checked={checkedItems.includes(item.id)}
-                  onChange={() => toggleCheck(item.id)}
+                  checked={checkedItems.includes(item.boardId || item.recruitmentId)}
+                  onChange={() => toggleCheck(item.boardId || item.recruitmentId)}
                 />
               </td>
               <td>{index + 1}</td>
               <td>{item.title}</td>
-              <td>{item.date}</td>
-              {item.category !== undefined &&
-                ( item.category === '구인'? (
+              <td>{item.createdAt.split('T')[0]}</td>
+              {item.recruitmentCategory !== undefined &&
+                (item.recruitmentCategory === '구인' ? (
                   <td>
                     <BoardCategory
                       label={'구인'}
@@ -89,18 +89,18 @@ const PostList = ({ mockData }) => {
                     />
                   </td>
                 ))}
-              {item.comment !== undefined && (
+              {item.commentCount !== undefined && (
                 <td>
                   <div className='flex items-center justify-center h-4 gap-1 sm:gap-2'>
                     <img src={commentImg} alt='commentImg' className='h-3 sm:h-4' />
-                    {item.comment}
+                    {item.commentCount}
                   </div>
                 </td>
               )}
-              {item.view !== undefined && <td>{item.view}</td>}
+              {item.viewCount !== undefined && <td>{item.viewCount}</td>}
               <td>
                 <button
-                  onClick={() => deleteItem(item.id)}
+                  onClick={() => deleteItem(item.boardId || item.recruitmentId)}
                   className='text-light-gray hover:text-main-pink'
                 >
                   ✕
