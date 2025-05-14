@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { searchPosts } from './postService'
+import { getAllPosts } from './postService'
 
 const useSearchPosts = () => {
   const [searchResults, setSearchResults] = useState([])
@@ -8,16 +8,25 @@ const useSearchPosts = () => {
 
   const handleSearch = async (searchTitle) => {
     if (!searchTitle) return
-    console.log('보내는 검색어:', searchTitle) // 추가
+
     setHasSearched(true)
     setSearchLoading(true)
+
     try {
-      const res = await searchPosts({ title: searchTitle })
-      console.log('받은 데이터', res)
-      setSearchResults(res?.data?.boards || [])
+      const res = await getAllPosts()
+      console.log('받은 데이터:', res)
+
+      if (Array.isArray(res.boards)) {
+        const filteredResults = res.boards.filter(
+          (post) => post.title.includes(searchTitle) || post.text.includes(searchTitle),
+        )
+        setSearchResults(filteredResults)
+      } else {
+        console.error('받은 데이터의 boards는 배열이 아닙니다:', res.boards)
+        setSearchResults([])
+      }
     } catch (err) {
-      console.error('검색 실패', err)
-      console.error('에러 응답:', err?.response?.data) // 추가
+      console.error('검색 실패:', err)
     } finally {
       setSearchLoading(false)
     }
