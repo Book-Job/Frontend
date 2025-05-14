@@ -11,7 +11,8 @@ const ROUTER_PATHS = {
   WRITE_RECRUITMENT_POST: '/job/recruitment/post', //구인 글 작성
   WRITE_JOB_SEARCH_POST: '/job/job-search/post', //구직 글 작성
   JOB_SEARCH_POST_DETAIL: '/job/job-search/post/:id', //구직 글 상세 조회
-  RECRUITMENT_POST_DETAIL: '//job/recruitment/post/:id', //구인 글 상세 조회
+  RECRUITMENT_POST_DETAIL: '/job/recruitment/post/:id', //구인 글 상세 조회
+  RECRUITMENT_POST_EDIT: '/job/recruitment/edit/:id', //구인 글 수정
   FIND_ID: '/find/id',
   FIND_ID_COMPLETE_PAGE: '/find/id/complete-page',
   FIND_PW: '/find/pW',
