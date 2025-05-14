@@ -2,7 +2,7 @@ import ROUTER_PATHS from './RouterPath'
 import JobMainPage from '../domains/job/main/page/JobMainPage'
 import CommunityMainPage from '../domains/community/main/page/CommunityMainPage'
 import WriteCommunityPostPage from '../domains/community/write/page/WriteCommunityPostPage'
-import WriteRecruitmentPostPage from '../domains/job/recruitment/page/WriteRecruitmentPostPage'
+import WriteRecruitmentPostPage from '../domains/job/recruitment/write/page/WriteRecruitmentPostPage'
 import WriteJobSearchPostPage from '../domains/job/search/page/WriteJobSearchPostPage'
 import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
@@ -24,6 +24,8 @@ import MyDrafts from '../domains/my/detail/MyDrafts'
 import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
 import ErrorPage from '../domains/error/page/ErrorPage'
 import DetailCommunityPage from '../domains/community/detail/page/DetailCommunityPage'
+import RecruitmentDetailPage from '../domains/job/recruitment/detail/page/RecruitmentDetailPage'
+import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecruitmentPostPage'
 
 const routes = [
   {
@@ -72,6 +74,16 @@ const routes = [
     label: '구인 글 작성',
   },
   {
+    path: '/job/recruitment/post/:id',
+    element: <RecruitmentDetailPage />,
+    label: '구인 상세 글',
+  },
+  {
+    path: '/job/recruitment/edit/:id',
+    element: <EditRecruitmentPost />,
+    label: '구인 글 수정',
+  },
+  {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
     label: '구직 글 작성',
@@ -79,7 +91,7 @@ const routes = [
   {
     path: '/job/job-search/post/:id',
     element: <DetailJobSearchPost />,
-    label: '구직 글',
+    label: '구직 상세 글',
   },
   {
     path: ROUTER_PATHS.FIND_ID,
