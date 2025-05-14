@@ -8,7 +8,7 @@ import { useState } from 'react'
 import MobileSidebar from './MobileSidebar'
 import useAuthStore from '../../store/login/useAuthStore'
 
-const MobileMainHeader = ({ login }) => {
+const MobileMainHeader = () => {
   const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
@@ -16,9 +16,36 @@ const MobileMainHeader = ({ login }) => {
     setIsSidebarOpen(!isSidebarOpen)
   }
   const { isAuthenticated, user, logout } = useAuthStore()
+  const [selectedOption, setSelectedOption] = useState('default')
 
-  const handleUserClick = () => {
-    logout()
+  // 드롭다운 옵션
+  const options = [
+    ...(isAuthenticated && user
+      ? [{ value: 'default', label: `${user.nickname}님`, disabled: false }]
+      : []),
+    ...(isAuthenticated
+      ? [
+          { value: 'mypage', label: '마이페이지' },
+          { value: 'logout', label: '로그아웃' },
+        ]
+      : [
+          { value: 'login', label: '로그인' },
+          { value: 'join', label: '회원가입' },
+        ]),
+  ]
+  // 드롭다운 선택 핸들러
+  const handleOptionChange = (value) => {
+    setSelectedOption(value)
+    if (value === 'login') {
+      navigate(ROUTER_PATHS.LOGIN_MAIN)
+    } else if (value === 'join') {
+      navigate(ROUTER_PATHS.JOIN)
+    } else if (value === 'mypage') {
+      navigate(ROUTER_PATHS.MY_PAGE)
+    } else if (value === 'logout') {
+      logout()
+    }
+    setSelectedOption('default')
   }
   return (
     <div className='flex w-full h-[50px] px-5 items-center justify-between'>
@@ -30,26 +57,31 @@ const MobileMainHeader = ({ login }) => {
       </div>
       <div className='flex text-base'>
         {isAuthenticated && user ? (
-          <button
-            onClick={toggleSidebar}
-            className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'
-          >
-            <img src={babyChick} alt='arrowDown' className='w-5 h-5 mr-4' />
-            <span className='font-bold '>{user.nickname}님</span>
-            <img src={arrowDown} alt='arrowDown' className='w-3 h-3 ml-2' />
+          <button className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'>
+            <img src={babyChick} alt='babyChick' className='w-5 h-5' />
+            <select
+              value={selectedOption}
+              onChange={(e) => handleOptionChange(e.target.value)}
+              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[30px] px-2  outline-none'
+            >
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </button>
         ) : (
           <div className='flex gap-5'>
             <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold row'>
               로그인
             </button>
-            <button onClick={toggleSidebar}>
-              <img src={mobileMenu} alt='mobileMenu' className='w-5 h-5' />
-            </button>
           </div>
         )}
+        <button onClick={toggleSidebar}>
+          <img src={mobileMenu} alt='mobileMenu' className='w-5 h-5 ml-4 ' />
+        </button>
       </div>
-
       {isSidebarOpen && <MobileSidebar onClose={toggleSidebar} />}
     </div>
   )
