@@ -38,7 +38,7 @@ const MainPage = () => {
         {isLoading ? (
           <div className='text-center'>로딩 중...</div>
         ) : error ? (
-          <div className='text-center text-red-500'>
+          <div className='flex flex-col text-center text-red-500'>
             {error}
             <button
               onClick={() => (selectedBoard === '자유게시판' ? fetchFreeBest() : fetchJobBest())}

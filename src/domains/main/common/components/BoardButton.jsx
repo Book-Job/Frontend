@@ -3,18 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import commonTime from '../../../../assets/icons/common/common_time.svg'
 
 const BoardButton = ({ onBoardSelect, selectedBoard }) => {
-  const boardButton = [
-    {
-      name: '자유',
-      // path: ROUTER_PATHS.LOGIN_MAIN,
-    },
-    {
-      name: '구인구직',
-      // path: '/',
-    },
-  ]
+  const boardButton = [{ name: '자유' }, { name: '구인구직' }]
   const navigate = useNavigate()
-  // const today = new Date().toISOString().split('T')[0]
   const today = new Date()
   const formattedDate = `${today.getMonth() + 1}월 ${today.getDate()}일`
 
@@ -33,7 +23,6 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
             return (
               <button
                 key={index}
-                // onClick={() => navigate(path)}
                 onClick={() => handleClick(path, name)}
                 className={`sm:w-[157px] w-[100px] sm:h-[47px] h-[37px] border rounded-full sm:text-2xl text-lg ${
                   isSelected ? 'bg-main-pink text-white' : 'bg-light-gray text-black'
