@@ -5,16 +5,17 @@ const JobPostList = ({ posts, navigate }) => {
   const { user } = useAuthStore()
 
   const loggedInUserId = user ? user.userId : null
+  const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 
   return (
     <>
-      <div className='hidden sm:flex flex-wrap gap-4'>
-        {posts.map((post) => (
+      {posts.map((post) => (
+        <div className='hidden sm:block w-full' key={post.id}>
           <WorkBoard
             key={post.id}
             title={post.title}
             name={post.nickname}
-            date={post.createdAt}
+            date={formatDate(post.createdAt)}
             like={post.like}
             popular1={post.popular1}
             joboffer1={post.joboffer1}
@@ -26,7 +27,7 @@ const JobPostList = ({ posts, navigate }) => {
             userId={loggedInUserId}
             onClick={() => {
               if (post.joboffer1) {
-                navigate(`/job-offer/${post.id}`)
+                navigate(`/job/job-offer/${post.id}`)
               } else if (post.jobsearch1) {
                 navigate(`/job/job-search/post/${post.id}`)
               } else {
@@ -34,16 +35,16 @@ const JobPostList = ({ posts, navigate }) => {
               }
             }}
           />
-        ))}
-      </div>
+        </div>
+      ))}
 
-      <div className='block sm:hidden flex flex-wrap gap-4 mt-4'>
+      <div className='block sm:hidden flex flex-wrap gap-4 mt-4 ml-4'>
         {posts.map((post) => (
           <MobileWorkBoard
             key={post.id}
             title={post.title}
             name={post.nickname}
-            date={post.createdAt}
+            date={formatDate(post.createdAt)}
             like={post.like}
             popular1={post.popular1}
             joboffer1={post.joboffer1}
@@ -55,7 +56,7 @@ const JobPostList = ({ posts, navigate }) => {
             view={post.viewCount}
             onClick={() => {
               if (post.joboffer1) {
-                navigate(`/job-offer/${post.id}`)
+                navigate(`/job/recruitment/post/${post.id}`)
               } else if (post.jobsearch1) {
                 navigate(`/job/job-search/post/${post.id}`)
               } else {
