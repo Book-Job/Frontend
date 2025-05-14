@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
-import useScrapStore from '../../domains/job/common/store/scrap/useScrapStore'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -9,9 +7,9 @@ import popular from '../../assets/icons/common/common_tag_popular.svg'
 import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
-import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
 import TagIcon from './TagIcon'
 import ShareViews from './ShareViews'
+
 const WorkBoard = ({
   title,
   name,
@@ -29,31 +27,16 @@ const WorkBoard = ({
   view,
   className,
 }) => {
-  const { scraps, toggleScrap, fetchScraps } = useScrapStore()
-
-  useEffect(() => {
-    if (userId) {
-      fetchScraps(userId)
-    }
-  }, [userId])
-
-  const isScrapped = scraps.has(postId)
-  const bookmarkIcon = isScrapped ? bookmarkPink : bookmarkGray
-
-  const handleBookmarkClick = (e) => {
-    e.stopPropagation()
-    toggleScrap(userId, postId)
-  }
+  const bookmarkIcon = bookmarkGray
 
   return (
     <div className={`w-[290px] h-[200px] mb-[20px] ${className}`}>
       <img
         src={bookmarkIcon}
         alt='bookmark'
-        onClick={handleBookmarkClick}
         className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] cursor-pointer'
       />
-      <div className='flex flex-col h-full  border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
+      <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
         <div className='flex-row'>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 === true ? <TagIcon label='인기 글' icon={popular} /> : ''}
@@ -67,8 +50,8 @@ const WorkBoard = ({
             {title}
           </div>
         </div>
-        <div className='flex-row  text-dark-gray text-[14px]'>
-          <div onClick={onClick} className='flex justify-end font-bold '>
+        <div className='flex-row text-dark-gray text-[14px]'>
+          <div onClick={onClick} className='flex justify-end font-bold'>
             {name}
           </div>
           <hr className='my-1 border-dark-gray' />
@@ -99,4 +82,5 @@ WorkBoard.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.number.isRequired,
 }
+
 export default WorkBoard
