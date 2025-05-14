@@ -48,7 +48,6 @@ const BestList = ({ boardName, bestList }) => {
           )
         })}
       </div>
-      {/* <div className='w-[2px] h-auto bg-light-gray'>sss</div> */}
     </div>
   )
 }
