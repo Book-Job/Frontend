@@ -6,3 +6,7 @@ export const jobCategories = [
   { value: 'SUPPORT', label: '서포트' },
   { value: 'ETC', label: '기타' },
 ]
+export function getJobCategoryLabel(value) {
+  const found = jobCategories.find((item) => item.value === value)
+  return found ? found.label : value
+}
