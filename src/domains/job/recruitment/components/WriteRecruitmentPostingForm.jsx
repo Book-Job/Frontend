@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 import { createRecruitmentPost } from '../../service/postService'
 import JobFormLine from '../../common/components/JobFormLine'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
@@ -9,21 +10,35 @@ import JobCategory from '../../common/components/form/JobCategory'
 import ClosingDate from './form/ClosingDate'
 import CompanyWebsite from './form/CompanyWebsite'
 import WorkPlace from './form/WorkPlace'
+import { useNavigate } from 'react-router-dom'
 import Experience from './form/Experience'
+import useAuthStore from '../../../../store/login/useAuthStore'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 
 const WriteRecruitmentPostingForm = () => {
+  const { user } = useAuthStore()
+  const navigate = useNavigate()
   const {
     register,
+    reset,
+    setValue,
     handleSubmit,
     watch,
-    setValue,
     formState: { errors },
   } = useForm()
+
+  useEffect(() => {
+    if (user?.nickname) {
+      setValue('writer', user.nickname)
+    }
+  }, [user, setValue])
 
   const onSubmit = async (data) => {
     try {
       await createRecruitmentPost(data)
-      console.log('게시글 작성 성공')
+      alert('게시글이 등록되었습니다.')
+      reset()
+      navigate(ROUTER_PATHS.JOB_MAIN)
     } catch (err) {
       console.error('게시글 작성 실패', err)
     }
@@ -40,7 +55,7 @@ const WriteRecruitmentPostingForm = () => {
       <JobFormLine />
 
       <div className='my-[30px]'>
-        <ClosingDate register={register} />
+        <ClosingDate register={register} setValue={setValue} />
       </div>
 
       <JobFormLine />
