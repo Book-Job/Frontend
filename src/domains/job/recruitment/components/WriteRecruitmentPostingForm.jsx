@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
-import { createRecruitmentPost } from '../../service/postService'
 import JobFormLine from '../../common/components/JobFormLine'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
 import PostTitle from '../../common/components/form/PostTitle'
@@ -10,14 +9,11 @@ import JobCategory from '../../common/components/form/JobCategory'
 import ClosingDate from './form/ClosingDate'
 import CompanyWebsite from './form/CompanyWebsite'
 import WorkPlace from './form/WorkPlace'
-import { useNavigate } from 'react-router-dom'
 import Experience from './form/Experience'
 import useAuthStore from '../../../../store/login/useAuthStore'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
 
-const WriteRecruitmentPostingForm = () => {
+const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
   const { user } = useAuthStore()
-  const navigate = useNavigate()
   const {
     register,
     reset,
@@ -25,24 +21,19 @@ const WriteRecruitmentPostingForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm({ defaultValues })
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues)
+    }
+  }, [defaultValues, reset])
 
   useEffect(() => {
     if (user?.nickname) {
       setValue('writer', user.nickname)
     }
   }, [user, setValue])
-
-  const onSubmit = async (data) => {
-    try {
-      await createRecruitmentPost(data)
-      alert('게시글이 등록되었습니다.')
-      reset()
-      navigate(ROUTER_PATHS.JOB_MAIN)
-    } catch (err) {
-      console.error('게시글 작성 실패', err)
-    }
-  }
 
   return (
     <form id='recruitment-post-form' onSubmit={handleSubmit(onSubmit)}>
