@@ -24,7 +24,7 @@ export default [
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      prettier: prettierPlugin, // ✅ Prettier 플러그인 추가
+      prettier: prettierPlugin,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -35,8 +35,8 @@ export default [
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 
-      'prettier/prettier': 'warn', // ✅ Prettier 적용
+      'prettier/prettier': 'warn',
     },
   },
-  prettierConfig, // ✅ Prettier 설정 적용
+  prettierConfig,
 ]

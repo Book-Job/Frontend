@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
-
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
 
-const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => {
+const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, view1 }) => {
   const [showButton, setShowButton] = useState(false)
   const navigate = useNavigate()
 
@@ -19,9 +18,13 @@ const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => 
     navigate(`/user-posts/${name}`)
   }
 
+  const goToDetailPage = () => {
+    navigate(`/community/post/${boardId}`)
+  }
+
   return (
-    <div className='w-[300px]'>
-      <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between'>
+    <div className='w-[300px]' onClick={goToDetailPage}>
+      <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[25px] pt-[25px] pb-[20px] justify-between cursor-pointer'>
         <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
           <div className='mt-[10px] text-[16px] line-clamp-2'>{content}</div>
@@ -60,6 +63,7 @@ const FreeBoard = ({ title, content, name, date, onClick, comment1, view1 }) => 
 }
 
 FreeBoard.propTypes = {
+  boardId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
