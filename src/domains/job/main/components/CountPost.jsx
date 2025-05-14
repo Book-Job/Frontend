@@ -1,4 +1,4 @@
-const CountPost = () => {
+/*const CountPost = () => {
   return (
     <div className='flex justify-between items-center px-7 mt-4 text-xs sm:text-sm md:text-[15px] font-semibold'>
       <span>오늘 5건</span>
@@ -8,4 +8,4 @@ const CountPost = () => {
   )
 }
 
-export default CountPost
+export default CountPost*/
