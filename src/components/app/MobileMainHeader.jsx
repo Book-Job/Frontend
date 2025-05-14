@@ -35,7 +35,7 @@ const MobileMainHeader = ({ login }) => {
             className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'
           >
             <img src={babyChick} alt='arrowDown' className='w-5 h-5 mr-4' />
-            <span className='font-bold '>{user.sub}님</span>
+            <span className='font-bold '>{user.nickname}님</span>
             <img src={arrowDown} alt='arrowDown' className='w-3 h-3 ml-2' />
           </button>
         ) : (

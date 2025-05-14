@@ -1,20 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import issueFire from '../../../../assets/icons/common/common_issue_fire.svg'
 import comment from '../../../../assets/icons/common/comment.svg'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
 const BestList = ({ boardName, bestList }) => {
-  const bestList22 = [
-    {
-      title: '오늘 회사에서 제안 받았어요',
-      path: '/',
-      commentNum: 123,
-    },
-    {
-      title: '여기 어때요?',
-      path: ROUTER_PATHS.LOGIN_MAIN,
-      commentNum: 123,
-    },
-  ]
   const navigate = useNavigate()
 
   return (
