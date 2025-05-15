@@ -27,7 +27,7 @@ const JobPostList = ({ posts, navigate }) => {
             userId={loggedInUserId}
             onClick={() => {
               if (post.joboffer1) {
-                navigate(`/job/job-offer/${post.id}`)
+                navigate(`/job/recruitment/post/${post.id}`)
               } else if (post.jobsearch1) {
                 navigate(`/job/job-search/post/${post.id}`)
               } else {
