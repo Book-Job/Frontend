@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
+import ROUTER_PATHS from '../../routes/RouterPath'
 
 const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount, viewCount }) => {
   const [showButton, setShowButton] = useState(false)
@@ -14,8 +15,9 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
     setShowButton((prev) => !prev)
   }
 
-  const goToAuthorPosts = () => {
-    navigate(`/user-posts/${name}`)
+  const goToAuthorPosts = (e) => {
+    e.stopPropagation()
+    navigate(ROUTER_PATHS.USER_POST)
   }
 
   const goToDetailPage = () => {
@@ -43,7 +45,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
 
               {showButton && (
                 <button
-                  onClick={goToAuthorPosts}
+                  onClick={(e) => goToAuthorPosts(e)}
                   className='absolute left-1/2 -translate-x-1/2 top-[100%] mt-[1px] bg-white text-xs text-black px-2 py-[2px] rounded-md border border-gray-300 whitespace-nowrap shadow-md'
                 >
                   작성글 보기
