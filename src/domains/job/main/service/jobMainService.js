@@ -2,7 +2,6 @@
 import { publicApi } from '../../../../services/api/axios'
 
 export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
-  console.log('getAllRecruitmentPosts 호출됨', lastId, order, keyword)
   try {
     const params = { last: lastId, order }
     if (keyword && keyword.trim() !== '') {
