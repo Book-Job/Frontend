@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const PinkButton = ({ label, type: button, ...props }) => {
+const PinkButton = ({ label, type, ...props }) => {
   return (
     <button className='w-[226px] h-[58px] rounded-[5px] bg-main-pink' {...props}>
       <span className='font-bold text-[20px] text-white'>{label}</span>

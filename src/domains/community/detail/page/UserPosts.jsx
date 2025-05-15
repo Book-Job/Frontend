@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import foldArrow from '../../../../assets/icons/common/common_fold_arrow.svg'
 import spreadArrow from '../../../../assets/icons/common/common_spread_arrow.svg'
 import useAuthStore from '../../../../store/login/useAuthStore'
