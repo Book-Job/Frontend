@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import foldArrow from '../../../../assets/icons/common/common_fold_arrow.svg'
 import spreadArrow from '../../../../assets/icons/common/common_spread_arrow.svg'
-
-const UserPosts = ({ nickname = '고길동' }) => {
+import useAuthStore from '../../../../store/login/useAuthStore'
+const UserPosts = () => {
+  const { user } = useAuthStore()
   const [isFolded, setIsFolded] = useState(true)
 
   const toggleArrow = () => {
@@ -11,7 +12,9 @@ const UserPosts = ({ nickname = '고길동' }) => {
 
   return (
     <div className='flex flex-col'>
-      <span className='sm:text-[30px] text-[24px] block mb-[60px]'>{nickname} 님이 작성한 글</span>
+      <span className='sm:text-[30px] text-[24px] block mb-[60px]'>
+        {user?.nickname ?? '닉네임 없음'}님이 작성한 글
+      </span>
 
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
         <div className='w-full h-[1px] bg-black' />
