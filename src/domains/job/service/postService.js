@@ -35,7 +35,15 @@ export const createJobSeekPost = async (postData) => {
 }
 
 //구직 글 상세조회
-export const JobSeekPostDetail = async (postData) => {
-  const response = await authApi.get('job-seeking/{jobSeekingId}', postData)
-  return response.data
+export const getJobSeekPostDetail = async (jobSeekingId) => {
+  const response = await authApi.get(`/job-seeking/${jobSeekingId}`)
+  return response.data.data
 }
+
+//구직 글 삭제
+export const deleteJobSeekPost = async (jobSeekingId) => {
+  const response = await authApi.delete(`/job-seeking/${jobSeekingId}`)
+  return response.data.data
+}
+
+//구직 글 수정
