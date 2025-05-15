@@ -15,8 +15,6 @@ const WorkBoard = ({
   name,
   date,
   like: initialLike,
-  userId,
-  postId,
   onClick,
   popular1,
   joboffer1,
