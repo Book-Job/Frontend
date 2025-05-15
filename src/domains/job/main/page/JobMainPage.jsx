@@ -1,86 +1,119 @@
 import { useState, useEffect } from 'react'
 import SearchBar from '../../../../components/web/SearchBar'
-import CountPost from '../components/CountPost'
+//import CountPost from '../components/CountPost' API 완성 안된듯..
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
 import { useNavigate } from 'react-router-dom'
-//import ROUTER_PATHS from '../../../../routes/RouterPath'
+import useJobSeekingSearch from '../../common/hook/useJobSeekingSearch'
+import useRecruitmentSearch from '../../common/hook/useRecruitmentSearch'
 import JobPostList from '../components/JobPostList'
+import Spinner from '../../../../components/web/Spinner'
+import { useLocation } from 'react-router-dom'
 
 const JobMainPage = () => {
+  const location = useLocation()
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const [order, setOrder] = useState('latest')
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
-  const [lastId, setLastId] = useState(null)
-  const [order, setOrder] = useState('LATEST')
   const navigate = useNavigate()
+
+  // 구인/구직 검색 현재 오류 발생중
+  const {
+    searchResults: recruitmentResults,
+    searchLoading: recruitmentLoading,
+    hasSearched: recruitmentHasSearched,
+    handleSearch: handleRecruitmentSearch,
+    reset: resetRecruitmentSearch,
+  } = useRecruitmentSearch()
+
+  const {
+    searchResults: jobSeekingResults,
+    searchLoading: jobSeekingLoading,
+    hasSearched: jobSeekingHasSearched,
+    handleSearch: handleJobSeekingSearch,
+    reset: resetJobSeekingSearch,
+  } = useJobSeekingSearch()
+
+  const isRecruitment = selectedJobTabs === 'job list'
+  const searchResults = isRecruitment ? recruitmentResults : jobSeekingResults
+  const searchLoading = isRecruitment ? recruitmentLoading : jobSeekingLoading
+  const hasSearched = isRecruitment ? recruitmentHasSearched : jobSeekingHasSearched
+  const handleSearch = isRecruitment ? handleRecruitmentSearch : handleJobSeekingSearch
+  const resetSearch = isRecruitment ? resetRecruitmentSearch : resetJobSeekingSearch
+
+  useEffect(() => {
+    if (location.state?.refresh) {
+      loadPosts()
+      window.history.replaceState({}, document.title)
+    }
+  }, [location.state])
 
   const loadPosts = async () => {
     setLoading(true)
     try {
-      let data
-      if (selectedJobTabs === 'job list') {
-        data = await getAllRecruitmentPosts(lastId, order)
-      } else {
-        data = await getJobPosts(lastId, order)
+      let data = isRecruitment ? await getAllRecruitmentPosts(null, 'LATEST') : await getJobPosts()
+      const newPostsRaw = isRecruitment ? data?.jobPostings || [] : data?.jobSeekings || []
+      let sortedPosts = [...newPostsRaw]
+      if (order === 'latest') {
+        sortedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      } else if (order === 'oldest') {
+        sortedPosts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
       }
-
-      const newPostsRaw = data?.jobSeekings || []
-      const newPosts = newPostsRaw.map((post) => ({
-        ...post,
-        joboffer1: selectedJobTabs === 'job list',
-        jobsearch1: selectedJobTabs !== 'job list',
-      }))
-
-      if (newPosts.length > 0) {
-        setPosts((prev) => {
-          const uniquePosts = [...prev, ...newPosts].filter(
-            (post, index, self) => index === self.findIndex((p) => p.id === post.id),
-          )
-          return uniquePosts
-        })
-        setLastId(data.lastId)
-      }
-    } catch (err) {
-      console.error('게시물 로딩 실패', err)
+      setPosts(
+        sortedPosts.map((post) => ({
+          ...post,
+          joboffer1: isRecruitment,
+          jobsearch1: !isRecruitment,
+        })),
+      )
+    } catch (error) {
+      console.error('게시물 로딩 실패', error)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleTabChange = (tab) => {
-    setSelectedJobTabs(tab)
-    setPosts([])
-    setLastId(null)
-  }
-
   useEffect(() => {
+    resetSearch()
     loadPosts()
-  }, [selectedJobTabs, lastId, order])
+  }, [selectedJobTabs, order])
+
+  const displayedPosts = hasSearched ? searchResults : posts
 
   return (
     <>
       <div className='flex justify-center'>
-        <SearchBar placeholder='검색어를 입력하세요' />
+        <SearchBar
+          placeholder='검색어를 입력하세요'
+          value={searchKeyword}
+          onChange={setSearchKeyword}
+          onSearch={handleSearch}
+        />
       </div>
       <div className='px-4 md:px-[100px] mt-2 lg:px-[250px]'>
         <div className='flex items-center justify-between'>
-          <CountPost />
           <div className='flex items-end'>
-            <JobDropDown handleTabChange={handleTabChange} />
-            <JobPostSortDropDown className='text-xs sm:text-sm md:text-[15px] font-semibold' />
+            <JobDropDown handleTabChange={setSelectedJobTabs} />
+            <JobPostSortDropDown
+              className='text-xs sm:text-sm md:text-[15px] font-semibold'
+              onSortChange={setOrder}
+            />
           </div>
         </div>
 
-        <div className='flex flex-wrap gap-4 mt-4 mx-[27px]'>
-          <div className='flex flex-wrap gap-4 mt-4 mx-[27px]'>
-            {posts.length > 0 ? (
-              <JobPostList posts={posts} navigate={navigate} />
-            ) : (
-              <span>게시물이 없습니다.</span>
-            )}
-          </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+          {loading || searchLoading ? (
+            <Spinner />
+          ) : displayedPosts.length > 0 ? (
+            <JobPostList posts={displayedPosts} navigate={navigate} />
+          ) : hasSearched ? (
+            <span>검색 결과가 없습니다.</span>
+          ) : (
+            <span>게시물이 없습니다.</span>
+          )}
         </div>
       </div>
     </>
