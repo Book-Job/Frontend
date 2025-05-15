@@ -5,7 +5,7 @@ const ROUTER_PATHS = {
   MEMBER_DATA_ENTRY: '/member-data-entry',
   JOB_MAIN: '/job',
   COMMUNITY: '/community',
-  USER_POST: '/user-post',
+  USER_POST: '/user-post', //특정 사용자가 작성한 글
   WRITE_COMMUNITY_POST: '/community/post', //자유게시판 글 작성
   COMMUNITY_POST_DETAIL: '/community/post/:id', //자유게시판 글 상세페이지
   WRITE_RECRUITMENT_POST: '/job/recruitment/post', //구인 글 작성
