@@ -8,12 +8,11 @@ import { useState } from 'react'
 const Header = ({ onClick }) => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuthStore()
-  console.log('user:', user)
   const [selectedOption, setSelectedOption] = useState('default')
   // 드롭다운 옵션
   const options = [
     ...(isAuthenticated && user
-      ? [{ value: 'default', label: `${user.sub}님`, disabled: true }]
+      ? [{ value: 'default', label: `${user.nickname}님`, disabled: true }]
       : []),
     ...(isAuthenticated
       ? [
