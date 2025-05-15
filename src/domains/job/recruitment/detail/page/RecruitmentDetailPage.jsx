@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
 import useRecruitmentPostDetail from '../hook/useRecruitmentPostDetail'
 import Spinner from '../../../../../components/web/Spinner'
-import unscrapIcon from '../../../../../assets/icons/common/common_bookmark_gray.svg'
-import scrapIcon from '../../../../../assets/icons/common/common_bookmark_pink.svg' //아직 스크랩 적용 안 했음
+import unScrapIcon from '../../../../../assets/icons/common/common_bookmark_gray.svg'
+import ScrapIcon from '../../../../../assets/icons/common/common_bookmark_pink.svg' //아직 스크랩 적용 안 했음
 import DetailPostLine from '../../../common/components/DetailPostLine'
 import { getJobCategoryLabel } from '../../../common/utils/jobCategories'
 import { getEmploymentTypeLabel } from '../../../common/utils/employmentTypes'
@@ -27,8 +27,8 @@ const RecruitmentDetailPage = () => {
       </div>
     )
   }
-  if (error) return <div className='text-center text-red-500'>존재하지 않는 게시글입니다.</div>
-  if (!data) return <div className='text-center text-gray-500'>게시글이 없습니다.</div>
+  if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
+  if (!data) return <p className='text-center text-gray-500'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
     navigate(ROUTER_PATHS.RECRUITMENT_POST_EDIT.replace(':id', id))
@@ -51,12 +51,14 @@ const RecruitmentDetailPage = () => {
         <span className='font-semibold text-lg sm:text-xl md:text-2xl lg:text-[20px]'>
           {data.nickname}
         </span>
-        <img src={unscrapIcon} alt='스크랩' className='w-5 h-5' />
+        <button aria-label='스크랩'>
+          <img src={unScrapIcon} alt='스크랩 상태 아이콘' className='w-5 h-5' />
+        </button>
       </div>
       <div className='flex justify-between mt-3'>
-        <span className='mt-4 text-base sm:text-[40px] md:text-[40px] lg:text-[30px] font-bold text-left '>
+        <h1 className='mt-4 text-base sm:text-[40px] md:text-[40px] lg:text-[30px] font-bold text-left '>
           {data.title}
-        </span>
+        </h1>
         <span className='block text-dark-gray mt-4 font-bold text-[13px]'>[구인 | 구직]</span>
       </div>
       {user && user.nickname === data.nickname && (
@@ -70,42 +72,34 @@ const RecruitmentDetailPage = () => {
         </div>
       )}
       <DetailPostLine />
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5 my-5'>
-        {/* 근무형태 */}
-        <div className='flex items-center'>
-          <span className='w-24 font-semibold text-dark-gray'>근무형태</span>
-          <span>{getEmploymentTypeLabel(data.employmentType)}</span>
+      <dl className='grid grid-rows-3 grid-cols-2 gap-x-8 gap-y-5 my-5'>
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>근무형태</dt>
+          <dd>{getEmploymentTypeLabel(data.employmentType)}</dd>
         </div>
-        {/* 경력 */}
-        <div className='flex items-center'>
-          <span className='w-24 font-semibold text-dark-gray'>경력</span>
-          <span>
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>경력</dt>
+          <dd>
             {data.experienceMin}년 ~ {data.experienceMax}년
-          </span>
+          </dd>
         </div>
-        {/* 근무지역 */}
-        <div className='flex items-center'>
-          <span className='w-24 font-semibold text-dark-gray'>근무지역</span>
-          <span>{data.location}</span>
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>근무지역</dt>
+          <dd>{data.location}</dd>
         </div>
-        {/* 직군 */}
-        <div className='flex items-center'>
-          <span className='w-24 font-semibold text-dark-gray'>직군</span>
-          <span>{getJobCategoryLabel(data.jobCategory)}</span>
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>직군</dt>
+          <dd>{getJobCategoryLabel(data.jobCategory)}</dd>
         </div>
-        {/* 지원 마감일 */}
-        <div className='flex items-center'>
-          <span className='w-24 font-semibold text-dark-gray'>지원 마감일</span>
-          <span>
-            {data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '-'}
-          </span>
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>지원 마감일</dt>
+          <dd>{data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '-'}</dd>
         </div>
-        {/* 자사 웹사이트 */}
-        <div className='flex items-center col-span-1 sm:col-span-2 lg:col-span-3'>
-          <span className='w-24 font-semibold text-dark-gray'>자사 웹사이트</span>
-          {data.websiteUrl}
+        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
+          <dt className='font-semibold text-dark-gray'>자사 웹사이트</dt>
+          <dd>{data.websiteUrl}</dd>
         </div>
-      </div>
+      </dl>
 
       <LastFormLine />
       <div className='flex gap-2 mb-4 ml-5 justify-end mr-3'>
