@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
+import ROUTER_PATHS from '../../routes/RouterPath'
 
-const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, view1 }) => {
+const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount, viewCount }) => {
   const [showButton, setShowButton] = useState(false)
   const navigate = useNavigate()
 
@@ -14,8 +15,9 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, vie
     setShowButton((prev) => !prev)
   }
 
-  const goToAuthorPosts = () => {
-    navigate(`/user-posts/${name}`)
+  const goToAuthorPosts = (e) => {
+    e.stopPropagation()
+    navigate(ROUTER_PATHS.USER_POST)
   }
 
   const goToDetailPage = () => {
@@ -32,7 +34,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, vie
 
         <div className='text-dark-gray text-[14px] mt-[15px]'>
           <div className='flex justify-between font-bold'>
-            <ShareViews label={comment1} textColor='text-dark-gray' icon={comment} />
+            <ShareViews label={commentCount} textColor='text-dark-gray' icon={comment} />
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
@@ -43,7 +45,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, vie
 
               {showButton && (
                 <button
-                  onClick={goToAuthorPosts}
+                  onClick={(e) => goToAuthorPosts(e)}
                   className='absolute left-1/2 -translate-x-1/2 top-[100%] mt-[1px] bg-white text-xs text-black px-2 py-[2px] rounded-md border border-gray-300 whitespace-nowrap shadow-md'
                 >
                   작성글 보기
@@ -54,7 +56,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, comment1, vie
           <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
             {date}
-            <ShareViews label={view1} textColor='text-main-pink' icon={viewPink} />
+            <ShareViews label={viewCount} textColor='text-main-pink' icon={viewPink} />
           </div>
         </div>
       </div>
@@ -68,8 +70,8 @@ FreeBoard.propTypes = {
   content: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  comment1: PropTypes.number.isRequired,
-  view1: PropTypes.number.isRequired,
+  commentCount: PropTypes.number.isRequired,
+  viewCount: PropTypes.number.isRequired,
   onClick: PropTypes.func,
 }
 

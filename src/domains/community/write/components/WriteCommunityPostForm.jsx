@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { useNavigate } from 'react-router-dom'
 import { createPost } from '../../service/postService'
 import FormItem from '../../../job/common/components/FormItem'
@@ -32,7 +33,7 @@ const WriteCommunityPostForm = () => {
       await createPost(data)
       alert('게시글이 등록되었습니다.')
       reset()
-      navigate('/community')
+      navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {
       console.error('게시글 작성 실패', err)
     }

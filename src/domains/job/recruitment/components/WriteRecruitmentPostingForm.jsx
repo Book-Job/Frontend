@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { createRecruitmentPost } from '../../service/postService'
+import { useEffect } from 'react'
 import JobFormLine from '../../common/components/JobFormLine'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
 import PostTitle from '../../common/components/form/PostTitle'
@@ -10,24 +10,30 @@ import ClosingDate from './form/ClosingDate'
 import CompanyWebsite from './form/CompanyWebsite'
 import WorkPlace from './form/WorkPlace'
 import Experience from './form/Experience'
+import useAuthStore from '../../../../store/login/useAuthStore'
 
-const WriteRecruitmentPostingForm = () => {
+const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
+  const { user } = useAuthStore()
   const {
     register,
+    reset,
+    setValue,
     handleSubmit,
     watch,
-    setValue,
     formState: { errors },
-  } = useForm()
+  } = useForm({ defaultValues })
 
-  const onSubmit = async (data) => {
-    try {
-      await createRecruitmentPost(data)
-      console.log('게시글 작성 성공')
-    } catch (err) {
-      console.error('게시글 작성 실패', err)
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues)
     }
-  }
+  }, [defaultValues, reset])
+
+  useEffect(() => {
+    if (user?.nickname) {
+      setValue('writer', user.nickname)
+    }
+  }, [user, setValue])
 
   return (
     <form id='recruitment-post-form' onSubmit={handleSubmit(onSubmit)}>
@@ -40,7 +46,7 @@ const WriteRecruitmentPostingForm = () => {
       <JobFormLine />
 
       <div className='my-[30px]'>
-        <ClosingDate register={register} />
+        <ClosingDate register={register} setValue={setValue} />
       </div>
 
       <JobFormLine />

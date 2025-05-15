@@ -6,15 +6,11 @@ import FreeBoard from '../../../../components/web/FreeBoard'
 import useCommunityPosts from '../hook/useCommunityPosts'
 import Spinner from '../../../../components/web/Spinner'
 import useSearchPosts from '../../service/useSearchPosts'
-
 const CommunityMainPage = () => {
   const { posts, loading } = useCommunityPosts()
-
   const [sortOrder, setSortOrder] = useState('latest')
   const { searchResults, searchLoading, hasSearched, handleSearch } = useSearchPosts()
-
   const rawPosts = searchResults.length > 0 ? searchResults : posts
-
   const displayedPosts = [...rawPosts].sort((a, b) => {
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
@@ -58,8 +54,8 @@ const CommunityMainPage = () => {
                     content={post.text.replace(/<[^>]*>/g, '')}
                     name={post.nickname}
                     date={new Date(post.createdAt).toLocaleDateString()}
-                    comment1={post.commentCount}
-                    view1={post.viewCount}
+                    commentCount={post.commentCount}
+                    viewCount={String(post.viewCount)}
                     onNameClick={(name) => {
                       console.log(`${name}의 게시글 보기`)
                     }}
