@@ -33,7 +33,6 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
             )
           })}
         </p>
-        {/* <div className='absolute right-0 flex'> */}
         <div className='flex justify-end mt-1 '>
           <div className='w-4 h-4 mr-1 sm:w-5 sm:h-5'>
             <img src={commonTime} alt='commonTime' />
