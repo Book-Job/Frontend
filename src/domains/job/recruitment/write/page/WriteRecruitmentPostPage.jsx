@@ -5,7 +5,9 @@ import PinkButton from '../../../../../components/web/PinkButton'
 import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useNavigate } from 'react-router-dom'
+import { createRecruitmentPost } from '../../../../job/service/postService'
 import { useEffect } from 'react'
+import ROUTER_PATHS from '../../../../../routes/RouterPath'
 const WriteRecruitmentPostPage = () => {
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
@@ -13,6 +15,17 @@ const WriteRecruitmentPostPage = () => {
   useEffect(() => {
     requireLogin(navigate)
   }, [requireLogin, navigate])
+
+  const handleSubmitForm = async (formData) => {
+    try {
+      await createRecruitmentPost(formData)
+      alert('등록이 완료되었습니다!')
+      navigate(ROUTER_PATHS.JOB_MAIN)
+    } catch (error) {
+      alert('등록 중 오류가 발생했습니다.')
+      console.error(error)
+    }
+  }
 
   return (
     <>
@@ -22,7 +35,7 @@ const WriteRecruitmentPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <WriteRecruitmentPostingForm />
+        <WriteRecruitmentPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button size='small' label='임시저장' className='mr-[14px]' />
