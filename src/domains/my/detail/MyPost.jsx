@@ -31,7 +31,7 @@ const MyPost = () => {
     fetchJobBoard()
   }, [fetchFreeBoard, fetchJobBoard])
 
-  const currentList = choiceBoard === '자유게시판' ? freeBoard : jobBoard
+  // const currentList = choiceBoard === '자유게시판' ? freeBoard : jobBoard
   const isLoading = choiceBoard === '자유게시판' ? isFreeLoading : isJobLoading
   const error = choiceBoard === '자유게시판' ? freeError : jobError
   return (
@@ -39,23 +39,36 @@ const MyPost = () => {
       <div className='sm:max-w-[940px] mx-auto'>
         <MyPostHead choiceBoard={choiceBoard} />
 
-        {isLoading ? (
-          <div className='text-center'>로딩 중...</div>
-        ) : error ? (
-          <div className='flex flex-col text-center text-red-500'>
-            {error}
-            <button
-              onClick={() => (choiceBoard === '자유게시판' ? fetchFreeBoard() : fetchJobBoard())}
-              className='ml-2 text-blue-500'
-            >
-              재시도
-            </button>
-          </div>
-        ) : choiceBoard === '구인구직' ? (
-          <PostList boardData={jobBoard} />
-        ) : (
-          <PostList boardData={freeBoard} />
-        )}
+        {
+          isLoading ? (
+            <div className='text-center'>로딩 중...</div>
+          ) : error ? (
+            <div className='flex flex-col text-center text-red-500'>
+              {error}
+              <button
+                onClick={() => (choiceBoard === '자유게시판' ? fetchFreeBoard() : fetchJobBoard())}
+                className='ml-2 text-blue-500'
+              >
+                재시도
+              </button>
+            </div>
+          ) : (
+            <PostList
+              boardData={
+                Array.isArray(choiceBoard === '구인구직' ? jobBoard : freeBoard)
+                  ? choiceBoard === '구인구직'
+                    ? jobBoard
+                    : freeBoard
+                  : []
+              }
+            />
+          )
+          // choiceBoard === '구인구직' ? (
+          //   <PostList boardData={jobBoard} />
+          // ) : (
+          //   <PostList boardData={freeBoard} />
+          // )
+        }
       </div>
     </div>
   )

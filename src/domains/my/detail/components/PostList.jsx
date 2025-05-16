@@ -51,15 +51,22 @@ const PostList = ({ boardData }) => {
             <th>
               날짜 <span className='text-[10px]'>▲</span>
             </th>
-            {boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
+            {Array.isArray(boardData) &&
+              boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
+            {Array.isArray(boardData) &&
+              boardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
+            {Array.isArray(boardData) && boardData.some((item) => item.viewCount !== undefined) && (
+              <th>조회수</th>
+            )}
+            {/* {boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
             {boardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
-            {boardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>}
+            {boardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>} */}
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           {boardData.map((item, index) => (
-            <tr key={index} className='h-12 border-b'>
+            <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
               <td>
                 <input
                   type='checkbox'
