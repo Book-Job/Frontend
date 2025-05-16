@@ -2,6 +2,7 @@ import commentImg from '../../../../assets/icons/common/comment.svg'
 import { useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
 import BoardCategory from '../../../../components/web/BoardCategory'
+import PropTypes from 'prop-types'
 
 const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -13,14 +14,14 @@ const PostList = ({ boardData }) => {
     )
   }
 
-  const isAllChecked = boardData.length === checkedItems.length
+  const isAllChecked = boardData && boardData.length > 0 && boardData.length === checkedItems.length
 
   const toggleAll = () => {
     setCheckedItems(isAllChecked ? [] : boardData.map((item) => item.boardId || item.recruitmentId))
   }
 
-  const deleteItem = (id) => {
-    alert(`ID ${id} 삭제`)
+  const deleteItem = (id, title) => {
+    alert(`제목: ${title} 삭제 (ID: ${id})`)
   }
   return (
     <div>
@@ -100,7 +101,7 @@ const PostList = ({ boardData }) => {
               {item.viewCount !== undefined && <td>{item.viewCount}</td>}
               <td>
                 <button
-                  onClick={() => deleteItem(item.boardId || item.recruitmentId)}
+                  onClick={() => deleteItem(item.boardId || item.recruitmentId, item.title)}
                   className='text-light-gray hover:text-main-pink'
                 >
                   ✕
@@ -113,5 +114,17 @@ const PostList = ({ boardData }) => {
     </div>
   )
 }
-
+PostList.propTypes = {
+  boardData: PropTypes.arrayOf(
+    PropTypes.shape({
+      boardId: PropTypes.number,
+      recruitmentId: PropTypes.number,
+      title: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      recruitmentCategory: PropTypes.string,
+      commentCount: PropTypes.number,
+      viewCount: PropTypes.number,
+    }),
+  ).isRequired,
+}
 export default PostList
