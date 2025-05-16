@@ -1,16 +1,18 @@
-//구직글 작성
-import WriteFormLine from '../../../../components/web/WriteFormLine'
-import WriteJobSearchPostingForm from '../components/WriteJobSearchPostingForm'
-import LastFormLine from '../../common/components/LastFormLine'
-import Button from '../../../../components/web/Button'
-import PinkButton from '../../../../components/web/PinkButton'
+import WriteFormLine from '../../../../../components/web/WriteFormLine'
+import WriteJobSearchPostingForm from '../../components/WriteJobSearchPostingForm'
+import LastFormLine from '../../../common/components/LastFormLine'
+import Button from '../../../../../components/web/Button'
+import PinkButton from '../../../../../components/web/PinkButton'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import useAuthStore from '../../../../store/login/useAuthStore'
+import useAuthStore from '../../../../../store/login/useAuthStore'
+import { createJobSeekPost } from '../../../service/postService'
+import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 
 const WriteJobSearchPostPage = () => {
   const navigate = useNavigate()
   const { requireLogin, isAuthenticated } = useAuthStore()
+  const handleSubmitForm = usePostSubmit(createJobSeekPost)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -26,8 +28,7 @@ const WriteJobSearchPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-
-        <WriteJobSearchPostingForm />
+        <WriteJobSearchPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button size='small' label='임시저장' className='mr-[14px]' />
