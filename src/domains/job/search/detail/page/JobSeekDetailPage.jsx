@@ -29,6 +29,10 @@ const JobSeekDetailPage = () => {
   if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
   if (!data) return <p className='text-center text-gray-500'>게시글이 없습니다.</p>
 
+  const handleEditClick = () => {
+    navigate(ROUTER_PATHS.JOB_SEARCH_POST_EDIT.replace(':id', id))
+  }
+
   const handleDeleteClick = async () => {
     try {
       await deleteJobSeekPost(id)
@@ -56,7 +60,9 @@ const JobSeekDetailPage = () => {
       </div>
       {user && user.nickname === data.nickname && (
         <div className='flex justify-end mt-5 gap-4 text-3 text-dark-gray'>
-          <span className='cursor-pointer'>수정</span>
+          <span className='cursor-pointer' onClick={handleEditClick}>
+            수정
+          </span>
           <span className='cursor-pointer' onClick={handleDeleteClick}>
             삭제
           </span>
