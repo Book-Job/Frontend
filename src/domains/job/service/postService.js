@@ -47,3 +47,12 @@ export const deleteJobSeekPost = async (jobSeekingId) => {
 }
 
 //구직 글 수정
+export const editJobSeekPost = async (jobSeekingId, data) => {
+  const response = await authApi.patch(`/job-seeking/${jobSeekingId}`, data, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  return response.data.data
+}
