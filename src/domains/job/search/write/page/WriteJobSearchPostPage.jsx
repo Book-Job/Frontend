@@ -6,7 +6,7 @@ import PinkButton from '../../../../../components/web/PinkButton'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import useAuthStore from '../../../../../store/login/useAuthStore'
-import { createJobSeekPost } from '../../../service/postService'
+import { createJobSeekPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 
 const WriteJobSearchPostPage = () => {

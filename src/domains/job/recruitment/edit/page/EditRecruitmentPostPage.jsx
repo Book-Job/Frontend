@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import useRecruitmentPostDetail from '../../detail/hook/useRecruitmentPostDetail'
-import { editRecruitmentPost } from '../../../service/postService'
+import { editRecruitmentPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
