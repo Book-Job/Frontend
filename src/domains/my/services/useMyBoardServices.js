@@ -49,19 +49,16 @@ export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
 //내가 작성한 자유게시판 글 삭제
 export const deleteMyFreeBoardData = async (token, id) => {
   try {
-    const response = await authApi.get(
-      '/boards/members',
-      {
-        ids: { id },
+    const response = await authApi.delete('/boards/members', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+      data: {
+        ids: Array.isArray(id) ? id : [id], // 단일 ID를 배열로 변환
       },
-    )
+    })
     return response.data
   } catch (error) {
     console.error('자유글 삭제 오류 api:', error.response.data.message)
@@ -69,30 +66,18 @@ export const deleteMyFreeBoardData = async (token, id) => {
   }
 }
 //내가 작성한 구인구직 게시판 글 삭제
-export const deleteMyJobBoardData = async (token) => {
+export const deleteMyJobBoardData = async (token, deleteRequest) => {
   try {
-    const response = await authApi.get(
-      '/recruitments/members',
-      {
-        deleteRequest: [
-          {
-            recruitmentId: 1,
-            recruitmentCategory: 'JOB_POSTING',
-          },
-          {
-            recruitmentId: 2,
-            recruitmentCategory: 'JOB_SEEKING',
-          },
-        ],
+    const response = await authApi.delete('/recruitments/members', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+      data: {
+        deleteRequest: Array.isArray(deleteRequest) ? deleteRequest : [deleteRequest], // 단일 객체를 배열로 변환
       },
-    )
+    })
     return response.data
   } catch (error) {
     console.error('구인구직글 삭제 오류 api:', error.response.data.message)
