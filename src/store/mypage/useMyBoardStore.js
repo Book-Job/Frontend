@@ -17,7 +17,7 @@ const useMyBoardStore = create((set) => ({
     const boardName = boardType === 'free' ? '자유게시판' : '구인구직'
 
     // force가 true이거나 데이터가 없으면 호출
-    if (force || useMyBoardStore.getState()[stateKey].length > 0) {
+    if (force || useMyBoardStore.getState()[stateKey].length === 0) {
       set({ [loadingKey]: true, [errorKey]: null })
       console.log(`Fetching ${boardName} with force:${force}`) // 디버깅 로그
 
