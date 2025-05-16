@@ -3,44 +3,95 @@ import { useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
 import BoardCategory from '../../../../components/web/BoardCategory'
 import PropTypes from 'prop-types'
-import { deleteMyFreeBoardData } from '../../services/useMyBoardServices'
+import { deleteMyFreeBoardData, deleteMyJobBoardData } from '../../services/useMyBoardServices'
+import useMyBoardStore from '../../../../store/mypage/useMyBoardStore'
 
-const PostList = ({ boardData }) => {
+const PostList = () => {
   const [checkedItems, setCheckedItems] = useState([])
+  const { freeBoard, jobBoard, fetchFreeBoard, fetchJobBoard } = useMyBoardStore()
   const { choiceBoard } = useBoardStore()
+  const boardData = choiceBoard === '구인구직' ? jobBoard : freeBoard
 
+  // 체크박스 토글
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     )
   }
 
+  // 전체 선택 토글
   const isAllChecked = boardData && boardData.length > 0 && boardData.length === checkedItems.length
-
   const toggleAll = () => {
     setCheckedItems(isAllChecked ? [] : boardData.map((item) => item.boardId || item.recruitmentId))
   }
 
-  const handleDelFreeItem = async () => {
+  // 삭제 API 호출 (공통 함수)
+  const deleteItems = async (items, isJobBoard) => {
     const token = localStorage.getItem('accessToken')
+    if (!token) {
+      alert('로그인이 필요합니다.')
+      return
+    }
     try {
-      const response = await deleteMyFreeBoardData(token)
-      console.log('마이 데이터 확인:', response.data)
-      if (response.data && response.data.message === 'success') {
-        console.log('마이데이터 성공:', response.data)
+      let response
+      if (isJobBoard) {
+        // 구인구직: items는 [{ id, recruitmentCategory }, ...] 형태
+        const deleteRequest = items.map((item) => ({
+          recruitmentId: item.id,
+          recruitmentCategory: item.recruitmentCategory || 'JOB_POSTING',
+        }))
+        response = await deleteMyJobBoardData(token, deleteRequest)
       } else {
-        console.log('마이데이터 오류:', response.data)
+        // 자유게시판: items는 ID 배열 [1, 3, 5]
+        response = await deleteMyFreeBoardData(token, items)
+      }
+      if (response && response.message === 'success') {
+        console.log(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 성공:`, response)
+        setCheckedItems([]) // 선택 항목 초기화
+        await (isJobBoard ? fetchJobBoard(token, true) : fetchFreeBoard(token, true))
+      } else {
+        console.log(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 오류:`, response)
+        alert('삭제에 실패했습니다.')
       }
     } catch (error) {
-      console.error('마이데이터 불러오기 오류:', error)
+      console.error(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 오류:`, error)
+      alert('삭제 중 오류가 발생했습니다.')
+    } finally {
+      useMyBoardStore.setState({ [isJobBoard ? 'isJobLoading' : 'isFreeLoading']: false })
+    }
+  }
+  // 개별 삭제
+  const handleDeleteItem = (id, title, recruitmentCategory) => {
+    if (
+      window.confirm(
+        `제목: ${title} (${choiceBoard === '구인구직' ? '구인구직' : '자유게시판'}) 삭제하시겠습니까?`,
+      )
+    ) {
+      const items = choiceBoard === '구인구직' ? [{ id, recruitmentCategory }] : [id]
+      deleteItems(items, choiceBoard === '구인구직')
     }
   }
 
-  const deleteItem = (id, title, recruitmentCategory) => {
-    const deleteData = alert(
-      `제목: ${title} 카테고리 (recruitmentCategory: ${recruitmentCategory}) 삭제 (ID: ${id})`,
-    )
+  // 다중 삭제
+  const handleDeleteSelected = () => {
+    if (checkedItems.length === 0) {
+      alert('삭제할 항목을 선택하세요.')
+      return
+    }
+    if (window.confirm(`${checkedItems.length}개의 항목을 삭제하시겠습니까?`)) {
+      const items =
+        choiceBoard === '구인구직'
+          ? boardData
+              .filter((item) => checkedItems.includes(item.recruitmentId))
+              .map((item) => ({
+                id: item.recruitmentId,
+                recruitmentCategory: item.recruitmentCategory,
+              }))
+          : checkedItems
+      deleteItems(items, choiceBoard === '구인구직')
+    }
   }
+
   return (
     <div>
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
@@ -52,7 +103,9 @@ const PostList = ({ boardData }) => {
           전체 선택
         </div>
         <div className='flex gap-2'>
-          <button className='text-dark-gray'>선택삭제</button>
+          <button onClick={handleDeleteSelected} className='text-dark-gray'>
+            선택삭제
+          </button>
           <div className='text-dark-gray'>|</div>
           <button className='text-main-pink'>글 작성</button>
         </div>
@@ -76,9 +129,6 @@ const PostList = ({ boardData }) => {
             {Array.isArray(boardData) && boardData.some((item) => item.viewCount !== undefined) && (
               <th>조회수</th>
             )}
-            {/* {boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
-            {boardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
-            {boardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>} */}
             <th>삭제</th>
           </tr>
         </thead>
@@ -97,7 +147,7 @@ const PostList = ({ boardData }) => {
                 <td>{item.title}</td>
                 <td>{item.createdAt.split('T')[0]}</td>
                 {item.recruitmentCategory !== undefined &&
-                  (item.recruitmentCategory === '구인' ? (
+                  (item.recruitmentCategory === 'JOB_POSTING' ? (
                     <td>
                       <BoardCategory
                         label={'구인'}
@@ -128,7 +178,7 @@ const PostList = ({ boardData }) => {
                 <td>
                   <button
                     onClick={() =>
-                      deleteItem(
+                      handleDeleteItem(
                         item.boardId || item.recruitmentId,
                         item.title,
                         item.recruitmentCategory,
