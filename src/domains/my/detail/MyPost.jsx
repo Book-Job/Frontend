@@ -7,11 +7,11 @@ import { useEffect } from 'react'
 const MyPost = () => {
   const { choiceBoard } = useBoardStore()
   // const jobData = [
-  //   { id: 1, title: '아이돌나라 편집자 구해요', date: '2025.04.10', category: '구인' },
+  //   { recruitmentId: 1, title: '아이돌나라 편집자 구해요', createdAt: '2025.04.10', recruitmentCategory: '구인' },
   //   { id: 2, title: '아이돌나라 편집자 구해요', date: '2025.04.03', category: '구직' },
   // ]
   // const freeData = [
-  //   { id: 1, title: '아이돌나라 편집자 구해요', date: '2025.04.10', comment: 23, view: 342 },
+  //   { boardId: 1, title: '아이돌나라 편집자 구해요', createdAt: '2025.04.10', commentCount: 23, viewCount: 342 },
   //   { id: 2, title: '아이돌나라 편집자 구해요', date: '2025.04.03', comment: 23, view: 342 },
   // ]
 

@@ -17,7 +17,9 @@ export const getMyFreeBoardData = async (token, page = 0, limit = 10) => {
     return response.data // API 응답 데이터만 반환
   } catch (error) {
     console.error('내가 작성한 자유게시판 오류 api:', error.response.data.message)
-    throw new Error(error.response.data.message)
+    throw new Error(
+      error.response?.data?.message || '자유게시판 데이터를 불러오는 중 오류가 발생했습니다.',
+    )
   }
 }
 
@@ -37,7 +39,9 @@ export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
     })
     return response.data // API 응답 데이터만 반환
   } catch (error) {
-    console.error('내가 작성한 자유게시판 오류 api:', error.response.data.message)
-    throw new Error(error.response.data.message)
+    console.error('내가 작성한 구인구직 오류 api:', error.response.data.message)
+    throw new Error(
+      error.response?.data?.message || '구인구직 데이터를 불러오는 중 오류가 발생했습니다.',
+    )
   }
 }
