@@ -5,30 +5,20 @@ import Button from '../../../../../components/web/Button'
 import PinkButton from '../../../../../components/web/PinkButton'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import { createJobSeekPost } from '../../../service/postService'
+import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 
 const WriteJobSearchPostPage = () => {
   const navigate = useNavigate()
   const { requireLogin, isAuthenticated } = useAuthStore()
+  const handleSubmitForm = usePostSubmit(createJobSeekPost)
 
   useEffect(() => {
     if (!isAuthenticated) {
       requireLogin(navigate)
     }
   }, [requireLogin, navigate, isAuthenticated])
-
-  const handleSubmitForm = async (formData) => {
-    try {
-      await createJobSeekPost(formData)
-      alert('등록이 완료되었습니다!')
-      navigate(ROUTER_PATHS.JOB_MAIN)
-    } catch (error) {
-      alert('등록 중 오류가 발생했습니다.')
-      console.error(error)
-    }
-  }
 
   return (
     <>

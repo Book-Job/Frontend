@@ -7,25 +7,15 @@ import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useNavigate } from 'react-router-dom'
 import { createRecruitmentPost } from '../../../../job/service/postService'
 import { useEffect } from 'react'
-import ROUTER_PATHS from '../../../../../routes/RouterPath'
+import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 const WriteRecruitmentPostPage = () => {
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
+  const handleSubmitForm = usePostSubmit(createRecruitmentPost)
 
   useEffect(() => {
     requireLogin(navigate)
   }, [requireLogin, navigate])
-
-  const handleSubmitForm = async (formData) => {
-    try {
-      await createRecruitmentPost(formData)
-      alert('등록이 완료되었습니다!')
-      navigate(ROUTER_PATHS.JOB_MAIN)
-    } catch (error) {
-      alert('등록 중 오류가 발생했습니다.')
-      console.error(error)
-    }
-  }
 
   return (
     <>

@@ -8,9 +8,8 @@ import EmploymentType from '../../common/components/form/EmploymentType'
 import JobCategory from '../../common/components/form/JobCategory'
 import WorkExperience from './form/WorkExperience'
 import ContactEmail from './form/ContactEmail'
-import useAuthStore from '../../../../store/login/useAuthStore'
+
 const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
-  const { user } = useAuthStore()
   const {
     register,
     handleSubmit,
