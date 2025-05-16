@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../../../store/login/useAuthStore'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { useState, useEffect } from 'react'
 import useDetailPost from '../hook/useDetailPost'
 import Spinner from '../../../../components/web/Spinner'
@@ -48,7 +49,7 @@ const DetailCommunityPage = () => {
     try {
       await deletePost(id)
       alert('성공적으로 삭제되었습니다.')
-      navigate('/community')
+      navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {
       alert('삭제 중 오류 발생')
       console.error(err)
@@ -77,12 +78,12 @@ const DetailCommunityPage = () => {
   if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
 
   return (
-    <div className='px-[250px] py-[50px]'>
+    <div className='px-[250px] py-[30px]'>
       <h1 className='text-[35px] font-bold text-left mb-4'>{post.title}</h1>
       <div className='text-[15px] text-gray-600 mb-2 text-left'>{post.nickname}</div>
 
       {post?.isWriter ? (
-        <div className='flex gap-4 mt-4 mb-4 justify-end'>
+        <div className='flex gap-4 mt-4 mb-2 justify-end'>
           {!isEditing ? (
             <>
               <button className='text-dark-gray text-[13px]' onClick={handleEditClick}>
@@ -104,7 +105,7 @@ const DetailCommunityPage = () => {
           )}
         </div>
       ) : (
-        <div className='flex gap-4 mt-4 mb-4 justify-end'>
+        <div className='flex gap-4 mt-4 mb-2 justify-end'>
           <button className='text-dark-gray text-[13px]' onClick={handleBlockUserClick}>
             차단
           </button>
@@ -113,19 +114,15 @@ const DetailCommunityPage = () => {
 
       <LastFormLine />
 
-      <div className='flex gap-3 mt-2 mb-4 ml-5 justify-end'>
+      <div className='flex gap-2 mb-4 ml-5 justify-end'>
         <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-[#E36397]' />
-        <MobileShare
-          label={post.commentCount.toString()}
-          icon={comment}
-          textColor='text-[#8E8E8E]'
-        />
-        <MobileShare label='공유' icon={share} textColor='text-[#8E8E8E]' />
+        <MobileShare label={comments.length.toString()} icon={comment} textColor='text-dark-gray' />
+        <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
       </div>
       <div className='mb-10'>
         {isEditing ? (
           <textarea
-            className='w-full h-[200px] p-4 border border-gray-300'
+            className='w-full h-[200px] p-4 border border-dark-gray'
             value={editedPost}
             onChange={(e) => setEditedPost(e.target.value)}
           />

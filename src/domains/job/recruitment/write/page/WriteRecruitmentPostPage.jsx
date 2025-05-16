@@ -1,14 +1,17 @@
-import WriteFormLine from '../../../../components/web/WriteFormLine'
-import LastFormLine from '../../common/components/LastFormLine'
-import Button from '../../../../components/web/Button'
-import PinkButton from '../../../../components/web/PinkButton'
-import WriteRecruitmentPostingForm from '../components/WriteRecruitmentPostingForm'
-import useAuthStore from '../../../../store/login/useAuthStore'
+import WriteFormLine from '../../../../../components/web/WriteFormLine'
+import LastFormLine from '../../../common/components/LastFormLine'
+import Button from '../../../../../components/web/Button'
+import PinkButton from '../../../../../components/web/PinkButton'
+import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
+import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useNavigate } from 'react-router-dom'
+import { createRecruitmentPost } from '../../../../job/service/postService'
 import { useEffect } from 'react'
+import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 const WriteRecruitmentPostPage = () => {
   const navigate = useNavigate()
   const { requireLogin } = useAuthStore()
+  const handleSubmitForm = usePostSubmit(createRecruitmentPost)
 
   useEffect(() => {
     requireLogin(navigate)
@@ -22,7 +25,7 @@ const WriteRecruitmentPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <WriteRecruitmentPostingForm />
+        <WriteRecruitmentPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button size='small' label='임시저장' className='mr-[14px]' />

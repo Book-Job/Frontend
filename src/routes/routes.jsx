@@ -2,8 +2,8 @@ import ROUTER_PATHS from './RouterPath'
 import JobMainPage from '../domains/job/main/page/JobMainPage'
 import CommunityMainPage from '../domains/community/main/page/CommunityMainPage'
 import WriteCommunityPostPage from '../domains/community/write/page/WriteCommunityPostPage'
-import WriteRecruitmentPostPage from '../domains/job/recruitment/page/WriteRecruitmentPostPage'
-import WriteJobSearchPostPage from '../domains/job/search/page/WriteJobSearchPostPage'
+import WriteRecruitmentPostPage from '../domains/job/recruitment/write/page/WriteRecruitmentPostPage'
+import WriteJobSearchPostPage from '../domains/job/search/write/page/WriteJobSearchPostPage'
 import FindPwCheckIDPage from '../domains/Find/detail/FindPwCheckIDPage'
 import ChangePwPage from '../domains/Find/detail/ChangePwPage'
 import FindIDCompletePage from '../domains/Find/detail/FindIDCompletePage'
@@ -21,9 +21,12 @@ import PasswordMis from '../domains/my/detail/PasswordMis'
 import MyScrap from '../domains/my/detail/MyScrap'
 import MyPost from '../domains/my/detail/MyPost'
 import MyDrafts from '../domains/my/detail/MyDrafts'
-import DetailJobSearchPost from '../domains/job/search/DetailJobSearchPost'
+import JobSeekDetailPage from '../domains/job/search/detail/page/JobSeekDetailPage'
 import ErrorPage from '../domains/error/page/ErrorPage'
 import DetailCommunityPage from '../domains/community/detail/page/DetailCommunityPage'
+import RecruitmentDetailPage from '../domains/job/recruitment/detail/page/RecruitmentDetailPage'
+import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecruitmentPostPage'
+import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPostPage'
 
 const routes = [
   {
@@ -72,14 +75,29 @@ const routes = [
     label: '구인 글 작성',
   },
   {
+    path: '/job/recruitment/post/:id',
+    element: <RecruitmentDetailPage />,
+    label: '구인 상세 글',
+  },
+  {
+    path: '/job/recruitment/edit/:id',
+    element: <EditRecruitmentPost />,
+    label: '구인 글 수정',
+  },
+  {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
     label: '구직 글 작성',
   },
   {
-    path: '/job/job-search/post/:id',
-    element: <DetailJobSearchPost />,
-    label: '구직 글',
+    path: '/job/job-seek/edit/:id',
+    element: <EditJobSeekPostPage />,
+    label: '구직 글 수정',
+  },
+  {
+    path: '/job/job-seek/post/:id',
+    element: <JobSeekDetailPage />,
+    label: '구직 상세 글',
   },
   {
     path: ROUTER_PATHS.FIND_ID,
