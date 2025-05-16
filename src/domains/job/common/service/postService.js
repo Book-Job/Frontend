@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/axios'
+import { authApi } from '../../../../services/api/axios'
 
 //구인 글 작성
 export const createRecruitmentPost = async (postData) => {
@@ -25,7 +25,7 @@ export const editRecruitmentPost = async (jobPostingId, data) => {
 //구인 글 삭제
 export const deleteRecruitmentPost = async (jobPostingId) => {
   const response = await authApi.delete(`/job-posting/${jobPostingId}`)
-  return response.data.data
+  return response.data
 }
 
 //구직 글 작성

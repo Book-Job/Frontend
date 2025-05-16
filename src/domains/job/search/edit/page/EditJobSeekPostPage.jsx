@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import useJobSeekPostDetail from '../../detail/hook/useJobSeekPostDetail'
-import { editJobSeekPost } from '../../../service/postService'
+import { editJobSeekPost } from '../../../common/service/postService'
 import WriteJobSearchPostingForm from '../../components/WriteJobSearchPostingForm'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import Spinner from '../../../../../components/web/Spinner'
