@@ -3,6 +3,7 @@ import { useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
 import BoardCategory from '../../../../components/web/BoardCategory'
 import PropTypes from 'prop-types'
+import { deleteMyFreeBoardData } from '../../services/useMyBoardServices'
 
 const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -20,13 +21,30 @@ const PostList = ({ boardData }) => {
     setCheckedItems(isAllChecked ? [] : boardData.map((item) => item.boardId || item.recruitmentId))
   }
 
-  const deleteItem = (id, title) => {
-    alert(`제목: ${title} 삭제 (ID: ${id})`)
+  const handleDelFreeItem = async () => {
+    const token = localStorage.getItem('accessToken')
+    try {
+      const response = await deleteMyFreeBoardData(token)
+      console.log('마이 데이터 확인:', response.data)
+      if (response.data && response.data.message === 'success') {
+        console.log('마이데이터 성공:', response.data)
+      } else {
+        console.log('마이데이터 오류:', response.data)
+      }
+    } catch (error) {
+      console.error('마이데이터 불러오기 오류:', error)
+    }
+  }
+
+  const deleteItem = (id, title, recruitmentCategory) => {
+    const deleteData = alert(
+      `제목: ${title} 카테고리 (recruitmentCategory: ${recruitmentCategory}) 삭제 (ID: ${id})`,
+    )
   }
   return (
     <div>
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
-        {choiceBoard === 'job' ? '구인 | 구직' : '자유게시판'}
+        {choiceBoard === '구인구직' ? '구인 | 구직' : '자유게시판'}
       </div>
       <div className='flex flex-row justify-between my-3'>
         <div className='flex gap-3'>
@@ -65,57 +83,64 @@ const PostList = ({ boardData }) => {
           </tr>
         </thead>
         <tbody>
-          {boardData.map((item, index) => (
-            <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
-              <td>
-                <input
-                  type='checkbox'
-                  checked={checkedItems.includes(item.boardId || item.recruitmentId)}
-                  onChange={() => toggleCheck(item.boardId || item.recruitmentId)}
-                />
-              </td>
-              <td>{index + 1}</td>
-              <td>{item.title}</td>
-              <td>{item.createdAt.split('T')[0]}</td>
-              {item.recruitmentCategory !== undefined &&
-                (item.recruitmentCategory === '구인' ? (
-                  <td>
-                    <BoardCategory
-                      label={'구인'}
-                      bgColor={'#EBF7FF'}
-                      labelColor={'#2563EB'}
-                      width={'60px'}
-                    />
-                  </td>
-                ) : (
-                  <td>
-                    <BoardCategory
-                      label={'구직'}
-                      bgColor={'#FFEFEB'}
-                      labelColor={'#DC2626'}
-                      width={'60px'}
-                    />
-                  </td>
-                ))}
-              {item.commentCount !== undefined && (
+          {Array.isArray(boardData) &&
+            boardData.map((item, index) => (
+              <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
                 <td>
-                  <div className='flex items-center justify-center h-4 gap-1 sm:gap-2'>
-                    <img src={commentImg} alt='commentImg' className='h-3 sm:h-4' />
-                    {item.commentCount}
-                  </div>
+                  <input
+                    type='checkbox'
+                    checked={checkedItems.includes(item.boardId || item.recruitmentId)}
+                    onChange={() => toggleCheck(item.boardId || item.recruitmentId)}
+                  />
                 </td>
-              )}
-              {item.viewCount !== undefined && <td>{item.viewCount}</td>}
-              <td>
-                <button
-                  onClick={() => deleteItem(item.boardId || item.recruitmentId, item.title)}
-                  className='text-light-gray hover:text-main-pink'
-                >
-                  ✕
-                </button>
-              </td>
-            </tr>
-          ))}
+                <td>{index + 1}</td>
+                <td>{item.title}</td>
+                <td>{item.createdAt.split('T')[0]}</td>
+                {item.recruitmentCategory !== undefined &&
+                  (item.recruitmentCategory === '구인' ? (
+                    <td>
+                      <BoardCategory
+                        label={'구인'}
+                        bgColor={'#EBF7FF'}
+                        labelColor={'#2563EB'}
+                        width={'60px'}
+                      />
+                    </td>
+                  ) : (
+                    <td>
+                      <BoardCategory
+                        label={'구직'}
+                        bgColor={'#FFEFEB'}
+                        labelColor={'#DC2626'}
+                        width={'60px'}
+                      />
+                    </td>
+                  ))}
+                {item.commentCount !== undefined && (
+                  <td>
+                    <div className='flex items-center justify-center h-4 gap-1 sm:gap-2'>
+                      <img src={commentImg} alt='commentImg' className='h-3 sm:h-4' />
+                      {item.commentCount}
+                    </div>
+                  </td>
+                )}
+                {item.viewCount !== undefined && <td>{item.viewCount}</td>}
+                <td>
+                  <button
+                    onClick={() =>
+                      deleteItem(
+                        item.boardId || item.recruitmentId,
+                        item.title,
+                        item.recruitmentCategory,
+                      )
+                    }
+                    className='text-light-gray hover:text-main-pink'
+                  >
+                    ✕
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
