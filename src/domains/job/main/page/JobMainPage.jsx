@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import SearchBar from '../../../../components/web/SearchBar'
-//import CountPost from '../components/CountPost' API 완성 안된듯..
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
@@ -10,7 +9,7 @@ import useRecruitmentSearch from '../../common/hook/useRecruitmentSearch'
 import JobPostList from '../components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
 import { useLocation } from 'react-router-dom'
-
+import { getPostCounts } from '../../common/utils/getPostCounts'
 const JobMainPage = () => {
   const location = useLocation()
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
@@ -19,6 +18,7 @@ const JobMainPage = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const counts = getPostCounts(posts)
 
   // 구인/구직 검색 현재 오류 발생중
   const {
@@ -95,6 +95,9 @@ const JobMainPage = () => {
       </div>
       <div className='px-4 md:px-[100px] mt-2 lg:px-[250px]'>
         <div className='flex items-center justify-between'>
+          <div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
+            전체: {counts.total}개 | 오늘: {counts.today}개
+          </div>
           <div className='flex items-end'>
             <JobDropDown handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
@@ -106,7 +109,9 @@ const JobMainPage = () => {
 
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
           {loading || searchLoading ? (
-            <Spinner />
+            <div className='flex justify-center items-center min-h-[300px] w-full'>
+              <Spinner />
+            </div>
           ) : displayedPosts.length > 0 ? (
             <JobPostList posts={displayedPosts} navigate={navigate} />
           ) : hasSearched ? (

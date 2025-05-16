@@ -29,7 +29,7 @@ const JobPostList = ({ posts, navigate }) => {
               if (post.joboffer1) {
                 navigate(`/job/recruitment/post/${post.id}`)
               } else if (post.jobsearch1) {
-                navigate(`/job/job-search/post/${post.id}`)
+                navigate(`/job/job-seek/post/${post.id}`)
               } else {
                 navigate(`/detail/${post.id}`)
               }
@@ -58,7 +58,7 @@ const JobPostList = ({ posts, navigate }) => {
               if (post.joboffer1) {
                 navigate(`/job/recruitment/post/${post.id}`)
               } else if (post.jobsearch1) {
-                navigate(`/job/job-search/post/${post.id}`)
+                navigate(`/job/job-seek/post/${post.id}`)
               } else {
                 navigate(`/detail/${post.id}`)
               }

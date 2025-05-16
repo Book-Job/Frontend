@@ -3,7 +3,6 @@ import useRecruitmentPostDetail from '../../detail/hook/useRecruitmentPostDetail
 import { editRecruitmentPost } from '../../../service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
-import PinkButton from '../../../../../components/web/PinkButton'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
@@ -34,7 +33,7 @@ const EditRecruitmentPostPage = () => {
 
   return (
     <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
-      <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>구인 글 수정</h1>
+      <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px] mb-8'>구인 글 수정</h1>
       <WriteFormLine />
       <WriteRecruitmentPostingForm defaultValues={data} onSubmit={handleEdit} />
       <LastFormLine />
