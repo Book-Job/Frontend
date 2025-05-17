@@ -10,6 +10,15 @@ import bookmarkGray from '../../assets/icons/common/common_bookmark_gray.svg'
 import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
 import TagIcon from '../web/TagIcon'
 import MobileShare from './MobileShare'
+import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
+
+import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
+
+const getEmploymentLabel = (value) => {
+  const found = employmentTypes.find((item) => item.value === value)
+  return found ? found.label : value
+}
+
 const MobileWorkBoard = ({
   title,
   name,
@@ -18,44 +27,65 @@ const MobileWorkBoard = ({
   onClick,
   popular1,
   joboffer1,
-  history1,
   jobsearch1,
   othersite1,
-  worktype1,
+  employmentType,
+  experienceLabel,
   view,
   className,
+  type,
+  postId,
+  userId,
 }) => {
-  const bookmarkIcon = like === true ? bookmarkPink : bookmarkGray
-  return (
-    <div className={`w-[336px] h-[160px] ${className} mt-3`}>
-      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer'>
-        <img
-          src={bookmarkIcon}
-          alt='bookmark'
-          onClick={onClick}
-          className='w-[23px] h-[23px] absolute top-[-2px] right-4 z-10'
-        />
+  const scraps = useScrapStore((state) => state.scraps)
+  const loading = useScrapStore((state) => state.loading)
+  const toggleScrap = useScrapStore((state) => state.toggleScrap)
 
-        <div className='flex-row'>
-          <div className='flex flex-wrap gap-1 mb-2'>
-            {popular1 && <TagIcon label='인기 글' icon={popular} />}
-            {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
-            {history1 && <TagIcon label='경력 1~3년' icon={history} />}
-            {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
-            {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
-            {worktype1 && <TagIcon label='정규직' icon={worktype} />}
-          </div>
-          <div onClick={onClick} className='text-[18px] font-bold line-clamp-2'>
-            {title}
-          </div>
+  const scrapped = Boolean(scraps[postId])
+  const bookmarkIcon = scrapped ? bookmarkPink : bookmarkGray
+
+  const handleToggleScrap = (e) => {
+    e.stopPropagation()
+    toggleScrap(postId, type)
+  }
+
+  return (
+    <div
+      className={`w-[336px] h-[160px] ${className} mt-3`}
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+    >
+      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-5 pt-5 pb-4 justify-between bg-white shadow-sm'>
+        <button
+          className='absolute top-[-2px] right-4 z-10 p-0 bg-transparent border-none'
+          onClick={handleToggleScrap}
+          disabled={loading}
+          aria-label={scrapped ? '스크랩 해제' : '스크랩'}
+        >
+          <img
+            src={bookmarkIcon}
+            alt='스크랩 아이콘'
+            className='w-6 h-6'
+            style={{ opacity: loading ? 0.5 : 1 }}
+          />
+        </button>
+
+        <div className='flex flex-wrap gap-1 mb-2'>
+          {popular1 && <TagIcon label='인기 글' icon={popular} />}
+          {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
+          {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
+          {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
+          {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
+          {employmentType && <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />}
         </div>
-        <div className='flex-row text-dark-gray text-[14px]'>
-          <div onClick={onClick} className='flex justify-end font-bold'>
-            {name}
-          </div>
+
+        <h3 className='text-[18px] font-bold line-clamp-2 mb-2 self-start'>{title}</h3>
+
+        <div className='flex flex-col text-dark-gray text-[14px] mt-auto'>
+          <div className='flex justify-end font-bold mb-1'>{name}</div>
           <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
-            {date}
+            <span>{date}</span>
             <MobileShare label={view} textColor='text-main-pink' icon={viewPink} />
           </div>
         </div>
@@ -67,15 +97,19 @@ const MobileWorkBoard = ({
 MobileWorkBoard.propTypes = {
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  experienceLabel: PropTypes.string,
   view: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
   like: PropTypes.bool.isRequired,
   popular1: PropTypes.bool.isRequired,
   joboffer1: PropTypes.bool.isRequired,
-  history1: PropTypes.bool.isRequired,
   jobsearch1: PropTypes.bool.isRequired,
   othersite1: PropTypes.bool.isRequired,
-  worktype1: PropTypes.bool.isRequired,
+  employmentType: PropTypes.string,
   onClick: PropTypes.func,
+  className: PropTypes.string,
+  type: PropTypes.string,
+  postId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 export default MobileWorkBoard
