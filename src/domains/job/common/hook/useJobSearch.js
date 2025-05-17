@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { getAllRecruitmentPosts } from '../../main/service/jobMainService'
 
-const useRecruitmentSearch = () => {
+const useJobSearch = (fetchJobs, resultKey) => {
   const [searchResults, setSearchResults] = useState([])
   const [searchLoading, setSearchLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
@@ -13,14 +12,14 @@ const useRecruitmentSearch = () => {
     setSearchLoading(true)
 
     try {
-      const res = await getAllRecruitmentPosts(null, 'LATEST', searchKeyword)
-      if (Array.isArray(res.jobPostings)) {
-        setSearchResults(res.jobPostings)
+      const res = await fetchJobs(null, 'LATEST', searchKeyword)
+      if (Array.isArray(res[resultKey])) {
+        setSearchResults(res[resultKey])
       } else {
         setSearchResults([])
       }
     } catch (err) {
-      console.error('구인 검색 실패:', err)
+      console.error('검색 실패:', err)
       setSearchResults([])
     } finally {
       setSearchLoading(false)
@@ -35,4 +34,4 @@ const useRecruitmentSearch = () => {
   return { searchResults, searchLoading, hasSearched, handleSearch, reset }
 }
 
-export default useRecruitmentSearch
+export default useJobSearch

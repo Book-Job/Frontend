@@ -10,13 +10,14 @@ import LastFormLine from '../../../common/components/LastFormLine'
 import MobileShare from '../../../../../components/app/MobileShare'
 import viewPink from '../../../../../assets/icons/common/common_view_pink.svg'
 import share from '../../../../../assets/icons/common/common_share.svg'
-import { deleteRecruitmentPost } from '../../../service/postService'
+import { deleteRecruitmentPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
   const { data, loading, error } = useRecruitmentPostDetail(id)
+
   const navigate = useNavigate()
 
   if (loading) {
