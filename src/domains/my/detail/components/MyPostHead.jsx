@@ -8,14 +8,14 @@ const MyPostHead = () => {
       <div className='sm:text-[30px] font-bold mb-[30px] text-[20px]'>내가 작성한 글</div>
       <div className='bg-[#F4F6FA] flex justify-center sm:gap-[130px] gap-10 sm:h-[52px] h-[38px] sm:w-[492px] w-[300px] items-center sm:text-xl text-base font-bold rounded-full'>
         <button
-          className={choiceBoard === 'job' ? 'text-main-pink' : 'text-dark-gray'}
-          onClick={() => setChoiceBoard('job')}
+          className={choiceBoard === '구인구직' ? 'text-main-pink' : 'text-dark-gray'}
+          onClick={() => setChoiceBoard('구인구직')}
         >
           구인 | 구직
         </button>
         <button
-          className={choiceBoard === 'free' ? 'text-main-pink' : 'text-dark-gray'}
-          onClick={() => setChoiceBoard('free')}
+          className={choiceBoard === '자유게시판' ? 'text-main-pink' : 'text-dark-gray'}
+          onClick={() => setChoiceBoard('자유게시판')}
         >
           자유게시판
         </button>
