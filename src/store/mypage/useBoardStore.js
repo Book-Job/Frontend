@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 const useBoardStore = create((set) => ({
-  choiceBoard: 'job',
+  choiceBoard: '구인구직',
   setChoiceBoard: (board) => set({ choiceBoard: board }),
 }))
 
