@@ -21,21 +21,19 @@ const MyScrap = () => {
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 
   useEffect(() => {
-    useEffect(() => {
-      let isMounted = true
-      setLoading(true)
-      getAllScrap()
-        .then((data) => {
-          if (isMounted) setScrapPosts(data)
-        })
-        .catch(console.error)
-        .finally(() => {
-          if (isMounted) setLoading(false)
-        })
-      return () => {
-        isMounted = false
-      }
-    }, [])
+    let isMounted = true
+    setLoading(true)
+    getAllScrap()
+      .then((data) => {
+        if (isMounted) setScrapPosts(data)
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (isMounted) setLoading(false)
+      })
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const sortedPosts = useMemo(() => {
