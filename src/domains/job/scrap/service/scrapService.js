@@ -1,19 +1,18 @@
 import { authApi } from '../../../../services/api/axios'
 
-//스크랩 생성
-export const createScrap = async () => {
-  const response = await authApi.post('/bookmarks')
+//스크랩요청
+export const createScrap = async ({ id, type }) => {
+  const response = await authApi.post('/bookmarks', { relatedId: id, type })
   return response.data
 }
 
-//스크랩 취소
-export const deleteScrap = async () => {
-  const response = await authApi.delete(`bookmarks/${bookMarkId}`)
+//취소
+export const deleteScrap = async (bookMarkId) => {
+  const response = await authApi.delete(`/bookmarks/${bookMarkId}`)
   return response.data
 }
-
-//스크랩 전체 조회
-export const getAllScarp = async () => {
+//조회
+export const getAllScrap = async () => {
   const response = await authApi.get('/bookmarks')
-  return response.data
+  return response.data.data.bookMarksResponses
 }
