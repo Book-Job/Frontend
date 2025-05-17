@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getJobSeekPostDetail } from '../../../service/postService'
+import { getJobSeekPostDetail } from '../../../../../domains/job/common/service/postService'
 
 const useJobSeekPostDetail = (jobSeekingId) => {
   const [data, setData] = useState(null)

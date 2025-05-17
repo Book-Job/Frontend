@@ -11,7 +11,7 @@ import LastFormLine from '../../../common/components/LastFormLine'
 import MobileShare from '../../../../../components/app/MobileShare'
 import viewPink from '../../../../../assets/icons/common/common_view_pink.svg'
 import share from '../../../../../assets/icons/common/common_share.svg'
-import { deleteJobSeekPost } from '../../../service/postService'
+import { deleteJobSeekPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
