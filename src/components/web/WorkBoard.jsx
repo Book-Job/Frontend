@@ -93,7 +93,6 @@ WorkBoard.propTypes = {
   date: PropTypes.string.isRequired,
   like: PropTypes.bool.isRequired,
   popular1: PropTypes.bool.isRequired,
-  experienceLabel: PropTypes.string,
   joboffer1: PropTypes.bool.isRequired,
   experienceLabel: PropTypes.string,
   jobsearch1: PropTypes.bool.isRequired,
