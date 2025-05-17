@@ -1,105 +1,120 @@
+import React, { useEffect, useState, useMemo } from 'react'
 import WorkBoard from '../../../components/web/WorkBoard'
+import MobileWorkBoard from '../../../components/app/MobileWorkBoard'
 import PageTitle from '../../Find/common/components/PageTitle'
+import { getAllScrap } from '../../job/scrap/service/scrapService'
+import getExperienceLabel from '../../job/common/utils/getExperienceLabel'
+import { useNavigate } from 'react-router-dom'
+import useAuthStore from '../../../store/login/useAuthStore'
+import Spinner from '../../../components/web/Spinner'
+import JobPostSortDropDown from '../../job/main/components/JobPostSortDropDown'
 
+//현재 라우팅도 오류남.. 잡카테고리를 안 넘겨움 + 닉네임
 const MyScrap = () => {
-  const scrapList = [
-    {
-      id: 1,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-    {
-      id: 2,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-    {
-      id: 3,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-    {
-      id: 4,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-    {
-      id: 5,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-    {
-      id: 6,
-      title: '연봉 7000천 받으면서 일하실분',
-      name: '여기는 북에디터',
-      date: '2020-12-12',
-      like: true,
-      popular1: false,
-      joboffer1: true,
-      history1: true,
-      othersite1: false,
-      worktype1: true,
-      view: 203,
-    },
-  ]
+  const [scrapPosts, setScrapPosts] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [sort, setSort] = useState('latest')
+  const navigate = useNavigate()
+  const { user } = useAuthStore()
+  const loggedInUserId = user ? user.userId : null
+
+  const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
+
+  useEffect(() => {
+    setLoading(true)
+    getAllScrap()
+      .then((data) => setScrapPosts(data))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const sortedPosts = useMemo(() => {
+    if (!scrapPosts) return []
+    return [...scrapPosts].sort((a, b) => {
+      if (sort === 'latest') {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+      } else {
+        return new Date(a.createdAt) - new Date(b.createdAt)
+      }
+    })
+  }, [scrapPosts, sort])
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center min-h-[300px]'>
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
     <div>
       <PageTitle title={'스크랩'} />
-      <div className='flex justify-end max-w-[932px] mx-auto'>최신 등록순</div>
-      <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center'>
-        {scrapList.map((scrap) => (
+      <div className='flex justify-end max-w-[932px] mx-auto mb-2'>
+        <JobPostSortDropDown onSortChange={setSort} />
+      </div>
+
+      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center'>
+        {sortedPosts.map((post) => (
           <WorkBoard
-            key={scrap.id}
-            title={scrap.title}
-            name={scrap.name}
-            date={scrap.date}
-            like={scrap.like}
-            popular1={scrap.popular1}
-            joboffer1={scrap.joboffer1}
-            history1={scrap.history1}
-            othersite1={scrap.othersite1}
-            worktype1={scrap.worktype1}
-            view={scrap.view}
+            key={post.bookMarkId || post.id}
+            postId={post.entityId || post.id}
+            title={post.title}
+            name={post.nickname}
+            date={formatDate(post.createdAt)}
+            like={post.like || false}
+            popular1={post.popular1 || false}
+            joboffer1={post.joboffer1 || false}
+            experienceLabel={getExperienceLabel(post.experienceMin, post.experienceMax)}
+            jobsearch1={post.jobsearch1 || false}
+            othersite1={post.othersite1 || false}
+            worktype1={post.worktype1 || post.employmentType}
+            employmentType={post.employmentType}
+            view={post.viewCount || post.view}
+            userId={loggedInUserId}
+            initialScrapped={true}
+            type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
+            onClick={() => {
+              if (post.joboffer1) {
+                navigate(`/job/recruitment/post/${post.entityId}`)
+              } else if (post.jobsearch1) {
+                navigate(`/job/job-seek/post/${post.entityId}`)
+              } else {
+                navigate(`/detail/${post.entityId}`)
+              }
+            }}
+          />
+        ))}
+      </div>
+
+      <div className='block sm:hidden flex flex-wrap gap-4 mt-4 ml-4'>
+        {sortedPosts.map((post) => (
+          <MobileWorkBoard
+            key={post.bookMarkId || post.id}
+            postId={post.entityId || post.id}
+            title={post.title}
+            name={post.nickname || post.recruitmentCategory || '작성자 없음'}
+            date={formatDate(post.createdAt)}
+            like={post.like || false}
+            popular1={post.popular1 || false}
+            joboffer1={post.joboffer1 || false}
+            experienceLabel={getExperienceLabel(post.experienceMin, post.experienceMax)}
+            jobsearch1={post.jobsearch1 || false}
+            othersite1={post.othersite1 || false}
+            worktype1={post.worktype1 || post.employmentType}
+            employmentType={post.employmentType}
+            view={post.viewCount || post.view}
+            userId={loggedInUserId}
+            initialScrapped={true}
+            type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
+            onClick={() => {
+              if (post.joboffer1) {
+                navigate(`/job/recruitment/post/${post.id}`)
+              } else if (post.jobsearch1) {
+                navigate(`/job/job-seek/post/${post.id}`)
+              } else {
+                navigate(`/detail/${post.id}`)
+              }
+            }}
           />
         ))}
       </div>
