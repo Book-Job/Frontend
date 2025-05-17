@@ -45,9 +45,16 @@ const JobMainPage = () => {
   const resetSearch = isRecruitment ? resetRecruitmentSearch : resetJobSeekingSearch
 
   useEffect(() => {
-    resetSearch()
-    loadScraps()
-    loadPosts()
+    ;(async () => {
+      try {
+        resetSearch()
+        await loadScraps()
+        await loadPosts()
+      } catch (error) {
+        console.error('데이터 로딩 실패', error)
+        alert('데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.')
+      }
+    })()
   }, [selectedJobTabs, order])
 
   useEffect(() => {

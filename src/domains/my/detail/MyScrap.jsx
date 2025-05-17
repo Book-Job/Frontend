@@ -21,10 +21,21 @@ const MyScrap = () => {
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 
   useEffect(() => {
-    setLoading(true)
-    getAllScrap()
-      .then((data) => setScrapPosts(data))
-      .finally(() => setLoading(false))
+    useEffect(() => {
+      let isMounted = true
+      setLoading(true)
+      getAllScrap()
+        .then((data) => {
+          if (isMounted) setScrapPosts(data)
+        })
+        .catch(console.error)
+        .finally(() => {
+          if (isMounted) setLoading(false)
+        })
+      return () => {
+        isMounted = false
+      }
+    }, [])
   }, [])
 
   const sortedPosts = useMemo(() => {
@@ -108,11 +119,11 @@ const MyScrap = () => {
             type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
             onClick={() => {
               if (post.joboffer1) {
-                navigate(`/job/recruitment/post/${post.id}`)
+                navigate(`/job/recruitment/post/${post.entityId}`)
               } else if (post.jobsearch1) {
-                navigate(`/job/job-seek/post/${post.id}`)
+                navigate(`/job/job-seek/post/${post.entityId}`)
               } else {
-                navigate(`/detail/${post.id}`)
+                navigate(`/detail/${post.entityId}`)
               }
             }}
           />

@@ -23,7 +23,6 @@ const WorkBoard = ({
   title,
   name,
   date,
-  like,
   onClick,
   popular1,
   joboffer1,
@@ -32,10 +31,8 @@ const WorkBoard = ({
   employmentType,
   experienceLabel,
   view,
-  className,
   type,
   postId,
-  userId,
 }) => {
   const scraps = useScrapStore((state) => state.scraps)
   const loading = useScrapStore((state) => state.loading)
@@ -86,12 +83,12 @@ const WorkBoard = ({
 }
 
 WorkBoard.propTypes = {
+  type: PropTypes.string.isRequired,
   postId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   view: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
-  like: PropTypes.bool.isRequired,
   popular1: PropTypes.bool.isRequired,
   joboffer1: PropTypes.bool.isRequired,
   experienceLabel: PropTypes.string,
@@ -99,8 +96,6 @@ WorkBoard.propTypes = {
   othersite1: PropTypes.bool.isRequired,
   employmentType: PropTypes.string,
   onClick: PropTypes.func,
-  className: PropTypes.string,
-  userId: PropTypes.number.isRequired,
 }
 
 export default WorkBoard
