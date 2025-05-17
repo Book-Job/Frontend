@@ -25,7 +25,7 @@ export const editRecruitmentPost = async (jobPostingId, data) => {
 //구인 글 삭제
 export const deleteRecruitmentPost = async (jobPostingId) => {
   const response = await authApi.delete(`/job-posting/${jobPostingId}`)
-  return response.data
+  return response.data.data
 }
 
 //구직 글 작성

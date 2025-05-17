@@ -100,7 +100,6 @@ MobileWorkBoard.propTypes = {
   experienceLabel: PropTypes.string,
   view: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
-  like: PropTypes.bool.isRequired,
   popular1: PropTypes.bool.isRequired,
   joboffer1: PropTypes.bool.isRequired,
   jobsearch1: PropTypes.bool.isRequired,
@@ -110,6 +109,5 @@ MobileWorkBoard.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
   postId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 export default MobileWorkBoard
