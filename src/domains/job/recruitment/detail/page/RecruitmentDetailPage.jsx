@@ -17,6 +17,7 @@ const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
   const { data, loading, error } = useRecruitmentPostDetail(id)
+
   const navigate = useNavigate()
 
   if (loading) {
