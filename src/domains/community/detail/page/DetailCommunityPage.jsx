@@ -14,7 +14,7 @@ import CommentForm from '../../comment/components/CommentForm'
 import CommentList from '../../comment/components/CommentList'
 import { deletePost, editPost } from '../../service/postService'
 import useCommentStore from '../../comment/store/useCommentStore'
-
+import RelatedPosts from '../components/RelatedPosts'
 const DetailCommunityPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
@@ -142,7 +142,8 @@ const DetailCommunityPage = () => {
         <CommentForm boardId={id} onCommentAdded={() => fetchComments(id)} />
         {isCommentOpen && <CommentList boardId={id} />}
         <LastFormLine />
-        <h2 className='font-bold text-xl mb-4 flex self-start'>관련 글</h2>
+        <h2 className='font-bold text-xl my-5 flex self-start'>관련 글</h2>
+        <RelatedPosts currentId={id} />
       </div>
     </div>
   )
