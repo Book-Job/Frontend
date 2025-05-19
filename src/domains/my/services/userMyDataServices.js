@@ -65,7 +65,6 @@ export const postPWCheck = async (PW) => {
         },
       },
     )
-    console.log('회원 PW 확인 중 오류 api:', response)
     return response
   } catch (error) {
     console.error('회원 PW 확인 중 오류 api:', error.response.data.message)
@@ -76,7 +75,6 @@ export const postPWCheck = async (PW) => {
 //마이 프로필 회원 탈퇴
 export const deleteMember = async (PW) => {
   try {
-    console.log('회원 탈퇴 pw:', PW)
     const response = await authApi.delete(
       '/members',
 
@@ -88,7 +86,6 @@ export const deleteMember = async (PW) => {
         data: { password: PW },
       },
     )
-    console.log('회원 탈퇴중 오류 api:', response)
     return response
   } catch (error) {
     console.error('회원 탈퇴중 오류 api:', error.response.data.message)
@@ -109,7 +106,6 @@ export const postNewPW = async (PW, resetToken) => {
         },
       },
     )
-    console.log('회원 pw변경 중 오류 api:', response)
     return response
   } catch (error) {
     console.error('회원 pw변경 중 오류 api:', error.response.data.message)
