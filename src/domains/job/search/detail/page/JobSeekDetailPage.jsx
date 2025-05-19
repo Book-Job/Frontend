@@ -13,6 +13,7 @@ import viewPink from '../../../../../assets/icons/common/common_view_pink.svg'
 import share from '../../../../../assets/icons/common/common_share.svg'
 import { deleteJobSeekPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
+import RelatedJobSearchPosts from '../components/RelatedJobSearchPosts'
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
@@ -90,6 +91,7 @@ const JobSeekDetailPage = () => {
       <div className='block  mt-4 mb-10 whitespace-pre-line'>{data.text}</div>
       <LastFormLine />
       <h2 className='font-bold text-xl mt-4 flex self-start'>관련 글</h2>
+      <RelatedJobSearchPosts currentId={id} />
     </div>
   )
 }
