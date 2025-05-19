@@ -51,7 +51,8 @@ const JobSeekDetailPage = () => {
   const handleScrapClick = async () => {
     try {
       await toggleScrap(id, 'JOB_SEEKING')
-    } catch (e) {
+    } catch (error) {
+      console.error('스크랩 처리 중 오류:', error)
       alert('스크랩 처리 중 오류가 발생했습니다.')
     }
   }

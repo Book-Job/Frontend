@@ -6,28 +6,31 @@ import Spinner from '../../../../../components/web/Spinner'
 
 const RelatedRecruitmentPosts = ({ currentId }) => {
   const [posts, setPosts] = useState([])
-
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
+    let isMounted = true
     const fetchPosts = async () => {
       try {
-        setLoading(true)
+        if (isMounted) setLoading(true)
         const data = await getAllRecruitmentPosts(undefined, 'LATEST')
         const jobPostings = data?.jobPostings || []
         const filtered = jobPostings.filter((p) => String(p.id) !== String(currentId))
         jobPostings.forEach((p) => console.log('post.id:', p.id))
 
-        setPosts(filtered)
+        if (isMounted) setPosts(filtered)
       } catch (err) {
-        setError(err)
+        if (isMounted) setError(err)
       } finally {
-        setLoading(false)
+        if (isMounted) setLoading(false)
       }
     }
     fetchPosts()
+    return () => {
+      isMounted = false
+    }
   }, [currentId])
 
   if (loading) {
