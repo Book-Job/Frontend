@@ -23,7 +23,6 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
   })
 
   const onSubmit = async (data) => {
-    console.log('PW 확인:', data)
     const PW = data.userPW
     try {
       const response = await postPWCheck(PW)
