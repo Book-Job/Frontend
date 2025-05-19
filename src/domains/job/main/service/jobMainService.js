@@ -1,12 +1,12 @@
 // 구인 전체 글 조회 및 검색
 import { publicApi } from '../../../../services/api/axios'
-
 export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
   try {
-    const params = { last: lastId, order }
-    if (keyword && keyword.trim() !== '') {
-      params.keyword = keyword
-    }
+    const params = {}
+    if (lastId !== undefined && lastId !== null) params.last = lastId
+    if (order !== undefined && order !== null) params.order = order
+    if (keyword && keyword.trim() !== '') params.keyword = keyword
+
     console.log('[구인 API 요청] params:', params)
 
     const response = await publicApi.get('/job-posting', {
@@ -16,7 +16,6 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
         'Content-Type': 'application/json',
       },
     })
-
     console.log('[구인 API 응답 전체]', response)
 
     const data = response.data.data
