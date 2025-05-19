@@ -108,7 +108,7 @@ const EditProfile = () => {
     )
   }
 
-  const pp = () => {
+  const openMembershipDeleteModal = () => {
     setAlertState({
       isOpen: true,
       onButtonClick: null,
@@ -148,7 +148,7 @@ const EditProfile = () => {
                 size='semiMedium'
                 label='회원탈퇴'
                 onClick={() => {
-                  pp()
+                  openMembershipDeleteModal()
                 }}
                 className={'hover:bg-main-pink'}
               />

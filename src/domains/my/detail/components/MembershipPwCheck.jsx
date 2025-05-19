@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import LabelWithInput from '../../../../components/web/LabelWithInput'
 import Button from '../../../../components/web/Button'
 import { postPWCheck } from '../../services/userMyDataServices'
 import { useState } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
+import { toast } from 'react-toastify'
+import PwInputBox from '../../../../components/web/PwInputBox'
 
 const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) => {
   const navigate = useNavigate()
@@ -26,25 +27,24 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
     const PW = data.userPW
     try {
       const response = await postPWCheck(PW)
-      console.log('기존 PW 확인:', response.data)
       if (response.data && response.data.message === 'success') {
-        console.log('비밀번호 일치:', response.data)
         setServerMessage({
           message: '비밀번호가 일치합니다.',
           isSuccess: true,
         })
         setVerifiedPW(PW)
-        console.log('resetToken확인:', response.data.data.resetToken)
-        const resetToken = response.data.data.resetToken || 'resetToken 없음'
+        const { resetToken } = response.data.data || {}
+        if (!resetToken) {
+          toast.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
+          return
+        }
         setResetToken(resetToken)
-        // navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
       } else {
         console.log('비밀번호 불일치:', response)
         setServerMessage({
           message: response.data?.message || '비밀번호가 일치하지 않습니다.',
           isSuccess: false,
         })
-        // navigate(ROUTER_PATHS.MY_PW_MIS)
       }
     } catch (error) {
       console.error('기존 비밀번호 확인 오류:', error)
@@ -61,9 +61,9 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
 
   const handleButtonClick = () => {
     if (serverMessage.isSuccess && onSuccessAction) {
-      onSuccessAction(navigate, verifiedPW) // 성공 시 커스텀 동작 실행
+      onSuccessAction(navigate, verifiedPW)
     } else if (onButtonClick) {
-      onButtonClick(navigate) // 기본 버튼 동작
+      onButtonClick(navigate)
     }
     onClose()
   }
@@ -79,9 +79,9 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
         </p>
         <div className='flex justify-center'>
           <div className='flex-auto mt-7 sm:mt-10'>
-            <LabelWithInput
+            <div className='mb-[11px] sm:text-[20px] text-base font-bold text-start'>비밀번호</div>
+            <PwInputBox
               label='비밀번호'
-              type='text'
               placeholder='현재 비밀번호를 입력해주세요'
               size='biggest'
               {...register('userPW', { required: '현재 사용중인 비밀번호를 입력해 주세요.' })}
