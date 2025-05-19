@@ -5,29 +5,61 @@ import ROUTER_PATHS from '../../../routes/RouterPath'
 import { useNavigate } from 'react-router-dom'
 import LabelWithInput from '../../../components/web/LabelWithInput'
 import Button from '../../../components/web/Button'
+import { postPWCheck } from '../services/userMyDataServices'
+import { useState } from 'react'
 
 const EditPassword = () => {
+  const navigate = useNavigate()
+  const [serverMessage, setServerMessage] = useState({ message: null, isSuccess: false })
+  const [isLoading, setIsLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    mode: 'onChange', 
+  })
 
-  const onSubmit = (data) => {
-    const currentPassword = data.userPW
-    // 예시: 실제 비밀번호 (이건 나중에 백엔드에서 받아오거나 비교해야 함)
-    const realPassword = '1234' // 임시로 정해둔 비밀번호
-
-    if (currentPassword !== realPassword) {
-      console.log('비밀번호 불일치:', data)
-      navigate(ROUTER_PATHS.MY_PW_MIS)
-    } else {
-      console.log('비밀번호 일치:', data)
-      navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
+  const onSubmit = async (data) => {
+    if (isLoading) return
+    setIsLoading(true)
+    console.log('PW 확인:', data)
+    const PW = data.userPW
+    try {
+      const response = await postPWCheck(PW)
+      console.log('기존 PW 확인:', response.data)
+      if (response.data && response.data.message === 'success') {
+        console.log('비밀번호 일치:', response.data)
+        setServerMessage({
+          message: '비밀번호가 일치합니다.',
+          isSuccess: true,
+        })
+      } else {
+        console.log('비밀번호 불일치:', response)
+        setServerMessage({
+          message: response.data?.message || '비밀번호가 일치하지 않습니다.',
+          isSuccess: false,
+        })
+      }
+    } catch (error) {
+      console.error('기존 비밀번호 확인 오류:', error)
+      setServerMessage({
+        message: error.message || '비밀번호 확인 중 오류가 발생했습니다.',
+        isSuccess: false,
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
-  //작업중 페이지
-  const navigate = useNavigate()
+  const handleButtonClick = () => {
+    if (isLoading) return
+    if (serverMessage.isSuccess) {
+      navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
+    } else {
+      handleSubmit(onSubmit)()
+    }
+  }
   return (
     <div>
       <PageTitle title={'비밀번호 변경'} />
@@ -40,18 +72,26 @@ const EditPassword = () => {
               type='text'
               placeholder='현재 비밀번호를 입력해주세요'
               size='biggest'
-              {...register('userPW', { required: '현재 사용중인 비밀번호와 일치하지않습니다' })}
+              {...register('userPW', { required: '현재 사용중인 비밀번호를 입력해 주세요.' })}
             />
           </div>
           <div className='flex items-start'>
             {errors.userPW && <p className='text-red-500 text-[14px]'>{errors.userPW.message}</p>}
+            {serverMessage.message && (
+              <p
+                className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              >
+                {serverMessage.message}
+              </p>
+            )}
           </div>
           <div className='flex items-end mt-6'>
             <Button
               size='biggest'
-              label='다음'
-              bgColor='light-gray'
-              onClick={handleSubmit(onSubmit)}
+              label={isLoading ? '처리 중...' : serverMessage.isSuccess ? '다음' : '확인'}
+              bgColor={serverMessage.isSuccess ? 'main-pink' : 'light-gray'}
+              onClick={handleButtonClick}
+              disabled={isLoading}
             />
           </div>
         </PageBox>
