@@ -4,6 +4,7 @@ import Spinner from '../../../../../components/web/Spinner'
 import unScrapIcon from '../../../../../assets/icons/common/common_bookmark_gray.svg'
 import ScrapIcon from '../../../../../assets/icons/common/common_bookmark_pink.svg' //아직 스크랩 적용 안 했음
 import DetailPostLine from '../../../common/components/DetailPostLine'
+import RelatedRecruitmentPosts from '../components/RelatedRecruitmentPosts'
 import { getJobCategoryLabel } from '../../../common/utils/jobCategories'
 import { getEmploymentTypeLabel } from '../../../common/utils/employmentTypes'
 import LastFormLine from '../../../common/components/LastFormLine'
@@ -108,7 +109,8 @@ const RecruitmentDetailPage = () => {
       </div>
       <div className='block mt-4 mb-10 whitespace-pre-line'>{data.text}</div>
       <LastFormLine />
-      <h2 className='font-bold text-xl mt-4 flex self-start'>관련 글</h2>
+      <h2 className='font-bold text-xl mt-7 flex self-start'>관련 글</h2>
+      <RelatedRecruitmentPosts currentId={id} />
     </div>
   )
 }
