@@ -4,7 +4,7 @@ import { getAllRecruitmentPosts } from '../../../../job/main/service/jobMainServ
 import JobPostList from '../../../main/components/JobPostList'
 import Spinner from '../../../../../components/web/Spinner'
 
-const RecruitmentRelatedPosts = ({ currentId }) => {
+const RelatedRecruitmentPosts = ({ currentId }) => {
   const [posts, setPosts] = useState([])
 
   const [loading, setLoading] = useState(true)
@@ -50,4 +50,4 @@ const RecruitmentRelatedPosts = ({ currentId }) => {
   )
 }
 
-export default RecruitmentRelatedPosts
+export default RelatedRecruitmentPosts
