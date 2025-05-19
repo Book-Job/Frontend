@@ -7,19 +7,19 @@ import { useEffect, useState } from 'react'
 import { getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
 import Spinner from './../../../components/web/Spinner.jsx'
 import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
+import useAuthStore from '../../../store/login/useAuthStore.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
+  const { logout } = useAuthStore()
 
   const handleMyData = async () => {
-    const token = localStorage.getItem('accessToken')
     try {
-      const response = await getMyProfileData(token)
+      const response = await getMyProfileData()
       console.log('마이프로필 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
-        console.log('마이프로필 데이터 성공:', response.data)
         setUserData(response.data)
       } else {
         console.log('마이프로필 데이터 오류:', response.data)
@@ -32,10 +32,9 @@ const EditProfile = () => {
   }
 
   const handleNickName = async (newNickname) => {
-    const token = localStorage.getItem('accessToken')
     setServerError(null)
     try {
-      const response = await patchNicknameCh(token, newNickname)
+      const response = await patchNicknameCh(newNickname)
       console.log('닉네임 변경 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
         console.log('닉네임 변경 데이터 성공:', response.data)
@@ -58,7 +57,7 @@ const EditProfile = () => {
   const handleCheckNickname = async (nickname) => {
     try {
       const response = await getJoinCheckNickname(nickname)
-      console.log('닉네임 중복 확인 응답:', response.data)
+      // console.log('닉네임 중복 확인 응답:', response.data)
       return response
     } catch (error) {
       console.error('닉네임 중복 확인 오류:', error)
@@ -69,6 +68,11 @@ const EditProfile = () => {
   useEffect(() => {
     handleMyData()
   }, [])
+
+  const userlogout = () => {
+    logout()
+    alert('로그아웃 되었습니다.')
+  }
 
   if (!userData) {
     return (
@@ -83,7 +87,7 @@ const EditProfile = () => {
       <PageTitle title={'내 정보'} />
       <div className='flex justify-center'>
         <div className='w-[580px]'>
-          <div className='flex flex-col w-full gap-12 '>
+          <div className='flex flex-col w-full gap-8 sm:gap-12 '>
             <ProfileInfo
               title={'닉네임'}
               content={userData.data.nickname}
@@ -107,9 +111,16 @@ const EditProfile = () => {
                 변경
               </button>
             </div>
-            <div className='flex justify-between'>
-              <Button size='semiMedium' label='회원탈퇴' />
-              <Button size='semiMedium' label='로그아웃' />
+            <div className='flex justify-between gap-2'>
+              <Button size='semiMedium' label='회원탈퇴' className={'hover:bg-main-pink'} />
+              <Button
+                size='semiMedium'
+                label='로그아웃'
+                onClick={() => {
+                  userlogout()
+                }}
+                className={'hover:bg-[]'}
+              />
             </div>
           </div>
         </div>
