@@ -42,7 +42,6 @@ const ChangePwPage = () => {
         alert('비밀번호 변경이 완료되었습니다.')
         clearResetToken()
         navigate(ROUTER_PATHS.MY_PROFILE)
-        alert
       } else {
         console.log('PW 변경 오류:', response)
       }

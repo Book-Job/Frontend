@@ -95,7 +95,11 @@ const FindPwCheckIDPage = () => {
         setStartTimer(false)
         toast.success('이메일 인증이 완료되었습니다.')
         console.log('resetToken확인:', response.data.data.resetToken)
-        const resetToken = response.data.data.resetToken || 'resetToken 없음'
+        const { resetToken } = response.data.data || {}
+        if (!resetToken) {
+          toast.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
+          return
+        }
         setResetToken(resetToken)
       } else {
         setEmailCodeMessage(response.data?.message || '임시 비밀번호가 일치하지 않습니다.')
