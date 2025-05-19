@@ -1,4 +1,4 @@
-import { publicApi } from '../../../services/api/axios'
+import { publicApi } from '../../../services/api/Axios'
 
 // 자유 베스트 리스트
 export const getFreeBest = async () => {
