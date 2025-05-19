@@ -9,7 +9,7 @@ import useFindPWStore from '../../../store/find/useFindPWStore'
 import OTPInput from '../common/components/OTPInput'
 import { useEffect, useState } from 'react'
 import { postFindPWEmail, postTemPW } from '../services/useFindPWServices'
-import { toast } from 'react-toastify'
+import ToastService from '../../../utils/toastService'
 
 const FindPwCheckIDPage = () => {
   const [startTimer, setStartTimer] = useState(false)
@@ -49,7 +49,7 @@ const FindPwCheckIDPage = () => {
   // 임시 비밀번호 전송
   const handleEmailAuth = async () => {
     if (isCheckingEmail) {
-      toast.info('잠시 기다려주세요. 요청이 진행 중입니다.')
+      ToastService.info('잠시 기다려주세요. 요청이 진행 중입니다.')
       return
     }
     const isValid = await trigger('userEmail')
@@ -64,18 +64,18 @@ const FindPwCheckIDPage = () => {
           setEmailCodeMessage('임시 비밀번호가 전송되었습니다.')
           setValidationStatusTemPW('pending')
           setStartTimer(true)
-          toast.success('임시 비밀번호가 전송되었습니다. 이메일을 확인하세요.')
+          ToastService.success('임시 비밀번호가 전송되었습니다. 이메일을 확인하세요.')
         } else {
           setEmailCheckMessage(response.data?.message || '이메일이 일치하지 않습니다.')
           setValidationStatusTemPW('error')
-          toast.error(response.data?.message || '이메일이 일치하지 않습니다.')
+          ToastService.error(response.data?.message || '이메일이 일치하지 않습니다.')
           setIsCheckingEmail(false)
         }
       } catch (error) {
         console.error('임시 비밀번호 전송 중 오류:', error)
         setEmailCheckMessage(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
         setValidationStatusTemPW('error')
-        toast.error(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
+        ToastService.error(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
         setIsCheckingEmail(false)
       } finally {
         setIsCheckingEmail(false)
@@ -91,17 +91,19 @@ const FindPwCheckIDPage = () => {
         setEmailCodeMessage('임시 비밀번호가 일치 되었습니다.')
         setValidationStatusTemPW('success')
         setStartTimer(false)
-        toast.success('이메일 인증이 완료되었습니다.')
+        ToastService.success('이메일 인증이 완료되었습니다.')
       } else {
         setEmailCodeMessage(response.data?.message || '임시 비밀번호가 일치하지 않습니다.')
         setValidationStatusTemPW('error')
-        toast.error(response.data?.message || '임시 비밀번호가 일치하지 않습니다.')
+        ToastService.error(response.data?.message || '임시 비밀번호가 일치하지 않습니다.')
       }
     } catch (error) {
       console.error('PW찾기 임시 비밀번호 확인 중 오류:', error.name)
       setEmailCodeMessage(error === 'Error' ? '서버오류 입니다.' : '인증번호가 일치하지 않습니다.')
       setValidationStatusTemPW('error')
-      toast.error(error.name === 'Error' ? '서버오류 입니다.' : '인증번호가 일치하지 않습니다.')
+      ToastService.error(
+        error.name === 'Error' ? '서버오류 입니다.' : '인증번호가 일치하지 않습니다.',
+      )
     }
   }
   const buttonLabel = isCheckingEmail
