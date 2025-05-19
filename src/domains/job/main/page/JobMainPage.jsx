@@ -124,9 +124,9 @@ const JobMainPage = () => {
           ) : displayedPosts.length > 0 ? (
             <JobPostList posts={displayedPosts} navigate={navigate} />
           ) : hasSearched ? (
-            <span>검색 결과가 없습니다.</span>
+            <p>검색 결과가 없습니다.</p>
           ) : (
-            <span>게시물이 없습니다.</span>
+            <p>게시물이 없습니다.</p>
           )}
         </div>
       </div>
