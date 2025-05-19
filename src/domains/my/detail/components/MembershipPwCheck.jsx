@@ -4,17 +4,21 @@ import LabelWithInput from '../../../../components/web/LabelWithInput'
 import Button from '../../../../components/web/Button'
 import { postPWCheck } from '../../services/userMyDataServices'
 import { useState } from 'react'
+import useAuthStore from '../../../../store/login/useAuthStore'
 
 const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) => {
   const navigate = useNavigate()
   const [serverMessage, setServerMessage] = useState({ message: null, isSuccess: false })
   const [verifiedPW, setVerifiedPW] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const { setResetToken } = useAuthStore()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onChange', // 입력 변경 시 검증
+    mode: 'onChange',
   })
 
   const onSubmit = async (data) => {
@@ -30,6 +34,9 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
           isSuccess: true,
         })
         setVerifiedPW(PW)
+        console.log('resetToken확인:', response.data.data.resetToken)
+        const resetToken = response.data.data.resetToken || 'resetToken 없음'
+        setResetToken(resetToken)
         // navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
       } else {
         console.log('비밀번호 불일치:', response)
@@ -45,6 +52,8 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
         message: error.message || '비밀번호 확인 중 오류가 발생했습니다.',
         isSuccess: false,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -92,9 +101,10 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
         <div className='flex items-end mt-6'>
           <Button
             size='biggest'
-            label='확인'
+            label={isLoading ? '처리 중...' : '확인'}
             bgColor={serverMessage.isSuccess ? 'main-pink' : 'light-gray'}
             onClick={serverMessage.isSuccess ? handleButtonClick : handleSubmit(onSubmit)}
+            disabled={isLoading}
           />
         </div>
       </div>
