@@ -12,21 +12,24 @@ const RelatedJobSearchPosts = ({ currentId }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    let isMounted = true
     const fetchPosts = async () => {
       try {
-        setLoading(true)
+        if (isMounted) setLoading(true)
         const data = await getJobPosts(undefined, 'LATEST')
         const jobSeekings = data?.jobSeekings || []
         const filtered = jobSeekings.filter((p) => String(p.id) !== String(currentId))
-        jobSeekings.forEach((p) => console.log('post.id:', p.id))
-        setPosts(filtered)
+        if (isMounted) setPosts(filtered)
       } catch (err) {
-        setError(err)
+        if (isMounted) setError(err)
       } finally {
-        setLoading(false)
+        if (isMounted) setLoading(false)
       }
     }
     fetchPosts()
+    return () => {
+      isMounted = false
+    }
   }, [currentId])
 
   if (loading) {
