@@ -14,10 +14,13 @@ import share from '../../../../../assets/icons/common/common_share.svg'
 import { deleteJobSeekPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import RelatedJobSearchPosts from '../components/RelatedJobSearchPosts'
+import useScrapStore from '../../../scrap/store/useScrapStore'
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
   const { data, loading, error } = useJobSeekPostDetail(id)
+  const { scraps, toggleScrap, loading: scrapLoading } = useScrapStore()
+  const isScrapped = Boolean(scraps[id])
   const navigate = useNavigate()
 
   if (loading) {
@@ -45,12 +48,24 @@ const JobSeekDetailPage = () => {
     }
   }
 
+  const handleScrapClick = async () => {
+    try {
+      await toggleScrap(id, 'JOB_SEEKING') // type은 서버 명세에 맞게
+    } catch (e) {
+      alert('스크랩 처리 중 오류가 발생했습니다.')
+    }
+  }
+
   return (
     <div className='px-4 md:px-12 lg:px-[100px] xl:px-[250px]'>
       <div className='flex items-center gap-2 justify-between'>
         <strong className='text-lg'>{data.nickname}</strong>
-        <button aria-label='스크랩'>
-          <img src={unScrapIcon} alt='스크랩 상태 아이콘' className='w-5 h-5' />
+        <button aria-label='스크랩' onClick={handleScrapClick} disabled={scrapLoading}>
+          <img
+            src={isScrapped ? ScrapIcon : unScrapIcon}
+            alt='스크랩 상태 아이콘'
+            className='w-5 h-5'
+          />
         </button>
       </div>
       <div className='flex justify-between mt-3'>
@@ -90,7 +105,7 @@ const JobSeekDetailPage = () => {
       </div>
       <div className='block  mt-4 mb-10 whitespace-pre-line'>{data.text}</div>
       <LastFormLine />
-      <h2 className='font-bold text-xl mt-4 flex self-start'>관련 글</h2>
+      <h2 className='font-bold text-xl mt-7 flex self-start'>관련 글</h2>
       <RelatedJobSearchPosts currentId={id} />
     </div>
   )
