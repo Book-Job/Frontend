@@ -4,16 +4,24 @@ import PageTitle from '../../Find/common/components/PageTitle'
 import Button from './../../../components/web/Button'
 import ProfileInfo from './components/ProfileInfo'
 import { useEffect, useState } from 'react'
-import { getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
+import { deleteMember, getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
 import Spinner from './../../../components/web/Spinner.jsx'
 import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
 import useAuthStore from '../../../store/login/useAuthStore.js'
+import MembershipPwCheck from './components/MembershipPwCheck.jsx'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
   const { logout } = useAuthStore()
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    onButtonClick: null,
+  })
+  const closeAlert = () => {
+    setAlertState((prev) => ({ ...prev, isOpen: false }))
+  }
 
   const handleMyData = async () => {
     try {
@@ -65,11 +73,29 @@ const EditProfile = () => {
     }
   }
 
+  const handleMembershipDelete = async (navigate, PW) => {
+    try {
+      const response = await deleteMember(PW)
+      if (response.data && response.data.message === 'success') {
+        console.log('회원 탈퇴 성공:', response.data)
+        logout()
+        alert('회원 탈퇴가 완료되었습니다.')
+        navigate(ROUTER_PATHS.HOME) // 홈 또는 로그인 페이지로 이동
+      } else {
+        console.log('회원 탈퇴 실패:', response.data)
+        alert('회원 탈퇴에 실패했습니다.')
+      }
+    } catch (error) {
+      console.error('회원 탈퇴 오류:', error)
+      alert(error.message || '회원 탈퇴 중 오류가 발생했습니다.')
+    }
+  }
+
   useEffect(() => {
     handleMyData()
   }, [])
 
-  const userlogout = () => {
+  const userLogout = () => {
     logout()
     alert('로그아웃 되었습니다.')
   }
@@ -82,6 +108,12 @@ const EditProfile = () => {
     )
   }
 
+  const pp = () => {
+    setAlertState({
+      isOpen: true,
+      onButtonClick: null,
+    })
+  }
   return (
     <div>
       <PageTitle title={'내 정보'} />
@@ -112,19 +144,32 @@ const EditProfile = () => {
               </button>
             </div>
             <div className='flex justify-between gap-2'>
-              <Button size='semiMedium' label='회원탈퇴' className={'hover:bg-main-pink'} />
+              <Button
+                size='semiMedium'
+                label='회원탈퇴'
+                onClick={() => {
+                  pp()
+                }}
+                className={'hover:bg-main-pink'}
+              />
               <Button
                 size='semiMedium'
                 label='로그아웃'
                 onClick={() => {
-                  userlogout()
+                  userLogout()
                 }}
-                className={'hover:bg-[]'}
+                className={'hover:bg-main-pink'}
               />
             </div>
           </div>
         </div>
       </div>
+      <MembershipPwCheck
+        isOpen={alertState.isOpen}
+        onClose={closeAlert}
+        onButtonClick={alertState.onButtonClick}
+        onSuccessAction={handleMembershipDelete}
+      />
     </div>
   )
 }
