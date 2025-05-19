@@ -73,7 +73,7 @@ export const postPWCheck = async (PW) => {
   }
 }
 
-//마이 프로필 회원 탈퇴 
+//마이 프로필 회원 탈퇴
 export const deleteMember = async (PW) => {
   try {
     const response = await publicApi.delete(
@@ -90,6 +90,27 @@ export const deleteMember = async (PW) => {
     return response
   } catch (error) {
     console.error('회원 탈퇴중 오류 api:', error.response.data.message)
+    throw new Error(error.response.data.message)
+  }
+}
+
+//마이 프로필 비밀번호 변경
+export const postNewPW = async (PW, resetToken) => {
+  try {
+    const response = await publicApi.post(
+      '/members/password/change',
+      { password: PW, resetToken: resetToken },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    console.log('회원 pw변경 중 오류 api:', response)
+    return response
+  } catch (error) {
+    console.error('회원 pw변경 중 오류 api:', error.response.data.message)
     throw new Error(error.response.data.message)
   }
 }
