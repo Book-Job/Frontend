@@ -52,7 +52,7 @@ export const patchNicknameCh = async (nickname) => {
     throw new Error(error.response.data.message)
   }
 }
-//마이 프로필 회원 탈퇴 기존 비밀번호 확인
+//마이 프로필 회원 기존 비밀번호 확인
 export const postPWCheck = async (PW) => {
   try {
     const response = await authApi.post(
@@ -65,10 +65,10 @@ export const postPWCheck = async (PW) => {
         },
       },
     )
-    console.log('회원 탈퇴 PW 확인 중 오류 api:', response)
+    console.log('회원 PW 확인 중 오류 api:', response)
     return response
   } catch (error) {
-    console.error('회원 탈퇴 PW 확인 중 오류 api:', error.response.data.message)
+    console.error('회원 PW 확인 중 오류 api:', error.response.data.message)
     throw new Error(error.response.data.message)
   }
 }
