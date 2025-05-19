@@ -18,7 +18,7 @@ export const getFreeBest = async () => {
 // 구인 베스트 리스트
 export const getJobBest = async () => {
   try {
-    const response = await publicApi.get('/recruitments/best', {
+    const response = await publicApi.get('/job-posting/best', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
