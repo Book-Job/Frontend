@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useRecruitmentPostDetail from '../hook/useRecruitmentPostDetail'
 import Spinner from '../../../../../components/web/Spinner'
 import unScrapIcon from '../../../../../assets/icons/common/common_bookmark_gray.svg'
-import ScrapIcon from '../../../../../assets/icons/common/common_bookmark_pink.svg' //아직 스크랩 적용 안 했음
+import ScrapIcon from '../../../../../assets/icons/common/common_bookmark_pink.svg'
 import DetailPostLine from '../../../common/components/DetailPostLine'
 import RelatedRecruitmentPosts from '../components/RelatedRecruitmentPosts'
 import { getJobCategoryLabel } from '../../../common/utils/jobCategories'
@@ -14,11 +14,13 @@ import share from '../../../../../assets/icons/common/common_share.svg'
 import { deleteRecruitmentPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
+import useScrapStore from '../../../scrap/store/useScrapStore'
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
   const { data, loading, error } = useRecruitmentPostDetail(id)
-
+  const { scraps, toggleScrap, loading: scrapLoading } = useScrapStore()
+  const isScrapped = Boolean(scraps[id])
   const navigate = useNavigate()
 
   if (loading) {
@@ -46,14 +48,26 @@ const RecruitmentDetailPage = () => {
     }
   }
 
+  const handleScrapClick = async () => {
+    try {
+      await toggleScrap(id, 'JOB_POSTING')
+    } catch (e) {
+      alert('스크랩 처리 중 오류가 발생했습니다.')
+    }
+  }
+
   return (
     <div className='px-4 md:px-12 lg:px-[100px] xl:px-[250px]'>
       <div className='flex items-center gap-2 justify-between'>
         <span className='font-semibold text-lg sm:text-xl md:text-2xl lg:text-[20px]'>
           {data.nickname}
         </span>
-        <button aria-label='스크랩'>
-          <img src={unScrapIcon} alt='스크랩 상태 아이콘' className='w-5 h-5' />
+        <button aria-label='스크랩' onClick={handleScrapClick} disabled={scrapLoading}>
+          <img
+            src={isScrapped ? ScrapIcon : unScrapIcon}
+            alt='스크랩 상태 아이콘'
+            className='w-5 h-5'
+          />
         </button>
       </div>
       <div className='flex justify-between mt-3'>
