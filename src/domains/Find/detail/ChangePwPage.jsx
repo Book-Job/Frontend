@@ -34,7 +34,7 @@ const ChangePwPage = () => {
     const { passwordCheck, ...filteredData } = data // passwordCheck 필터링
     console.log('새 비밀번호:', filteredData)
     const newPW = filteredData.newPassword
-    console.log('PW 변경 정보보 확인:', newPW, resetToken)
+    console.log('PW 변경 정보 확인:', newPW, resetToken)
     try {
       const response = await postNewPW(newPW, resetToken)
       if (response.data && response.data.message === 'success') {

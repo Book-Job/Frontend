@@ -76,14 +76,16 @@ export const postPWCheck = async (PW) => {
 //마이 프로필 회원 탈퇴
 export const deleteMember = async (PW) => {
   try {
-    const response = await publicApi.delete(
+    console.log('회원 탈퇴 pw:', PW)
+    const response = await authApi.delete(
       '/members',
-      { password: PW },
+
       {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        data: { password: PW },
       },
     )
     console.log('회원 탈퇴중 오류 api:', response)

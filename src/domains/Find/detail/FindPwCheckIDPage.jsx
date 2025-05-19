@@ -10,6 +10,7 @@ import OTPInput from '../common/components/OTPInput'
 import { useEffect, useState } from 'react'
 import { postFindPWEmail, postTemPW } from '../services/useFindPWServices'
 import { toast } from 'react-toastify'
+import useAuthStore from '../../../store/login/useAuthStore'
 
 const FindPwCheckIDPage = () => {
   const [startTimer, setStartTimer] = useState(false)
@@ -20,6 +21,7 @@ const FindPwCheckIDPage = () => {
   const [emailCheckMessage, setEmailCheckMessage] = useState('')
   const [emailCodeMessage, setEmailCodeMessage] = useState('')
   const [validationStatusTemPW, setValidationStatusTemPW] = useState(null)
+  const { setResetToken } = useAuthStore()
   const navigate = useNavigate()
   const {
     register,
@@ -92,6 +94,9 @@ const FindPwCheckIDPage = () => {
         setValidationStatusTemPW('success')
         setStartTimer(false)
         toast.success('이메일 인증이 완료되었습니다.')
+        console.log('resetToken확인:', response.data.data.resetToken)
+        const resetToken = response.data.data.resetToken || 'resetToken 없음'
+        setResetToken(resetToken)
       } else {
         setEmailCodeMessage(response.data?.message || '임시 비밀번호가 일치하지 않습니다.')
         setValidationStatusTemPW('error')
