@@ -3,13 +3,13 @@ import SearchBar from '../../../../components/web/SearchBar'
 import JobDropDown from '../components/JobDropDown'
 import JobPostSortDropDown from '../components/JobPostSortDropDown'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
-import { useNavigate } from 'react-router-dom'
-import useJobSeekingSearch from '../../common/hook/useJobSeekingSearch'
-import useRecruitmentSearch from '../../common/hook/useRecruitmentSearch'
 import JobPostList from '../components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { getPostCounts } from '../../common/utils/getPostCounts'
+import useScrapStore from '../../scrap/store/useScrapStore'
+import useJobSearch from '../../common/hook/useJobSearch'
+
 const JobMainPage = () => {
   const location = useLocation()
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
@@ -19,15 +19,7 @@ const JobMainPage = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const counts = getPostCounts(posts)
-
-  // 구인/구직 검색 현재 오류 발생중
-  const {
-    searchResults: recruitmentResults,
-    searchLoading: recruitmentLoading,
-    hasSearched: recruitmentHasSearched,
-    handleSearch: handleRecruitmentSearch,
-    reset: resetRecruitmentSearch,
-  } = useRecruitmentSearch()
+  const loadScraps = useScrapStore((state) => state.loadScraps)
 
   const {
     searchResults: jobSeekingResults,
@@ -35,7 +27,15 @@ const JobMainPage = () => {
     hasSearched: jobSeekingHasSearched,
     handleSearch: handleJobSeekingSearch,
     reset: resetJobSeekingSearch,
-  } = useJobSeekingSearch()
+  } = useJobSearch(getJobPosts, 'jobSeekings')
+
+  const {
+    searchResults: recruitmentResults,
+    searchLoading: recruitmentLoading,
+    hasSearched: recruitmentHasSearched,
+    handleSearch: handleRecruitmentSearch,
+    reset: resetRecruitmentSearch,
+  } = useJobSearch(getAllRecruitmentPosts, 'jobPostings')
 
   const isRecruitment = selectedJobTabs === 'job list'
   const searchResults = isRecruitment ? recruitmentResults : jobSeekingResults
@@ -45,7 +45,21 @@ const JobMainPage = () => {
   const resetSearch = isRecruitment ? resetRecruitmentSearch : resetJobSeekingSearch
 
   useEffect(() => {
+    ;(async () => {
+      try {
+        resetSearch()
+        await loadScraps()
+        await loadPosts()
+      } catch (error) {
+        console.error('데이터 로딩 실패', error)
+        alert('데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.')
+      }
+    })()
+  }, [selectedJobTabs, order])
+
+  useEffect(() => {
     if (location.state?.refresh) {
+      loadScraps()
       loadPosts()
       window.history.replaceState({}, document.title)
     }
@@ -75,11 +89,6 @@ const JobMainPage = () => {
       setLoading(false)
     }
   }
-
-  useEffect(() => {
-    resetSearch()
-    loadPosts()
-  }, [selectedJobTabs, order])
 
   const displayedPosts = hasSearched ? searchResults : posts
 
@@ -115,9 +124,9 @@ const JobMainPage = () => {
           ) : displayedPosts.length > 0 ? (
             <JobPostList posts={displayedPosts} navigate={navigate} />
           ) : hasSearched ? (
-            <span>검색 결과가 없습니다.</span>
+            <p>검색 결과가 없습니다.</p>
           ) : (
-            <span>게시물이 없습니다.</span>
+            <p>게시물이 없습니다.</p>
           )}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getRecruitmentPostDetail } from '../../../service/postService'
+import { getRecruitmentPostDetail } from '../../../common/service/postService'
 
 const useRecruitmentPostDetail = (jobPostingId) => {
   const [data, setData] = useState(null)
