@@ -15,7 +15,7 @@ const RelatedJobSearchPosts = ({ currentId }) => {
     let isMounted = true
     const fetchPosts = async () => {
       try {
-        if (isMounted) setLoading(true)
+        setLoading(true)
         const data = await getJobPosts(undefined, 'LATEST')
         const jobSeekings = data?.jobSeekings || []
         const filtered = jobSeekings.filter((p) => String(p.id) !== String(currentId))
