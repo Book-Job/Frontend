@@ -18,12 +18,11 @@ export const getMyData = async (token) => {
   }
 }
 //마이 프로필 데이터 불러오기
-export const getMyProfileData = async (token) => {
+export const getMyProfileData = async () => {
   try {
     const response = await authApi.get('/members/detail', {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
@@ -35,7 +34,7 @@ export const getMyProfileData = async (token) => {
 }
 
 //마이 프로필 닉네임 변경
-export const patchNicknameCh = async (token, nickname) => {
+export const patchNicknameCh = async (nickname) => {
   try {
     const response = await authApi.patch(
       '/members/nickname',
@@ -43,7 +42,6 @@ export const patchNicknameCh = async (token, nickname) => {
       {
         headers: {
           Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       },

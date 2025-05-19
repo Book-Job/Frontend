@@ -77,7 +77,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
   }
 
   return (
-    <div>
+    <div className='h-32'>
       <div className='text-[22px] font-semibold flex mb-5'>{title}</div>
       <div className='flex justify-between py-2 text-lg border-b border-dark-gray'>
         {isEditing ? (
@@ -104,8 +104,8 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                 className='w-full bg-transparent border-none outline-none focus:ring-0'
                 placeholder='새 닉네임을 입력하세요'
               />
-              {(errors.nickname || serverError || nicknameCheckMessage) && (
-                <div className='mt-1'>
+              {/* {(errors.nickname || serverError || nicknameCheckMessage) && (
+                <div className='flex items-start mt-1'>
                   {errors.nickname && (
                     <p className='text-sm text-red-500' aria-live='polite'>
                       {errors.nickname.message}
@@ -117,7 +117,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                     </p>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
             <div className='flex gap-2'>
               <button
@@ -143,7 +143,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
               <button
                 type='button'
                 onClick={handleCancel}
-                className='font-bold text-dark-gray hover:text-gray-600'
+                className='font-bold text-dark-gray hover:text-pink-600'
               >
                 취소
               </button>
@@ -165,6 +165,20 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
           </>
         )}
       </div>
+      {(errors.nickname || serverError || nicknameCheckMessage) && (
+        <div className='flex items-start mt-1'>
+          {errors.nickname && (
+            <p className='text-sm text-red-500' aria-live='polite'>
+              {errors.nickname.message}
+            </p>
+          )}
+          {serverError && (
+            <p className='text-sm text-red-500' aria-live='polite'>
+              {serverError}
+            </p>
+          )}
+        </div>
+      )}
       {nicknameCheckMessage && (
         <p
           className={`text-sm flex justify-start ${
