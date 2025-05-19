@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { postLoginData } from './../../domains/login/services/useLoginServices';
+import { postLoginData } from './../../domains/login/services/useLoginServices'
 
 const parseJwt = (token) => {
   try {
@@ -23,23 +23,49 @@ const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
   accessToken: null,
+  resetToken: null,
 
   initialize: () => {
     const token = localStorage.getItem('accessToken')
+    const resetToken = sessionStorage.getItem('resetToken')
     if (token) {
       const decoded = parseJwt(token)
       if (decoded && decoded.exp * 1000 > Date.now()) {
-        set({ user: decoded, isAuthenticated: true, accessToken: token })
+        set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
       } else {
-        set({ user: null, isAuthenticated: false, accessToken: null })
+        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
         localStorage.removeItem('accessToken')
-        // localStorage.removeItem('saveLoginID')
+        sessionStorage.removeItem('resetToken')
       }
+    } else {
+      set({ resetToken }) // accessToken 없어도 resetToken 유지
+    }
+  },
+
+  // resetToken 설정
+  setResetToken: (token) => {
+    sessionStorage.setItem('resetToken', token) // sessionStorage 동기화
+    set({ resetToken: token })
+  },
+
+  // resetToken 제거
+  clearResetToken: () => {
+    sessionStorage.removeItem('resetToken')
+    set({ resetToken: null })
+  },
+
+  // resetToken 필요 여부 확인
+  requireResetToken: async (navigate) => {
+    const state = useAuthStore.getState()
+    const resetToken = state.resetToken
+    if (!resetToken) {
+      alert('비밀번호 확인이 필요합니다.')
+      navigate(ROUTER_PATHS.MY_EDIT_PW)
+      return false
     }
   },
 
   //로그인을 해야지 접근 가능하게 하는 로직
-
   requireLogin: (navigate) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
@@ -74,6 +100,7 @@ const useAuthStore = create((set) => ({
 
   logout: () => {
     localStorage.removeItem('accessToken')
+    sessionStorage.removeItem('resetToken');
     set({ user: null, isAuthenticated: false, accessToken: null })
     window.location.href = ROUTER_PATHS.MAIN_PAGE
   },

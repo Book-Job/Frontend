@@ -7,18 +7,20 @@ import LabelWithInput from '../../../components/web/LabelWithInput'
 import Button from '../../../components/web/Button'
 import { postPWCheck } from '../services/userMyDataServices'
 import { useState } from 'react'
+import useAuthStore from '../../../store/login/useAuthStore'
 
 const EditPassword = () => {
   const navigate = useNavigate()
   const [serverMessage, setServerMessage] = useState({ message: null, isSuccess: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { setResetToken } = useAuthStore()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onChange', 
+    mode: 'onChange',
   })
 
   const onSubmit = async (data) => {
@@ -35,6 +37,9 @@ const EditPassword = () => {
           message: '비밀번호가 일치합니다.',
           isSuccess: true,
         })
+        console.log('resetToken확인:', response.data.data.resetToken)
+        const resetToken = response.data.data.resetToken || 'resetToken 없음'
+        setResetToken(resetToken);
       } else {
         console.log('비밀번호 불일치:', response)
         setServerMessage({
