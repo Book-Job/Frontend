@@ -19,6 +19,7 @@ const EditJobSeekPostPage = () => {
       navigate(ROUTER_PATHS.JOB_SEARCH_POST_DETAIL.replace(':id', id))
     } catch (error) {
       console.error(error)
+      ToastService.error('수정 중 오류가 발생했습니다.')
     }
   }
   if (loading) {

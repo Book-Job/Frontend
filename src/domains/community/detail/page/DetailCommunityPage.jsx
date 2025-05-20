@@ -66,6 +66,7 @@ const DetailCommunityPage = () => {
       ToastService.success('게시글이 수정되었습니다.')
       setIsEditing(false)
     } catch (error) {
+      ToastService.error('수정 중 오류가 발생했습니다.')
       console.error('수정 중 오류 발생:', error)
     }
   }

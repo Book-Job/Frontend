@@ -56,7 +56,7 @@ export const getJobPosts = async (lastId, order, keyword) => {
       jobSeekings: postsWithTag,
     }
   } catch (error) {
-    console.log('에러발생', error)
+    console.error('getJobPosts 에러발생:', error)
     throw error
   }
 }
