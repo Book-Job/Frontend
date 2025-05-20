@@ -11,7 +11,6 @@ import bookmarkPink from '../../assets/icons/common/common_bookmark_pink.svg'
 import TagIcon from '../web/TagIcon'
 import MobileShare from './MobileShare'
 import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
-
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
 
 const getEmploymentLabel = (value) => {
@@ -51,11 +50,11 @@ const MobileWorkBoard = ({
 
   return (
     <div
-      className={`w-[336px] h-[160px] ${className} mt-3`}
+      className={`w-full max-w-xs mx-auto mt-3 ${className || ''}`}
       onClick={onClick}
       style={{ cursor: 'pointer' }}
     >
-      <div className='relative flex flex-col h-full border border-light-gray rounded-[10px] px-5 pt-5 pb-4 justify-between bg-white shadow-sm'>
+      <div className='relative flex flex-col h-auto border border-light-gray rounded-[10px] px-5 pt-5 pb-4 justify-between bg-white shadow-sm'>
         <button
           className='absolute top-[-2px] right-4 z-10 p-0 bg-transparent border-none'
           onClick={handleToggleScrap}
@@ -78,10 +77,8 @@ const MobileWorkBoard = ({
           {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
           {employmentType && <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />}
         </div>
-
-        <h3 className='text-[18px] font-bold line-clamp-2 mb-2 self-start'>{title}</h3>
-
-        <div className='flex flex-col text-dark-gray text-[14px] mt-auto'>
+        <h3 className='text-base sm:text-lg font-bold line-clamp-2 mb-2 self-start'>{title}</h3>
+        <div className='flex flex-col text-dark-gray text-xs sm:text-sm mt-auto'>
           <div className='flex justify-end font-bold mb-1'>{name}</div>
           <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>

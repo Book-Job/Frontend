@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import useAuthStore from '../../../../store/login/useAuthStore'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { useState, useEffect } from 'react'
 import useDetailPost from '../hook/useDetailPost'
@@ -15,8 +14,9 @@ import CommentList from '../../comment/components/CommentList'
 import { deletePost, editPost } from '../../service/postService'
 import useCommentStore from '../../comment/store/useCommentStore'
 import RelatedPosts from '../components/RelatedPosts'
+import ToastService from '../../../../utils/toastService'
+
 const DetailCommunityPage = () => {
-  const { user } = useAuthStore()
   const { id } = useParams()
   const { post, loading, error } = useDetailPost(id)
   const navigate = useNavigate()
@@ -48,11 +48,11 @@ const DetailCommunityPage = () => {
   const handleDeleteClick = async () => {
     try {
       await deletePost(id)
-      alert('성공적으로 삭제되었습니다.')
+      ToastService.success('성공적으로 삭제되었습니다.')
       navigate(ROUTER_PATHS.COMMUNITY)
-    } catch (err) {
-      alert('삭제 중 오류 발생')
-      console.error(err)
+    } catch (error) {
+      ToastService.error('삭제 중 오류 발생')
+      console.error(error)
     }
   }
 
@@ -63,24 +63,41 @@ const DetailCommunityPage = () => {
   const handleUpdateSubmit = async () => {
     try {
       await editPost(id, editedPost)
-      alert('게시글이 수정되었습니다.')
+      ToastService.success('게시글이 수정되었습니다.')
       setIsEditing(false)
-    } catch (err) {
-      console.error('수정 중 오류 발생:', err)
+    } catch (error) {
+      ToastService.error('수정 중 오류가 발생했습니다.')
+      console.error('수정 중 오류 발생:', error)
     }
   }
 
   const handleBlockUserClick = () => {
-    alert('이 사용자를 차단합니다.')
+    ToastService.warn('이 사용자를 차단합니다.')
   }
 
   if (error) return <div className='text-center text-red-500 mt-10'>오류가 발생했어요.</div>
   if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
 
   return (
-    <div className='px-[250px] py-[30px]'>
-      <h1 className='text-[35px] font-bold text-left mb-4'>{post.title}</h1>
-      <div className='text-[15px] text-gray-600 mb-2 text-left'>{post.nickname}</div>
+    <div
+      className='
+        w-full
+        max-w-[1440px]
+        mx-auto
+        px-4
+        sm:px-8
+        lg:px-[100px]
+        xl:px-[250px]
+        py-6
+        sm:py-10
+      '
+    >
+      <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
+        {post.title}
+      </h1>
+      <div className='text-sm sm:text-[15px] text-gray-600 mb-2 text-left break-words'>
+        {post.nickname}
+      </div>
 
       {post?.isWriter ? (
         <div className='flex gap-4 mt-4 mb-2 justify-end'>
@@ -114,7 +131,7 @@ const DetailCommunityPage = () => {
 
       <LastFormLine />
 
-      <div className='flex gap-2 mb-4 ml-5 justify-end'>
+      <div className='flex flex-wrap gap-2 mb-4 ml-0 sm:ml-5 justify-end'>
         <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-[#E36397]' />
         <MobileShare label={comments.length.toString()} icon={comment} textColor='text-dark-gray' />
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
@@ -122,18 +139,20 @@ const DetailCommunityPage = () => {
       <div className='mb-10'>
         {isEditing ? (
           <textarea
-            className='w-full h-[200px] p-4 border border-dark-gray'
+            className='w-full h-[200px] p-4 border border-dark-gray rounded resize-y'
             value={editedPost}
             onChange={(e) => setEditedPost(e.target.value)}
           />
         ) : (
-          editedPost.replace(/<[^>]*>/g, '')
+          <div className='whitespace-pre-line break-words'>
+            {editedPost.replace(/<[^>]*>/g, '')}
+          </div>
         )}
       </div>
 
-      <div className='w-full sm:w-[870px] h-[1px] bg-light-gray mb-[20px]' />
+      <div className='w-full h-[1px] bg-light-gray mb-[20px]' />
 
-      <div>
+      <div className='w-full max-w-full sm:max-w-[870px] mx-auto'>
         <CommentHeader
           isOpen={isCommentOpen}
           toggleOpen={() => setIsCommentOpen((prev) => !prev)}
@@ -142,7 +161,7 @@ const DetailCommunityPage = () => {
         <CommentForm boardId={id} onCommentAdded={() => fetchComments(id)} />
         {isCommentOpen && <CommentList boardId={id} />}
         <LastFormLine />
-        <h2 className='font-bold text-xl my-5 flex self-start'>관련 글</h2>
+        <h2 className='font-bold text-lg sm:text-xl my-5 flex self-start'>관련 글</h2>
         <RelatedPosts currentId={id} />
       </div>
     </div>
