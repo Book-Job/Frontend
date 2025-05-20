@@ -1,9 +1,9 @@
-import { authApi } from '../../../services/api/axios'
+import { publicApi } from '../../../services/api/Axios'
 
 // 자유 베스트 리스트
 export const getFreeBest = async () => {
   try {
-    const response = await authApi.get('/boards/best', {
+    const response = await publicApi.get('/boards/best', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export const getFreeBest = async () => {
 // 구인 베스트 리스트
 export const getJobBest = async () => {
   try {
-    const response = await authApi.get('/recruitments/bests', {
+    const response = await publicApi.get('/job-posting/best', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

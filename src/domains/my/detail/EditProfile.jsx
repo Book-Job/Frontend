@@ -4,22 +4,30 @@ import PageTitle from '../../Find/common/components/PageTitle'
 import Button from './../../../components/web/Button'
 import ProfileInfo from './components/ProfileInfo'
 import { useEffect, useState } from 'react'
-import { getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
+import { deleteMember, getMyProfileData, patchNicknameCh } from '../services/userMyDataServices'
 import Spinner from './../../../components/web/Spinner.jsx'
 import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
+import useAuthStore from '../../../store/login/useAuthStore.js'
+import MembershipPwCheck from './components/MembershipPwCheck.jsx'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
+  const { logout } = useAuthStore()
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    onButtonClick: null,
+  })
+  const closeAlert = () => {
+    setAlertState((prev) => ({ ...prev, isOpen: false }))
+  }
 
   const handleMyData = async () => {
-    const token = localStorage.getItem('accessToken')
     try {
-      const response = await getMyProfileData(token)
+      const response = await getMyProfileData()
       console.log('마이프로필 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
-        console.log('마이프로필 데이터 성공:', response.data)
         setUserData(response.data)
       } else {
         console.log('마이프로필 데이터 오류:', response.data)
@@ -32,10 +40,9 @@ const EditProfile = () => {
   }
 
   const handleNickName = async (newNickname) => {
-    const token = localStorage.getItem('accessToken')
     setServerError(null)
     try {
-      const response = await patchNicknameCh(token, newNickname)
+      const response = await patchNicknameCh(newNickname)
       console.log('닉네임 변경 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
         console.log('닉네임 변경 데이터 성공:', response.data)
@@ -58,7 +65,7 @@ const EditProfile = () => {
   const handleCheckNickname = async (nickname) => {
     try {
       const response = await getJoinCheckNickname(nickname)
-      console.log('닉네임 중복 확인 응답:', response.data)
+      // console.log('닉네임 중복 확인 응답:', response.data)
       return response
     } catch (error) {
       console.error('닉네임 중복 확인 오류:', error)
@@ -66,9 +73,32 @@ const EditProfile = () => {
     }
   }
 
+  const handleMembershipDelete = async (navigate, PW) => {
+    try {
+      const response = await deleteMember(PW)
+      if (response.data && response.data.message === 'success') {
+        console.log('회원 탈퇴 성공:', response.data)
+        logout()
+        alert('회원 탈퇴가 완료되었습니다.')
+        navigate(ROUTER_PATHS.HOME) // 홈 또는 로그인 페이지로 이동
+      } else {
+        console.log('회원 탈퇴 실패:', response.data)
+        alert('회원 탈퇴에 실패했습니다.')
+      }
+    } catch (error) {
+      console.error('회원 탈퇴 오류:', error)
+      alert(error.message || '회원 탈퇴 중 오류가 발생했습니다.')
+    }
+  }
+
   useEffect(() => {
     handleMyData()
   }, [])
+
+  const userLogout = () => {
+    logout()
+    alert('로그아웃 되었습니다.')
+  }
 
   if (!userData) {
     return (
@@ -78,12 +108,18 @@ const EditProfile = () => {
     )
   }
 
+  const openMembershipDeleteModal = () => {
+    setAlertState({
+      isOpen: true,
+      onButtonClick: null,
+    })
+  }
   return (
     <div>
       <PageTitle title={'내 정보'} />
       <div className='flex justify-center'>
         <div className='w-[580px]'>
-          <div className='flex flex-col w-full gap-12 '>
+          <div className='flex flex-col w-full gap-8 sm:gap-12 '>
             <ProfileInfo
               title={'닉네임'}
               content={userData.data.nickname}
@@ -107,13 +143,33 @@ const EditProfile = () => {
                 변경
               </button>
             </div>
-            <div className='flex justify-between'>
-              <Button size='semiMedium' label='회원탈퇴' />
-              <Button size='semiMedium' label='로그아웃' />
+            <div className='flex justify-between gap-2'>
+              <Button
+                size='semiMedium'
+                label='회원탈퇴'
+                onClick={() => {
+                  openMembershipDeleteModal()
+                }}
+                className={'hover:bg-main-pink'}
+              />
+              <Button
+                size='semiMedium'
+                label='로그아웃'
+                onClick={() => {
+                  userLogout()
+                }}
+                className={'hover:bg-main-pink'}
+              />
             </div>
           </div>
         </div>
       </div>
+      <MembershipPwCheck
+        isOpen={alertState.isOpen}
+        onClose={closeAlert}
+        onButtonClick={alertState.onButtonClick}
+        onSuccessAction={handleMembershipDelete}
+      />
     </div>
   )
 }
