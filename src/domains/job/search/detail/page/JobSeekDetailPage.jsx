@@ -15,6 +15,7 @@ import { deleteJobSeekPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import RelatedJobSearchPosts from '../components/RelatedJobSearchPosts'
 import useScrapStore from '../../../scrap/store/useScrapStore'
+import ToastService from '../../../../../utils/toastService'
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
@@ -40,10 +41,9 @@ const JobSeekDetailPage = () => {
   const handleDeleteClick = async () => {
     try {
       await deleteJobSeekPost(id)
-      alert('성공적으로 삭제되었습니다.')
+      ToastService.success('성공적으로 삭제되었습니다.')
       navigate(ROUTER_PATHS.JOB_MAIN, { state: { refresh: true } })
     } catch (error) {
-      alert('삭제 중 오류 발생')
       console.error(error)
     }
   }
@@ -53,15 +53,22 @@ const JobSeekDetailPage = () => {
       await toggleScrap(id, 'JOB_SEEKING')
     } catch (error) {
       console.error('스크랩 처리 중 오류:', error)
-      alert('스크랩 처리 중 오류가 발생했습니다.')
+      ToastService.error('스크랩 중에 오류가 발생했습니다.')
     }
   }
 
   return (
-    <div className='px-4 md:px-12 lg:px-[100px] xl:px-[250px]'>
-      <div className='flex items-center gap-2 justify-between'>
-        <strong className='text-lg'>{data.nickname}</strong>
-        <button aria-label='스크랩' onClick={handleScrapClick} disabled={scrapLoading}>
+    <div className='w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 xl:px-0'>
+      <div className='flex flex-row items-center justify-between gap-2 mt-6'>
+        <span className='font-semibold text-base sm:text-xl md:text-2xl truncate max-w-[70%]'>
+          {data.nickname}
+        </span>
+        <button
+          aria-label='스크랩'
+          onClick={handleScrapClick}
+          disabled={scrapLoading}
+          className='ml-2'
+        >
           <img
             src={isScrapped ? ScrapIcon : unScrapIcon}
             alt='스크랩 상태 아이콘'
@@ -69,20 +76,24 @@ const JobSeekDetailPage = () => {
           />
         </button>
       </div>
-      <div className='flex justify-between mt-3'>
-        <h1 className='mt-4 text-base sm:text-[40px] md:text-[40px] lg:text-[30px] font-bold text-left '>
+
+      <div className='flex flex-col sm:flex-row justify-between items-start mt-3 gap-2'>
+        <h1 className='flex-1 min-w-0 mt-2 text-lg sm:text-2xl md:text-3xl font-bold text-left break-words'>
           {data.title}
         </h1>
-        <span className='block text-dark-gray mt-4 font-bold text-[13px]'>[구인 | 구직]</span>
+        <span className='block text-dark-gray mt-2 font-bold text-xs sm:text-sm self-start shrink-0'>
+          [구인 | 구직]
+        </span>
       </div>
+
       {user && user.nickname === data.nickname && (
-        <div className='flex justify-end mt-5 gap-4 text-3 text-dark-gray'>
-          <span className='cursor-pointer' onClick={handleEditClick}>
+        <div className='flex justify-end mt-5 gap-4 text-sm text-dark-gray'>
+          <p className='cursor-pointer' onClick={handleEditClick}>
             수정
-          </span>
-          <span className='cursor-pointer' onClick={handleDeleteClick}>
+          </p>
+          <p className='cursor-pointer' onClick={handleDeleteClick}>
             삭제
-          </span>
+          </p>
         </div>
       )}
       <DetailPostLine />
@@ -93,20 +104,25 @@ const JobSeekDetailPage = () => {
           ['경력', data.experience],
           ['연락가능한 이메일', data.contactEmail],
         ].map(([label, value]) => (
-          <div key={label} className='grid grid-cols-[10rem_1fr] gap-x-4 items-start'>
-            <dt className='font-semibold text-dark-gray text-left'>{label}</dt>
-            <dd className='text-left'>{value}</dd>
+          <div
+            key={label}
+            className='grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-4 items-start'
+          >
+            <dt className='font-semibold text-dark-gray text-left text-sm sm:text-base'>{label}</dt>
+            <dd className='text-left text-sm sm:text-base break-words'>{value}</dd>
           </div>
         ))}
       </dl>
       <LastFormLine />
-      <div className='flex gap-2 mb-4 ml-5 justify-end mr-3'>
+      <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-[#E36397]' />
       </div>
-      <div className='block  mt-4 mb-10 whitespace-pre-line'>{data.text}</div>
+      <div className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'>
+        {data.text}
+      </div>
       <LastFormLine />
-      <h2 className='font-bold text-xl mt-7 flex self-start'>관련 글</h2>
+      <h2 className='font-bold text-lg sm:text-xl mt-7 flex self-start'>관련 글</h2>
       <RelatedJobSearchPosts currentId={id} />
     </div>
   )
