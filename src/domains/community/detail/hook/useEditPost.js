@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { editPost } from '../../service/postService'
+import ToastService from '../../../../utils/toastService'
 
 const useEditPost = (id) => {
   const [postData, setPostData] = useState({
@@ -13,9 +14,9 @@ const useEditPost = (id) => {
     const fetchPostData = async () => {
       setLoading(true)
       try {
-      } catch (err) {
+      } catch (error) {
         setError('게시글을 불러오는 데 오류가 발생했습니다.')
-        console.error(err)
+        console.error(error)
       } finally {
         setLoading(false)
       }
@@ -30,10 +31,10 @@ const useEditPost = (id) => {
 
     try {
       await editPost(id, postData)
-      alert('게시글이 수정되었습니다.')
-    } catch (err) {
+      ToastService.success('게시글이 수정되었습니다.')
+    } catch (error) {
       setError('수정 중 오류가 발생했습니다.')
-      console.error(err)
+      console.error(error)
     } finally {
       setLoading(false)
     }

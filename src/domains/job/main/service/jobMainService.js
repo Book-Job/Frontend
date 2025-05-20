@@ -7,8 +7,6 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
     if (order !== undefined && order !== null) params.order = order
     if (keyword && keyword.trim() !== '') params.keyword = keyword
 
-    console.log('[구인 API 요청] params:', params)
-
     const response = await publicApi.get('/job-posting', {
       params,
       headers: {
@@ -16,10 +14,8 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
         'Content-Type': 'application/json',
       },
     })
-    console.log('[구인 API 응답 전체]', response)
 
     const data = response.data.data
-    console.log('[구인 API 응답 data]', data)
 
     const postsWithTag = (Array.isArray(data.jobPostings) ? data.jobPostings : []).map((post) => ({
       ...post,
@@ -27,14 +23,12 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
       createdAtShort: post.createdAt ? post.createdAt.slice(0, 10) : '',
     }))
 
-    console.log('[구인 API 최종 반환]', { ...data, jobPostings: postsWithTag })
-
     return {
       ...data,
       jobPostings: postsWithTag,
     }
   } catch (error) {
-    console.error('[구인 API 에러메세지]:', error)
+    console.error('에러발생:', error)
     throw error
   }
 }
@@ -46,31 +40,23 @@ export const getJobPosts = async (lastId, order, keyword) => {
     if (keyword && keyword.trim() !== '') {
       params.keyword = keyword
     }
-    console.log('[구직 API 요청] params:', params)
 
     const response = await publicApi.get('/job-seeking', {
       params,
     })
-
-    console.log('[구직 API 응답 전체]', response)
-
     const data = response.data.data
-
-    console.log('[구직 API 응답 data]', data)
 
     const postsWithTag = (Array.isArray(data.jobSeekings) ? data.jobSeekings : []).map((post) => ({
       ...post,
       jobsearch1: true,
     }))
 
-    console.log('[구직 API 최종 반환]', { ...data, jobSeekings: postsWithTag })
-
     return {
       ...data,
       jobSeekings: postsWithTag,
     }
   } catch (error) {
-    console.log('[구직 API 에러메세지]:', error)
+    console.log('에러발생', error)
     throw error
   }
 }

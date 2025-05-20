@@ -29,7 +29,7 @@ const PostList = () => {
   const deleteItems = async (items, isJobBoard) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
-      alert('로그인이 필요합니다.')
+      ;('로그인이 필요합니다.')
       return
     }
     try {

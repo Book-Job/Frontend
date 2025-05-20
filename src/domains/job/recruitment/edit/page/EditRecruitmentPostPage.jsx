@@ -6,6 +6,7 @@ import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostin
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
+import ToastService from '../../../../../utils/toastService'
 const EditRecruitmentPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -14,10 +15,9 @@ const EditRecruitmentPostPage = () => {
   const handleEdit = async (formData) => {
     try {
       await editRecruitmentPost(id, formData)
-      alert('수정이 완료되었습니다.')
+      ToastService.success('수정이 완료되었습니다.')
       navigate(ROUTER_PATHS.RECRUITMENT_POST_DETAIL.replace(':id', id))
     } catch (error) {
-      alert('수정 중 오류 발생')
       console.error(error)
     }
   }
