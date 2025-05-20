@@ -53,7 +53,7 @@ const JobSeekDetailPage = () => {
       await toggleScrap(id, 'JOB_SEEKING')
     } catch (error) {
       console.error('스크랩 처리 중 오류:', error)
-      alert('스크랩 중에 오류가 발생했습니다.')
+      ToastService.error('스크랩 중에 오류가 발생했습니다.')
     }
   }
 
