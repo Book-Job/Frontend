@@ -42,7 +42,7 @@ export const postFindPWEmail = async (email) => {
 export const postTemPW = async ({ userEmail, code }) => {
   try {
     const response = await authApi.post(
-      '/auth/email-verification/pw',
+      '/auth/email-verification/pw/temp',
       {
         email: userEmail,
         code: code,
