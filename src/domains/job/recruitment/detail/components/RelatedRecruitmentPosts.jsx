@@ -18,7 +18,6 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
         const data = await getAllRecruitmentPosts(undefined, 'LATEST')
         const jobPostings = data?.jobPostings || []
         const filtered = jobPostings.filter((p) => String(p.id) !== String(currentId))
-        jobPostings.forEach((p) => console.log('post.id:', p.id))
 
         if (isMounted) setPosts(filtered)
       } catch (err) {
@@ -41,13 +40,11 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
     )
   }
 
-  if (error) return <div className='text-red-500'>관련 채용 글을 불러올 수 없습니다.</div>
-  if (posts.length === 0) return <div className='text-gray-400'>관련 채용 글이 없습니다.</div>
-
-  console.log('currentId:', currentId)
+  if (error) return <p className='text-red-500'>관련 채용 글을 불러올 수 없습니다.</p>
+  if (posts.length === 0) return <p className='text-gray-400'>관련 채용 글이 없습니다.</p>
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
       <JobPostList posts={posts} navigate={navigate} />
     </div>
   )

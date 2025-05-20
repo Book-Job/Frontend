@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getAllPosts } from '../../service/postService'
 import FreeBoard from '../../../../components/web/FreeBoard'
+import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import Spinner from '../../../../components/web/Spinner'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 const RelatedPosts = ({ currentId }) => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const isMobile = useIsMobile()
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -36,21 +40,40 @@ const RelatedPosts = ({ currentId }) => {
   if (posts.length === 0) return <p className='text-gray-400'>관련 글이 없습니다.</p>
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10'>
+    <div
+      className={
+        isMobile ? 'flex flex-col gap-3' : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'
+      }
+    >
       {posts.map((post) => (
-        <div key={post.boardId} className='min-w-[300px]'>
-          <FreeBoard
-            boardId={post.boardId}
-            title={post.title}
-            content={post.text.replace(/<[^>]*>/g, '')}
-            name={post.nickname}
-            date={new Date(post.createdAt).toLocaleDateString()}
-            commentCount={post.commentCount}
-            viewCount={String(post.viewCount)}
-            onNameClick={(name) => {
-              console.log(`${name}의 게시글 보기`)
-            }}
-          />
+        <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+          {isMobile ? (
+            <MobileFreeBoard
+              boardId={post.boardId}
+              title={post.title}
+              content={post.text.replace(/<[^>]*>/g, '')}
+              name={post.nickname}
+              date={new Date(post.createdAt).toLocaleDateString()}
+              commentCount={post.commentCount}
+              viewCount={post.viewCount}
+              onClick={() => {
+                console.log(`${post.nickname}의 게시글 보기`)
+              }}
+            />
+          ) : (
+            <FreeBoard
+              boardId={post.boardId}
+              title={post.title}
+              content={post.text.replace(/<[^>]*>/g, '')}
+              name={post.nickname}
+              date={new Date(post.createdAt).toLocaleDateString()}
+              commentCount={post.commentCount}
+              viewCount={post.viewCount}
+              onNameClick={(name) => {
+                console.log(`${name}의 게시글 보기`)
+              }}
+            />
+          )}
         </div>
       ))}
     </div>

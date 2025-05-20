@@ -6,10 +6,15 @@ import FreeBoard from '../../../../components/web/FreeBoard'
 import useCommunityPosts from '../hook/useCommunityPosts'
 import Spinner from '../../../../components/web/Spinner'
 import useSearchPosts from '../../service/useSearchPosts'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
+import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
+
 const CommunityMainPage = () => {
   const { posts, loading } = useCommunityPosts()
   const [sortOrder, setSortOrder] = useState('latest')
+  const isMobile = useIsMobile()
   const { searchResults, searchLoading, hasSearched, handleSearch } = useSearchPosts()
+
   const rawPosts = searchResults.length > 0 ? searchResults : posts
   const displayedPosts = [...rawPosts].sort((a, b) => {
     const dateA = new Date(a.createdAt)
@@ -32,7 +37,7 @@ const CommunityMainPage = () => {
         <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
       </section>
       <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
-        <div className='w-full flex justify-end px-30 mt-5 text-[14px] mb-3'>
+        <div className='w-full flex justify-end mt-5 text-[14px] mb-3'>
           <JobPostSortDropDown onSortChange={setSortOrder} />
         </div>
         <div className='mt-[15px] overflow-x-auto'>
@@ -45,23 +50,46 @@ const CommunityMainPage = () => {
               검색어와 일치하는 결과가 없습니다.
             </div>
           ) : (
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
-              {displayedPosts.map((post) => (
-                <div key={post.boardId} className='min-w-[300px]'>
-                  <FreeBoard
-                    boardId={post.boardId}
-                    title={post.title}
-                    content={post.text.replace(/<[^>]*>/g, '')}
-                    name={post.nickname}
-                    date={new Date(post.createdAt).toLocaleDateString()}
-                    commentCount={post.commentCount}
-                    viewCount={String(post.viewCount)}
-                    onNameClick={(name) => {
-                      console.log(`${name}의 게시글 보기`)
-                    }}
-                  />
-                </div>
-              ))}
+            <div
+              className={
+                isMobile
+                  ? 'flex flex-col gap-2'
+                  : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'
+              }
+            >
+              {displayedPosts.map((post) => {
+                return (
+                  <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+                    {isMobile ? (
+                      <MobileFreeBoard
+                        boardId={post.boardId}
+                        title={post.title}
+                        content={post.text.replace(/<[^>]*>/g, '')}
+                        name={post.nickname}
+                        date={new Date(post.createdAt).toLocaleDateString()}
+                        commentCount={post.commentCount}
+                        viewCount={post.viewCount}
+                        onClick={() => {
+                          console.log(`${post.nickname}의 게시글 보기`)
+                        }}
+                      />
+                    ) : (
+                      <FreeBoard
+                        boardId={post.boardId}
+                        title={post.title}
+                        content={post.text.replace(/<[^>]*>/g, '')}
+                        name={post.nickname}
+                        date={new Date(post.createdAt).toLocaleDateString()}
+                        commentCount={post.commentCount}
+                        viewCount={post.viewCount}
+                        onNameClick={(name) => {
+                          console.log(`${name}의 게시글 보기`)
+                        }}
+                      />
+                    )}
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>
