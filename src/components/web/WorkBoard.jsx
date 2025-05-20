@@ -12,7 +12,6 @@ import TagIcon from './TagIcon'
 import ShareViews from './ShareViews'
 import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
-import getExperienceLabel from '../../domains/job/common/utils/getExperienceLabel'
 
 const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
@@ -46,34 +45,41 @@ const WorkBoard = ({
   }
 
   return (
-    <div className={`w-[290px] h-[200px] mb-[20px]`}>
-      <img
-        src={bookmarkIcon}
-        alt='bookmark'
-        className='w-[23px] h-[23px] relative absolute top-[20px] left-[255px] cursor-pointer'
+    <div className='w-full h-[200px] mb-3 mt-3 relative'>
+      <button
+        className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
         onClick={handleToggleScrap}
-        style={{ opacity: loading ? 0.5 : 1 }}
-      />
+        aria-label={scrapped ? '스크랩 해제' : '스크랩'}
+      >
+        <img
+          src={bookmarkIcon}
+          alt='북마크'
+          className='w-6 h-6'
+          style={{ opacity: loading ? 0.5 : 1 }}
+        />
+      </button>
       <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
         <div className='flex flex-wrap gap-2 mb-2'>
           {popular1 && <TagIcon label='인기 글' icon={popular} />}
           {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
           {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
-
           {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
           {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
           {employmentType && <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />}
         </div>
-        <h3 onClick={onClick} className='flex text-[18px] font-bold line-clamp-2'>
+        <h3
+          onClick={onClick}
+          className='flex font-bold line-clamp-2 text-sm sm:text-base md:text-lg mb-1'
+        >
           {title}
         </h3>
-        <div className='flex-row text-dark-gray text-[14px]'>
+        <div className='flex-row text-dark-gray text-xs sm:text-sm md:text-base'>
           <div onClick={onClick} className='flex justify-end font-bold'>
             {name}
           </div>
           <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
-            {date}
+            <span>{date}</span>
             <ShareViews label={view} textColor='text-main-pink' icon={viewPink} />
           </div>
         </div>
