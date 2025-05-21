@@ -7,10 +7,8 @@ const MyPage = () => {
   const [userData, setUserData] = useState()
 
   const handleMyData = async () => {
-    const token = localStorage.getItem('accessToken')
     try {
-      const response = await getMyData(token)
-      console.log('마이 데이터 확인:', response.data)
+      const response = await getMyData()
       if (response.data && response.data.message === 'success') {
         console.log('마이데이터 성공:', response.data)
         setUserData(response.data)

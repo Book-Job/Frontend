@@ -64,7 +64,7 @@ const MobileMainHeader = () => {
   }, [])
 
   return (
-    <div className='flex w-full h-[50px] px-5 items-center justify-between'>
+    <div className='flex w-full h-[70px] px-5 items-center justify-between'>
       <div
         onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
         className='flex text-2xl font-bold cursor-pointer text-main-pink font-logo'
