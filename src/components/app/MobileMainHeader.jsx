@@ -4,25 +4,27 @@ import babyChick from '../../assets/icons/common/common_babyChick.svg'
 import mobileMenu from '../../assets/icons/mobile/mobile_menu.svg'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import MobileSidebar from './MobileSidebar'
 import useAuthStore from '../../store/login/useAuthStore'
 
 const MobileMainHeader = () => {
   const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const { isAuthenticated, user, logout } = useAuthStore()
+  const dropdownRef = useRef(null)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
-  const { isAuthenticated, user, logout } = useAuthStore()
-  const [selectedOption, setSelectedOption] = useState('default')
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
 
   // 드롭다운 옵션
   const options = [
-    ...(isAuthenticated && user
-      ? [{ value: 'default', label: `${user.nickname}님`, disabled: false }]
-      : []),
     ...(isAuthenticated
       ? [
           { value: 'mypage', label: '마이페이지' },
@@ -33,9 +35,10 @@ const MobileMainHeader = () => {
           { value: 'join', label: '회원가입' },
         ]),
   ]
+
   // 드롭다운 선택 핸들러
   const handleOptionChange = (value) => {
-    setSelectedOption(value)
+    setIsDropdownOpen(false) // 선택 후 드롭다운 닫기
     if (value === 'login') {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
     } else if (value === 'join') {
@@ -45,41 +48,72 @@ const MobileMainHeader = () => {
     } else if (value === 'logout') {
       logout()
     }
-    setSelectedOption('default')
   }
+
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   return (
-    <div className='flex w-full h-[50px] px-5 items-center justify-between'>
+    <div className='flex w-full h-[70px] px-5 items-center justify-between'>
       <div
         onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-        className='flex text-2xl font-bold text-main-pink font-logo cursor-pointer'
+        className='flex text-2xl font-bold cursor-pointer text-main-pink font-logo'
       >
         bookjob
       </div>
-      <div className='flex text-base'>
+      <div className='flex items-center text-base'>
         {isAuthenticated && user ? (
-          <button className='inline-flex bg-[#F4F6FA] h-[30px] rounded-full items-center px-4'>
-            <img src={babyChick} alt='babyChick' className='w-5 h-5' />
-            <select
-              value={selectedOption}
-              onChange={(e) => handleOptionChange(e.target.value)}
-              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[30px] px-2  outline-none'
+          <div className='relative' ref={dropdownRef}>
+            <button
+              onClick={toggleDropdown}
+              className='flex items-center bg-[#F4F6FA] h-[30px] rounded-full px-4 font-bold'
             >
-              {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </button>
+              <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
+              <span>{user.nickname}님</span>
+              <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-2' />
+            </button>
+            {isDropdownOpen && (
+              <ul className='absolute top-[35px] right-3 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+                {options.map((option) => (
+                  <li
+                    key={option.value}
+                    onClick={() => !option.disabled && handleOptionChange(option.value)}
+                    className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
+                      option.disabled ? 'text-dark-gray' : ''
+                    }`}
+                  >
+                    {option.value === 'default' ? (
+                      <div className='flex items-center'>
+                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
+                        {option.label}
+                      </div>
+                    ) : (
+                      option.label
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         ) : (
           <div className='flex gap-5'>
-            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold row'>
+            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold'>
               로그인
             </button>
           </div>
         )}
         <button onClick={toggleSidebar}>
-          <img src={mobileMenu} alt='mobileMenu' className='w-5 h-5 ml-4 ' />
+          <img src={mobileMenu} alt='mobileMenu' className='w-5 h-5 ml-4' />
         </button>
       </div>
       {isSidebarOpen && <MobileSidebar onClose={toggleSidebar} />}
@@ -88,7 +122,7 @@ const MobileMainHeader = () => {
 }
 
 MobileMainHeader.propTypes = {
-  login: PropTypes.string.isRequired,
+  login: PropTypes.string,
 }
 
 export default MobileMainHeader
