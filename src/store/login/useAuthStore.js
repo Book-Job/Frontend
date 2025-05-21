@@ -79,11 +79,12 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLoginData(loginData)
       if (response.data && response.data.message === 'success') {
+        console.log('response22:', response.data.data.nickname)
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
           set({
-            user: { sub: loginData.userID },
+            user: { nickname: response.data.data.nickname },
             isAuthenticated: true,
           })
         } else {
@@ -96,6 +97,16 @@ const useAuthStore = create((set) => ({
       console.error('로그인 실패:', error)
       throw error
     }
+  },
+
+  updateNickname: (nickname, newAccessToken = null) => {
+    if (newAccessToken) {
+      localStorage.setItem('accessToken', newAccessToken)
+    }
+    set((state) => ({
+      user: { ...state.user, nickname },
+      accessToken: newAccessToken || state.accessToken,
+    }))
   },
 
   logout: async () => {
