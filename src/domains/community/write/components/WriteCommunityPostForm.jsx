@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import DOMPurify from 'dompurify'
 import { useForm, Controller } from 'react-hook-form'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -38,7 +39,8 @@ const WriteCommunityPostForm = () => {
   }, [user, setValue])
 
   const onSubmit = async (data) => {
-    const htmlText = draftToHtml(convertToRaw(data.text.getCurrentContent()))
+    const rawHtml = draftToHtml(convertToRaw(data.text.getCurrentContent()))
+    const htmlText = DOMPurify.sanitize(rawHtml)
     const postData = {
       nickname: data.nickname,
       title: data.title,
