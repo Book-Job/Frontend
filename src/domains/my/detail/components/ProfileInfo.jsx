@@ -104,20 +104,6 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                 className='w-full bg-transparent border-none outline-none focus:ring-0'
                 placeholder='새 닉네임을 입력하세요'
               />
-              {/* {(errors.nickname || serverError || nicknameCheckMessage) && (
-                <div className='flex items-start mt-1'>
-                  {errors.nickname && (
-                    <p className='text-sm text-red-500' aria-live='polite'>
-                      {errors.nickname.message}
-                    </p>
-                  )}
-                  {serverError && (
-                    <p className='text-sm text-red-500' aria-live='polite'>
-                      {serverError}
-                    </p>
-                  )}
-                </div>
-              )} */}
             </div>
             <div className='flex gap-2'>
               <button
