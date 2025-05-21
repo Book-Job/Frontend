@@ -8,7 +8,6 @@ const useJobSeekPostDetail = (jobSeekingId) => {
 
   useEffect(() => {
     if (!jobSeekingId) return
-    console.log('상세 조회 useEffect 실행:', jobSeekingId)
     setLoading(true)
     setError(null)
     getJobSeekPostDetail(jobSeekingId)

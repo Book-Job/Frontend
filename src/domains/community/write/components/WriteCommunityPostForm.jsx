@@ -3,11 +3,13 @@ import { useEffect } from 'react'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { useNavigate } from 'react-router-dom'
 import { createPost } from '../../service/postService'
+import ToastService from '../../../../utils/toastService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import TiptapEditor from '../../../../components/common/TiptapEditor'
+
 const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
   const navigate = useNavigate()
@@ -31,7 +33,7 @@ const WriteCommunityPostForm = () => {
   const onSubmit = async (data) => {
     try {
       await createPost(data)
-      alert('게시글이 등록되었습니다.')
+      ToastService.success('게시글이 등록되었습니다.')
       reset()
       navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {

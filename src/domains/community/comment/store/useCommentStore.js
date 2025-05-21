@@ -25,9 +25,9 @@ const useCommentStore = create((set, get) => ({
       } else {
         set({ comments: [] })
       }
-    } catch (err) {
-      set({ error: err, comments: [] })
-      console.error('댓글 불러오기 실패:', err)
+    } catch (error) {
+      set({ error: error, comments: [] })
+      console.error('댓글 불러오기 실패:', error)
     } finally {
       set({ loading: false })
     }
@@ -40,9 +40,9 @@ const useCommentStore = create((set, get) => ({
         comments: [...state.comments, response.comment],
         successMessage: response.message,
       }))
-    } catch (err) {
-      set({ error: err })
-      throw err
+    } catch (error) {
+      set({ error: error })
+      throw error
     } finally {
       set({ loading: false })
     }
@@ -54,9 +54,9 @@ const useCommentStore = create((set, get) => ({
       set((state) => ({
         comments: state.comments.filter((c) => c.commentId !== commentId),
       }))
-    } catch (err) {
-      console.error('댓글 삭제 실패:', err)
-      throw err
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error)
+      throw error
     }
   },
 
@@ -68,8 +68,8 @@ const useCommentStore = create((set, get) => ({
           c.commentId === commentId ? { ...c, text: newContent } : c,
         ),
       }))
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   },
 }))

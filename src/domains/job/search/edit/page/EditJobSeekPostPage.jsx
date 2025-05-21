@@ -6,6 +6,7 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import Spinner from '../../../../../components/web/Spinner'
 import LastFormLine from '../../../common/components/LastFormLine'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
+import ToastService from '../../../../../utils/toastService'
 const EditJobSeekPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -14,11 +15,11 @@ const EditJobSeekPostPage = () => {
   const handleEdit = async (formData) => {
     try {
       await editJobSeekPost(id, formData)
-      alert('수정이 완료되었습니다.')
+      ToastService.success('수정이 완료되었습니다.')
       navigate(ROUTER_PATHS.JOB_SEARCH_POST_DETAIL.replace(':id', id))
     } catch (error) {
-      alert('수정 중 오류 발생')
       console.error(error)
+      ToastService.error('수정 중 오류가 발생했습니다.')
     }
   }
   if (loading) {
