@@ -5,6 +5,7 @@ import BoardCategory from '../../../../components/web/BoardCategory'
 import PropTypes from 'prop-types'
 import { deleteMyFreeBoardData, deleteMyJobBoardData } from '../../services/useMyBoardServices'
 import useMyBoardStore from '../../../../store/mypage/useMyBoardStore'
+import ToastService from '../../../../utils/toastService'
 
 const PostList = () => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -29,7 +30,7 @@ const PostList = () => {
   const deleteItems = async (items, isJobBoard) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
-      alert('로그인이 필요합니다.')
+      ToastService.error('로그인이 필요합니다.')
       return
     }
     try {

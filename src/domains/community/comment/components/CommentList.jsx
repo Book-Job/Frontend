@@ -1,24 +1,36 @@
-import { useState, useEffect } from 'react'
-import useAuthStore from '../../../../store/login/useAuthStore'
+import { useState } from 'react'
 import useCommentStore from '../store/useCommentStore'
+import Spinner from '../../../../components/web/Spinner'
+import ToastService from '../../../../utils/toastService'
 
 const CommentList = ({ boardId }) => {
-  const { user } = useAuthStore()
   const comments = useCommentStore((state) => state.comments)
   const deleteComment = useCommentStore((state) => state.deleteComment)
   const editComment = useCommentStore((state) => state.editComment)
   const loading = useCommentStore((state) => state.loading)
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
+  const [deletingId, setDeletingId] = useState(null)
 
   const handleDelete = async (boardId, commentId) => {
     try {
+      setDeletingId(commentId)
       await deleteComment(boardId, commentId)
-      alert('댓글이 성공적으로 삭제되었습니다.')
+      ToastService.success('댓글이 성공적으로 삭제되었습니다.')
     } catch (err) {
-      alert('댓글 삭제 중 오류 발생')
+      ToastService.error('댓글 삭제 중 오류 발생')
       console.error(err)
+    } finally {
+      setDeletingId(null)
     }
+  }
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-[300px]'>
+        <Spinner size={48} color='main-pink' />
+      </div>
+    )
   }
 
   const handleEditClick = (commentId, text) => {
@@ -28,17 +40,17 @@ const CommentList = ({ boardId }) => {
 
   const handleEditSubmit = async (boardId, commentId) => {
     if (!editContent.trim()) {
-      alert('수정할 내용을 입력하세요.')
+      ToastService.warning('수정할 내용을 입력하세요.')
       return
     }
     try {
       await editComment(boardId, commentId, editContent)
-      alert('댓글이 수정되었습니다.')
+      ToastService.success('댓글이 수정되었습니다.')
       setEditingCommentId(null)
       setEditContent('')
-    } catch (err) {
-      alert('댓글 수정 중 오류 발생')
-      console.error(err)
+    } catch (error) {
+      ToastService.error('댓글 수정 중 오류 발생')
+      console.error(error)
     }
   }
 
@@ -103,9 +115,13 @@ const CommentList = ({ boardId }) => {
                     <button
                       className='text-main-pink hover:underline'
                       onClick={() => handleDelete(boardId, comment.commentId)}
-                      disabled={loading}
+                      disabled={loading || deletingId === comment.commentId}
                     >
-                      {loading ? '삭제 중...' : '삭제'}
+                      {deletingId === comment.commentId ? (
+                        <Spinner size={16} color='main-pink' />
+                      ) : (
+                        '삭제'
+                      )}
                     </button>
                   </div>
                 )}

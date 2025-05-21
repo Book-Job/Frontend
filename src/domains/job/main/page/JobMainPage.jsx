@@ -52,7 +52,6 @@ const JobMainPage = () => {
         await loadPosts()
       } catch (error) {
         console.error('데이터 로딩 실패', error)
-        alert('데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.')
       }
     })()
   }, [selectedJobTabs, order])
@@ -85,11 +84,19 @@ const JobMainPage = () => {
       )
     } catch (error) {
       console.error('게시물 로딩 실패', error)
+      setPosts([])
     } finally {
       setLoading(false)
     }
   }
 
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-[300px]'>
+        <Spinner size={48} color='main-pink' />
+      </div>
+    )
+  }
   const displayedPosts = hasSearched ? searchResults : posts
 
   return (
@@ -108,7 +115,7 @@ const JobMainPage = () => {
             전체: {counts.total}개 | 오늘: {counts.today}개
           </div>
           <div className='flex items-end'>
-            <JobDropDown handleTabChange={setSelectedJobTabs} />
+            <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
               className='text-xs sm:text-sm md:text-[15px] font-semibold'
               onSortChange={setOrder}
@@ -116,19 +123,17 @@ const JobMainPage = () => {
           </div>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {loading || searchLoading ? (
-            <div className='flex justify-center items-center min-h-[300px] w-full'>
-              <Spinner />
-            </div>
-          ) : displayedPosts.length > 0 ? (
+        {displayedPosts.length > 0 ? (
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
             <JobPostList posts={displayedPosts} navigate={navigate} />
-          ) : hasSearched ? (
-            <p>검색 결과가 없습니다.</p>
-          ) : (
-            <p>게시물이 없습니다.</p>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className='flex justify-center items-center min-h-[300px] w-full'>
+            <p className='text-gray-500 text-lg'>
+              {hasSearched ? '검색 결과가 없습니다.' : '게시물이 없습니다.'}
+            </p>
+          </div>
+        )}
       </div>
     </>
   )
