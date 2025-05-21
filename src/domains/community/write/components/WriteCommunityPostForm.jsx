@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -15,7 +15,6 @@ import WriteEditor from '../../../../components/common/WriteEditor'
 const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
   const navigate = useNavigate()
-  const isMounted = useRef(false)
 
   const {
     register,
@@ -33,13 +32,6 @@ const WriteCommunityPostForm = () => {
   })
 
   useEffect(() => {
-    isMounted.current = true
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
-
-  useEffect(() => {
     if (user?.nickname) {
       setValue('nickname', user.nickname)
     }
@@ -54,16 +46,12 @@ const WriteCommunityPostForm = () => {
     }
     try {
       await createPost(postData)
-      if (isMounted.current) {
-        ToastService.success('게시글이 등록되었습니다.')
-        reset()
-        navigate(ROUTER_PATHS.COMMUNITY)
-      }
+      ToastService.success('게시글이 등록되었습니다.')
+      reset()
+      navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {
-      if (isMounted.current) {
-        console.error('게시글 작성 실패', err)
-        ToastService.error('게시글 작성에 실패했습니다.')
-      }
+      console.error('게시글 작성 실패', err)
+      ToastService.error('게시글 작성에 실패했습니다.')
     }
   }
 
@@ -84,6 +72,7 @@ const WriteCommunityPostForm = () => {
         </FormItem>
       </div>
       <JobFormLine />
+
       <div className='my-[30px]'>
         <FormItem label='글 제목' dot={true}>
           <div className='flex flex-col w-full'>
@@ -99,31 +88,30 @@ const WriteCommunityPostForm = () => {
         </FormItem>
       </div>
       <JobFormLine />
+
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
-          <div className='flex flex-col w-full'>
-            <Controller
-              name='text'
-              control={control}
-              rules={{
-                required: '내용은 필수입니다',
-                validate: (value) => {
-                  const content = value.getCurrentContent()
-                  return content.hasText() || '내용은 필수입니다'
-                },
-              }}
-              render={({ field }) => (
-                <WriteEditor
-                  editorState={field.value}
-                  onEditorStateChange={field.onChange}
-                  placeholder='내용을 입력하세요'
-                />
-              )}
-            />
-            {errors.text && (
-              <span className='self-start text-red-500 text-xs mt-1'>{errors.text.message}</span>
+          <Controller
+            name='text'
+            control={control}
+            rules={{
+              required: '내용은 필수입니다',
+              validate: (value) => {
+                const content = value.getCurrentContent()
+                return content.hasText() || '내용은 필수입니다'
+              },
+            }}
+            render={({ field }) => (
+              <WriteEditor
+                editorState={field.value}
+                onEditorStateChange={field.onChange}
+                placeholder='내용을 입력하세요'
+              />
             )}
-          </div>
+          />
+          {errors.text && (
+            <span className='self-start text-red-500 text-xs mt-1'>{errors.text.message}</span>
+          )}
         </FormItem>
       </div>
     </form>
