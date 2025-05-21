@@ -1,28 +1,43 @@
-import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
+import React, { useEffect, useRef } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { EditorState, convertToRaw } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
 import { useNavigate } from 'react-router-dom'
+import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { createPost } from '../../service/postService'
 import ToastService from '../../../../utils/toastService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
-import TiptapEditor from '../../../../components/common/TiptapEditor'
+import WriteEditor from '../../../../components/common/WriteEditor'
 
 const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
   const navigate = useNavigate()
+  const isMounted = useRef(false)
 
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
-    setValue: setFormValue,
-    watch,
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      nickname: '',
+      title: '',
+      text: EditorState.createEmpty(),
+    },
+  })
+
+  useEffect(() => {
+    isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   useEffect(() => {
     if (user?.nickname) {
@@ -31,21 +46,30 @@ const WriteCommunityPostForm = () => {
   }, [user, setValue])
 
   const onSubmit = async (data) => {
+    const htmlText = draftToHtml(convertToRaw(data.text.getCurrentContent()))
+    const postData = {
+      nickname: data.nickname,
+      title: data.title,
+      text: htmlText,
+    }
     try {
-      await createPost(data)
-      ToastService.success('게시글이 등록되었습니다.')
-      reset()
-      navigate(ROUTER_PATHS.COMMUNITY)
+      await createPost(postData)
+      if (isMounted.current) {
+        ToastService.success('게시글이 등록되었습니다.')
+        reset()
+        navigate(ROUTER_PATHS.COMMUNITY)
+      }
     } catch (err) {
-      console.error('게시글 작성 실패', err)
+      if (isMounted.current) {
+        console.error('게시글 작성 실패', err)
+        ToastService.error('게시글 작성에 실패했습니다.')
+      }
     }
   }
 
-  const textValue = watch('text')
-
   return (
     <form id='community-post-form' onSubmit={handleSubmit(onSubmit)}>
-      <div className='my-[10px]'>
+      <div className='my-[30px]'>
         <FormItem label='닉네임' dot={true}>
           <div className='flex flex-col w-full'>
             <JobInputBox
@@ -77,14 +101,29 @@ const WriteCommunityPostForm = () => {
       <JobFormLine />
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
-          <TiptapEditor
-            value={textValue}
-            onChange={(value) => setFormValue('text', value)}
-            placeholder='내용을 입력하세요'
-          />
-          {errors.text && (
-            <span className='self-start text-red-500 text-xs mt-1'>내용은 필수입니다</span>
-          )}
+          <div className='flex flex-col w-full'>
+            <Controller
+              name='text'
+              control={control}
+              rules={{
+                required: '내용은 필수입니다',
+                validate: (value) => {
+                  const content = value.getCurrentContent()
+                  return content.hasText() || '내용은 필수입니다'
+                },
+              }}
+              render={({ field }) => (
+                <WriteEditor
+                  editorState={field.value}
+                  onEditorStateChange={field.onChange}
+                  placeholder='내용을 입력하세요'
+                />
+              )}
+            />
+            {errors.text && (
+              <span className='self-start text-red-500 text-xs mt-1'>{errors.text.message}</span>
+            )}
+          </div>
         </FormItem>
       </div>
     </form>
