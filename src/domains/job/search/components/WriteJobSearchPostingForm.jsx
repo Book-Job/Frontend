@@ -14,6 +14,7 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
     register,
     handleSubmit,
     watch,
+    control,
     reset,
     formState: { errors },
   } = useForm({ defaultValues })
@@ -54,7 +55,7 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
       <JobFormLine />
 
       <div className='my-[30px]'>
-        <PostContent register={register} errors={errors} />
+        <PostContent register={register} control={control} errors={errors} />
       </div>
     </form>
   )

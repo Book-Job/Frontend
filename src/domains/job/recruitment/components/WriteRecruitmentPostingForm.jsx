@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import JobFormLine from '../../common/components/JobFormLine'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
 import PostTitle from '../../common/components/form/PostTitle'
@@ -18,10 +18,20 @@ const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
     register,
     reset,
     setValue,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({ defaultValues })
+
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   useEffect(() => {
     if (defaultValues) {
@@ -75,7 +85,7 @@ const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
       <JobFormLine />
 
       <div className='my-[30px]'>
-        <PostContent register={register} errors={errors} />
+        <PostContent register={register} control={control} errors={errors} />
       </div>
     </form>
   )
