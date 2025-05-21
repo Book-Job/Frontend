@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { postLoginData } from './../../domains/login/services/useLoginServices'
+import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
 
 const parseJwt = (token) => {
   try {
@@ -98,11 +98,22 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  logout: () => {
+  logout: async () => {
     localStorage.removeItem('accessToken')
-    sessionStorage.removeItem('resetToken');
+    sessionStorage.removeItem('resetToken')
     set({ user: null, isAuthenticated: false, accessToken: null })
     window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // try {
+    //   const response = await deleteLogout()
+    //   response.data && response.data.message === 'success'
+    //   localStorage.removeItem('accessToken')
+    //   sessionStorage.removeItem('resetToken')
+    //   set({ user: null, isAuthenticated: false, accessToken: null })
+    //   window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // } catch (error) {
+    //   console.error('로그아웃 실패:', error)
+    //   throw error
+    // }
   },
 }))
 
