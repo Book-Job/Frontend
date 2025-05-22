@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 // import ROUTER_PATHS from '../../../../routes/RouterPath'
 import commonTime from '../../../../assets/icons/common/common_time.svg'
 
-const BoardButton = ({ onBoardSelect, selectedBoard }) => {
+const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
   const boardButton = [{ name: '자유' }, { name: '구인구직' }]
   const navigate = useNavigate()
   const today = new Date()
@@ -33,12 +33,17 @@ const BoardButton = ({ onBoardSelect, selectedBoard }) => {
             )
           })}
         </p>
-        <div className='flex justify-end mt-1 '>
+        <button
+          onClick={() => {
+            handleRefresh()
+          }}
+          className='flex justify-end w-full mt-1 '
+        >
           <div className='w-4 h-4 mr-1 sm:w-5 sm:h-5'>
             <img src={commonTime} alt='commonTime' />
           </div>
           <p className='text-sm font-semibold sm:text-base text-dark-gray'>{formattedDate} 기준</p>
-        </div>
+        </button>
       </div>
     </div>
   )
