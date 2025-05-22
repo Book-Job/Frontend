@@ -28,7 +28,7 @@ const BestList = ({ boardName, bestList }) => {
                   {title}
                 </button>
                 <div className='flex flex-row items-center'>
-                  {commentCount ? (
+                  {boardId ? (
                     <>
                       <img
                         src={comment}

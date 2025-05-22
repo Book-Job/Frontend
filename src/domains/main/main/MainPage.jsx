@@ -20,6 +20,12 @@ const MainPage = () => {
     setSelectedBoard(boardName)
   }
 
+  // 새로고침 버튼 핸들러
+  useEffect(() => {
+    fetchFreeBest() // 강제 갱신
+    fetchJobBest() // 강제 갱신
+  }, [])
+
   useEffect(() => {
     fetchFreeBest()
     fetchJobBest()
@@ -33,6 +39,13 @@ const MainPage = () => {
     <div className='flex flex-col items-center w-full'>
       <div className='w-full mb-6 sm:mb-10'>
         <BoardButton onBoardSelect={handleBoardSelect} selectedBoard={selectedBoard} />
+        {/* <button
+          onClick={handleRefresh}
+          className='px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600'
+          disabled={isLoading}
+        >
+          {isLoading ? '로딩 중...' : '새로고침'}
+        </button> */}
       </div>
       <div className='flex justify-center w-full'>
         {isLoading ? (
