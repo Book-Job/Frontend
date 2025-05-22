@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react'
 import MyActivity from '../mypage/components/MyActivity'
 import MyData from '../mypage/components/MyData'
 import { getMyData } from '../services/userMyDataServices'
+import useAuthStore from '../../../store/login/useAuthStore'
+import { useNavigate } from 'react-router-dom'
+import Spinner from '../../../components/web/Spinner'
 
 const MyPage = () => {
   const [userData, setUserData] = useState()
+  const { requireLogin, isAuthenticated } = useAuthStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+
 
   const handleMyData = async () => {
     try {
@@ -14,18 +22,37 @@ const MyPage = () => {
         setUserData(response.data)
       } else {
         console.log('마이데이터 오류:', response.data)
+        setError('마이데이터를 불러오지 못했습니다.')
       }
     } catch (error) {
       console.error('마이데이터 불러오기 오류:', error)
+      setError('서버 오류가 발생했습니다.')
+    } finally {
+      setIsLoading(false)
     }
   }
+
   useEffect(() => {
-    handleMyData()
-  }, [])
+    requireLogin(navigate);
+    if (isAuthenticated) {
+      handleMyData();
+    }
+  }, [requireLogin, navigate, isAuthenticated]);
+
   return (
     <div>
-      {userData && <MyData userID={userData.data.nickname} email={userData.data.email} />}
-      <MyActivity />
+      {isLoading ? (
+        <div className='flex justify-center mt-40'>
+          <Spinner size={48} color='main-pink' />
+        </div>
+      ) : error ? (
+        <div className='text-center text-red-500'>{error}</div>
+      ) : userData ? (
+        <>
+          <MyData userID={userData.data.nickname} email={userData.data.email} />
+          <MyActivity />
+        </>
+      ) : null}
     </div>
   )
 }
