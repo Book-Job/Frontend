@@ -41,6 +41,7 @@ const BestList = ({ boardName, bestList }) => {
                     <>
                       <img
                         src={viewGray}
+                        alt='viewCount'
                         className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
                       />
                       {viewCount}
