@@ -22,8 +22,8 @@ const MainPage = () => {
 
   // 새로고침 버튼 핸들러
   const handleRefresh = () => {
-    fetchFreeBest(true) // 강제 갱신
-    fetchJobBest(true) // 강제 갱신
+    fetchFreeBest(true) 
+    fetchJobBest(true)
   }
 
   useEffect(() => {
