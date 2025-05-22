@@ -88,7 +88,7 @@ const MobileMainHeader = () => {
                   <li
                     key={option.value}
                     onClick={() => !option.disabled && handleOptionChange(option.value)}
-                    className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
+                    className={`px-4 py-2 cursor-pointer rounded-md hover:bg-gray-200 ${
                       option.disabled ? 'text-dark-gray' : ''
                     }`}
                   >
