@@ -35,6 +35,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
         border border-[#D6D6D6]
         rounded-[10px]
         px-4 sm:px-5 pt-5 pb-4
+        mb-4
         justify-between cursor-pointer
         bg-white
         shadow-sm
