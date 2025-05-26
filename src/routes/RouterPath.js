@@ -20,9 +20,9 @@ const ROUTER_PATHS = {
   FIND_PW_CHECK_ID_PAGE: '/find/pw/check-id-page', //임시 비밀번호 발급받을 이메일 작성 페이지
   FIND_PW_CHANGE_PW: '/find/pw/change-pw', // 비밀번호 변경 페이지
   MY_PAGE: '/my-page', //마이페이지
-  MY_EDIT_PROFILE: '/my-page/edit-profile',
-  MY_EDIT_PW: '/my-page/edit-password',
-  MY_PW_MIS: '/my-page/password-mis',
+  MY_EDIT_PROFILE: '/my-page/edit-profile', // 프로필 수정 페이지지
+  MY_EDIT_PW: '/my-page/edit-password', //현재 사용중인 비밀번호 확인 페이지
+  MY_PW_MIS: '/my-page/password-mis', // 비밀번호 오류 확인 페이지지
   MY_SCRAP: '/my-page/my-scrap',
   MY_POST: '/my-page/my-post',
   MY_DRAFTS: '/my-page/my-drafts',

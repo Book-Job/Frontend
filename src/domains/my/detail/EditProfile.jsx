@@ -144,9 +144,9 @@ const EditProfile = () => {
                 변경
               </button>
             </div>
-            <div className='flex justify-between gap-2'>
+            <div className='flex justify-between gap-4'>
               <Button
-                size='semiMedium'
+                size='medium'
                 label='회원탈퇴'
                 onClick={() => {
                   openMembershipDeleteModal()
@@ -154,7 +154,7 @@ const EditProfile = () => {
                 className={'hover:bg-main-pink'}
               />
               <Button
-                size='semiMedium'
+                size='medium'
                 label='로그아웃'
                 onClick={() => {
                   userLogout()

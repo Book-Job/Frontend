@@ -15,13 +15,13 @@ const Alert = ({ isOpen, onClose, title, description, buttonLabel, onButtonClick
   return (
     <div className='fixed z-50 flex items-center justify-center inset-1'>
       <div className='fixed inset-0 bg-black opacity-50' onClick={onClose}></div>
-      <div className='relative sm:w-full sm:max-w-xl  sm:py-20 py-10 px-4 mx-4 bg-white rounded-[5px] shadow-lg'>
+      <div className='relative w-4/5 max-w-xl sm:py-20 py-10 px-4 mx-4 bg-white rounded-[5px] shadow-lg'>
         <h2 className='mb-4 text-2xl font-bold text-center sm:text-4xl sm:mb-10'>{title}</h2>
         <p className='sm:mb-10 mb-4 sm:text-[20px] text-base text-center text-dark-gray'>{description}</p>
         <Button
           label={buttonLabel}
           onClick={handleButtonClick}
-          size='semiMedium'
+          size='medium'
           bgColor='main-pink'
           className='hover:bg-pink-600'
         ></Button>

@@ -8,6 +8,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'
 import { postNewPW } from '../../my/services/userMyDataServices'
+import ToastService from '../../../utils/toastService'
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
@@ -39,21 +40,24 @@ const ChangePwPage = () => {
       const response = await postNewPW(newPW, resetToken)
       if (response.data && response.data.message === 'success') {
         console.log('PW 변경 성공:', response.data)
-        alert('비밀번호 변경이 완료되었습니다.')
+        ToastService.success('비밀번호 변경이 완료되었습니다.')
         clearResetToken()
         navigate(ROUTER_PATHS.MY_PROFILE)
       } else {
         console.log('PW 변경 오류:', response)
+        ToastService.error('비밀번호 변경 중 오류')
       }
     } catch (error) {
       console.error('PW 변경 확인 오류:', error)
+      ToastService.error('비밀번호 변경 중 오류')
     }
   }
 
-  // resetToken 없음
-  if (!resetToken) {
-    return <Navigate to={ROUTER_PATHS.MY_EDIT_PW} replace />
-  }
+  // // resetToken 없음
+  // if (!resetToken) {
+  //   return <Navigate to={ROUTER_PATHS.MY_EDIT_PW} replace />
+
+  // }
 
   return (
     <div>

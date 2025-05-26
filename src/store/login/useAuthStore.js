@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
+import ToastService from '../../utils/toastService'
 
 const parseJwt = (token) => {
   try {
@@ -59,7 +60,7 @@ const useAuthStore = create((set) => ({
     const state = useAuthStore.getState()
     const resetToken = state.resetToken
     if (!resetToken) {
-      alert('비밀번호 확인이 필요합니다.')
+      ToastService.info('비밀번호 확인이 필요합니다.')
       navigate(ROUTER_PATHS.MY_EDIT_PW)
       return false
     }
