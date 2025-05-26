@@ -63,6 +63,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
       setEmailCheckStatus('error')
       setValidationStatus('error')
       trigger('emailId')
+      ToastService.error(error?.message || '인증번호 전송 중 오류가 발생했습니다.')
     } finally {
       setIsCheckingEmail(false)
     }
