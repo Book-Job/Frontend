@@ -7,6 +7,7 @@ import Spinner from '../../../../../components/web/Spinner'
 import LastFormLine from '../../../common/components/LastFormLine'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import ToastService from '../../../../../utils/toastService'
+import { htmlToEditorState } from '../../../../community/detail/util/draftjsUtils'
 const EditJobSeekPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -31,11 +32,16 @@ const EditJobSeekPostPage = () => {
   }
   if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
 
+  const defaultValues = {
+    ...data,
+    text: htmlToEditorState(data.text ?? ''),
+  }
+
   return (
     <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px] mb-8'>구직 글 수정</h1>
       <WriteFormLine />
-      <WriteJobSearchPostingForm defaultValues={data} onSubmit={handleEdit} />
+      <WriteJobSearchPostingForm defaultValues={defaultValues} onSubmit={handleEdit} />
       <LastFormLine />
       <div className='flex justify-end mb-10'>
         <button

@@ -11,25 +11,30 @@ import LastFormLine from '../../../job/common/components/LastFormLine'
 import CommentHeader from '../../comment/components/CommentHeader'
 import CommentForm from '../../comment/components/CommentForm'
 import CommentList from '../../comment/components/CommentList'
-import { deletePost, editPost } from '../../service/postService'
+import { deletePost } from '../../service/postService'
 import useCommentStore from '../../comment/store/useCommentStore'
 import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../utils/toastService'
+import WriteEditor from '../../../../components/common/WriteEditor'
+import useEditPost from '../hook/useEditPost'
+import { htmlToEditorState } from '../util/draftjsUtils'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
-  const { post, loading, error } = useDetailPost(id)
+  const { post, loading, error, refetch } = useDetailPost(id)
   const navigate = useNavigate()
   const [isEditing, setIsEditing] = useState(false)
-  const [editedPost, setEditedPost] = useState('')
   const [isCommentOpen, setIsCommentOpen] = useState(true)
-
   const comments = useCommentStore((state) => state.comments)
   const fetchComments = useCommentStore((state) => state.fetchComments)
 
-  useEffect(() => {
-    if (post) setEditedPost(post.text)
-  }, [post])
+  const {
+    editorState,
+    setEditorState,
+    loading: editLoading,
+    error: editError,
+    handleSubmit,
+  } = useEditPost(id, refetch)
 
   useEffect(() => {
     if (id) {
@@ -57,19 +62,10 @@ const DetailCommunityPage = () => {
   }
 
   const handleEditClick = () => {
+    setEditorState(htmlToEditorState(post.text || ''))
     setIsEditing(true)
   }
-
-  const handleUpdateSubmit = async () => {
-    try {
-      await editPost(id, editedPost)
-      ToastService.success('게시글이 수정되었습니다.')
-      setIsEditing(false)
-    } catch (error) {
-      ToastService.error('수정 중 오류가 발생했습니다.')
-      console.error('수정 중 오류 발생:', error)
-    }
-  }
+  const handleCancelEdit = () => setIsEditing(false)
 
   const handleBlockUserClick = () => {
     ToastService.warn('이 사용자를 차단합니다.')
@@ -79,19 +75,7 @@ const DetailCommunityPage = () => {
   if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
 
   return (
-    <div
-      className='
-        w-full
-        max-w-[1440px]
-        mx-auto
-        px-4
-        sm:px-8
-        lg:px-[100px]
-        xl:px-[250px]
-        py-6
-        sm:py-10
-      '
-    >
+    <div className='w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-[100px] xl:px-[250px] py-6 sm:py-10'>
       <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
         {post.title}
       </h1>
@@ -112,10 +96,18 @@ const DetailCommunityPage = () => {
             </>
           ) : (
             <>
-              <button className='text-dark-gray text-[13px]' onClick={handleUpdateSubmit}>
+              <button
+                className='text-dark-gray text-[13px]'
+                onClick={async (e) => {
+                  await handleSubmit(e)
+                  setIsEditing(false)
+                  await refetch()
+                }}
+                disabled={editLoading}
+              >
                 저장
               </button>
-              <button className='text-dark-gray text-[13px]' onClick={() => setIsEditing(false)}>
+              <button className='text-dark-gray text-[13px]' onClick={handleCancelEdit}>
                 취소
               </button>
             </>
@@ -138,15 +130,16 @@ const DetailCommunityPage = () => {
       </div>
       <div className='mb-10'>
         {isEditing ? (
-          <textarea
-            className='w-full h-[200px] p-4 border border-dark-gray rounded resize-y'
-            value={editedPost}
-            onChange={(e) => setEditedPost(e.target.value)}
+          <WriteEditor
+            editorState={editorState}
+            onEditorStateChange={setEditorState}
+            placeholder='내용을 입력하세요'
           />
         ) : (
-          <div className='whitespace-pre-line break-words'>
-            {editedPost.replace(/<[^>]*>/g, '')}
-          </div>
+          <div
+            className='whitespace-pre-line break-words'
+            dangerouslySetInnerHTML={{ __html: post.text }}
+          />
         )}
       </div>
 

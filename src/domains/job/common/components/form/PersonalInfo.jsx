@@ -7,12 +7,13 @@ const PersonalInfo = ({ register }) => {
 
   return (
     <>
-      <div className='my-[10px]'>
-        <FormItem label='닉네임' dot={false} name='writer'>
-          <div className='flex sm:w-[171px] md:text-[14px]'>{user?.nickname ?? '닉네임 없음'}</div>
-          <input type='hidden' {...register('writer')} />
-        </FormItem>
-      </div>
+      <FormItem label='닉네임' dot={false} name='writer'>
+        <div className='text-left text-4 w-full font-medium text-gray-800 block my-4'>
+          {user?.nickname ?? '닉네임 없음'}
+        </div>
+        <input type='hidden' {...register('writer')} value={user?.nickname ?? ''} />
+      </FormItem>
+
       <JobFormLine />
     </>
   )
