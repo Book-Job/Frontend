@@ -10,12 +10,14 @@ import { useEffect } from 'react'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 const WriteRecruitmentPostPage = () => {
   const navigate = useNavigate()
-  const { requireLogin } = useAuthStore()
+  const { requireLogin, isAuthenticated } = useAuthStore()
   const handleSubmitForm = usePostSubmit(createRecruitmentPost)
 
   useEffect(() => {
-    requireLogin(navigate)
-  }, [requireLogin, navigate])
+    if (!isAuthenticated) {
+      requireLogin(navigate)
+    }
+  }, [requireLogin, navigate, isAuthenticated])
 
   return (
     <>

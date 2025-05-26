@@ -7,6 +7,8 @@ import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
 import ToastService from '../../../../../utils/toastService'
+import { htmlToEditorState } from '../../../../community/detail/util/draftjsUtils'
+
 const EditRecruitmentPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -29,13 +31,20 @@ const EditRecruitmentPostPage = () => {
       </div>
     )
   }
+
   if (error) return <div>존재하지 않는 게시글입니다.</div>
+  if (!data) return null
+
+  const defaultValues = {
+    ...data,
+    text: htmlToEditorState(data.text ?? ''),
+  }
 
   return (
     <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px] mb-8'>구인 글 수정</h1>
       <WriteFormLine />
-      <WriteRecruitmentPostingForm defaultValues={data} onSubmit={handleEdit} />
+      <WriteRecruitmentPostingForm defaultValues={defaultValues} onSubmit={handleEdit} />
       <LastFormLine />
       <div className='flex justify-end mb-10'>
         <button
@@ -48,4 +57,5 @@ const EditRecruitmentPostPage = () => {
     </div>
   )
 }
+
 export default EditRecruitmentPostPage

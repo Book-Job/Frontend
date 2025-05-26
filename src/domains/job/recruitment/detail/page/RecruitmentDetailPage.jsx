@@ -16,6 +16,8 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useScrapStore from '../../../scrap/store/useScrapStore'
 import ToastService from '../../../../../utils/toastService'
+import DOMPurify from 'dompurify'
+
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
@@ -117,7 +119,9 @@ const RecruitmentDetailPage = () => {
         </div>
         <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
           <dt className='font-semibold text-dark-gray'>지원 마감일</dt>
-          <dd>{data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '-'}</dd>
+          <dd>
+            {data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용'}
+          </dd>
         </div>
         <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
           <dt className='font-semibold text-dark-gray'>자사 웹사이트</dt>
@@ -129,9 +133,10 @@ const RecruitmentDetailPage = () => {
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-[#E36397]' />
       </div>
-      <div className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'>
-        {data.text}
-      </div>
+      <div
+        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
+      />
       <LastFormLine />
       <h2 className='font-bold text-lg sm:text-xl my-5 flex self-start'>관련 글</h2>
       <RelatedRecruitmentPosts currentId={id} />
