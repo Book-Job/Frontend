@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'react'
 import { editPost } from '../../service/postService'
 import ToastService from '../../../../utils/toastService'
-import { EditorState, ContentState, convertToRaw } from 'draft-js'
-import htmlToDraft from 'html-to-draftjs'
+import { EditorState, convertToRaw } from 'draft-js'
+import { htmlToEditorState } from '../util/draftjsUtils'
 import draftToHtml from 'draftjs-to-html'
-
-const htmlToEditorState = (html) => {
-  const blocksFromHtml = htmlToDraft(html || '')
-  const { contentBlocks, entityMap } = blocksFromHtml
-  const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap)
-  return EditorState.createWithContent(contentState)
-}
 
 const useEditPost = (id, fetchDetail) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())

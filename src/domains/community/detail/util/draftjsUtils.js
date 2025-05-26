@@ -5,10 +5,20 @@ import DOMPurify from 'dompurify'
 export function htmlToEditorState(html) {
   if (!html) return EditorState.createEmpty()
 
-  const cleanHtml = DOMPurify.sanitize(html)
+  try {
+    const cleanHtml = DOMPurify.sanitize(html)
+    const blocksFromHtml = htmlToDraft(cleanHtml)
 
-  const blocksFromHtml = htmlToDraft(cleanHtml)
-  const { contentBlocks, entityMap } = blocksFromHtml
-  const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap)
-  return EditorState.createWithContent(contentState)
+    if (!blocksFromHtml) {
+      console.warn('주의:', cleanHtml)
+      return EditorState.createEmpty()
+    }
+
+    const { contentBlocks, entityMap } = blocksFromHtml
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap)
+    return EditorState.createWithContent(contentState)
+  } catch (error) {
+    console.error('오류', error, '원래 HTML:', html)
+    return EditorState.createEmpty()
+  }
 }
