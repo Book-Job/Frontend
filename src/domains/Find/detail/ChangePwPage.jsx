@@ -13,6 +13,7 @@ import ToastService from '../../../utils/toastService'
 const ChangePwPage = () => {
   const navigate = useNavigate()
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const { resetToken, requireResetToken, clearResetToken } = useAuthStore()
   const {
     register,
@@ -39,14 +40,13 @@ const ChangePwPage = () => {
       }
     }
     validatePasswords()
-  }, [newPassword, passwordCheck, errors])
+  }, [newPassword, passwordCheck, errors.newPassword, errors.passwordCheck])
 
   // resetToken 확인
   useEffect(() => {
     const checkToken = async () => {
       const isValid = await requireResetToken(navigate)
       if (!isValid) {
-        console.log('비밀번호 확인이 필요합니다.2')
         ToastService.info('비밀번호 확인이 필요합니다.')
       }
     }
@@ -54,10 +54,9 @@ const ChangePwPage = () => {
   }, [requireResetToken, navigate])
 
   const onSubmit = async (data) => {
-    const { passwordCheck, ...filteredData } = data
-    console.log('새 비밀번호:', filteredData)
+    setIsLoading(true)
+    const { /* passwordCheck */ ...filteredData } = data
     const newPW = filteredData.newPassword
-    console.log('PW 변경 정보 확인:', newPW, resetToken)
     try {
       const response = await postNewPW(newPW, resetToken)
       if (response.data && response.data.message === 'success') {
@@ -72,6 +71,8 @@ const ChangePwPage = () => {
     } catch (error) {
       console.error('PW 변경 확인 오류:', error)
       ToastService.error('비밀번호 변경 중 오류')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -87,8 +88,8 @@ const ChangePwPage = () => {
               <Button
                 label='완료'
                 size='biggest'
-                bgColor={isSuccess ? 'main-pink' : 'light-gray'}
-                disabled={!isSuccess}
+                bgColor={isSuccess && !isLoading ? 'main-pink' : 'light-gray'}
+                disabled={!isSuccess || isLoading}
                 type='submit'
               />
             </div>
