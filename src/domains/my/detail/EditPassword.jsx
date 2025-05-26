@@ -2,10 +2,10 @@ import { useForm } from 'react-hook-form'
 import PageTitle from '../../Find/common/components/PageTitle'
 import PageBox from './../../Find/common/components/PageBox'
 import ROUTER_PATHS from '../../../routes/RouterPath'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import Button from '../../../components/web/Button'
 import { postPWCheck } from '../services/userMyDataServices'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useAuthStore from '../../../store/login/useAuthStore'
 import PwInputBox from '../../../components/web/PwInputBox'
 import ToastService from '../../../utils/toastService'
@@ -14,7 +14,7 @@ const EditPassword = () => {
   const navigate = useNavigate()
   const [serverMessage, setServerMessage] = useState({ message: null, isSuccess: false })
   const [isLoading, setIsLoading] = useState(false)
-  const { setResetToken } = useAuthStore()
+  const { setResetToken, requireLogin } = useAuthStore()
 
   const {
     register,
@@ -23,6 +23,18 @@ const EditPassword = () => {
   } = useForm({
     mode: 'onChange',
   })
+
+  // Login 확인
+  useEffect(() => {
+    const checkLogin = async () => {
+      const isLogin = await requireLogin(navigate)
+      if (!isLogin) {
+        ToastService.info('로그인 후 이용 가능합니다.')
+        console.log('로그인 확인이 필요합니다.1')
+      }
+    }
+    checkLogin()
+  }, [requireLogin, navigate])
 
   const onSubmit = async (data) => {
     if (isLoading) return
