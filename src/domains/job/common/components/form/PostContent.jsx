@@ -15,13 +15,15 @@ const PostContent = ({ control, errors }) => {
             return (content && content.hasText()) || '내용은 필수입니다'
           },
         }}
-        render={({ field }) => (
-          <WriteEditor
-            editorState={field.value}
-            onEditorStateChange={field.onChange}
-            placeholder='내용을 입력하세요'
-          />
-        )}
+        render={({ field }) => {
+          return (
+            <WriteEditor
+              editorState={field.value}
+              onEditorStateChange={field.onChange}
+              placeholder='내용을 입력하세요'
+            />
+          )
+        }}
       />
       <div className='flex items-start'>
         {errors.text && (
@@ -31,4 +33,5 @@ const PostContent = ({ control, errors }) => {
     </FormItem>
   )
 }
+
 export default PostContent
