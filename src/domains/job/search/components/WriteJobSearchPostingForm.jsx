@@ -8,8 +8,12 @@ import EmploymentType from '../../common/components/form/EmploymentType'
 import JobCategory from '../../common/components/form/JobCategory'
 import WorkExperience from './form/WorkExperience'
 import ContactEmail from './form/ContactEmail'
-
+import useAuthStore from '../../../../store/login/useAuthStore'
+import draftToHtml from 'draftjs-to-html'
+import { convertToRaw } from 'draft-js'
 const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
+  const { user } = useAuthStore()
+
   const {
     register,
     handleSubmit,
@@ -17,16 +21,34 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
     control,
     reset,
     formState: { errors },
-  } = useForm({ defaultValues })
+  } = useForm({
+    defaultValues: {
+      writer: user?.nickname || '',
+      ...defaultValues,
+    },
+  })
 
   useEffect(() => {
-    if (defaultValues) {
-      reset(defaultValues)
+    if (defaultValues && user?.nickname) {
+      const writerToSet = defaultValues.writer || user.nickname
+      reset({
+        ...defaultValues,
+        writer: writerToSet,
+      })
     }
-  }, [defaultValues, reset])
+  }, [defaultValues, user, reset])
+
+  const handleFormSubmit = (formData) => {
+    if (formData.text && formData.text.getCurrentContent) {
+      const rawContent = convertToRaw(formData.text.getCurrentContent())
+      formData.text = draftToHtml(rawContent)
+    }
+
+    onSubmit(formData)
+  }
 
   return (
-    <form id='job-search-post-form' onSubmit={handleSubmit(onSubmit)}>
+    <form id='job-search-post-form' onSubmit={handleSubmit(handleFormSubmit)}>
       <PersonalInfo register={register} />
 
       <JobFormLine />
@@ -55,7 +77,7 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
       <JobFormLine />
 
       <div className='my-[30px]'>
-        <PostContent register={register} control={control} errors={errors} />
+        <PostContent control={control} errors={errors} />
       </div>
     </form>
   )
