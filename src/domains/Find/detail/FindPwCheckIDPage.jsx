@@ -64,7 +64,6 @@ const FindPwCheckIDPage = () => {
     setIsCheckingEmail(true)
     const email = getValues('userEmail')
     setUserEmail(email)
-    console.log('이메일 인증 로직 실행:', email)
 
     try {
       const response = await postFindPWEmail(email)
@@ -99,7 +98,6 @@ const FindPwCheckIDPage = () => {
         setValidationStatusTemPW('success')
         setStartTimer(false)
         ToastService.success('이메일 인증이 완료되었습니다.')
-        console.log('resetToken확인:', response.data.data.resetToken)
         const { resetToken } = response.data.data || {}
         if (!resetToken) {
           ToastService.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
@@ -126,7 +124,7 @@ const FindPwCheckIDPage = () => {
       ? '비밀번호 발급 완료'
       : '임시 비밀번호 받기'
 
-  const handleInputChange = (e) => {
+  const handleInputChange = () => {
     if (emailCheckMessage) setEmailCheckMessage('')
     if (emailCodeMessage) setEmailCodeMessage('')
     if (validationStatusTemPW) setValidationStatusTemPW(null)
