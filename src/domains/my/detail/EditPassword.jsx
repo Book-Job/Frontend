@@ -7,8 +7,8 @@ import Button from '../../../components/web/Button'
 import { postPWCheck } from '../services/userMyDataServices'
 import { useState } from 'react'
 import useAuthStore from '../../../store/login/useAuthStore'
-import { toast } from 'react-toastify'
 import PwInputBox from '../../../components/web/PwInputBox'
+import ToastService from '../../../utils/toastService'
 
 const EditPassword = () => {
   const navigate = useNavigate()
@@ -37,7 +37,7 @@ const EditPassword = () => {
         })
         const { resetToken } = response.data.data || {}
         if (!resetToken) {
-          toast.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
+          ToastService.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
           return
         }
         setResetToken(resetToken)
@@ -71,35 +71,39 @@ const EditPassword = () => {
       <PageTitle title={'비밀번호 변경'} />
       <div className='flex justify-center'>
         <PageBox>
-          <div className='flex justify-start text-3xl font-bold'>비밀번호 입력</div>
-          <div className='flex-auto mt-8'>
-            <div className='mb-[11px] sm:text-[20px] text-base font-bold text-start'>비밀번호</div>
-            <PwInputBox
-              label='비밀번호'
-              placeholder='현재 비밀번호를 입력해주세요'
-              size='biggest'
-              {...register('userPW', { required: '현재 사용중인 비밀번호를 입력해 주세요.' })}
-            />
-          </div>
-          <div className='flex items-start'>
-            {errors.userPW && <p className='text-red-500 text-[14px]'>{errors.userPW.message}</p>}
-            {serverMessage.message && (
-              <p
-                className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-              >
-                {serverMessage.message}
-              </p>
-            )}
-          </div>
-          <div className='flex items-end mt-6'>
-            <Button
-              size='biggest'
-              label={isLoading ? '처리 중...' : serverMessage.isSuccess ? '다음' : '확인'}
-              bgColor={serverMessage.isSuccess ? 'main-pink' : 'light-gray'}
-              onClick={handleButtonClick}
-              disabled={isLoading}
-            />
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex justify-start text-3xl font-bold'>비밀번호 입력</div>
+            <div className='flex-auto mt-8'>
+              <div className='mb-[11px] sm:text-[20px] text-base font-bold text-start'>
+                비밀번호
+              </div>
+              <PwInputBox
+                label='비밀번호'
+                placeholder='현재 비밀번호를 입력해주세요'
+                size='biggest'
+                {...register('userPW', { required: '현재 사용중인 비밀번호를 입력해 주세요.' })}
+              />
+            </div>
+            <div className='flex items-start'>
+              {errors.userPW && <p className='text-red-500 text-[14px]'>{errors.userPW.message}</p>}
+              {serverMessage.message && (
+                <p
+                  className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                >
+                  {serverMessage.message}
+                </p>
+              )}
+            </div>
+            <div className='flex items-end mt-6'>
+              <Button
+                size='biggest'
+                label={isLoading ? '처리 중...' : serverMessage.isSuccess ? '다음' : '확인'}
+                bgColor={serverMessage.isSuccess ? 'main-pink' : 'light-gray'}
+                onClick={handleButtonClick}
+                disabled={isLoading}
+              />
+            </div>
+          </form>
         </PageBox>
       </div>
     </div>

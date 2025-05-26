@@ -4,6 +4,7 @@ import Button from '../../../../components/web/Button'
 import DomainSelector from './DomainSelector'
 import OTPInput from '../../../Find/common/components/OTPInput'
 import { postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/useJoinServices'
+import ToastService from '../../../../utils/toastService'
 
 const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationStatus }) => {
   const [domain, setDomain] = useState('naver.com')
@@ -29,9 +30,9 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
 
   // 중복 확인 버튼 클릭 핸들러
   const handleCheckEmail = async () => {
-    setEmailCheckMessage('')
-    setEmailCheckStatus(null)
-    setIsCheckingEmail(true)
+    if (isCheckingEmail) {
+      return
+    }
 
     const isValEmail = await trigger('emailId')
     if (!isValEmail) {
@@ -39,15 +40,17 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
       return
     }
 
-    try {
-      console.log('Email :', fullEmail)
-      const response = await postJoinCheckEmail(fullEmail)
-      console.log('Email API 응답 데이터:', response.data)
+    setEmailCheckMessage('')
+    setEmailCheckStatus(null)
+    setIsCheckingEmail(true)
 
+    try {
+      const response = await postJoinCheckEmail(fullEmail)
       if (response.data && response.data.message === 'success') {
         setEmailCheckMessage('인증번호가 전송되었습니다.')
-        setEmailCheckStatus('pending') // 인증 대기 상태
-        setStartTimer(true) // 타이머 시작
+        setEmailCheckStatus('pending')
+        setStartTimer(true)
+        ToastService.success('인증번호가 전송되었습니다. 이메일을 확인하세요.')
       } else {
         setEmailCheckMessage(response.data?.message || '이미 사용 중인 이메일입니다.')
         setEmailCheckStatus('error')
@@ -141,7 +144,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
           <Button
             size='biggest'
             label={buttonLabel}
-            bgColor={emailId ? 'main-pink' : 'light-gray'}
+            bgColor={emailId && !isCheckingEmail ? 'main-pink' : 'light-gray'}
             onClick={handleCheckEmail}
             disabled={!emailId || isCheckingEmail}
           />
