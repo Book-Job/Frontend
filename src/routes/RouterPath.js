@@ -14,12 +14,12 @@ const ROUTER_PATHS = {
   JOB_SEARCH_POST_DETAIL: '/job/job-seek/post/:id', //구직 글 상세 조회
   RECRUITMENT_POST_DETAIL: '/job/recruitment/post/:id', //구인 글 상세 조회
   RECRUITMENT_POST_EDIT: '/job/recruitment/edit/:id', //구인 글 수정
-  FIND_ID: '/find/id',
+  FIND_ID: '/find/id', // 아이디 찾기 페이지
   FIND_ID_COMPLETE_PAGE: '/find/id/complete-page',
-  FIND_PW: '/find/pW',
-  FIND_PW_CHECK_ID_PAGE: '/find/pw/check-id-page',
-  FIND_PW_CHANGE_PW: '/find/pw/change-pw',
-  MY_PAGE: '/my-page',
+  FIND_PW: '/find/pw', //비밀번호 찾기 페이지
+  FIND_PW_CHECK_ID_PAGE: '/find/pw/check-id-page', //임시 비밀번호 발급받을 이메일 작성 페이지
+  FIND_PW_CHANGE_PW: '/find/pw/change-pw', // 비밀번호 변경 페이지
+  MY_PAGE: '/my-page', //마이페이지
   MY_EDIT_PROFILE: '/my-page/edit-profile',
   MY_EDIT_PW: '/my-page/edit-password',
   MY_PW_MIS: '/my-page/password-mis',

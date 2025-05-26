@@ -49,7 +49,7 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     console.log('로그인 데이터:', data)
     try {
-      await login(data) // useAuthStore의 login 액션 호출
+      await login(data)
       if (saveLoginID) {
         localStorage.setItem('saveLoginID', data.userID)
       } else {

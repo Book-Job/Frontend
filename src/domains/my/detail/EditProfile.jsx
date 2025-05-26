@@ -14,7 +14,7 @@ const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
-  const { logout } = useAuthStore()
+  const { logout, updateNickname } = useAuthStore()
   const [alertState, setAlertState] = useState({
     isOpen: false,
     onButtonClick: null,
@@ -50,6 +50,7 @@ const EditProfile = () => {
           ...prev,
           data: { ...prev.data, nickname: newNickname },
         }))
+        updateNickname(newNickname)
         setServerError(null)
         alert('닉네임이 성공적으로 변경되었습니다!')
       } else {
