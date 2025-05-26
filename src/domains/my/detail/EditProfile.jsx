@@ -9,6 +9,7 @@ import Spinner from './../../../components/web/Spinner.jsx'
 import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
 import useAuthStore from '../../../store/login/useAuthStore.js'
 import MembershipPwCheck from './components/MembershipPwCheck.jsx'
+import ToastService from '../../../utils/toastService.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ const EditProfile = () => {
         }))
         updateNickname(newNickname)
         setServerError(null)
-        alert('닉네임이 성공적으로 변경되었습니다!')
+        ToastService.success('닉네임이 성공적으로 변경되었습니다!')
       } else {
         console.log('닉네임 변경 데이터 오류:', response.data)
         setServerError(response.data?.message || '닉네임 변경에 실패했습니다.')
@@ -60,6 +61,7 @@ const EditProfile = () => {
     } catch (error) {
       console.error('닉네임 변경 데이터 불러오기 오류:', error)
       setServerError(error.message || '닉네임 변경 중 오류가 발생했습니다.')
+      ToastService.error('닉네임 변경 실패했습니다.')
     }
   }
 
@@ -80,15 +82,15 @@ const EditProfile = () => {
       if (response.data && response.data.message === 'success') {
         console.log('회원 탈퇴 성공:', response.data)
         logout()
-        alert('회원 탈퇴가 완료되었습니다.')
+        ToastService.success('회원 탈퇴가 완료되었습니다.')
         navigate(ROUTER_PATHS.HOME) // 홈 또는 로그인 페이지로 이동
       } else {
         console.log('회원 탈퇴 실패:', response.data)
-        alert('회원 탈퇴에 실패했습니다.')
+        ToastService.info('회원 탈퇴에 실패했습니다.')
       }
     } catch (error) {
       console.error('회원 탈퇴 오류:', error)
-      alert(error.message || '회원 탈퇴 중 오류가 발생했습니다.')
+      ToastService.error(error.message || '회원 탈퇴 중 오류가 발생했습니다.')
     }
   }
 
@@ -98,7 +100,7 @@ const EditProfile = () => {
 
   const userLogout = () => {
     logout()
-    alert('로그아웃 되었습니다.')
+    ToastService.info('로그아웃 되었습니다.')
   }
 
   if (!userData) {

@@ -3,6 +3,7 @@ import PostList from './components/PostList'
 import useBoardStore from '../../../store/mypage/useBoardStore'
 import useMyBoardStore from '../../../store/mypage/useMyBoardStore'
 import { useEffect } from 'react'
+import Spinner from '../../../components/web/Spinner'
 
 const MyPost = () => {
   const { choiceBoard } = useBoardStore()
@@ -26,7 +27,9 @@ const MyPost = () => {
         <MyPostHead choiceBoard={choiceBoard} />
 
         {isLoading ? (
-          <div className='text-center'>로딩 중...</div>
+          <div className='text-center'>
+            <Spinner size={48} color='main-pink' />
+          </div>
         ) : error ? (
           <div className='flex flex-col text-center text-red-500'>
             {error}
