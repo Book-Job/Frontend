@@ -119,7 +119,9 @@ const RecruitmentDetailPage = () => {
         </div>
         <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
           <dt className='font-semibold text-dark-gray'>지원 마감일</dt>
-          <dd>{data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '-'}</dd>
+          <dd>
+            {data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용'}
+          </dd>
         </div>
         <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
           <dt className='font-semibold text-dark-gray'>자사 웹사이트</dt>
