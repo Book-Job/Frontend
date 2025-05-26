@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import JobFormLine from '../../common/components/JobFormLine'
 import PersonalInfo from '../../common/components/form/PersonalInfo'
 import PostTitle from '../../common/components/form/PostTitle'
@@ -11,9 +11,12 @@ import CompanyWebsite from './form/CompanyWebsite'
 import WorkPlace from './form/WorkPlace'
 import Experience from './form/Experience'
 import useAuthStore from '../../../../store/login/useAuthStore'
+import draftToHtml from 'draftjs-to-html'
+import { convertToRaw } from 'draft-js'
 
-const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
+const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   const { user } = useAuthStore()
+
   const {
     register,
     reset,
@@ -22,59 +25,56 @@ const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ defaultValues })
+  } = useForm({
+    defaultValues: {
+      writer: user?.nickname || '',
+      ...defaultValues,
+    },
+  })
 
-  const isMounted = useRef(false)
-
-  useEffect(() => {
-    isMounted.current = true
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
+  const closingDateValue = watch('closingDate')
 
   useEffect(() => {
-    if (defaultValues) {
-      reset(defaultValues)
+    if (defaultValues && user?.nickname) {
+      const writerToSet = defaultValues.writer || user.nickname
+      reset({
+        ...defaultValues,
+        writer: writerToSet,
+      })
     }
-  }, [defaultValues, reset])
+  }, [defaultValues, user, reset])
 
-  useEffect(() => {
-    if (user?.nickname) {
-      setValue('writer', user.nickname)
+  const handleFormSubmit = (formData) => {
+    if (formData.text && formData.text.getCurrentContent) {
+      const rawContent = convertToRaw(formData.text.getCurrentContent())
+      formData.text = draftToHtml(rawContent)
     }
-  }, [user, setValue])
+    if (formData.closingDate) {
+      formData.closingDate = `${formData.closingDate}T00:00:00`
+    }
+
+    onSubmit(formData)
+  }
 
   return (
-    <form id='recruitment-post-form' onSubmit={handleSubmit(onSubmit)}>
+    <form id='recruitment-post-form' onSubmit={handleSubmit(handleFormSubmit)}>
       <PersonalInfo register={register} />
-
       <div className='my-[30px]'>
         <PostTitle register={register} errors={errors} />
       </div>
-
       <JobFormLine />
-
       <div className='my-[30px]'>
-        <ClosingDate register={register} setValue={setValue} />
+        <ClosingDate control={control} />
       </div>
-
       <JobFormLine />
-
       <div className='my-[30px]'>
         <CompanyWebsite register={register} />
       </div>
-
       <JobFormLine />
-
       <WorkPlace register={register} errors={errors} />
-
       <JobFormLine />
-
       <JobCategory register={register} errors={errors} watch={watch} setValue={setValue} />
-
       <JobFormLine />
-
       <div className='my-[30px]'>
         <EmploymentType register={register} errors={errors} />
       </div>
@@ -83,9 +83,8 @@ const WriteRecruitmentPostingForm = ({ defaultValues, onSubmit }) => {
         <Experience register={register} errors={errors} />
       </div>
       <JobFormLine />
-
       <div className='my-[30px]'>
-        <PostContent register={register} control={control} errors={errors} />
+        <PostContent control={control} errors={errors} />
       </div>
     </form>
   )
