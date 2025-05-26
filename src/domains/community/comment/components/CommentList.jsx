@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useCommentStore from '../store/useCommentStore'
 import Spinner from '../../../../components/web/Spinner'
 import ToastService from '../../../../utils/toastService'
+import useBestStore from '../../../../store/main/useBestStore'
 
 const CommentList = ({ boardId }) => {
   const comments = useCommentStore((state) => state.comments)
@@ -11,12 +12,14 @@ const CommentList = ({ boardId }) => {
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
   const [deletingId, setDeletingId] = useState(null)
+  const { fetchFreeBest } = useBestStore() //메인 자유베스트 최신화
 
   const handleDelete = async (boardId, commentId) => {
     try {
       setDeletingId(commentId)
       await deleteComment(boardId, commentId)
       ToastService.success('댓글이 성공적으로 삭제되었습니다.')
+      fetchFreeBest(true) //메인 자유베스트 최신화
     } catch (err) {
       ToastService.error('댓글 삭제 중 오류 발생')
       console.error(err)
@@ -55,11 +58,11 @@ const CommentList = ({ boardId }) => {
   }
 
   if (!comments || comments.length === 0) {
-    return <p className='text-gray-500 mt-4 mb-4'>아직 작성된 댓글이 없습니다.</p>
+    return <p className='mt-4 mb-4 text-gray-500'>아직 작성된 댓글이 없습니다.</p>
   }
 
   return (
-    <div className='w-full mt-4 border border-dark-gray rounded-md overflow-hidden'>
+    <div className='w-full mt-4 overflow-hidden border rounded-md border-dark-gray'>
       {comments.map((comment, index) => {
         let nicknameColor = 'text-dark-gray'
         if (comment.isWriter) {
@@ -70,13 +73,13 @@ const CommentList = ({ boardId }) => {
         return (
           <div key={comment.commentId}>
             <div className='px-4 py-3'>
-              <div className='flex justify-between items-center mb-1'>
+              <div className='flex items-center justify-between mb-1'>
                 <span className={`font-semibold ${nicknameColor}`}>{comment.nickname}</span>
               </div>
               {editingCommentId === comment.commentId ? (
                 <div className='flex items-center gap-2'>
                   <input
-                    className='border border-gray-300 rounded px-2 py-1 flex-1'
+                    className='flex-1 px-2 py-1 border border-gray-300 rounded'
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
                     maxLength={200}
@@ -98,7 +101,7 @@ const CommentList = ({ boardId }) => {
                   </button>
                 </div>
               ) : (
-                <p className='text-gray-700 whitespace-pre-wrap flex justify-between items-center mb-1'>
+                <p className='flex items-center justify-between mb-1 text-gray-700 whitespace-pre-wrap'>
                   {comment.text}
                 </p>
               )}
@@ -127,7 +130,7 @@ const CommentList = ({ boardId }) => {
                 )}
               </div>
             </div>
-            {index !== comments.length - 1 && <hr className='border-t border-light-gray mx-4' />}
+            {index !== comments.length - 1 && <hr className='mx-4 border-t border-light-gray' />}
           </div>
         )
       })}

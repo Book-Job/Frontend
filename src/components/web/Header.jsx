@@ -3,17 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useAuthStore from '../../store/login/useAuthStore'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 
-const Header = ({ onClick }) => {
+const Header = () => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuthStore()
-  const [selectedOption, setSelectedOption] = useState('default')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
   // 드롭다운 옵션
   const options = [
-    ...(isAuthenticated && user
-      ? [{ value: 'default', label: `${user.nickname}님`, disabled: true }]
-      : []),
     ...(isAuthenticated
       ? [
           { value: 'mypage', label: '마이페이지' },
@@ -27,7 +30,7 @@ const Header = ({ onClick }) => {
 
   // 드롭다운 선택 핸들러
   const handleOptionChange = (value) => {
-    setSelectedOption(value)
+    setIsDropdownOpen(false)
     if (value === 'login') {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
     } else if (value === 'join') {
@@ -37,8 +40,19 @@ const Header = ({ onClick }) => {
     } else if (value === 'logout') {
       logout()
     }
-    setSelectedOption('default')
   }
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
   const navButtons = [
     { label: '자유게시판', nav: `${ROUTER_PATHS.COMMUNITY}` },
     { label: '구인/구직', nav: `${ROUTER_PATHS.JOB_MAIN}` },
@@ -64,23 +78,36 @@ const Header = ({ onClick }) => {
       </div>
       <div className='flex justify-end'>
         {isAuthenticated && user ? (
-          <button
-            onClick={onClick}
-            className='inline-flex bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full items-center md:px-5 sm:px-3'
-          >
-            <img src={babyChick} alt='babyChick' className='w-6 h-6 md:w-7 md:h-7' />
-            <select
-              value={selectedOption}
-              onChange={(e) => handleOptionChange(e.target.value)}
-              className='font-bold inline-flex bg-[#F4F6FA] items-center rounded-full h-[44px] md:h-[52px] px-2 md:px-3 outline-none'
+          <div className='relative' ref={dropdownRef}>
+            <button
+              onClick={toggleDropdown}
+              className='flex items-center bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full px-6 font-bold'
             >
-              {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </button>
+              <img src={babyChick} alt='babyChick' className='w-6 h-6 mr-3 md:w-7 md:h-7' />
+              <span>{user.nickname}님</span>
+              <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-3' />
+            </button>
+            {isDropdownOpen && (
+              <ul className='absolute top-14 right-4 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+                {options.map((option) => (
+                  <li
+                    key={option.value}
+                    onClick={() => !option.disabled && handleOptionChange(option.value)}
+                    className='px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200'
+                  >
+                    {option.value === 'default' ? (
+                      <div className='flex items-center'>
+                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
+                        {option.label}
+                      </div>
+                    ) : (
+                      option.label
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         ) : (
           <span className='flex gap-8 text-[15px]'>
             <button

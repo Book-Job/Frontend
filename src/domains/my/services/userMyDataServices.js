@@ -1,13 +1,11 @@
 import { authApi, publicApi } from '../../../services/api/Axios'
 
 //마이 데이터 불러오기
-export const getMyData = async (token) => {
+export const getMyData = async () => {
   try {
     const response = await authApi.get('/members/mypage', {
-      // params: { loginId: nowUserID },
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })

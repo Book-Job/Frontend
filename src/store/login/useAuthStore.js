@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { postLoginData } from './../../domains/login/services/useLoginServices'
+import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
 
 const parseJwt = (token) => {
   try {
@@ -79,11 +79,12 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLoginData(loginData)
       if (response.data && response.data.message === 'success') {
+        console.log('response22:', response.data.data.nickname)
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
           set({
-            user: { sub: loginData.userID },
+            user: { nickname: response.data.data.nickname },
             isAuthenticated: true,
           })
         } else {
@@ -98,11 +99,32 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  logout: () => {
+  updateNickname: (nickname, newAccessToken = null) => {
+    if (newAccessToken) {
+      localStorage.setItem('accessToken', newAccessToken)
+    }
+    set((state) => ({
+      user: { ...state.user, nickname },
+      accessToken: newAccessToken || state.accessToken,
+    }))
+  },
+
+  logout: async () => {
     localStorage.removeItem('accessToken')
-    sessionStorage.removeItem('resetToken');
+    sessionStorage.removeItem('resetToken')
     set({ user: null, isAuthenticated: false, accessToken: null })
     window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // try {
+    //   const response = await deleteLogout()
+    //   response.data && response.data.message === 'success'
+    //   localStorage.removeItem('accessToken')
+    //   sessionStorage.removeItem('resetToken')
+    //   set({ user: null, isAuthenticated: false, accessToken: null })
+    //   window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // } catch (error) {
+    //   console.error('로그아웃 실패:', error)
+    //   throw error
+    // }
   },
 }))
 

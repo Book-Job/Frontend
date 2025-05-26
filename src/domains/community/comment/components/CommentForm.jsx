@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import { postComment } from '../../service/commentService'
 import ToastService from '../../../../utils/toastService'
+import useBestStore from '../../../../store/main/useBestStore'
 
 const CommentForm = ({ boardId, onCommentAdded }) => {
   const { user } = useAuthStore()
   const [content, setContent] = useState('')
   const [nickname, setNickname] = useState('')
-
+  const { fetchFreeBest } = useBestStore() //메인 자유베스트 최신화
   useEffect(() => {
     if (user?.nickname) {
       setNickname(user.nickname)
@@ -27,6 +28,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
     try {
       await postComment(boardId, { content, nickname })
       ToastService.success('댓글이 등록되었습니다.')
+      fetchFreeBest(true) //메인 자유베스트 최신화
       setContent('')
       setNickname(user?.nickname || '')
       if (onCommentAdded) onCommentAdded()
@@ -39,7 +41,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col sm:flex-row gap-2 sm:gap-3 w-full mt-4 mb-4'
+      className='flex flex-col w-full gap-2 mt-4 mb-4 sm:flex-row sm:gap-3'
     >
       <input
         value={nickname}
