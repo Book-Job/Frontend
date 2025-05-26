@@ -75,7 +75,6 @@ const ChangePwPage = () => {
     }
   }
 
-
   return (
     <div>
       <PageTitle title={'비밀번호 변경'} />
