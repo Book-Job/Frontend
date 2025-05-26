@@ -32,20 +32,14 @@ export const deletePost = async (id) => {
 }
 
 //작성한 글 수정
-export const editPost = async (id, text) => {
+export const editPost = async (id, data) => {
   try {
-    const response = await authApi.patch(
-      `boards/${id}`,
-      {
-        text,
+    const response = await authApi.patch(`boards/${id}`, data, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    })
     return response.data
   } catch (error) {
     console.error('게시글 수정 실패:', error)

@@ -16,6 +16,8 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import RelatedJobSearchPosts from '../components/RelatedJobSearchPosts'
 import useScrapStore from '../../../scrap/store/useScrapStore'
 import ToastService from '../../../../../utils/toastService'
+import DOMPurify from 'dompurify'
+
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
   const { id } = useParams()
@@ -118,9 +120,10 @@ const JobSeekDetailPage = () => {
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-[#E36397]' />
       </div>
-      <div className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'>
-        {data.text}
-      </div>
+      <div
+        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
+      />
       <LastFormLine />
       <h2 className='font-bold text-lg sm:text-xl mt-7 flex self-start'>관련 글</h2>
       <RelatedJobSearchPosts currentId={id} />
