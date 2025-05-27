@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SearchBar from '../../../../components/web/SearchBar'
 import JobDropDown from '../components/JobDropDown'
@@ -21,6 +21,9 @@ const JobMainPage = () => {
 
   const [recruitmentOrder, setRecruitmentOrder] = useState('latest')
   const [seekingOrder, setSeekingOrder] = useState('latest')
+
+  const recruitmentFetcher = useCallback(getAllRecruitmentPosts, [])
+  const seekingFetcher = useCallback(getJobPosts, [])
 
   const {
     searchResults: jobSeekingResults,
@@ -122,7 +125,7 @@ const JobMainPage = () => {
 
         {!hasSearched && (
           <JobInfiniteScroll
-            fetcher={isRecruitment ? getAllRecruitmentPosts : getJobPosts}
+            fetcher={isRecruitment ? recruitmentFetcher : seekingFetcher}
             dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
             postType={isRecruitment ? 'recruitment' : 'seeking'}
             order={currentOrder}

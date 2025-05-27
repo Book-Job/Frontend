@@ -3,25 +3,13 @@ import InfiniteScrollList from '../../../../components/common/InfiniteScrollList
 import JobPostList from '../../main/components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
 import { useNavigate } from 'react-router-dom'
+
 const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, loadingComponent }) => {
   const [posts, setPosts] = useState([])
   const [lastId, setLastId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    setPosts([])
-    setLastId(null)
-    setHasMore(true)
-    setLoading(false)
-  }, [order, postType])
-
-  useEffect(() => {
-    if (lastId === null && hasMore && !loading) {
-      loadPosts()
-    }
-  }, [fetcher, lastId, order, dataKey, hasMore, loading])
 
   const loadPosts = useCallback(async () => {
     if (loading || !hasMore) return
@@ -44,6 +32,20 @@ const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, load
       setLoading(false)
     }
   }, [fetcher, lastId, order, dataKey, hasMore, loading])
+
+  useEffect(() => {
+    setPosts([])
+    setLastId(null)
+    setHasMore(true)
+    setLoading(false)
+  }, [order, postType])
+
+  useEffect(() => {
+    if (lastId === null && hasMore && !loading) {
+      loadPosts()
+    }
+  }, [loadPosts])
+
   return (
     <InfiniteScrollList onIntersect={loadPosts} disabled={!hasMore || loading}>
       {renderList ? (
@@ -59,6 +61,12 @@ const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, load
             <Spinner size={32} color='main-pink' />
           </div>
         ))}
+
+      {!hasMore && posts.length > 0 && (
+        <div className='flex justify-center items-center py-8 text-gray-400 text-sm'>
+          더 이상 불러올 게시물이 없습니다.
+        </div>
+      )}
     </InfiniteScrollList>
   )
 }
