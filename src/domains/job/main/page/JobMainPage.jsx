@@ -54,7 +54,6 @@ const JobMainPage = () => {
         setRecruitmentOrder(value)
       }
     : (value) => {
-        console.log('setSeekingOrder 호출됨:', value)
         setSeekingOrder(value)
       }
 
@@ -104,7 +103,6 @@ const JobMainPage = () => {
             <JobPostSortDropDown
               className='text-xs sm:text-sm md:text-[15px] font-semibold'
               onSortChange={(value) => {
-                console.log('JobPostSortDropDown 선택된 정렬:', value)
                 setOrder(value)
               }}
               options={sortOptions}

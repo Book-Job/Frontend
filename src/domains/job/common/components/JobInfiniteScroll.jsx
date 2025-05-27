@@ -26,7 +26,8 @@ const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, load
       })
       setLastId(newLastId)
       setHasMore(newPosts.length > 0)
-    } catch (err) {
+    } catch (error) {
+      console.error('게시물 로딩 중 오류 발생:', error)
       setHasMore(false)
     } finally {
       setLoading(false)
