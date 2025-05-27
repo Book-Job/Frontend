@@ -52,11 +52,11 @@ const PostList = () => {
         await (isJobBoard ? fetchJobBoard(token, true) : fetchFreeBoard(token, true))
       } else {
         console.log(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 오류:`, response)
-        alert('삭제에 실패했습니다.')
+        ToastService.info('삭제에 실패했습니다.')
       }
     } catch (error) {
       console.error(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 오류:`, error)
-      alert('삭제 중 오류가 발생했습니다.')
+      ToastService.error('삭제 중 오류가 발생했습니다.')
     } finally {
       useMyBoardStore.setState({ [isJobBoard ? 'isJobLoading' : 'isFreeLoading']: false })
     }
@@ -76,7 +76,7 @@ const PostList = () => {
   // 다중 삭제
   const handleDeleteSelected = () => {
     if (checkedItems.length === 0) {
-      alert('삭제할 항목을 선택하세요.')
+      ToastService.info('삭제할 항목을 선택하세요.')
       return
     }
     if (window.confirm(`${checkedItems.length}개의 항목을 삭제하시겠습니까?`)) {

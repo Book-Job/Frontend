@@ -36,52 +36,56 @@ const FindPwCheckIDPage = () => {
   const emailValue = watch('userEmail')
   // 이메일 유효성 검사
   useEffect(() => {
+    if (findPWMaskEmail === '') {
+      ToastService.info('잘못된 접근입니다.')
+      navigate(ROUTER_PATHS.FIND_PW)
+    }
     const validateEmail = async () => {
       const isValid = await trigger('userEmail')
       setIsEmailValid(isValid)
-      console.log('Email Valid:', isValid, 'Email Value:', emailValue)
     }
     if (emailValue) {
       validateEmail()
     } else {
       setIsEmailValid(false)
     }
-  }, [emailValue, trigger])
+  }, [emailValue, trigger, navigate, findPWMaskEmail])
 
   // 임시 비밀번호 전송
   const handleEmailAuth = async () => {
     if (isCheckingEmail) {
-      ToastService.info('잠시 기다려주세요. 요청이 진행 중입니다.')
       return
     }
     const isValid = await trigger('userEmail')
-    if (isValid) {
-      const email = getValues('userEmail')
-      setUserEmail(email)
-      console.log('이메일 인증 로직 실행:', email)
+    if (!isValid) {
+      return
+    }
 
-      try {
-        const response = await postFindPWEmail(email)
-        if (response.data && response.data.message === 'success') {
-          setEmailCodeMessage('임시 비밀번호가 전송되었습니다.')
-          setValidationStatusTemPW('pending')
-          setStartTimer(true)
-          ToastService.success('임시 비밀번호가 전송되었습니다. 이메일을 확인하세요.')
-        } else {
-          setEmailCheckMessage(response.data?.message || '이메일이 일치하지 않습니다.')
-          setValidationStatusTemPW('error')
-          ToastService.error(response.data?.message || '이메일이 일치하지 않습니다.')
-          setIsCheckingEmail(false)
-        }
-      } catch (error) {
-        console.error('임시 비밀번호 전송 중 오류:', error)
-        setEmailCheckMessage(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
+    setIsCheckingEmail(true)
+    const email = getValues('userEmail')
+    setUserEmail(email)
+
+    try {
+      const response = await postFindPWEmail(email)
+      if (response.data && response.data.message === 'success') {
+        setEmailCodeMessage('임시 비밀번호가 전송되었습니다.')
+        setValidationStatusTemPW('pending')
+        setStartTimer(true)
+        ToastService.success('임시 비밀번호가 전송되었습니다. 이메일을 확인하세요.')
+      } else {
+        setEmailCheckMessage(response.data?.message || '이메일이 일치하지 않습니다.')
         setValidationStatusTemPW('error')
-        ToastService.error(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
-        setIsCheckingEmail(false)
-      } finally {
+        ToastService.error(response.data?.message || '이메일이 일치하지 않습니다.')
         setIsCheckingEmail(false)
       }
+    } catch (error) {
+      console.error('임시 비밀번호 전송 중 오류:', error)
+      setEmailCheckMessage(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
+      setValidationStatusTemPW('error')
+      ToastService.error(error?.message || '임시 비밀번호 전송 중 오류가 발생했습니다.')
+      setIsCheckingEmail(false)
+    } finally {
+      setIsCheckingEmail(false)
     }
   }
   // OTPInput에서 받은 코드 처리
@@ -94,7 +98,6 @@ const FindPwCheckIDPage = () => {
         setValidationStatusTemPW('success')
         setStartTimer(false)
         ToastService.success('이메일 인증이 완료되었습니다.')
-        console.log('resetToken확인:', response.data.data.resetToken)
         const { resetToken } = response.data.data || {}
         if (!resetToken) {
           ToastService.error('서버로부터 resetToken을 받지 못했습니다. 다시 시도해 주세요.')
@@ -118,10 +121,10 @@ const FindPwCheckIDPage = () => {
   const buttonLabel = isCheckingEmail
     ? '전송 중...'
     : validationStatusTemPW === 'success'
-      ? 'PW 확인'
-      : '임시 PW 받기'
+      ? '비밀번호 발급 완료'
+      : '임시 비밀번호 받기'
 
-  const handleInputChange = (e) => {
+  const handleInputChange = () => {
     if (emailCheckMessage) setEmailCheckMessage('')
     if (emailCodeMessage) setEmailCodeMessage('')
     if (validationStatusTemPW) setValidationStatusTemPW(null)
@@ -129,7 +132,7 @@ const FindPwCheckIDPage = () => {
   }
 
   const onSubmit = () => {
-    console.log('비밀번호 변경 성공여부 :', validationStatusTemPW)
+    console.log('임시 비밀번호 확인 성공여부 :', validationStatusTemPW)
     if (validationStatusTemPW === 'success') {
       navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
     } else {
@@ -139,7 +142,6 @@ const FindPwCheckIDPage = () => {
 
   return (
     <div>
-      입력한 아이디 존재 확인
       <PageTitle title={'비밀번호 찾기'} subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'} />
       <div className='flex justify-center w-full'>
         <PageBox>
@@ -190,9 +192,9 @@ const FindPwCheckIDPage = () => {
                 <Button
                   type='button'
                   label={buttonLabel}
-                  size='small'
+                  size='semiMedium'
                   bgColor={isEmailValid && !isCheckingEmail ? 'main-pink' : 'light-gray'}
-                  disabled={!isEmailValid && isCheckingEmail}
+                  disabled={!isEmailValid || isCheckingEmail}
                   onClick={handleEmailAuth}
                 />
               </div>
