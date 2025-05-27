@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import SearchBar from '../../../../components/web/SearchBar'
 import JobDropDown from '../components/JobDropDown'
-import JobPostSortDropDown from '../components/JobPostSortDropDown'
-import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
+import JobPostSortDropDown from '../../common/components/JobPostSortDropDown'
 import JobPostList from '../components/JobPostList'
-import Spinner from '../../../../components/web/Spinner'
-import { useLocation, useNavigate } from 'react-router-dom'
+import JobInfiniteScroll from '../../common/components/JobInfiniteScroll'
+import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
 import { getPostCounts } from '../../common/utils/getPostCounts'
 import useScrapStore from '../../scrap/store/useScrapStore'
 import useJobSearch from '../../common/hook/useJobSearch'
+import { recruitmentSortOptions, seekingSortOptions } from '../../common/constants/sortOptions'
 
 const JobMainPage = () => {
   const location = useLocation()
+  const navigate = useNavigate()
+  const loadScraps = useScrapStore((state) => state.loadScraps)
+
   const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
   const [searchKeyword, setSearchKeyword] = useState('')
-  const [order, setOrder] = useState('latest')
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-  const counts = getPostCounts(posts)
-  const loadScraps = useScrapStore((state) => state.loadScraps)
+
+  const [recruitmentOrder, setRecruitmentOrder] = useState('latest')
+  const [seekingOrder, setSeekingOrder] = useState('latest')
 
   const {
     searchResults: jobSeekingResults,
@@ -38,6 +39,22 @@ const JobMainPage = () => {
   } = useJobSearch(getAllRecruitmentPosts, 'jobPostings')
 
   const isRecruitment = selectedJobTabs === 'job list'
+  const sortOptions = isRecruitment ? recruitmentSortOptions : seekingSortOptions
+
+  const currentOrder = useMemo(
+    () => (isRecruitment ? recruitmentOrder : seekingOrder),
+    [isRecruitment, recruitmentOrder, seekingOrder],
+  )
+
+  const setOrder = isRecruitment
+    ? (value) => {
+        setRecruitmentOrder(value)
+      }
+    : (value) => {
+        console.log('setSeekingOrder 호출됨:', value)
+        setSeekingOrder(value)
+      }
+
   const searchResults = isRecruitment ? recruitmentResults : jobSeekingResults
   const searchLoading = isRecruitment ? recruitmentLoading : jobSeekingLoading
   const hasSearched = isRecruitment ? recruitmentHasSearched : jobSeekingHasSearched
@@ -49,55 +66,20 @@ const JobMainPage = () => {
       try {
         resetSearch()
         await loadScraps()
-        await loadPosts()
       } catch (error) {
         console.error('데이터 로딩 실패', error)
       }
     })()
-  }, [selectedJobTabs, order])
+  }, [selectedJobTabs, currentOrder])
 
   useEffect(() => {
     if (location.state?.refresh) {
       loadScraps()
-      loadPosts()
       window.history.replaceState({}, document.title)
     }
   }, [location.state])
 
-  const loadPosts = async () => {
-    setLoading(true)
-    try {
-      let data = isRecruitment ? await getAllRecruitmentPosts(null, 'LATEST') : await getJobPosts()
-      const newPostsRaw = isRecruitment ? data?.jobPostings || [] : data?.jobSeekings || []
-      let sortedPosts = [...newPostsRaw]
-      if (order === 'latest') {
-        sortedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      } else if (order === 'oldest') {
-        sortedPosts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-      }
-      setPosts(
-        sortedPosts.map((post) => ({
-          ...post,
-          joboffer1: isRecruitment,
-          jobsearch1: !isRecruitment,
-        })),
-      )
-    } catch (error) {
-      console.error('게시물 로딩 실패', error)
-      setPosts([])
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-[300px]'>
-        <Spinner size={48} color='main-pink' />
-      </div>
-    )
-  }
-  const displayedPosts = hasSearched ? searchResults : posts
+  const counts = getPostCounts(searchResults)
 
   return (
     <>
@@ -111,28 +93,40 @@ const JobMainPage = () => {
       </div>
       <div className='px-4 md:px-[100px] mt-2 lg:px-[250px]'>
         <div className='flex items-center justify-between'>
-          <div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
+          {/*  div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
             전체: {counts.total}개 | 오늘: {counts.today}개
-          </div>
-          <div className='flex items-end'>
+          </div>*/}
+          <div className='flex items-end ml-auto gap-2'>
             <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
               className='text-xs sm:text-sm md:text-[15px] font-semibold'
-              onSortChange={setOrder}
+              onSortChange={(value) => {
+                console.log('JobPostSortDropDown 선택된 정렬:', value)
+                setOrder(value)
+              }}
+              options={sortOptions}
+              selected={currentOrder}
             />
           </div>
         </div>
-
-        {displayedPosts.length > 0 ? (
+        {hasSearched && searchResults.length > 0 && (
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
-            <JobPostList posts={displayedPosts} navigate={navigate} />
+            <JobPostList posts={searchResults} navigate={navigate} />
           </div>
-        ) : (
+        )}
+        {hasSearched && searchResults.length === 0 && (
           <div className='flex justify-center items-center min-h-[300px] w-full'>
-            <p className='text-gray-500 text-lg'>
-              {hasSearched ? '검색 결과가 없습니다.' : '게시물이 없습니다.'}
-            </p>
+            <p className='text-gray-500 text-lg'>검색 결과가 없습니다.</p>
           </div>
+        )}
+
+        {!hasSearched && (
+          <JobInfiniteScroll
+            fetcher={isRecruitment ? getAllRecruitmentPosts : getJobPosts}
+            dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
+            postType={isRecruitment ? 'recruitment' : 'seeking'}
+            order={currentOrder}
+          />
         )}
       </div>
     </>
