@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import SortDropdown from '../../../../components/common/SortDropdown'
+import SortDropdown from './SortDropdown'
 
-const JobPostSortDropDown = ({ className = '', onSortChange }) => {
+const PostSortDropDown = ({ className = '', onSortChange }) => {
   const [selectedSort, setSelectedSort] = useState('latest')
 
   const handleSortChange = (value) => {
@@ -24,4 +24,4 @@ const JobPostSortDropDown = ({ className = '', onSortChange }) => {
   )
 }
 
-export default JobPostSortDropDown
+export default PostSortDropDown
