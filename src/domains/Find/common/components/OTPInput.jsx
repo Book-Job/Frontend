@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import ToastService from '../../../../utils/toastService'
 
 const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   const [code, setCode] = useState('')
@@ -38,12 +39,12 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
 
   const handleVerify = () => {
     if (isExpired) {
-      alert('시간이 만료되었습니다. 인증번호를 다시 요청해주세요.')
+      ToastService.info('시간이 만료되었습니다. 인증번호를 다시 요청해주세요.')
       return
     }
 
     if (!code) {
-      alert('인증번호를 입력해주세요.')
+      ToastService.info('인증번호를 입력해주세요.')
       return
     }
 

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
+import ToastService from '../../utils/toastService'
 
 const parseJwt = (token) => {
   try {
@@ -58,20 +59,25 @@ const useAuthStore = create((set) => ({
   requireResetToken: async (navigate) => {
     const state = useAuthStore.getState()
     const resetToken = state.resetToken
-    if (!resetToken) {
-      alert('비밀번호 확인이 필요합니다.')
+    const accessToken = localStorage.getItem('accessToken')
+    if (!resetToken && !accessToken) {
+      navigate(ROUTER_PATHS.LOGIN_MAIN)
+      return false
+    } else if (!resetToken && accessToken) {
       navigate(ROUTER_PATHS.MY_EDIT_PW)
       return false
     }
+    return true
   },
 
   //로그인을 해야지 접근 가능하게 하는 로직
   requireLogin: (navigate) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
-      alert('로그인 후 이용 가능합니다.')
       navigate(ROUTER_PATHS.LOGIN_MAIN)
+      return false
     }
+    return true
   },
 
   // 로그인 액션
