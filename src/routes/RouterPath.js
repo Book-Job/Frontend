@@ -1,6 +1,8 @@
 const ROUTER_PATHS = {
   MAIN_PAGE: '/',
-  LOGIN_MAIN: '/login-main',
+  LOGIN_MAIN: '/login-main', //메인 로그인
+  LOGIN_KAKAO: '/login-kakao',
+  LOGIN_NAVER: '/login-naver',
   JOIN: '/join',
   MEMBER_DATA_ENTRY: '/member-data-entry',
   JOB_MAIN: '/job',
@@ -23,8 +25,8 @@ const ROUTER_PATHS = {
   MY_EDIT_PROFILE: '/my-page/edit-profile', // 프로필 수정 페이지지
   MY_EDIT_PW: '/my-page/edit-password', //현재 사용중인 비밀번호 확인 페이지
   MY_PW_MIS: '/my-page/password-mis', // 비밀번호 오류 확인 페이지지
-  MY_SCRAP: '/my-page/my-scrap',
-  MY_POST: '/my-page/my-post',
+  MY_SCRAP: '/my-page/my-scrap', //내가 스크랩한 목록
+  MY_POST: '/my-page/my-post', //내가 작성한 글 목록록
   MY_DRAFTS: '/my-page/my-drafts',
   ERROR: '/error',
 }

@@ -35,3 +35,20 @@ export const deleteLogout = async () => {
     throw new Error(error.response.data.message)
   }
 }
+// 카카오 로그인
+export const postKakaoLogin = async (code) => {
+  try {
+    const response = await publicApi.post('/oauth2/authorization/kakao', {
+      params: { code: code },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    console.log('카카오 로그인response:', response)
+    return response
+  } catch (error) {
+    console.error('카카오 로그인 확인 중 오류:', error)
+    throw new Error(error.response.data.message)
+  }
+}

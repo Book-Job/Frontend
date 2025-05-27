@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
-import ToastService from '../../utils/toastService'
 
 const parseJwt = (token) => {
   try {

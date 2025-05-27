@@ -1,5 +1,6 @@
-import navericon from '../../../../assets/icons/common/naverIcon.svg'
-import kakaoicon from '../../../../assets/icons/common/kakaoIcon.svg'
+import KakaoLogin from './KakaoLogin'
+import NaverLogin from './NaverLogin'
+
 const SnsLogin = () => {
   return (
     <div className='mt-11'>
@@ -9,12 +10,8 @@ const SnsLogin = () => {
         <hr className='w-1/3 border-1 border-dark-gray' />
       </div>
       <div className='flex justify-center gap-16 mt-9'>
-        <button className='w-14 h-14 sm:w-20 sm:h-20'>
-          <img src={navericon} />
-        </button>
-        <button className='w-14 h-14 sm:w-20 sm:h-20'>
-          <img src={kakaoicon} />
-        </button>
+        <NaverLogin />
+        <KakaoLogin />
       </div>
     </div>
   )
