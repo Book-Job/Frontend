@@ -38,13 +38,23 @@ export const deleteLogout = async () => {
 // 카카오 로그인
 export const postKakaoLogin = async (code) => {
   try {
-    const response = await publicApi.post('/oauth2/authorization/kakao', {
-      params: { code: code },
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+    const response = await publicApi.post(
+      '/oauth2/authorization/kakao',
+      //    {
+      //   params: { code: code },
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      // }
+      { code: code },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       },
-    })
+    )
     console.log('카카오 로그인response:', response)
     return response
   } catch (error) {
