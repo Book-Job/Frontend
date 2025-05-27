@@ -1,11 +1,14 @@
 import { publicApi, authApi } from '../../../services/api/axios'
 
 // 전체 글 조회 & 검색
-export const getAllPosts = async (keyword = '') => {
+export const getAllPosts = async ({ last = null, size = 6 } = {}) => {
   try {
-    const response = await publicApi.get('/boards', {
-      params: { keyword },
-    })
+    const params = { size }
+    if (last !== null) {
+      params.last = last
+    }
+
+    const response = await publicApi.get('/boards', { params })
     return response.data.data
   } catch (error) {
     console.error('게시글 조회 실패', error)
