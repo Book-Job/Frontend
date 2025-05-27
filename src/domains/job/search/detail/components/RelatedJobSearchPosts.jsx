@@ -12,6 +12,7 @@ const RelatedJobSearchPosts = ({ currentId }) => {
     return {
       ...data,
       jobSeekings: filtered,
+      lastId: filtered.length ? filtered[filtered.length - 1].id : lastId,
     }
   }
 

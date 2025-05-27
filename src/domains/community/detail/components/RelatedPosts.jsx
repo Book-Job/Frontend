@@ -5,6 +5,7 @@ import FreeBoard from '../../../../components/web/FreeBoard'
 import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import Spinner from '../../../../components/web/Spinner'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+
 const RelatedPosts = ({ currentId }) => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
@@ -39,8 +40,13 @@ const RelatedPosts = ({ currentId }) => {
   useEffect(() => {
     setPosts([])
     setHasMore(true)
-    loadMore()
   }, [currentId])
+
+  useEffect(() => {
+    if (posts.length === 0 && hasMore) {
+      loadMore()
+    }
+  }, [posts.length, hasMore, loadMore])
 
   return (
     <InfiniteScrollList onIntersect={loadMore} disabled={!hasMore || loading}>
