@@ -54,10 +54,12 @@ const routes = [
     path: ROUTER_PATHS.WRITE_COMMUNITY_POST,
     element: <WriteCommunityPostPage />,
     label: '자유게시판 글 작성',
+    isProtected: true,
   },
   {
     path: '/community/post/:id',
     element: <DetailCommunityPage />,
+    isProtected: true,
   },
   {
     path: ROUTER_PATHS.USER_POST,
@@ -73,31 +75,37 @@ const routes = [
     path: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
     element: <WriteRecruitmentPostPage />,
     label: '구인 글 작성',
+    isProtected: true,
   },
   {
     path: '/job/recruitment/post/:id',
     element: <RecruitmentDetailPage />,
     label: '구인 상세 글',
+    isProtected: true,
   },
   {
     path: '/job/recruitment/edit/:id',
     element: <EditRecruitmentPost />,
     label: '구인 글 수정',
+    isProtected: true,
   },
   {
     path: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     element: <WriteJobSearchPostPage />,
     label: '구직 글 작성',
+    isProtected: true,
   },
   {
     path: '/job/job-seek/edit/:id',
     element: <EditJobSeekPostPage />,
     label: '구직 글 수정',
+    isProtected: true,
   },
   {
     path: '/job/job-seek/post/:id',
     element: <JobSeekDetailPage />,
     label: '구직 상세 글',
+    isProtected: true,
   },
   {
     path: ROUTER_PATHS.FIND_ID,
@@ -143,6 +151,7 @@ const routes = [
     path: ROUTER_PATHS.MY_PAGE,
     element: <MyPage />,
     noMargin: true,
+    isProtected: true,
   },
   {
     path: ROUTER_PATHS.MY_EDIT_PROFILE,
