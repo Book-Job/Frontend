@@ -33,12 +33,9 @@ const LoginMain = () => {
         } catch (error) {
           console.error('카카오 로그인 에러:', error)
           ToastService.error('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.')
+          navigate(ROUTER_PATHS.LOGIN_MAIN)
         }
-        if (response) {
-          navigate(ROUTER_PATHS.MAIN_PAGE) // 로그인 성공 시 메인 페이지로
-        } else {
-          navigate(ROUTER_PATHS.LOGIN_MAIN, { replace: true }) // URL 정리
-        }
+        navigate(ROUTER_PATHS.MAIN_PAGE)
       }
       handleAuth()
     }
