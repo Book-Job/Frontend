@@ -2,17 +2,12 @@ import { useEffect, useState } from 'react'
 import MyActivity from '../mypage/components/MyActivity'
 import MyData from '../mypage/components/MyData'
 import { getMyData } from '../services/userMyDataServices'
-import useAuthStore from '../../../store/login/useAuthStore'
-import { useNavigate } from 'react-router-dom'
 import Spinner from '../../../components/web/Spinner'
 
 const MyPage = () => {
   const [userData, setUserData] = useState()
-  const { requireLogin, isAuthenticated } = useAuthStore()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const navigate = useNavigate()
-
 
   const handleMyData = async () => {
     try {
@@ -33,11 +28,8 @@ const MyPage = () => {
   }
 
   useEffect(() => {
-    requireLogin(navigate);
-    if (isAuthenticated) {
-      handleMyData();
-    }
-  }, [requireLogin, navigate, isAuthenticated]);
+    handleMyData()
+  }, [])
 
   return (
     <div>

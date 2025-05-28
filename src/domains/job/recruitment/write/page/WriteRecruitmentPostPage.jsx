@@ -3,22 +3,10 @@ import LastFormLine from '../../../common/components/LastFormLine'
 import Button from '../../../../../components/web/Button'
 import PinkButton from '../../../../../components/web/PinkButton'
 import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
-import useAuthStore from '../../../../../store/login/useAuthStore'
-import { useNavigate } from 'react-router-dom'
 import { createRecruitmentPost } from '../../../common/service/postService'
-import { useEffect } from 'react'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 const WriteRecruitmentPostPage = () => {
-  const navigate = useNavigate()
-  const { requireLogin, isAuthenticated } = useAuthStore()
   const handleSubmitForm = usePostSubmit(createRecruitmentPost)
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      requireLogin(navigate)
-    }
-  }, [requireLogin, navigate, isAuthenticated])
-
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
