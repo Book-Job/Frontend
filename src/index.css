@@ -25,16 +25,10 @@
 
   html,
   body {
-<<<<<<< HEAD
-    @apply w-full h-full min-h-screen p-0 m-0 overflow-auto;
-  }
-
-=======
     @apply w-full p-0 m-0;
     overflow: visible;
   }
->>>>>>> a002db00f5b234dc767012ea5df884703d65535c
   #root {
-    @apply mx-auto h-full w-full text-center;
+    @apply w-full h-full mx-auto text-center;
   }
 }

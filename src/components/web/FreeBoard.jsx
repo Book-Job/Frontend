@@ -35,10 +35,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
         border border-[#D6D6D6]
         rounded-[10px]
         px-4 sm:px-5 pt-5 pb-4
-<<<<<<< HEAD
-=======
         mb-4
->>>>>>> a002db00f5b234dc767012ea5df884703d65535c
         justify-between cursor-pointer
         bg-white
         shadow-sm
@@ -47,17 +44,17 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
       '
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
-          <div className='text-base sm:text-lg font-bold truncate'>{title}</div>
+          <div className='text-base font-bold truncate sm:text-lg'>{title}</div>
           <div className='mt-2 text-sm sm:text-base line-clamp-2'>{content}</div>
         </div>
 
-        <div className='text-dark-gray text-xs sm:text-sm mt-4'>
+        <div className='mt-4 text-xs text-dark-gray sm:text-sm'>
           <div className='flex justify-between font-bold'>
             <ShareViews label={commentCount} textColor='text-dark-gray' icon={comment} />
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
-                className='cursor-pointer hover:underline z-10 text-xs sm:text-sm font-medium'
+                className='z-10 text-xs font-medium cursor-pointer hover:underline sm:text-sm'
               >
                 {name}
               </span>

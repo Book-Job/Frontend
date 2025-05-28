@@ -1,10 +1,10 @@
 import LoginForm from './../common/components/LoginForm'
 import SnsLogin from './../common/components/SnsLogin'
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { postKakaoLogin } from '../services/useLoginServices'
 import ROUTER_PATHS from '../../../routes/RouterPath'
+import ToastService from '../../../utils/toastService'
 const LoginMain = () => {
   const navigate = useNavigate()
 
@@ -17,21 +17,32 @@ const LoginMain = () => {
         try {
           const response = await postKakaoLogin(code)
           if (response) {
-            console.log('카카오 로그인 성공공:', response)
-            localStorage.setItem('token', response.data.token)
+            console.log('카카오 로그인 성공:', response)
+            // localStorage.setItem('token', response.data.token)
+            // 토큰 유효성 검증
+            if (response.data?.token && typeof response.data.token === 'string') {
+              localStorage.setItem('token', response.data.token)
+              // 사용자 정보도 함께 저장 (필요한 경우)
+              if (response.data.user) {
+                localStorage.setItem('user', JSON.stringify(response.data.user))
+              }
+            } else {
+              throw new Error('유효하지 않은 토큰입니다.')
+            }
           }
         } catch (error) {
           console.error('카카오 로그인 에러:', error)
+          ToastService.error('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.')
         }
-        navigate(ROUTER_PATHS.LOGIN_MAIN)
+        if (response) {
+          navigate(ROUTER_PATHS.MAIN_PAGE) // 로그인 성공 시 메인 페이지로
+        } else {
+          navigate(ROUTER_PATHS.LOGIN_MAIN, { replace: true }) // URL 정리
+        }
       }
       handleAuth()
     }
   }, [navigate])
-=======
-
-const LoginMain = () => {
->>>>>>> a002db00f5b234dc767012ea5df884703d65535c
   return (
     <div className='items-center h-full '>
       <LoginForm />
