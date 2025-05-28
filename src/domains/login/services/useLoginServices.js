@@ -35,6 +35,7 @@ export const deleteLogout = async () => {
     throw new Error(error.response.data.message)
   }
 }
+<<<<<<< HEAD
 // 카카오 로그인
 export const postKakaoLogin = async (code) => {
   try {
@@ -62,3 +63,5 @@ export const postKakaoLogin = async (code) => {
     throw new Error(error.response.data.message)
   }
 }
+=======
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c

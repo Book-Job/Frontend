@@ -1,5 +1,6 @@
 import LoginForm from './../common/components/LoginForm'
 import SnsLogin from './../common/components/SnsLogin'
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { postKakaoLogin } from '../services/useLoginServices'
@@ -27,6 +28,10 @@ const LoginMain = () => {
       handleAuth()
     }
   }, [navigate])
+=======
+
+const LoginMain = () => {
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c
   return (
     <div className='items-center h-full '>
       <LoginForm />

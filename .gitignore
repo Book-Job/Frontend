@@ -25,6 +25,10 @@ dev-dist
 *.sw?
 
 *storybook.log
+<<<<<<< HEAD
 #API KEY
 .env
 .env.local
+=======
+
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c

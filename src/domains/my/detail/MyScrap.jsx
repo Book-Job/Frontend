@@ -7,7 +7,11 @@ import getExperienceLabel from '../../job/common/utils/getExperienceLabel'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../../../store/login/useAuthStore'
 import Spinner from '../../../components/web/Spinner'
+<<<<<<< HEAD
 import JobPostSortDropDown from '../../job/main/components/JobPostSortDropDown'
+=======
+import PostSortDropDown from '../../../components/common/PostSortDropDown'
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c
 
 //현재 라우팅도 오류남.. 잡카테고리를 안 넘겨움 + 닉네임
 const MyScrap = () => {
@@ -59,7 +63,11 @@ const MyScrap = () => {
     <div>
       <PageTitle title={'스크랩'} />
       <div className='flex justify-end max-w-[932px] mx-auto mb-2'>
+<<<<<<< HEAD
         <JobPostSortDropDown onSortChange={setSort} />
+=======
+        <PostSortDropDown onSortChange={setSort} />
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c
       </div>
 
       <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center'>

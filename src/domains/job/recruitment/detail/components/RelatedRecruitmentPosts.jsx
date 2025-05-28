@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react'
+=======
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c
 import { useNavigate } from 'react-router-dom'
 import { getAllRecruitmentPosts } from '../../../../job/main/service/jobMainService'
 import JobPostList from '../../../main/components/JobPostList'
 import Spinner from '../../../../../components/web/Spinner'
+<<<<<<< HEAD
 
 const RelatedRecruitmentPosts = ({ currentId }) => {
   const [posts, setPosts] = useState([])
@@ -47,6 +51,43 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
       <JobPostList posts={posts} navigate={navigate} />
     </div>
+=======
+import JobInfiniteScroll from '../../../common/components/JobInfiniteScroll'
+
+const RelatedRecruitmentPosts = ({ currentId }) => {
+  const navigate = useNavigate()
+
+  const fetchRelatedPosts = async (lastId) => {
+    const data = await getAllRecruitmentPosts(lastId, 'LATEST')
+    const filtered = (data?.jobPostings || []).filter((p) => String(p.id) !== String(currentId))
+    return {
+      ...data,
+      jobPostings: filtered,
+    }
+  }
+
+  return (
+    <JobInfiniteScroll
+      fetcher={fetchRelatedPosts}
+      dataKey='jobPostings'
+      postType='recruitment'
+      order='latest'
+      renderList={(posts) =>
+        posts.length === 0 ? (
+          <p className='text-gray-400'>관련 채용 글이 없습니다.</p>
+        ) : (
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
+            <JobPostList posts={posts} navigate={navigate} />
+          </div>
+        )
+      }
+      loadingComponent={
+        <div className='flex justify-center items-center h-[300px]'>
+          <Spinner size={48} color='main-pink' />
+        </div>
+      }
+    />
+>>>>>>> a002db00f5b234dc767012ea5df884703d65535c
   )
 }
 
