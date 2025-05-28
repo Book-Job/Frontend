@@ -98,7 +98,7 @@ const JobMainPage = () => {
           {/*  div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
             전체: {counts.total}개 | 오늘: {counts.today}개
           </div>*/}
-          <div className='flex items-end ml-auto gap-2'>
+          <div className='flex items-end gap-2 ml-auto'>
             <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
               className='text-xs sm:text-sm md:text-[15px] font-semibold'
@@ -111,13 +111,13 @@ const JobMainPage = () => {
           </div>
         </div>
         {hasSearched && searchResults.length > 0 && (
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto'>
+          <div className='grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3'>
             <JobPostList posts={searchResults} navigate={navigate} />
           </div>
         )}
         {hasSearched && searchResults.length === 0 && (
           <div className='flex justify-center items-center min-h-[300px] w-full'>
-            <p className='text-gray-500 text-lg'>검색 결과가 없습니다.</p>
+            <p className='text-lg text-gray-500'>검색 결과가 없습니다.</p>
           </div>
         )}
 

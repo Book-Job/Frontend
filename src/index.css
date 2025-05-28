@@ -29,6 +29,6 @@
     overflow: visible;
   }
   #root {
-    @apply mx-auto h-full w-full text-center;
+    @apply w-full h-full mx-auto text-center;
   }
 }

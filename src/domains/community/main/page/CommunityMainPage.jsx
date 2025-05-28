@@ -39,7 +39,7 @@ const CommunityMainPage = () => {
               <Spinner size={48} color='main-pink' />
             </div>
           ) : hasSearched && displayedPosts.length === 0 ? (
-            <div className='text-center text-gray-500 text-lg my-10'>
+            <div className='my-10 text-lg text-center text-gray-500'>
               검색어와 일치하는 결과가 없습니다.
             </div>
           ) : (
@@ -91,7 +91,7 @@ const CommunityMainPage = () => {
               </InfiniteScrollList>
 
               {!hasMore && !loading && !hasSearched && (
-                <div className='text-center text-gray-500 my-6'>
+                <div className='my-6 text-center text-gray-500'>
                   더 이상 불러올 게시글이 없습니다.
                 </div>
               )}

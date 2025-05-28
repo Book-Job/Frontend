@@ -95,7 +95,7 @@ const MyScrap = () => {
         ))}
       </div>
 
-      <div className='block sm:hidden flex flex-wrap gap-4 mt-4 ml-4'>
+      <div className='flex flex-wrap block gap-4 mt-4 ml-4 sm:hidden'>
         {sortedPosts.map((post) => (
           <MobileWorkBoard
             key={post.bookMarkId || post.id}

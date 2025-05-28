@@ -26,7 +26,7 @@ const RelatedJobSearchPosts = ({ currentId }) => {
         posts.length === 0 ? (
           <div className='text-gray-400'>관련 구직 글이 없습니다.</div>
         ) : (
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'>
+          <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
             <JobPostList posts={posts} navigate={navigate} />
           </div>
         )
