@@ -55,7 +55,6 @@ const ScrollBtn = () => {
       >
         <img src={arrow} alt='위로 올라가는 버튼' className='w-[20px] h-[20px]' />
       </button>
-      ㄴ
       {showModal && <ChooseWriteForm onSelect={handleSelect} onClose={() => setShowModal(false)} />}
     </>
   )
