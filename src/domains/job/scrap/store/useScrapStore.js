@@ -31,10 +31,12 @@ const useScrapStore = create((set, get) => ({
           delete newScraps[postId]
           return { scraps: newScraps, loading: false }
         })
+        return false
       } else {
         await createScrap({ id: postId, type })
         await get().loadScraps()
         set({ loading: false })
+        return true
       }
     } catch (error) {
       set({ loading: false })

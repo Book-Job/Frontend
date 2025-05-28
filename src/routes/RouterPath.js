@@ -7,15 +7,15 @@ const ROUTER_PATHS = {
   MEMBER_DATA_ENTRY: '/member-data-entry',
   JOB_MAIN: '/job',
   COMMUNITY: '/community',
-  USER_POST: '/user-post', //특정 사용자가 작성한 글
-  WRITE_COMMUNITY_POST: '/community/post', //자유게시판 글 작성
-  COMMUNITY_POST_DETAIL: '/community/post/:id', //자유게시판 글 상세페이지
-  WRITE_RECRUITMENT_POST: '/job/recruitment/post', //구인 글 작성
-  WRITE_JOB_SEARCH_POST: '/job/job-search/post', //구직 글 작성
-  JOB_SEARCH_POST_EDIT: '/job/job-seek/edit/:id', //구직 글 수정
-  JOB_SEARCH_POST_DETAIL: '/job/job-seek/post/:id', //구직 글 상세 조회
-  RECRUITMENT_POST_DETAIL: '/job/recruitment/post/:id', //구인 글 상세 조회
-  RECRUITMENT_POST_EDIT: '/job/recruitment/edit/:id', //구인 글 수정
+  USER_POST: '/user-post',
+  WRITE_COMMUNITY_POST: '/community/post',
+  COMMUNITY_POST_DETAIL: '/community/post/:id',
+  WRITE_RECRUITMENT_POST: '/job/recruitment/post',
+  WRITE_JOB_SEARCH_POST: '/job/job-search/post',
+  JOB_SEARCH_POST_EDIT: '/job/job-seek/edit/:id',
+  JOB_SEARCH_POST_DETAIL: '/job/job-seek/post/:id',
+  RECRUITMENT_POST_DETAIL: '/job/recruitment/post/:id',
+  RECRUITMENT_POST_EDIT: '/job/recruitment/edit/:id',
   FIND_ID: '/find/id', // 아이디 찾기 페이지
   FIND_ID_COMPLETE_PAGE: '/find/id/complete-page',
   FIND_PW: '/find/pw', //비밀번호 찾기 페이지
