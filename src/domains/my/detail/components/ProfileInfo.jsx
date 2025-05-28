@@ -105,11 +105,11 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                 placeholder='새 닉네임을 입력하세요'
               />
             </div>
-            <div className='flex gap-2'>
+            <div className='flex'>
               <button
                 onClick={handleCheckNickname}
                 disabled={!nowNickname || isCheckingNickname}
-                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold hover:text-pink-600`}
+                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold px-2 rounded-[5px] hover:bg-main-pink/10 transition`}
               >
                 {isCheckingNickname ? (
                   <Spinner size={20} color='light-gray' />
@@ -122,14 +122,14 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
               <button
                 type='submit'
                 disabled={!isValid || nicknameCheckStatus !== 'success'}
-                className={`font-bold text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} hover:text-pink-600`}
+                className={`font-bold cursor-pointer text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} px-2 rounded-[5px] hover:bg-main-pink/10 transition`}
               >
                 저장
               </button>
               <button
                 type='button'
                 onClick={handleCancel}
-                className='font-bold text-dark-gray hover:text-pink-600'
+                className='font-bold text-dark-gray px-2 rounded-[5px] hover:bg-main-pink/10 transition'
               >
                 취소
               </button>
@@ -137,16 +137,16 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
           </form>
         ) : (
           <>
-            <span>{content}</span>
+            <span className='flex items-center'>{content}</span>
             {edit ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className='font-bold text-main-pink hover:text-pink-600'
+                className='font-bold text-main-pink px-2 rounded-[5px] hover:bg-main-pink/10 transition'
               >
                 {edit}
               </button>
             ) : (
-              <span className='font-bold text-main-pink'>{text || ''}</span>
+              <span className='px-2 font-bold cursor-default text-main-pink'>{text || ''}</span>
             )}
           </>
         )}

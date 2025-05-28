@@ -40,13 +40,13 @@ export const postKakaoLogin = async (code) => {
   try {
     const response = await publicApi.post(
       '/oauth2/authorization/kakao',
-      //    {
+      // {
       //   params: { code: code },
       //   headers: {
       //     Accept: 'application/json',
       //     'Content-Type': 'application/json',
       //   },
-      // }
+      // },
       { code: code },
       {
         headers: {
