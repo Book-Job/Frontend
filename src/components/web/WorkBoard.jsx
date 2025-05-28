@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -12,12 +13,13 @@ import TagIcon from './TagIcon'
 import ShareViews from './ShareViews'
 import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
-
+import LoginRequiredAlert from '../common/LoginRequiredAlert'
+import useAuthStore from '../../store/login/useAuthStore'
+import ToastService from '../../utils/toastService'
 const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
-
 const WorkBoard = ({
   title,
   name,
@@ -37,54 +39,74 @@ const WorkBoard = ({
   const loading = useScrapStore((state) => state.loading)
   const toggleScrap = useScrapStore((state) => state.toggleScrap)
 
+  const { isAuthenticated } = useAuthStore()
+  const [showLoginAlert, setShowLoginAlert] = useState(false)
+
   const scrapped = Boolean(scraps[postId])
   const bookmarkIcon = scrapped ? bookmarkPink : bookmarkGray
 
-  const handleToggleScrap = () => {
-    toggleScrap(postId, type)
+  const handleToggleScrap = async () => {
+    if (!isAuthenticated) {
+      setShowLoginAlert(true)
+      return
+    }
+    try {
+      const nowScrapped = await toggleScrap(postId, type)
+      if (nowScrapped) {
+        ToastService.success('스크랩되었습니다.')
+      } else {
+        ToastService.info('스크랩이 해제되었습니다.')
+      }
+    } catch {
+      ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
+    }
   }
-
   return (
-    <div className='w-full h-[200px] mb-3 mt-3 relative'>
-      <button
-        className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
-        onClick={handleToggleScrap}
-        aria-label={scrapped ? '스크랩 해제' : '스크랩'}
-      >
-        <img
-          src={bookmarkIcon}
-          alt='북마크'
-          className='w-6 h-6'
-          style={{ opacity: loading ? 0.5 : 1 }}
-        />
-      </button>
-      <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
-        <div className='flex flex-wrap gap-2 mb-2'>
-          {popular1 && <TagIcon label='인기 글' icon={popular} />}
-          {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
-          {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
-          {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
-          {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
-          {employmentType && <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />}
-        </div>
-        <h3
-          onClick={onClick}
-          className='flex font-bold line-clamp-2 text-sm sm:text-base md:text-lg mb-1'
+    <>
+      <div className='w-full h-[200px] mb-3 mt-3 relative'>
+        <button
+          className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
+          onClick={handleToggleScrap}
+          aria-label={scrapped ? '스크랩 해제' : '스크랩'}
         >
-          {title}
-        </h3>
-        <div className='flex-row text-dark-gray text-xs sm:text-sm md:text-base'>
-          <div onClick={onClick} className='flex justify-end font-bold'>
-            {name}
+          <img
+            src={bookmarkIcon}
+            alt='북마크'
+            className='w-6 h-6'
+            style={{ opacity: loading ? 0.5 : 1 }}
+          />
+        </button>
+        <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
+          <div className='flex flex-wrap gap-2 mb-2'>
+            {popular1 && <TagIcon label='인기 글' icon={popular} />}
+            {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
+            {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
+            {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
+            {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
+            {employmentType && (
+              <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />
+            )}
           </div>
-          <hr className='my-1 border-dark-gray' />
-          <div className='flex items-end justify-between'>
-            <span>{date}</span>
-            <ShareViews label={view} textColor='text-main-pink' icon={viewPink} />
+          <h3
+            onClick={onClick}
+            className='flex font-bold line-clamp-2 text-sm sm:text-base md:text-lg mb-1'
+          >
+            {title}
+          </h3>
+          <div className='flex-row text-dark-gray text-xs sm:text-sm md:text-base'>
+            <div onClick={onClick} className='flex justify-end font-bold'>
+              {name}
+            </div>
+            <hr className='my-1 border-dark-gray' />
+            <div className='flex items-end justify-between'>
+              <span>{date}</span>
+              <ShareViews label={view} textColor='text-main-pink' icon={viewPink} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <LoginRequiredAlert isOpen={showLoginAlert} onClose={() => setShowLoginAlert(false)} />
+    </>
   )
 }
 
