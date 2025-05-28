@@ -25,9 +25,9 @@
 
   html,
   body {
-    @apply w-full h-full min-h-screen p-0 m-0 overflow-auto;
+    @apply w-full p-0 m-0;
+    overflow: visible;
   }
-
   #root {
     @apply mx-auto h-full w-full text-center;
   }
