@@ -20,12 +20,10 @@ const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
-
 const MobileWorkBoard = ({
   title,
   name,
   date,
-  like,
   onClick,
   popular1,
   joboffer1,
@@ -37,7 +35,6 @@ const MobileWorkBoard = ({
   className,
   type,
   postId,
-  userId,
 }) => {
   const scraps = useScrapStore((state) => state.scraps)
   const loading = useScrapStore((state) => state.loading)
@@ -54,14 +51,13 @@ const MobileWorkBoard = ({
       return
     }
     try {
-      await toggleScrap(postId, type)
-      const nowScrapped = Boolean(useScrapStore.getState().scraps[postId])
+      const nowScrapped = await toggleScrap(postId, type)
       if (nowScrapped) {
         ToastService.success('스크랩되었습니다.')
       } else {
         ToastService.info('스크랩이 해제되었습니다.')
       }
-    } catch (error) {
+    } catch {
       ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
     }
   }
@@ -75,7 +71,10 @@ const MobileWorkBoard = ({
         <div className='relative flex flex-col h-auto border border-light-gray rounded-[10px] px-5 pt-5 pb-4 justify-between bg-white shadow-sm'>
           <button
             className='absolute top-[-2px] right-4 z-10 p-0 bg-transparent border-none'
-            onClick={handleToggleScrap}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleToggleScrap()
+            }}
             disabled={loading}
             aria-label={scrapped ? '스크랩 해제' : '스크랩'}
           >

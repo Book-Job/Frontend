@@ -51,14 +51,13 @@ const WorkBoard = ({
       return
     }
     try {
-      await toggleScrap(postId, type)
-      const nowScrapped = Boolean(useScrapStore.getState().scraps[postId])
+      const nowScrapped = await toggleScrap(postId, type)
       if (nowScrapped) {
         ToastService.success('스크랩되었습니다.')
       } else {
         ToastService.info('스크랩이 해제되었습니다.')
       }
-    } catch (error) {
+    } catch {
       ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
     }
   }
