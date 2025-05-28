@@ -15,6 +15,7 @@ import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
 import LoginRequiredAlert from '../common/LoginRequiredAlert'
 import useAuthStore from '../../store/login/useAuthStore'
+import ToastService from '../../utils/toastService'
 const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
@@ -44,14 +45,23 @@ const WorkBoard = ({
   const scrapped = Boolean(scraps[postId])
   const bookmarkIcon = scrapped ? bookmarkPink : bookmarkGray
 
-  const handleToggleScrap = () => {
+  const handleToggleScrap = async () => {
     if (!isAuthenticated) {
       setShowLoginAlert(true)
       return
     }
-    toggleScrap(postId, type)
+    try {
+      await toggleScrap(postId, type)
+      const nowScrapped = Boolean(useScrapStore.getState().scraps[postId])
+      if (nowScrapped) {
+        ToastService.success('스크랩되었습니다.')
+      } else {
+        ToastService.info('스크랩이 해제되었습니다.')
+      }
+    } catch (error) {
+      ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
+    }
   }
-
   return (
     <>
       <div className='w-full h-[200px] mb-3 mt-3 relative'>
