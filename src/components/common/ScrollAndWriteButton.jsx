@@ -34,7 +34,7 @@ const ScrollBtn = () => {
   const btnBaseClass =
     'w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] flex items-center justify-center ' +
     'rounded-full backdrop-blur-md bg-white/30 border border-light-gray shadow-lg ' +
-    'hover:scale-110 transition-transform duration-200 z-100'
+    'hover:scale-110 transition-transform duration-200 z-40'
 
   return (
     <>
