@@ -13,13 +13,10 @@ const ScrollBtn = () => {
     setShowModal(true)
   }
   const handleTop = () => {
-    const scrollContainer = document.querySelector('#root')
-    if (scrollContainer) {
-      scrollContainer.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   const handleSelect = (type) => {
