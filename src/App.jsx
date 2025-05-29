@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import useAuthStore from './store/login/useAuthStore'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 function App() {
   useEffect(() => {
