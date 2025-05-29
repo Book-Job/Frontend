@@ -27,8 +27,6 @@ import DetailCommunityPage from '../domains/community/detail/page/DetailCommunit
 import RecruitmentDetailPage from '../domains/job/recruitment/detail/page/RecruitmentDetailPage'
 import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecruitmentPostPage'
 import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPostPage'
-import KakaoCallback from '../domains/login/page/KakaoSuccess'
-import KakaoSusses from '../domains/login/page/KakaoSuccess'
 import KakaoSuccess from '../domains/login/page/KakaoSuccess'
 
 const routes = [
