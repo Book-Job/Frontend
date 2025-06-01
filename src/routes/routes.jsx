@@ -33,6 +33,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MAIN_PAGE,
     element: <MainPage />,
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.LOGIN_MAIN,

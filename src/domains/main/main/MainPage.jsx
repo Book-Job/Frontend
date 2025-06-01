@@ -3,6 +3,7 @@ import BestList from '../common/components/BestList'
 import BoardButton from '../common/components/BoardButton'
 import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
+import BannerExample from '../../../components/common/BannerExample'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('자유게시판')
   const {
@@ -37,7 +38,8 @@ const MainPage = () => {
 
   return (
     <div className='flex flex-col items-center w-full'>
-      <div className='w-full mb-6 sm:mb-10'>
+      <BannerExample />
+      <div className='w-full my-6 sm:my-10'>
         <BoardButton
           onBoardSelect={handleBoardSelect}
           selectedBoard={selectedBoard}
