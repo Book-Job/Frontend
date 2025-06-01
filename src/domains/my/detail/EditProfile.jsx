@@ -140,7 +140,7 @@ const EditProfile = () => {
             <div className='flex justify-between py-2 text-lg border-dark-gray'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
-                className='font-bold text-main-pink hover:text-pink-600'
+                className='font-bold text-main-pink hover:text-hover-pink'
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
               >
                 변경

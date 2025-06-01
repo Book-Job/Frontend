@@ -69,7 +69,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
                 onClick={handleVerify}
                 disabled={isExpired || !code}
                 className={`text-main-pink ${
-                  isExpired || !code ? 'bg-gray-400 cursor-not-allowed' : 'hover:text-pink-600'
+                  isExpired || !code ? 'bg-gray-400 cursor-not-allowed' : 'hover:text-hover-pink'
                 }`}
               >
                 <span className='text-red-500'>{formatTime(timeLeft)}</span> 인증

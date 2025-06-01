@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import arrow from '../../assets/icons/common/common_arrow_up.svg'
-import pencil from '../../assets/icons/common/common_pencil.svg'
+import writePencil from '../../assets/icons/common/common_pencil2.svg'
 import ChooseWriteForm from './ChooseWriteForm'
 
 const ScrollBtn = () => {
@@ -39,11 +39,12 @@ const ScrollBtn = () => {
   return (
     <>
       <button
+        style={{ backgroundColor: '#ec4899' }}
         className={`fixed right-4 bottom-[80px] sm:bottom-[130px] ${btnBaseClass}`}
         onClick={handleCreatePostClick}
         title='글 작성'
       >
-        <img src={pencil} alt='글 작성 버튼' className='w-[20px] h-[20px]' />
+        <img src={writePencil} alt='글 작성 버튼' className='w-[20px] h-[20px]' />
       </button>
       <button
         className={`fixed right-4 bottom-[20px] sm:bottom-[65px] ${btnBaseClass} 

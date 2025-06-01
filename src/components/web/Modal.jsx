@@ -33,7 +33,7 @@ const Modal = () => {
         <p className='mb-6 text-sm text-center text-gray-600 whitespace-pre-line'>{description}</p>
         <button
           onClick={handleButtonClick}
-          className='w-full py-3 rounded-xl bg-pink-500 text-white font-semibold text-sm shadow-md hover:bg-pink-600 active:scale-95 transition-all duration-200'
+          className='w-full py-3 rounded-xl bg-pink-500 text-white font-semibold text-sm shadow-md hover:bg-hover-pink active:scale-95 transition-all duration-200'
         >
           {buttonLabel}
         </button>
