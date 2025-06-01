@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import useAuthStore from './store/login/useAuthStore'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Modal from './components/web/Modal'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <ToastContainer position='top-center' autoClose={2000} />
       <PageScrollToTop />
       <AppRoutes />
+      <Modal />
     </BrowserRouter>
   )
 }
