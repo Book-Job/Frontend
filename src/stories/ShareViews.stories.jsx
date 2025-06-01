@@ -33,7 +33,7 @@ share1.args = {
 export const view = Template.bind({})
 view.args = {
   label: '123',
-  textColor: 'text-[#E36397]',
+  textColor: 'text-main-pink',
   icon: viewPink,
 }
 export const comment1 = Template.bind({})

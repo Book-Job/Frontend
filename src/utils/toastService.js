@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const defaultOptions = {
   position: 'top-center',
@@ -10,12 +11,25 @@ const defaultOptions = {
   theme: 'colored',
 }
 
+const baseStyle = {
+  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+  fontWeight: '600',
+  transition: 'transform 0.3s ease, opacity 0.3s ease',
+}
+
 const ToastService = {
   success: (message, options = {}) =>
     toast.success(message, {
       ...defaultOptions,
-      className: 'bg-pink-100 text-main-pink font-semibold rounded shadow',
-      progressClassName: 'bg-main-pink',
+      style: {
+        backgroundColor: '#fbcfe8',
+        color: '#ec4899',
+        ...baseStyle,
+      },
+      progressStyle: {
+        background: '#ec4899',
+        borderRadius: '12px',
+      },
       icon: '🌸',
       ...options,
     }),
@@ -23,8 +37,15 @@ const ToastService = {
   error: (message, options = {}) =>
     toast.error(message, {
       ...defaultOptions,
-      className: 'bg-red-100 text-red-700 font-semibold rounded shadow',
-      progressClassName: 'bg-red-500',
+      style: {
+        backgroundColor: '#fee2e2',
+        color: '#b91c1c',
+        ...baseStyle,
+      },
+      progressStyle: {
+        background: '#ef4444',
+        borderRadius: '12px',
+      },
       icon: '❌',
       ...options,
     }),
@@ -32,8 +53,15 @@ const ToastService = {
   info: (message, options = {}) =>
     toast.info(message, {
       ...defaultOptions,
-      className: 'bg-blue-100 text-blue-700 font-semibold rounded shadow',
-      progressClassName: 'bg-blue-500',
+      style: {
+        backgroundColor: '#dbeafe',
+        color: '#1e40af',
+        ...baseStyle,
+      },
+      progressStyle: {
+        background: '#3b82f6',
+        borderRadius: '12px',
+      },
       icon: 'ℹ️',
       ...options,
     }),
@@ -41,8 +69,15 @@ const ToastService = {
   warning: (message, options = {}) =>
     toast.warn(message, {
       ...defaultOptions,
-      className: 'bg-yellow-100 text-yellow-700 font-semibold rounded shadow',
-      progressClassName: 'bg-yellow-500',
+      style: {
+        backgroundColor: '#fef9c3',
+        color: '#92400e',
+        ...baseStyle,
+      },
+      progressStyle: {
+        background: '#facc15',
+        borderRadius: '12px',
+      },
       icon: '⚠️',
       ...options,
     }),

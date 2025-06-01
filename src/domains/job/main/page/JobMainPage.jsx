@@ -94,14 +94,14 @@ const JobMainPage = () => {
         />
       </div>
       <div className='px-4 md:px-[100px] mt-2 lg:px-[250px]'>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between mb-2'>
           {/*  div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
             전체: {counts.total}개 | 오늘: {counts.today}개
           </div>*/}
           <div className='flex items-end gap-2 ml-auto'>
             <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
-              className='text-xs sm:text-sm md:text-[15px] font-semibold'
+              className='text-xs sm:text-sm md:text-[15px] font-semibold '
               onSortChange={(value) => {
                 setOrder(value)
               }}

@@ -131,7 +131,7 @@ const RecruitmentDetailPage = () => {
       <LastFormLine />
       <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
-        <MobileShare label={data.viewCount} icon={viewPink} textColor='text-[#E36397]' />
+        <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
         className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'

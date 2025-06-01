@@ -11,7 +11,8 @@ export default {
       colors: {
         'dark-gray': '#8e8e8e',
         'light-gray': '#d9d9d9',
-        'main-pink': '#E36397',
+        'main-pink': '#ec4899',
+        lightBlueGray: '#F3F3F3',
       },
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],
