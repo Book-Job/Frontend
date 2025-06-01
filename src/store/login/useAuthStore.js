@@ -115,21 +115,22 @@ const useAuthStore = create((set) => ({
   },
 
   logout: async () => {
-    localStorage.removeItem('accessToken')
-    sessionStorage.removeItem('resetToken')
-    set({ user: null, isAuthenticated: false, accessToken: null })
-    window.location.href = ROUTER_PATHS.MAIN_PAGE
-    // try {
-    //   const response = await deleteLogout()
-    //   response.data && response.data.message === 'success'
-    //   localStorage.removeItem('accessToken')
-    //   sessionStorage.removeItem('resetToken')
-    //   set({ user: null, isAuthenticated: false, accessToken: null })
-    //   window.location.href = ROUTER_PATHS.MAIN_PAGE
-    // } catch (error) {
-    //   console.error('로그아웃 실패:', error)
-    //   throw error
-    // }
+    // localStorage.removeItem('accessToken')
+    // sessionStorage.removeItem('resetToken')
+    // set({ user: null, isAuthenticated: false, accessToken: null })
+    // window.location.href = ROUTER_PATHS.MAIN_PAGE
+    try {
+      const response = await deleteLogout()
+      response.data && response.data.message === 'success'
+      console.log('로그아웃 성공:', response)
+      localStorage.removeItem('accessToken')
+      sessionStorage.removeItem('resetToken')
+      set({ user: null, isAuthenticated: false, accessToken: null })
+      window.location.href = ROUTER_PATHS.MAIN_PAGE
+    } catch (error) {
+      console.error('로그아웃 실패:', error)
+      throw error
+    }
   },
 }))
 

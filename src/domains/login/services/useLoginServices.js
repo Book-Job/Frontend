@@ -1,4 +1,5 @@
-import { authApi, publicApi } from '../../../services/api/axios'
+import { authApi, publicApi } from '../../../services/api/Axios'
+
 // 로그인
 export const postLoginData = async (data) => {
   try {
@@ -28,11 +29,10 @@ export const deleteLogout = async () => {
         'Content-Type': 'application/json',
       },
     })
-    console.log('response:', response)
+    console.log('로그아웃 response:', response)
     return response
   } catch (error) {
     console.error('로그아웃 확인 중 오류:', error.response.data.message)
     throw new Error(error.response.data.message)
   }
 }
-

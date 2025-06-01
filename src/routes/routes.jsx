@@ -28,6 +28,7 @@ import RecruitmentDetailPage from '../domains/job/recruitment/detail/page/Recrui
 import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecruitmentPostPage'
 import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPostPage'
 import KakaoSuccess from '../domains/login/page/KakaoSuccess'
+import NaverSuccess from '../domains/login/page/NaverSuccess'
 
 const routes = [
   {
@@ -186,6 +187,10 @@ const routes = [
   {
     path: ROUTER_PATHS.KAKAO_SUCCESS,
     element: <KakaoSuccess />,
+  },
+  {
+    path: ROUTER_PATHS.NAVER_SUCCESS,
+    element: <NaverSuccess />,
   },
 ]
 
