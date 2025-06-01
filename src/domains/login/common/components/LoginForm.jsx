@@ -5,16 +5,16 @@ import Button from '../../../../components/web/Button'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import PageTitle from '../../../Find/common/components/PageTitle'
-import Alert from '../../../../components/web/Alert'
 import { useEffect, useState } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import DOMPurify from 'dompurify'
+import useModalStore from '../../../../store/modal/useModalStore'
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue, // useForm에서 setValue 가져오기
+    setValue,
   } = useForm({
     defaultValues: {
       userID: '',
@@ -24,14 +24,8 @@ const LoginForm = () => {
 
   const navigate = useNavigate()
   const { login } = useAuthStore()
+  const { openModal } = useModalStore()
   const [saveLoginID, setSaveLoginID] = useState(false)
-  const [alertState, setAlertState] = useState({
-    isOpen: false,
-    title: '',
-    description: '',
-    buttonLabel: '',
-    onButtonClick: null,
-  })
 
   // 페이지 로드 시 localStorage에서 saveLoginID 가져오기
   useEffect(() => {
@@ -55,8 +49,7 @@ const LoginForm = () => {
       } else {
         localStorage.removeItem('saveLoginID')
       }
-      setAlertState({
-        isOpen: true,
+      openModal({
         title: '로그인 성공',
         description: '메인 페이지로 이동합니다.',
         buttonLabel: '메인 페이지로',
@@ -64,8 +57,7 @@ const LoginForm = () => {
       })
     } catch (error) {
       console.error('로그인 오류:', error)
-      setAlertState({
-        isOpen: true,
+      openModal({
         title: '로그인 실패',
         description:
           error.message === '인증 과정 중 오류 발생'
@@ -141,14 +133,6 @@ const LoginForm = () => {
           />
         </div>
       </form>
-      <Alert
-        isOpen={alertState.isOpen}
-        onClose={closeAlert}
-        title={alertState.title}
-        description={alertState.description}
-        buttonLabel={alertState.buttonLabel}
-        onButtonClick={alertState.onButtonClick}
-      />
     </div>
   )
 }

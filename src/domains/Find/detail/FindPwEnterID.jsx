@@ -8,7 +8,7 @@ import LabelWithInput from '../../../components/web/LabelWithInput'
 import Button from '../../../components/web/Button'
 import FindLink from '../common/components/FindLink'
 import { getFindPW } from './../services/useFindPWServices'
-import Alert from '../../../components/web/Alert'
+import useModalStore from '../../../store/modal/useModalStore'
 import useFindPWStore from '../../../store/find/useFindPWStore'
 
 const FindPwEnterID = () => {
@@ -16,6 +16,7 @@ const FindPwEnterID = () => {
   const [idCheckMessage, setIdCheckMessage] = useState()
   const [idCheckStatus, setIDCheckStatus] = useState(null)
   const { setFindPWMaskEmail } = useFindPWStore()
+  const { openModal } = useModalStore()
   const {
     register,
     handleSubmit,
@@ -35,8 +36,7 @@ const FindPwEnterID = () => {
         setIDCheckStatus('success')
         console.log('response:', response.data.data.maskedEmail)
         setFindPWMaskEmail(response.data.data.maskedEmail)
-        setAlertState({
-          isOpen: true,
+        openModal({
           title: '아이디 확인 성공',
           description: '임시 비밀번호 발급 페이지로 이동합니다.',
           buttonLabel: '비밀번호 발급 페이지로',
@@ -45,8 +45,7 @@ const FindPwEnterID = () => {
       } else {
         setIdCheckMessage(response.data?.message || '존재하지 않는 아이디입니다.')
         setIDCheckStatus('error')
-        setAlertState({
-          isOpen: true,
+        openModal({
           title: '아이디 확인 실패',
           description: '존재하지 않는 아이디입니다.',
           buttonLabel: '확인',
@@ -56,25 +55,13 @@ const FindPwEnterID = () => {
     } catch (error) {
       console.error('아이디 확인 중 오류:', error)
       setIdCheckMessage(error?.message || '아이디디 확인 중 오류가 발생했습니다.')
-      setAlertState({
-        isOpen: true,
+      openModal({
         title: '아이디 확인 실패',
         description: '이메일 확인 중 오류가 발생했습니다.',
         buttonLabel: '확인',
         onButtonClick: null,
       })
     }
-  }
-
-  const [alertState, setAlertState] = useState({
-    isOpen: false,
-    title: '',
-    description: '',
-    buttonLabel: '',
-    onButtonClick: null,
-  })
-  const closeAlert = () => {
-    setAlertState((prev) => ({ ...prev, isOpen: false }))
   }
   return (
     <div>
@@ -133,14 +120,6 @@ const FindPwEnterID = () => {
           </PageBox>
         </div>
       </div>
-      <Alert
-        isOpen={alertState.isOpen}
-        onClose={closeAlert}
-        title={alertState.title}
-        description={alertState.description}
-        buttonLabel={alertState.buttonLabel}
-        onButtonClick={alertState.onButtonClick}
-      />
     </div>
   )
 }
