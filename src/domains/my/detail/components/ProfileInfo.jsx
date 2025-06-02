@@ -109,7 +109,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
               <button
                 onClick={handleCheckNickname}
                 disabled={!nowNickname || isCheckingNickname}
-                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold hover:text-pink-600`}
+                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold hover:text-hover-pink`}
               >
                 {isCheckingNickname ? (
                   <Spinner size={20} color='light-gray' />
@@ -122,14 +122,14 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
               <button
                 type='submit'
                 disabled={!isValid || nicknameCheckStatus !== 'success'}
-                className={`font-bold text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} hover:text-pink-600`}
+                className={`font-bold text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} hover:text-hover-pink`}
               >
                 저장
               </button>
               <button
                 type='button'
                 onClick={handleCancel}
-                className='font-bold text-dark-gray hover:text-pink-600'
+                className='font-bold text-dark-gray hover:text-hover-pink'
               >
                 취소
               </button>
@@ -141,7 +141,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
             {edit ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className='font-bold text-main-pink hover:text-pink-600'
+                className='font-bold text-main-pink hover:text-hover-pink'
               >
                 {edit}
               </button>

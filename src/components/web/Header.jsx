@@ -68,9 +68,13 @@ const Header = () => {
         >
           bookjob
         </span>
-        <span className='flex gap-6 sm:gap-10 sm:text-[18px] text-[15px] sm:flex '>
+        <span className='flex gap-6 sm:gap-10 sm:text-[18px] text-[15px] sm:flex'>
           {navButtons.map((item, index) => (
-            <button key={index} onClick={() => navigate(item.nav)} value={item.value}>
+            <button
+              key={index}
+              onClick={() => navigate(item.nav)}
+              className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+            >
               {item.label}
             </button>
           ))}
