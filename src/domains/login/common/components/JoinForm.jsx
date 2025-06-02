@@ -5,12 +5,15 @@ import NicknameInput from './NicknameInput'
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 import PageTitle from './../../../Find/common/components/PageTitle'
-import Alert from '../../../../components/web/Alert'
+import useModalStore from '../../../../store/modal/useModalStore'
 import { useState } from 'react'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { postJoinData } from '../../services/useJoinServices'
-
+import { useNavigate } from 'react-router-dom'
 const JoinForm = () => {
+  const navigate = useNavigate()
+  const { openModal } = useModalStore()
+
   const {
     register,
     handleSubmit,
@@ -44,8 +47,7 @@ const JoinForm = () => {
 
   const onSubmit = (data) => {
     if (!isAllValid()) {
-      setAlertState({
-        isOpen: true,
+      openModal({
         title: '검증 미완료',
         description: '아이디, 닉네임 중복 확인과 이메일 인증을 모두 완료해주세요.',
         buttonLabel: '확인',
@@ -66,37 +68,30 @@ const JoinForm = () => {
 
       if (response.data && response.data.message === 'success') {
         console.log('가입 성공:', response.data)
-        setAlertState({
-          isOpen: true,
-          title: '회원가입입 성공',
+        openModal({
+          title: '회원가입 성공',
           description: '로그인페이지로 이동합니다.',
-          buttonLabel: '로그인인 페이지로',
-          onButtonClick: (navigate) => navigate(ROUTER_PATHS.LOGIN_MAIN),
+          buttonLabel: '로그인 페이지로',
+          onButtonClick: () => navigate(ROUTER_PATHS.LOGIN_MAIN),
         })
       } else {
         console.log('가입 오류:', response.data)
-        setAlertState({
-          isOpen: true,
+        openModal({
           title: '회원가입 실패',
           description: '아이디 또는 비밀번호를 확인해주세요.',
           buttonLabel: '확인',
-          onButtonClick: null, // 모달만 닫기
+          onButtonClick: null,
         })
       }
     } catch (error) {
       console.error('가입중 오류:', error)
+      openModal({
+        title: '회원가입 오류',
+        description: '서버 오류가 발생했습니다. 다시 시도해주세요.',
+        buttonLabel: '확인',
+        onButtonClick: null,
+      })
     }
-  }
-
-  const [alertState, setAlertState] = useState({
-    isOpen: false,
-    title: '',
-    description: '',
-    buttonLabel: '',
-    onButtonClick: null,
-  })
-  const closeAlert = () => {
-    setAlertState((prev) => ({ ...prev, isOpen: false }))
   }
 
   return (
@@ -138,14 +133,6 @@ const JoinForm = () => {
           />
         </div>
       </div>
-      <Alert
-        isOpen={alertState.isOpen}
-        onClose={closeAlert}
-        title={alertState.title}
-        description={alertState.description}
-        buttonLabel={alertState.buttonLabel}
-        onButtonClick={alertState.onButtonClick}
-      />
     </div>
   )
 }

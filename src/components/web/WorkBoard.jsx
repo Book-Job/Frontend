@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -13,7 +12,7 @@ import TagIcon from './TagIcon'
 import ShareViews from './ShareViews'
 import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
-import LoginRequiredAlert from '../common/LoginRequiredAlert'
+import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
 import ToastService from '../../utils/toastService'
 const getEmploymentLabel = (value) => {
@@ -40,14 +39,21 @@ const WorkBoard = ({
   const toggleScrap = useScrapStore((state) => state.toggleScrap)
 
   const { isAuthenticated } = useAuthStore()
-  const [showLoginAlert, setShowLoginAlert] = useState(false)
+  const openModal = useModalStore((state) => state.openModal)
 
   const scrapped = Boolean(scraps[postId])
   const bookmarkIcon = scrapped ? bookmarkPink : bookmarkGray
 
   const handleToggleScrap = async () => {
     if (!isAuthenticated) {
-      setShowLoginAlert(true)
+      openModal({
+        title: '로그인이 필요합니다',
+        description: '로그인이 필요한 기능입니다.\n로그인 페이지로 이동하시겠습니까?',
+        buttonLabel: '로그인하기',
+        onButtonClick: (navigate) => {
+          navigate('/login')
+        },
+      })
       return
     }
     try {
@@ -105,7 +111,6 @@ const WorkBoard = ({
           </div>
         </div>
       </div>
-      <LoginRequiredAlert isOpen={showLoginAlert} onClose={() => setShowLoginAlert(false)} />
     </>
   )
 }

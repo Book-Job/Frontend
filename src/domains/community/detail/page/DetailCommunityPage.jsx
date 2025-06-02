@@ -124,7 +124,7 @@ const DetailCommunityPage = () => {
       <LastFormLine />
 
       <div className='flex flex-wrap gap-2 mb-4 ml-0 sm:ml-5 justify-end'>
-        <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-[#E36397]' />
+        <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-main-pink' />
         <MobileShare label={comments.length.toString()} icon={comment} textColor='text-dark-gray' />
         <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
       </div>

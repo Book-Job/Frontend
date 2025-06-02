@@ -1,47 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../store/login/useAuthStore'
 import ROUTER_PATHS from './RouterPath'
-import Alert from '../components/web/Alert'
+import useModalStore from '../store/modal/useModalStore'
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthStore()
   const navigate = useNavigate()
-  const [showAlert, setShowAlert] = useState(false)
-  const [checked, setChecked] = useState(false)
+  const { openModal, closeModal } = useModalStore()
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setShowAlert(true)
+      openModal({
+        title: '로그인이 필요합니다',
+        description: '로그인이 필요한 페이지입니다.\n로그인 페이지로 이동하시겠습니까?',
+        buttonLabel: '로그인하기',
+        onButtonClick: () => {
+          navigate(ROUTER_PATHS.LOGIN_MAIN, { replace: true })
+        },
+      })
     } else {
-      setChecked(true)
+      closeModal()
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, navigate, openModal, closeModal])
 
-  const handleAlertClose = () => {
-    setShowAlert(false)
-    setChecked(true)
-  }
-
-  const handleAlertAction = () => {
-    navigate(ROUTER_PATHS.LOGIN_MAIN, { replace: true })
-  }
-
-  if (!checked && !showAlert) return null
-
-  return (
-    <>
-      {isAuthenticated ? children : null}
-      <Alert
-        isOpen={showAlert}
-        onClose={handleAlertClose}
-        title='로그인이 필요합니다'
-        description='로그인이 필요한 페이지입니다. 로그인 페이지로 이동하시겠습니까?'
-        buttonLabel='로그인하기'
-        onButtonClick={handleAlertAction}
-      />
-    </>
-  )
+  return isAuthenticated ? children : null
 }
 
 export default ProtectedRoute
