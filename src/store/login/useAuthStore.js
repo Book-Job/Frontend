@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
+import {
+  postLoginData,
+  postLogout,
+  refreshAccessToken,
+} from './../../domains/login/services/useLoginServices'
+import { get } from 'react-hook-form'
 
 const parseJwt = (token) => {
   try {
@@ -25,7 +30,7 @@ const useAuthStore = create((set) => ({
   accessToken: null,
   resetToken: null,
 
-  initialize: () => {
+  initialize: async () => {
     const token = localStorage.getItem('accessToken')
     const resetToken = sessionStorage.getItem('resetToken')
     if (token) {
@@ -33,9 +38,20 @@ const useAuthStore = create((set) => ({
       if (decoded && decoded.exp * 1000 > Date.now()) {
         set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
       } else {
-        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-        localStorage.removeItem('accessToken')
-        sessionStorage.removeItem('resetToken')
+        // set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+        // localStorage.removeItem('accessToken')
+        // sessionStorage.removeItem('resetToken')
+        try {
+          const newAccessToken = await refreshAccessToken()
+          const newDecoded = parseJwt(newAccessToken)
+          set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
+          console.log('새로운 accessToken 갱신 11')
+        } catch (error) {
+          localStorage.removeItem('accessToken')
+          sessionStorage.removeItem('resetToken')
+          set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+          console.log('새로운 accessToken 갱신 실패')
+        }
       }
     } else {
       set({ resetToken }) // accessToken 없어도 resetToken 유지
@@ -70,11 +86,37 @@ const useAuthStore = create((set) => ({
   },
 
   //로그인을 해야지 접근 가능하게 하는 로직
-  requireLogin: (navigate) => {
+  // requireLogin: (navigate) => {
+  //   const token = localStorage.getItem('accessToken')
+  //   if (!token) {
+  //     navigate(ROUTER_PATHS.LOGIN_MAIN)
+  //     return false
+  //   }
+  //   return true
+  // },
+  requireLogin: async (navigate) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
+    }
+    const decoded = parseJwt(token)
+    if (decoded && decoded.exp * 1000 < Date.now()) {
+      // 토큰 만료 시 갱신 시도
+      try {
+        const newAccessToken = await refreshAccessToken(token)
+        const newDecoded = parseJwt(newAccessToken)
+        set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
+        console.log('새로운 accessToken 갱신 성공')
+        return true
+      } catch (error) {
+        console.log('새로운 accessToken 갱신 실패')
+        localStorage.removeItem('accessToken')
+        sessionStorage.removeItem('resetToken')
+        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+        navigate(ROUTER_PATHS.LOGIN_MAIN)
+        return false
+      }
     }
     return true
   },
@@ -84,13 +126,13 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLoginData(loginData)
       if (response.data && response.data.message === 'success') {
-        console.log('response22:', response.data.data.nickname)
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
           set({
             user: { nickname: response.data.data.nickname },
             isAuthenticated: true,
+            accessToken,
           })
         } else {
           throw new Error('액세스 토큰을 받지 못했습니다.')
@@ -120,8 +162,9 @@ const useAuthStore = create((set) => ({
     set({ user: null, isAuthenticated: false, accessToken: null })
     window.location.href = ROUTER_PATHS.MAIN_PAGE
     // try {
-    //   const response = await deleteLogout()
+    //   const response = await postLogout()
     //   response.data && response.data.message === 'success'
+    //   console.log('로그아웃 성공:', response)
     //   localStorage.removeItem('accessToken')
     //   sessionStorage.removeItem('resetToken')
     //   set({ user: null, isAuthenticated: false, accessToken: null })

@@ -11,14 +11,14 @@ const BestList = ({ boardName, bestList }) => {
         <img src={issueFire} alt='issueFire' className='w-6 h-6 mr-3 sm:mr-5 ms:w-11 sm:h-11' />
         <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
       </div>
-      <div className='grid grid-flow-row sm:grid-cols-2 gap-y-4 gap-x-20'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
         {bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
           return (
             <div key={index} className='flex items-center'>
               <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
               <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3'>
                 <button
-                  className='flex justify-start w-auto line-clamp-1'
+                  className='justify-start w-auto line-clamp-1'
                   onClick={
                     boardId
                       ? () => navigate(`/community/post/${boardId}`)
@@ -27,7 +27,7 @@ const BestList = ({ boardName, bestList }) => {
                 >
                   {title}
                 </button>
-                <div className='flex flex-row items-center'>
+                <div className='flex flex-row items-center justify-between sm:min-w-14 min-w-10'>
                   {boardId ? (
                     <>
                       <img

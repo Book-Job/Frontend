@@ -42,7 +42,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
           <div className='w-4 h-4 mr-1 sm:w-5 sm:h-5'>
             <img src={commonTime} alt='commonTime' />
           </div>
-          <p className='text-sm font-semibold sm:text-base text-dark-gray'>{formattedDate} 기준</p>
+          <p className='text-sm font-semibold sm:text-base text-dark-gray hover:text-light-gray'>{formattedDate} 기준</p>
         </button>
       </div>
     </div>

@@ -22,7 +22,7 @@ const Layout = ({ children, headerType, label, noMargin = false }) => {
 
       <main
         className={`flex flex-col flex-1 ${
-          noMargin ? 'mb-4 sm:mb-10' : 'mx-4 my-4 sm:my-10 sm:mx-10 justify-center'
+          noMargin ? 'mb-4 sm:mb-10' : 'm-4 sm:m-10 justify-center'
         } ${!isMobile ? '' : ''} `}
       >
         {children}

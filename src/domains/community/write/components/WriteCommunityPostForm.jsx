@@ -12,9 +12,10 @@ import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import WriteEditor from '../../../../components/common/WriteEditor'
-
-const WriteCommunityPostForm = () => {
+import useDraftStore from '../../../../store/mypage/useDraftStore'
+const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const { user } = useAuthStore()
+  const { selectedDraft, deleteDraft, clearSelectedDraft } = useDraftStore()
   const navigate = useNavigate()
 
   const {
@@ -31,12 +32,28 @@ const WriteCommunityPostForm = () => {
       text: EditorState.createEmpty(),
     },
   })
+  //원본
+  // useEffect(() => {
+  //   if (user?.nickname) {
+  //     setValue('nickname', user.nickname)
+  //   }
+  // }, [user, setValue])
 
+  // 선택된 임시저장 복원
   useEffect(() => {
-    if (user?.nickname) {
+    if (selectedDraft) {
+      try {
+        setValue('nickname', selectedDraft.nickname || user?.nickname || '')
+        setValue('title', selectedDraft.title || '')
+        setValue('text', useDraftStore.getState().getDraftEditorState(selectedDraft))
+      } catch (error) {
+        console.error('드래프트 복원 오류:', error)
+        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
+      }
+    } else if (user?.nickname) {
       setValue('nickname', user.nickname)
     }
-  }, [user, setValue])
+  }, [selectedDraft, user, setValue])
 
   const onSubmit = async (data) => {
     const rawHtml = draftToHtml(convertToRaw(data.text.getCurrentContent()))
@@ -49,6 +66,10 @@ const WriteCommunityPostForm = () => {
     try {
       await createPost(postData)
       ToastService.success('게시글이 등록되었습니다.')
+      if (selectedDraft) {
+        deleteDraft(selectedDraft.id)
+        clearSelectedDraft()
+      }
       reset()
       navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {
@@ -56,7 +77,22 @@ const WriteCommunityPostForm = () => {
       ToastService.error('게시글 작성에 실패했습니다.')
     }
   }
-
+  // 임시 저장
+  const handleSaveDraft = () => {
+    const formData = {
+      nickname: control._formValues.nickname || '',
+      title: control._formValues.title || '',
+      text: control._formValues.text,
+    }
+    try {
+      const draftId = useDraftStore.getState().saveDraft(formData)
+      ToastService.success('게시글이 임시 저장되었습니다.')
+      onSaveDraft(draftId)
+    } catch (error) {
+      console.error('임시 저장 실패:', error)
+      ToastService.error('임시 저장에 실패했습니다.')
+    }
+  }
   return (
     <form id='community-post-form' onSubmit={handleSubmit(onSubmit)}>
       <div className='my-[30px]'>
@@ -84,7 +120,7 @@ const WriteCommunityPostForm = () => {
               className='w-full'
             />
             {errors.title && (
-              <span className='self-start text-red-500 text-xs mt-1'>제목은 필수입니다</span>
+              <span className='self-start mt-1 text-xs text-red-500'>제목은 필수입니다</span>
             )}
           </div>
         </FormItem>
@@ -112,10 +148,11 @@ const WriteCommunityPostForm = () => {
             )}
           />
           {errors.text && (
-            <span className='self-start text-red-500 text-xs mt-1'>{errors.text.message}</span>
+            <span className='self-start mt-1 text-xs text-red-500'>{errors.text.message}</span>
           )}
         </FormItem>
       </div>
+      <button type='button' onClick={handleSaveDraft} hidden />
     </form>
   )
 }

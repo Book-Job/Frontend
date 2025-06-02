@@ -137,10 +137,10 @@ const EditProfile = () => {
               text={'인증된 이메일입니다'}
             />
             <ProfileInfo title={'로그인 아이디'} content={userData.data.loginId} />
-            <div className='flex justify-between py-2 text-lg border-dark-gray'>
+            <div className='flex justify-between py-1 text-lg border-dark-gray'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
-                className='font-bold text-main-pink hover:text-hover-pink'
+                className='font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
               >
                 변경

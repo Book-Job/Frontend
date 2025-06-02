@@ -29,6 +29,8 @@ const ROUTER_PATHS = {
   MY_POST: '/my-page/my-post', //내가 작성한 글 목록록
   MY_DRAFTS: '/my-page/my-drafts',
   ERROR: '/error',
+  KAKAO_SUCCESS: '/login/kakao/success',
+  NAVER_SUCCESS: '/login/naver/success',
 }
 
 export default ROUTER_PATHS

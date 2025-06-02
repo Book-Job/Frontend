@@ -1,5 +1,4 @@
-import { authApi } from '../../../services/api/axios'
-import useFindIDStore from '../../../store/find/useFindIDStore'
+import { publicApi } from '../../../services/api/Axios'
 
 //아이디 찾기 이메일 인증 요청
 export const postFindIDEmail = async (fullEmail) => {
@@ -8,7 +7,7 @@ export const postFindIDEmail = async (fullEmail) => {
   }
 
   try {
-    const response = await authApi.post(
+    const response = await publicApi.post(
       '/auth/email-verification/id',
       { email: fullEmail },
       {
@@ -31,7 +30,7 @@ export const postFindIDEmail = async (fullEmail) => {
 //아이디 찾기 이메일 인증 번호 확인
 export const postFindIDEmailCode = async ({ fullEmail, code }) => {
   try {
-    const response = await authApi.post(
+    const response = await publicApi.post(
       '/auth/email-verification/id/code',
       { email: fullEmail, code: code, reason: '아이디 찾기' },
       {

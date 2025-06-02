@@ -69,9 +69,6 @@ const LoginForm = () => {
     }
   }
 
-  const closeAlert = () => {
-    setAlertState((prev) => ({ ...prev, isOpen: false }))
-  }
   const handleSaveLoginID = (e) => {
     setSaveLoginID(e.target.checked)
   }
@@ -109,7 +106,7 @@ const LoginForm = () => {
               name='SaveLoginID'
               checked={saveLoginID}
               onChange={handleSaveLoginID}
-              className='flex w-6 h-6 mt-[5px]'
+              className='flex w-6 h-6 mt-[5px] cursor-pointer'
             />
             아이디 저장
           </div>
