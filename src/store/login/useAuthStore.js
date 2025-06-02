@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import {
-  deleteLogout,
   postLoginData,
+  postLogout,
   refreshAccessToken,
 } from './../../domains/login/services/useLoginServices'
+import { get } from 'react-hook-form'
 
 const parseJwt = (token) => {
   try {
@@ -22,27 +23,6 @@ const parseJwt = (token) => {
     return null
   }
 }
-
-// 토큰 갱신 API 호출 (가정)
-// const refreshAccessToken = async () => {
-//   try {
-//     const response = await post('/api/auth/refresh', {
-//       method: 'POST',
-//       credentials: 'include', // 쿠키에 포함된 refreshToken을 자동으로 전송
-//     })
-//     if (!response.ok) throw new Error('토큰 갱신 실패')
-//     const data = await response.json()
-//     const newAccessToken = response.headers.get('Authorization')?.replace('Bearer ', '')
-//     if (newAccessToken) {
-//       localStorage.setItem('accessToken', newAccessToken)
-//       return newAccessToken
-//     }
-//     throw new Error('새로운 액세스 토큰을 받지 못했습니다.')
-//   } catch (error) {
-//     console.error('토큰 갱신 오류:', error)
-//     throw error
-//   }
-// }
 
 const useAuthStore = create((set) => ({
   user: null,
@@ -65,10 +45,12 @@ const useAuthStore = create((set) => ({
           const newAccessToken = await refreshAccessToken()
           const newDecoded = parseJwt(newAccessToken)
           set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
+          console.log('새로운 accessToken 갱신 11')
         } catch (error) {
           localStorage.removeItem('accessToken')
           sessionStorage.removeItem('resetToken')
           set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+          console.log('새로운 accessToken 갱신 실패')
         }
       }
     } else {
@@ -104,11 +86,37 @@ const useAuthStore = create((set) => ({
   },
 
   //로그인을 해야지 접근 가능하게 하는 로직
-  requireLogin: (navigate) => {
+  // requireLogin: (navigate) => {
+  //   const token = localStorage.getItem('accessToken')
+  //   if (!token) {
+  //     navigate(ROUTER_PATHS.LOGIN_MAIN)
+  //     return false
+  //   }
+  //   return true
+  // },
+  requireLogin: async (navigate) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
+    }
+    const decoded = parseJwt(token)
+    if (decoded && decoded.exp * 1000 < Date.now()) {
+      // 토큰 만료 시 갱신 시도
+      try {
+        const newAccessToken = await refreshAccessToken(token)
+        const newDecoded = parseJwt(newAccessToken)
+        set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
+        console.log('새로운 accessToken 갱신 성공')
+        return true
+      } catch (error) {
+        console.log('새로운 accessToken 갱신 실패')
+        localStorage.removeItem('accessToken')
+        sessionStorage.removeItem('resetToken')
+        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+        navigate(ROUTER_PATHS.LOGIN_MAIN)
+        return false
+      }
     }
     return true
   },
@@ -118,7 +126,6 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLoginData(loginData)
       if (response.data && response.data.message === 'success') {
-        console.log('response22:', response.data.data.nickname)
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
@@ -150,22 +157,22 @@ const useAuthStore = create((set) => ({
   },
 
   logout: async () => {
-    // localStorage.removeItem('accessToken')
-    // sessionStorage.removeItem('resetToken')
-    // set({ user: null, isAuthenticated: false, accessToken: null })
-    // window.location.href = ROUTER_PATHS.MAIN_PAGE
-    try {
-      const response = await deleteLogout()
-      response.data && response.data.message === 'success'
-      console.log('로그아웃 성공:', response)
-      localStorage.removeItem('accessToken')
-      sessionStorage.removeItem('resetToken')
-      set({ user: null, isAuthenticated: false, accessToken: null })
-      window.location.href = ROUTER_PATHS.MAIN_PAGE
-    } catch (error) {
-      console.error('로그아웃 실패:', error)
-      throw error
-    }
+    localStorage.removeItem('accessToken')
+    sessionStorage.removeItem('resetToken')
+    set({ user: null, isAuthenticated: false, accessToken: null })
+    window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // try {
+    //   const response = await postLogout()
+    //   response.data && response.data.message === 'success'
+    //   console.log('로그아웃 성공:', response)
+    //   localStorage.removeItem('accessToken')
+    //   sessionStorage.removeItem('resetToken')
+    //   set({ user: null, isAuthenticated: false, accessToken: null })
+    //   window.location.href = ROUTER_PATHS.MAIN_PAGE
+    // } catch (error) {
+    //   console.error('로그아웃 실패:', error)
+    //   throw error
+    // }
   },
 }))
 
