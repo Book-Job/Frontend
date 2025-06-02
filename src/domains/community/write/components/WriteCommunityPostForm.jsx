@@ -32,11 +32,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       text: EditorState.createEmpty(),
     },
   })
-  useEffect(() => {
-    if (user?.nickname) {
-      setValue('nickname', user.nickname)
-    }
-  }, [user, setValue])
 
   useEffect(() => {
     if (selectedDraft) {

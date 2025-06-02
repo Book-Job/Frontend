@@ -28,6 +28,6 @@ Test.args = {
   onClick: action('클릭액션'),
   name: '하하호호',
   date: '2020-11-11',
-  comment1: 11,
-  view1: 11,
+  commentCount: 11,
+  viewCount: 11,
 }
