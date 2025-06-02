@@ -1,5 +1,3 @@
-import KakaoLogin from './KakaoLogin'
-import NaverLogin from './NaverLogin'
 import kakaoicon from '../../../../assets/icons/common/kakaoIcon.svg'
 import navericon from '../../../../assets/icons/common/naverIcon.svg'
 const SnsLogin = () => {
@@ -17,8 +15,6 @@ const SnsLogin = () => {
         <hr className='w-1/3 border-1 border-dark-gray' />
       </div>
       <div className='flex justify-center gap-16 mt-9'>
-        {/* <NaverLogin /> */}
-        {/* <KakaoLogin /> */}
         <button
           onClick={handleNaverLogin}
           className='transition-transform duration-200 rounded-full w-14 h-14 sm:w-20 sm:h-20 hover:scale-110 '
