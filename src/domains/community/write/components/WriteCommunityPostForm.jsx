@@ -112,7 +112,9 @@ const WriteCommunityPostForm = () => {
             )}
           />
           {errors.text && (
-            <span className='self-start text-red-500 text-xs mt-1'>{errors.text.message}</span>
+            <span className='self-start text-red-500 text-xs mt-1 block text-left'>
+              {errors.text.message}
+            </span>
           )}
         </FormItem>
       </div>
