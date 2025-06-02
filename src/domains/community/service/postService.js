@@ -1,6 +1,5 @@
 import { publicApi, authApi } from '../../../services/api/axios'
 
-// 전체 글 조회 & 검색
 export const getAllPosts = async ({ last = null, size = 6 } = {}) => {
   try {
     const params = { size }
@@ -16,25 +15,21 @@ export const getAllPosts = async ({ last = null, size = 6 } = {}) => {
   }
 }
 
-// 글 작성
 export const createPost = async (postData) => {
   const response = await authApi.post('/boards', postData)
   return response.data
 }
 
-// 글 상세 조회
 export const getDetailPost = async (id) => {
   const response = await authApi.get(`/boards/${id}`)
   return response.data.data
 }
 
-//작성한 글 삭제
 export const deletePost = async (id) => {
   const response = await authApi.delete(`/boards/${id}`)
   return response.data.data
 }
 
-//작성한 글 수정
 export const editPost = async (id, data) => {
   try {
     const response = await authApi.patch(`boards/${id}`, data, {

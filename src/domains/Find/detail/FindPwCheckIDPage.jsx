@@ -32,9 +32,8 @@ const FindPwCheckIDPage = () => {
     formState: { errors },
   } = useForm()
 
-  // 이메일 입력값 실시간 감지
   const emailValue = watch('userEmail')
-  // 이메일 유효성 검사
+
   useEffect(() => {
     if (findPWMaskEmail === '') {
       ToastService.info('잘못된 접근입니다.')
@@ -51,7 +50,6 @@ const FindPwCheckIDPage = () => {
     }
   }, [emailValue, trigger, navigate, findPWMaskEmail])
 
-  // 임시 비밀번호 전송
   const handleEmailAuth = async () => {
     if (isCheckingEmail) {
       return
@@ -88,7 +86,7 @@ const FindPwCheckIDPage = () => {
       setIsCheckingEmail(false)
     }
   }
-  // OTPInput에서 받은 코드 처리
+
   const handleTemporaryPW = async (code) => {
     try {
       const response = await postTemPW({ userEmail, code })
@@ -132,7 +130,6 @@ const FindPwCheckIDPage = () => {
   }
 
   const onSubmit = () => {
-    console.log('임시 비밀번호 확인 성공여부 :', validationStatusTemPW)
     if (validationStatusTemPW === 'success') {
       navigate(ROUTER_PATHS.FIND_PW_CHANGE_PW)
     } else {
@@ -221,7 +218,6 @@ const FindPwCheckIDPage = () => {
                   type='submit'
                   label='새로운 비밀번호 생성'
                   size='biggest'
-                  // onClick={() => onSubmit()}
                   disabled={validationStatusTemPW !== 'success'}
                   bgColor={validationStatusTemPW === 'success' ? 'main-pink' : 'light-gray'}
                 />

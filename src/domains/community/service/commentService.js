@@ -1,6 +1,5 @@
 import { authApi } from '../../../services/api/axios'
 
-//댓글 작성
 export const postComment = async (boardId, { content, nickname }) => {
   const response = await authApi.post(`/boards/${boardId}/comments`, {
     content,
@@ -9,7 +8,6 @@ export const postComment = async (boardId, { content, nickname }) => {
   return response.data
 }
 
-// 댓글 목록 불러오기 서비스 함수
 export const getAllComment = async (boardId, lastComment = null) => {
   try {
     const url = lastComment
@@ -24,14 +22,12 @@ export const getAllComment = async (boardId, lastComment = null) => {
   }
 }
 
-//댓글 수정
 export const editCommentService = async (boardId, commentId, content) => {
   return authApi.patch(`/boards/${boardId}/comments/${commentId}`, {
     content,
   })
 }
 
-//댓글 삭제
 export const deleteCommentService = async (boardId, commentId) => {
   return authApi.delete(`/boards/${boardId}/comments/${commentId}`)
 }

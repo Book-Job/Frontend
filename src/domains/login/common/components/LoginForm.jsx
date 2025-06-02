@@ -26,14 +26,12 @@ const LoginForm = () => {
   const { login } = useAuthStore()
   const { openModal } = useModalStore()
   const [saveLoginID, setSaveLoginID] = useState(false)
-
-  // 페이지 로드 시 localStorage에서 saveLoginID 가져오기
   useEffect(() => {
     const savedID = localStorage.getItem('saveLoginID')
     if (typeof savedID === 'string' && savedID.length > 0) {
       const sanitizedID = DOMPurify.sanitize(savedID, {
-        ALLOWED_TAGS: [], // 모든 HTML 태그 제거
-        ALLOWED_ATTR: [], // 모든 속성 제거
+        ALLOWED_TAGS: [],
+        ALLOWED_ATTR: [],
       })
       setValue('userID', sanitizedID)
       setSaveLoginID(true)
@@ -41,7 +39,6 @@ const LoginForm = () => {
   }, [setValue])
 
   const onSubmit = async (data) => {
-    console.log('로그인 데이터:', data)
     try {
       await login(data)
       if (saveLoginID) {

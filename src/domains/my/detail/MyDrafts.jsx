@@ -10,12 +10,12 @@ const MyDrafts = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    loadDrafts() // 컴포넌트 마운트 시 드래프트 로드
+    loadDrafts()
   }, [loadDrafts])
 
   const handleDraftClick = (draft) => {
     setSelectedDraft(draft)
-    navigate(ROUTER_PATHS.WRITE_COMMUNITY_POST) // 글 작성 페이지로 이동
+    navigate(ROUTER_PATHS.WRITE_COMMUNITY_POST)
   }
   return (
     <div>

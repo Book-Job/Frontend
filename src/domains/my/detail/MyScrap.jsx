@@ -9,7 +9,6 @@ import useAuthStore from '../../../store/login/useAuthStore'
 import Spinner from '../../../components/web/Spinner'
 import PostSortDropDown from '../../../components/common/PostSortDropDown'
 
-//현재 라우팅도 오류남.. 잡카테고리를 안 넘겨움 + 닉네임
 const MyScrap = () => {
   const [scrapPosts, setScrapPosts] = useState([])
   const [loading, setLoading] = useState(false)

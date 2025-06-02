@@ -12,14 +12,14 @@ const CommentList = ({ boardId }) => {
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
   const [deletingId, setDeletingId] = useState(null)
-  const { fetchFreeBest } = useBestStore() //메인 자유베스트 최신화
+  const { fetchFreeBest } = useBestStore()
 
   const handleDelete = async (boardId, commentId) => {
     try {
       setDeletingId(commentId)
       await deleteComment(boardId, commentId)
       ToastService.success('댓글이 성공적으로 삭제되었습니다.')
-      fetchFreeBest(true) //메인 자유베스트 최신화
+      fetchFreeBest(true)
     } catch (err) {
       ToastService.error('댓글 삭제 중 오류 발생')
       console.error(err)

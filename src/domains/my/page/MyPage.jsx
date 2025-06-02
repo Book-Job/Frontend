@@ -13,10 +13,8 @@ const MyPage = () => {
     try {
       const response = await getMyData()
       if (response.data && response.data.message === 'success') {
-        console.log('마이데이터 성공:', response.data)
         setUserData(response.data)
       } else {
-        console.log('마이데이터 오류:', response.data)
         setError('마이데이터를 불러오지 못했습니다.')
       }
     } catch (error) {

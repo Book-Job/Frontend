@@ -13,14 +13,14 @@ const InputBox = forwardRef(({ placeholder, size, ...rest }, ref) => {
       <input
         placeholder={placeholder}
         className={`${InputBoxSize[size]} border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none `}
-        ref={ref} // react-hook-form에서 사용할 ref 추가
-        {...rest} // 기타 속성 전달
+        ref={ref}
+        {...rest}
       />
     </div>
   )
 })
 
-InputBox.displayName = 'InputBox' // forwardRef 사용 시 필요
+InputBox.displayName = 'InputBox'
 
 InputBox.propTypes = {
   placeholder: PropTypes.string.isRequired,

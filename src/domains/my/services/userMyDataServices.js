@@ -1,6 +1,5 @@
-import { authApi, publicApi } from '../../../services/api/Axios'
+import { authApi, publicApi } from '../../../services/api/axios'
 
-//마이 데이터 불러오기
 export const getMyData = async () => {
   try {
     const response = await authApi.get('/members/mypage', {
@@ -15,7 +14,7 @@ export const getMyData = async () => {
     throw new Error(error.response.data.message)
   }
 }
-//마이 프로필 데이터 불러오기
+
 export const getMyProfileData = async () => {
   try {
     const response = await authApi.get('/members/detail', {
@@ -31,12 +30,11 @@ export const getMyProfileData = async () => {
   }
 }
 
-//마이 프로필 닉네임 변경
 export const patchNicknameCh = async (nickname) => {
   try {
     const response = await authApi.patch(
       '/members/nickname',
-      { nickname: nickname }, //body
+      { nickname: nickname },
       {
         headers: {
           Accept: 'application/json',
@@ -50,7 +48,7 @@ export const patchNicknameCh = async (nickname) => {
     throw new Error(error.response.data.message)
   }
 }
-//마이 프로필 회원 기존 비밀번호 확인
+
 export const postPWCheck = async (PW) => {
   try {
     const response = await authApi.post(
@@ -70,7 +68,6 @@ export const postPWCheck = async (PW) => {
   }
 }
 
-//마이 프로필 회원 탈퇴
 export const deleteMember = async (PW) => {
   try {
     const response = await authApi.delete(
@@ -91,7 +88,6 @@ export const deleteMember = async (PW) => {
   }
 }
 
-//마이 프로필 비밀번호 변경
 export const postNewPW = async (PW, resetToken) => {
   try {
     const response = await publicApi.post(

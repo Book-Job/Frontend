@@ -21,19 +21,17 @@ const MainPage = () => {
     setSelectedBoard(boardName)
   }
 
-  // 새로고침 버튼 핸들러
   const handleRefresh = () => {
-    fetchFreeBest(true) 
+    fetchFreeBest(true)
     fetchJobBest(true)
   }
 
   useEffect(() => {
-    Promise.all([fetchFreeBest(), fetchJobBest()]) // 병렬 호출로 최적화
+    Promise.all([fetchFreeBest(), fetchJobBest()])
   }, [fetchFreeBest, fetchJobBest])
 
   const currentList = selectedBoard === '자유게시판' ? freeBest : jobBest
   const isLoading = selectedBoard === '자유게시판' ? isFreeLoading : isJobLoading
-  // const isLoading = true
   const error = selectedBoard === '자유게시판' ? freeError : jobError
 
   return (

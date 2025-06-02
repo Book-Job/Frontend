@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { v4 as uuidv4 } from 'uuid' // 고유 ID 생성
+import { v4 as uuidv4 } from 'uuid'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import ToastService from '../../utils/toastService'
 
@@ -7,7 +7,6 @@ const useDraftStore = create((set) => ({
   drafts: [],
   selectedDraft: null,
 
-  // 로컬 스토리지에서 임시저장 로드
   loadDrafts: () => {
     const savedDrafts = localStorage.getItem('communityPostDrafts')
     if (savedDrafts) {
@@ -20,7 +19,6 @@ const useDraftStore = create((set) => ({
     }
   },
 
-  // 임시저장 저장
   saveDraft: (draftData) => {
     const id = uuidv4()
     const date = new Date()
@@ -32,7 +30,7 @@ const useDraftStore = create((set) => ({
       })
       .split('. ')
       .join('-')
-      .slice(0, -1) // '2025. 06. 02.' -> '2025-06-02'
+      .slice(0, -1)
     const newDraft = {
       id,
       nickname: draftData.nickname || '',
@@ -52,7 +50,6 @@ const useDraftStore = create((set) => ({
     return id
   },
 
-  // 임시저장 삭제
   deleteDraft: (id) => {
     set((state) => {
       const updatedDrafts = state.drafts.filter((draft) => draft.id !== id)
@@ -61,22 +58,19 @@ const useDraftStore = create((set) => ({
     })
   },
 
-  // 선택한 임시저장 설정
   setSelectedDraft: (draft) => {
     set({ selectedDraft: draft })
   },
 
-  // 선택한 임시저장데이터터 초기화
   clearSelectedDraft: () => {
     set({ selectedDraft: null })
   },
 
-  // 임시저장 데이터를 EditorState로 변환
   getDraftEditorState: (draft) => {
     if (draft?.text) {
       try {
         const rawContent = JSON.parse(draft.text)
-        const contentState = convertFromRaw(rawContent) // convertFromRaw 사용
+        const contentState = convertFromRaw(rawContent)
         return EditorState.createWithContent(contentState)
       } catch (error) {
         console.error('드래프트 복원 오류:', error)

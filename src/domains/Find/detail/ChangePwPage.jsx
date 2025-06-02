@@ -22,16 +22,12 @@ const ChangePwPage = () => {
     formState: { errors },
   } = useForm()
 
-  // 비밀번호와 비밀번호 확인 실시간 감지
   const newPassword = watch('newPassword')
   const passwordCheck = watch('passwordCheck')
 
-  // 비밀번호 유효성 검사 및 isSuccess 업데이트
   useEffect(() => {
     const validatePasswords = async () => {
-      // newPassword와 passwordCheck가 모두 입력되었는지 확인
       if (newPassword && passwordCheck) {
-        // react-hook-form의 유효성 검사 트리거
         const isValid =
           newPassword === passwordCheck && !errors.newPassword && !errors.passwordCheck
         setIsSuccess(isValid)
@@ -42,7 +38,6 @@ const ChangePwPage = () => {
     validatePasswords()
   }, [newPassword, passwordCheck, errors.newPassword, errors.passwordCheck])
 
-  // resetToken 확인
   useEffect(() => {
     const checkToken = async () => {
       const isValid = await requireResetToken(navigate)
@@ -55,17 +50,15 @@ const ChangePwPage = () => {
 
   const onSubmit = async (data) => {
     setIsLoading(true)
-    const { /* passwordCheck */ ...filteredData } = data
+    const { ...filteredData } = data
     const newPW = filteredData.newPassword
     try {
       const response = await postNewPW(newPW, resetToken)
       if (response.data && response.data.message === 'success') {
-        console.log('PW 변경 성공:', response.data)
         navigate(ROUTER_PATHS.MY_PROFILE)
         ToastService.success('비밀번호 변경이 완료되었습니다.')
         clearResetToken()
       } else {
-        console.log('PW 변경 오류:', response)
         ToastService.error('비밀번호 변경 중 오류')
       }
     } catch (error) {

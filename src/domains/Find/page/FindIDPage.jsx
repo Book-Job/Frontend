@@ -21,7 +21,6 @@ const FindIDPage = () => {
 
   const onSubmit = (data) => {
     if (validationStatus === 'success') {
-      console.log('ID찾기 폼 데이터:', { email: data.email })
       navigate(ROUTER_PATHS.FIND_ID_COMPLETE_PAGE)
     }
   }

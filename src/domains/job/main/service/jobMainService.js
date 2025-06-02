@@ -1,7 +1,6 @@
 import { publicApi } from '../../../../services/api/axios'
 import { recruitmentSortOrder, seekingSortOrder } from '../../../job/common/utils/sortOrder'
 
-// 구인 전체 글 조회 및 검색
 export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
   const apiOrder = recruitmentSortOrder[order] || order || 'LATEST'
   const params = {
@@ -22,10 +21,8 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
   }
 }
 
-// 구직 전체 글 조회 및 검색
 export const getJobPosts = async (lastId, order, keyword) => {
   const apiOrder = seekingSortOrder[order] || 'LATEST'
-  console.log('getJobPosts order:', order, 'apiOrder:', apiOrder)
   const params = { order: apiOrder, size: 6 }
   if (lastId !== undefined && lastId !== null) params.last = lastId
   if (keyword && keyword.trim() !== '') params.keyword = keyword

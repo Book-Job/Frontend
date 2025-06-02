@@ -10,7 +10,7 @@ const WriteCommunityPost = () => {
   const navigate = useNavigate()
 
   const handleSaveDraft = (draftId) => {
-    navigate(ROUTER_PATHS.MY_DRAFTS) // 임시 저장 후 마이페이지로 이동
+    navigate(ROUTER_PATHS.MY_DRAFTS)
   }
   return (
     <main className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>

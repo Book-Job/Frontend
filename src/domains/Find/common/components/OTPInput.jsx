@@ -3,7 +3,7 @@ import ToastService from '../../../../utils/toastService'
 
 const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   const [code, setCode] = useState('')
-  const [timeLeft, setTimeLeft] = useState(300) // 5분
+  const [timeLeft, setTimeLeft] = useState(300)
   const [isExpired, setIsExpired] = useState(true)
 
   useEffect(() => {
@@ -25,10 +25,10 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   useEffect(() => {
     if (!startTimer) {
       setTimeLeft(300)
-      setIsExpired(true) // startTimer가 false일 때 비활성화
+      setIsExpired(true)
       setCode('')
     } else {
-      setIsExpired(false) // startTimer가 true일 때 활성화
+      setIsExpired(false)
     }
   }, [startTimer])
   const formatTime = (seconds) => {
@@ -48,7 +48,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
       return
     }
 
-    onVerify(code) // 상위 컴포넌트로 인증번호 전달
+    onVerify(code)
   }
 
   return (

@@ -9,7 +9,6 @@ const JobPostSortDropDown = ({ className = '', onSortChange, options, value }) =
   }, [value])
 
   const handleSortChange = (newValue) => {
-    console.log('JobPostSortDropDown 선택됨:', newValue)
     setSelectedSort(newValue)
     onSortChange?.(newValue)
   }

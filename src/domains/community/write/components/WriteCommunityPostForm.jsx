@@ -32,14 +32,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       text: EditorState.createEmpty(),
     },
   })
-  //원본
-  // useEffect(() => {
-  //   if (user?.nickname) {
-  //     setValue('nickname', user.nickname)
-  //   }
-  // }, [user, setValue])
 
-  // 선택된 임시저장 복원
   useEffect(() => {
     if (selectedDraft) {
       try {
@@ -77,7 +70,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       ToastService.error('게시글 작성에 실패했습니다.')
     }
   }
-  // 임시 저장
+
   const handleSaveDraft = () => {
     const formData = {
       nickname: control._formValues.nickname || '',
@@ -148,7 +141,9 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
             )}
           />
           {errors.text && (
-            <span className='self-start mt-1 text-xs text-red-500'>{errors.text.message}</span>
+            <span className='self-start text-red-500 text-xs mt-1 block text-left'>
+              {errors.text.message}
+            </span>
           )}
         </FormItem>
       </div>

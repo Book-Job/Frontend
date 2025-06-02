@@ -30,7 +30,6 @@ Small.args = {
   onClick: action('클릭액션'),
 }
 
-//default = 미디움 사이즈
 export const Default = Template.bind({})
 Default.args = {
   label: '기본 버튼',

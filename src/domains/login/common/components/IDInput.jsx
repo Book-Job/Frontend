@@ -4,13 +4,12 @@ import LabelWithInput from '../../../../components/web/LabelWithInput'
 import { getJoinCheckId } from '../../services/useJoinServices'
 
 const IDInput = ({ register, errors, trigger, getValues, watch, setValidationStatus }) => {
-  const [isCheckingId, setIsCheckingId] = useState(false) // 중복 확인 중 로딩 상태
-  const [idCheckMessage, setIdCheckMessage] = useState('') // 중복 확인 결과 메시지
-  const [idCheckStatus, setIdCheckStatus] = useState(null) // 'success' or 'error'
+  const [isCheckingId, setIsCheckingId] = useState(false)
+  const [idCheckMessage, setIdCheckMessage] = useState('')
+  const [idCheckStatus, setIdCheckStatus] = useState(null)
 
   const nowUserIDValue = watch('userID')
 
-  // 중복 확인 버튼 클릭 핸들러
   const handleCheckId = async () => {
     setIdCheckMessage('')
     setIdCheckStatus(null)
@@ -27,18 +26,17 @@ const IDInput = ({ register, errors, trigger, getValues, watch, setValidationSta
 
     try {
       const response = await getJoinCheckId(nowUserID)
-      console.log('ID API 응답 데이터:', response.data)
 
       if (response.data && response.data.message === 'success') {
         setIdCheckMessage('사용 가능한 아이디입니다.')
         setIdCheckStatus('success')
         setValidationStatus('success')
-        trigger('userID') // 유효성 검사 갱신
+        trigger('userID')
       } else {
         setIdCheckMessage(response.data?.message || '이미 사용 중인 아이디입니다.')
         setIdCheckStatus('error')
         setValidationStatus('error')
-        trigger('userID') // 유효성 검사 갱신
+        trigger('userID')
       }
     } catch (error) {
       console.error('ID 중복 확인 중 오류:', error)
@@ -51,14 +49,12 @@ const IDInput = ({ register, errors, trigger, getValues, watch, setValidationSta
     }
   }
 
-  // 버튼 라벨 결정 로직
   const buttonLabel = isCheckingId
     ? '확인 중...'
     : idCheckStatus === 'success'
       ? '사용가능'
       : '중복확인'
 
-  // onChange 핸들러
   const handleInputChange = (e) => {
     if (idCheckMessage) setIdCheckMessage('')
     if (idCheckStatus) setIdCheckStatus(null)

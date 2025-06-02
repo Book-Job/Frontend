@@ -39,7 +39,6 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
         }
         setResetToken(resetToken)
       } else {
-        console.log('비밀번호 불일치:', response)
         setServerMessage({
           message: response.data?.message || '비밀번호가 일치하지 않습니다.',
           isSuccess: false,

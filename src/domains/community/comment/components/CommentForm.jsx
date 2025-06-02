@@ -8,7 +8,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
   const { user } = useAuthStore()
   const [content, setContent] = useState('')
   const [nickname, setNickname] = useState('')
-  const { fetchFreeBest } = useBestStore() //메인 자유베스트 최신화
+  const { fetchFreeBest } = useBestStore()
   useEffect(() => {
     if (user?.nickname) {
       setNickname(user.nickname)
@@ -28,7 +28,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
     try {
       await postComment(boardId, { content, nickname })
       ToastService.success('댓글이 등록되었습니다.')
-      fetchFreeBest(true) //메인 자유베스트 최신화
+      fetchFreeBest(true)
       setContent('')
       setNickname(user?.nickname || '')
       if (onCommentAdded) onCommentAdded()

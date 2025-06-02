@@ -23,7 +23,6 @@ const FindPwEnterID = () => {
     formState: { errors, isValid },
   } = useForm()
 
-  //비밀번호 찾기 아이디 존재여부 확인
   const onSubmit = (ID) => {
     handleFindID(ID.userID)
   }
@@ -34,7 +33,6 @@ const FindPwEnterID = () => {
       if (response.data && response.data.message === 'success') {
         setIdCheckMessage('존재하는 아이디입니다.')
         setIDCheckStatus('success')
-        console.log('response:', response.data.data.maskedEmail)
         setFindPWMaskEmail(response.data.data.maskedEmail)
         openModal({
           title: '아이디 확인 성공',

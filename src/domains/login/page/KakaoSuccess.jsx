@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import ToastService from '../../../utils/toastService';
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import ToastService from '../../../utils/toastService'
 
 const KakaoSuccess = () => {
   // const location = useLocation();
@@ -18,7 +18,6 @@ const KakaoSuccess = () => {
   //     try {
   //       // data를 JSON으로 파싱 (URL 디코딩 필요)
   //       const data = JSON.parse(decodeURIComponent(dataParam));
-  //       console.log('추출된 데이터:', data);
 
   //       // 데이터 사용 (예: 로컬 스토리지에 저장)
   //       const { email, nickname, loginId } = data;
@@ -42,7 +41,7 @@ const KakaoSuccess = () => {
   //   }
   // }, [location, navigate]);
 
-  return <div>카카오 로그인 처리 중...</div>;
-};
+  return <div>카카오 로그인 처리 중...</div>
+}
 
-export default KakaoSuccess;
+export default KakaoSuccess

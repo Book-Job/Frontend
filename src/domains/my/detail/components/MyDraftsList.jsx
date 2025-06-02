@@ -3,7 +3,6 @@ import useDraftStore from '../../../../store/mypage/useDraftStore'
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteDraft } = useDraftStore()
 
-  // JSON 형태의 text에서 텍스트 미리보기 추출
   const getPreviewText = (text) => {
     try {
       const rawContent = JSON.parse(text)
@@ -11,7 +10,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
       const preview = blocks
         .map((block) => block.text)
         .join(' ')
-        .slice(0, 100) // 100자 제한
+        .slice(0, 100)
       return preview || '내용 없음'
     } catch (error) {
       console.error('텍스트 미리보기 변환 오류:', error)

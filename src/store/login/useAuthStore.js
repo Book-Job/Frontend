@@ -38,39 +38,31 @@ const useAuthStore = create((set) => ({
       if (decoded && decoded.exp * 1000 > Date.now()) {
         set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
       } else {
-        // set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-        // localStorage.removeItem('accessToken')
-        // sessionStorage.removeItem('resetToken')
         try {
           const newAccessToken = await refreshAccessToken()
           const newDecoded = parseJwt(newAccessToken)
           set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
-          console.log('새로운 accessToken 갱신 11')
         } catch (error) {
           localStorage.removeItem('accessToken')
           sessionStorage.removeItem('resetToken')
           set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-          console.log('새로운 accessToken 갱신 실패')
         }
       }
     } else {
-      set({ resetToken }) // accessToken 없어도 resetToken 유지
+      set({ resetToken })
     }
   },
 
-  // resetToken 설정
   setResetToken: (token) => {
-    sessionStorage.setItem('resetToken', token) // sessionStorage 동기화
+    sessionStorage.setItem('resetToken', token)
     set({ resetToken: token })
   },
 
-  // resetToken 제거
   clearResetToken: () => {
     sessionStorage.removeItem('resetToken')
     set({ resetToken: null })
   },
 
-  // resetToken 필요 여부 확인
   requireResetToken: async (navigate) => {
     const state = useAuthStore.getState()
     const resetToken = state.resetToken
@@ -102,15 +94,12 @@ const useAuthStore = create((set) => ({
     }
     const decoded = parseJwt(token)
     if (decoded && decoded.exp * 1000 < Date.now()) {
-      // 토큰 만료 시 갱신 시도
       try {
         const newAccessToken = await refreshAccessToken(token)
         const newDecoded = parseJwt(newAccessToken)
         set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
-        console.log('새로운 accessToken 갱신 성공')
         return true
       } catch (error) {
-        console.log('새로운 accessToken 갱신 실패')
         localStorage.removeItem('accessToken')
         sessionStorage.removeItem('resetToken')
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
@@ -121,7 +110,6 @@ const useAuthStore = create((set) => ({
     return true
   },
 
-  // 로그인 액션
   login: async (loginData) => {
     try {
       const response = await postLoginData(loginData)

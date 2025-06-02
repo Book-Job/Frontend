@@ -24,13 +24,11 @@ const EditPassword = () => {
     mode: 'onChange',
   })
 
-  // Login 확인
   useEffect(() => {
     const checkLogin = async () => {
       const isLogin = await requireLogin(navigate)
       if (!isLogin) {
         ToastService.info('로그인 후 이용 가능합니다.')
-        console.log('로그인 확인이 필요합니다.1')
       }
     }
     checkLogin()
@@ -54,7 +52,6 @@ const EditPassword = () => {
         }
         setResetToken(resetToken)
       } else {
-        console.log('비밀번호 불일치:', response)
         setServerMessage({
           message: response.data?.message || '비밀번호가 일치하지 않습니다.',
           isSuccess: false,
