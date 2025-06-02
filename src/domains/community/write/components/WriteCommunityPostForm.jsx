@@ -67,10 +67,9 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       await createPost(postData)
       ToastService.success('게시글이 등록되었습니다.')
       if (selectedDraft) {
-        // 추가
-        deleteDraft(selectedDraft.id) // 선택된 드래프트 삭제
+        deleteDraft(selectedDraft.id)
         clearSelectedDraft()
-      } //여기까지
+      }
       reset()
       navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {

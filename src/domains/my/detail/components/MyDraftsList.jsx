@@ -1,25 +1,5 @@
 import useDraftStore from '../../../../store/mypage/useDraftStore'
 
-// 날짜를 yyyy-mm-dd 형식으로 포맷팅
-const formatDate = (dateString) => {
-  try {
-    const date = new Date(dateString)
-    return date
-      .toLocaleDateString('ko-KR', {
-        timeZone: 'Asia/Seoul',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split('. ')
-      .join('-')
-      .slice(0, -1) // '2025. 06. 02.' -> '2025-06-02'
-  } catch (error) {
-    console.error('날짜 포맷팅 오류:', error)
-    return '날짜 오류'
-  }
-}
-
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteDraft } = useDraftStore()
 
@@ -51,9 +31,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
             </div>
             <div className='flex sm:text-[24px] text-[16px]'>{getPreviewText(item.text)}</div>
             <div className='flex justify-between my-[24px]'>
-              <span className='text-main-pink sm:text-[20px] text-[14px]'>
-                {formatDate(item.date)}
-              </span>
+              <span className='text-main-pink sm:text-[20px] text-[14px]'>{item.date}</span>
               <span
                 className='text-dark-gray sm:text-[20px] text-[14px] px-3 py-1 rounded-[5px]
         hover:bg-main-pink/10 transition'

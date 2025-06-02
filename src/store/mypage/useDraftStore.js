@@ -23,25 +23,28 @@ const useDraftStore = create((set) => ({
   // 임시저장 저장
   saveDraft: (draftData) => {
     const id = uuidv4()
-    const date = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    const date = new Date()
+      .toLocaleDateString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .split('. ')
+      .join('-')
+      .slice(0, -1) // '2025. 06. 02.' -> '2025-06-02'
     const newDraft = {
       id,
       nickname: draftData.nickname || '',
       title: draftData.title || '',
-      text: JSON.stringify(convertToRaw(draftData.text.getCurrentContent())), // JSON으로 저장
+      text: JSON.stringify(convertToRaw(draftData.text.getCurrentContent())),
       date,
     }
     set((state) => {
       let updatedDrafts = [newDraft, ...state.drafts]
       if (updatedDrafts.length > 5) {
-        updatedDrafts = updatedDrafts
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .slice(0, 5) 
-        const oldestDraft = state.drafts[state.drafts.length - 1]
-        ToastService.info(
-          `임시저장 5개를 초과하여 가장 오래된 임시저장이 삭제되었습니다.\n
-          삭제 임시저장: "${oldestDraft.title || '제목 없음'}"`,
-        )
+        ToastService.info('임시저장은 최대 5개까지 저장할 수 있습니다.')
+        return { drafts: state.drafts }
       }
       localStorage.setItem('communityPostDrafts', JSON.stringify(updatedDrafts))
       return { drafts: updatedDrafts }
