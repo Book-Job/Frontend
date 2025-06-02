@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import { deleteLogout, postLoginData } from './../../domains/login/services/useLoginServices'
+import {
+  deleteLogout,
+  postLoginData,
+  refreshAccessToken,
+} from './../../domains/login/services/useLoginServices'
 
 const parseJwt = (token) => {
   try {
@@ -19,13 +23,34 @@ const parseJwt = (token) => {
   }
 }
 
+// 토큰 갱신 API 호출 (가정)
+// const refreshAccessToken = async () => {
+//   try {
+//     const response = await post('/api/auth/refresh', {
+//       method: 'POST',
+//       credentials: 'include', // 쿠키에 포함된 refreshToken을 자동으로 전송
+//     })
+//     if (!response.ok) throw new Error('토큰 갱신 실패')
+//     const data = await response.json()
+//     const newAccessToken = response.headers.get('Authorization')?.replace('Bearer ', '')
+//     if (newAccessToken) {
+//       localStorage.setItem('accessToken', newAccessToken)
+//       return newAccessToken
+//     }
+//     throw new Error('새로운 액세스 토큰을 받지 못했습니다.')
+//   } catch (error) {
+//     console.error('토큰 갱신 오류:', error)
+//     throw error
+//   }
+// }
+
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
   accessToken: null,
   resetToken: null,
 
-  initialize: () => {
+  initialize: async () => {
     const token = localStorage.getItem('accessToken')
     const resetToken = sessionStorage.getItem('resetToken')
     if (token) {
@@ -33,9 +58,18 @@ const useAuthStore = create((set) => ({
       if (decoded && decoded.exp * 1000 > Date.now()) {
         set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
       } else {
-        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-        localStorage.removeItem('accessToken')
-        sessionStorage.removeItem('resetToken')
+        // set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+        // localStorage.removeItem('accessToken')
+        // sessionStorage.removeItem('resetToken')
+        try {
+          const newAccessToken = await refreshAccessToken()
+          const newDecoded = parseJwt(newAccessToken)
+          set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
+        } catch (error) {
+          localStorage.removeItem('accessToken')
+          sessionStorage.removeItem('resetToken')
+          set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+        }
       }
     } else {
       set({ resetToken }) // accessToken 없어도 resetToken 유지
@@ -91,6 +125,7 @@ const useAuthStore = create((set) => ({
           set({
             user: { nickname: response.data.data.nickname },
             isAuthenticated: true,
+            accessToken,
           })
         } else {
           throw new Error('액세스 토큰을 받지 못했습니다.')
