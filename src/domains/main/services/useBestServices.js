@@ -1,6 +1,5 @@
-import { publicApi } from '../../../services/api/Axios'
+import { publicApi } from '../../../services/api/axios'
 
-// 자유 베스트 리스트
 export const getFreeBest = async () => {
   try {
     const response = await publicApi.get('/boards/best', {
@@ -15,7 +14,7 @@ export const getFreeBest = async () => {
     throw new Error(error)
   }
 }
-// 구인 베스트 리스트
+
 export const getJobBest = async () => {
   try {
     const response = await publicApi.get('/job-posting/best', {

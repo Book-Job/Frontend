@@ -27,11 +27,9 @@ const EditProfile = () => {
   const handleMyData = async () => {
     try {
       const response = await getMyProfileData()
-      console.log('마이프로필 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
         setUserData(response.data)
       } else {
-        console.log('마이프로필 데이터 오류:', response.data)
         setServerError(response.data?.message || '프로필 데이터를 불러오지 못했습니다.')
       }
     } catch (error) {
@@ -44,9 +42,7 @@ const EditProfile = () => {
     setServerError(null)
     try {
       const response = await patchNicknameCh(newNickname)
-      console.log('닉네임 변경 데이터 확인:', response)
       if (response.data && response.data.message === 'success') {
-        console.log('닉네임 변경 데이터 성공:', response.data)
         setUserData((prev) => ({
           ...prev,
           data: { ...prev.data, nickname: newNickname },
@@ -55,7 +51,6 @@ const EditProfile = () => {
         setServerError(null)
         ToastService.success('닉네임이 성공적으로 변경되었습니다!')
       } else {
-        console.log('닉네임 변경 데이터 오류:', response.data)
         setServerError(response.data?.message || '닉네임 변경에 실패했습니다.')
       }
     } catch (error) {
@@ -68,7 +63,6 @@ const EditProfile = () => {
   const handleCheckNickname = async (nickname) => {
     try {
       const response = await getJoinCheckNickname(nickname)
-      // console.log('닉네임 중복 확인 응답:', response.data)
       return response
     } catch (error) {
       console.error('닉네임 중복 확인 오류:', error)
@@ -80,12 +74,10 @@ const EditProfile = () => {
     try {
       const response = await deleteMember(PW)
       if (response.data && response.data.message === 'success') {
-        console.log('회원 탈퇴 성공:', response.data)
         logout()
         ToastService.success('회원 탈퇴가 완료되었습니다.')
-        navigate(ROUTER_PATHS.HOME) // 홈 또는 로그인 페이지로 이동
+        navigate(ROUTER_PATHS.HOME)
       } else {
-        console.log('회원 탈퇴 실패:', response.data)
         ToastService.info('회원 탈퇴에 실패했습니다.')
       }
     } catch (error) {
@@ -137,10 +129,10 @@ const EditProfile = () => {
               text={'인증된 이메일입니다'}
             />
             <ProfileInfo title={'로그인 아이디'} content={userData.data.loginId} />
-            <div className='flex justify-between py-2 text-lg border-dark-gray'>
+            <div className='flex justify-between py-1 text-lg border-dark-gray'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
-                className='font-bold text-main-pink hover:text-hover-pink'
+                className='font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
               >
                 변경

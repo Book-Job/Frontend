@@ -27,7 +27,6 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
     setFullEmail(emailFull)
   }, [emailId, domainValue, setValue])
 
-  // 중복 확인 버튼 클릭 핸들러
   const handleCheckEmail = async () => {
     if (isCheckingEmail) {
       ToastService.info('잠시 기다려주세요. 요청이 진행 중입니다.')

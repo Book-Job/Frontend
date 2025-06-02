@@ -1,12 +1,11 @@
 import { authApi } from '../../../services/api/axios'
 
-//내가 작성한 자유게시판 글 불러오기
 export const getMyFreeBoardData = async (token, page = 0, limit = 10) => {
   try {
     const response = await authApi.get('/boards/members', {
       params: {
-        page, // 기본값 0
-        limit, // 기본값 10
+        page,
+        limit,
       },
       headers: {
         Accept: 'application/json',
@@ -23,13 +22,12 @@ export const getMyFreeBoardData = async (token, page = 0, limit = 10) => {
   }
 }
 
-//내가 작성한 구인 구직 게시판 글 불러오기
 export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
   try {
     const response = await authApi.get('/recruitments/members', {
       params: {
-        page, // 기본값 0
-        limit, // 기본값 10
+        page,
+        limit,
       },
       headers: {
         Accept: 'application/json',
@@ -46,7 +44,6 @@ export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
   }
 }
 
-//내가 작성한 자유게시판 글 삭제
 export const deleteMyFreeBoardData = async (token, id) => {
   try {
     const response = await authApi.delete('/boards/members', {
@@ -56,7 +53,7 @@ export const deleteMyFreeBoardData = async (token, id) => {
         'Content-Type': 'application/json',
       },
       data: {
-        ids: Array.isArray(id) ? id : [id], // 단일 ID를 배열로 변환
+        ids: Array.isArray(id) ? id : [id],
       },
     })
     return response.data
@@ -65,7 +62,7 @@ export const deleteMyFreeBoardData = async (token, id) => {
     throw new Error(error.response?.data?.message || '자유글 삭제 중 오류가 발생했습니다.')
   }
 }
-//내가 작성한 구인구직 게시판 글 삭제
+
 export const deleteMyJobBoardData = async (token, deleteRequest) => {
   try {
     const response = await authApi.delete('/recruitments/members', {
@@ -75,7 +72,7 @@ export const deleteMyJobBoardData = async (token, deleteRequest) => {
         'Content-Type': 'application/json',
       },
       data: {
-        deleteRequest: Array.isArray(deleteRequest) ? deleteRequest : [deleteRequest], // 단일 객체를 배열로 변환
+        deleteRequest: Array.isArray(deleteRequest) ? deleteRequest : [deleteRequest],
       },
     })
     return response.data

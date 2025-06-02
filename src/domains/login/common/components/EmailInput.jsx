@@ -11,24 +11,20 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
   const [customDomain, setCustomDomain] = useState('')
   const [isCustom, setIsCustom] = useState(false)
   const [fullEmail, setFullEmail] = useState()
-  const [startTimer, setStartTimer] = useState(false) // 타이머 시작 상태
-  const [isCheckingEmail, setIsCheckingEmail] = useState(false) // 중복 확인 중 로딩 상태
-  const [emailCheckMessage, setEmailCheckMessage] = useState('') // 중복 확인 결과 메시지
-  const [emailCheckStatus, setEmailCheckStatus] = useState(null) // 'success' or 'error'
-  // 이메일 입력 값
-  const emailId = watch('emailId') || ''
+  const [startTimer, setStartTimer] = useState(false)
+  const [isCheckingEmail, setIsCheckingEmail] = useState(false)
+  const [emailCheckMessage, setEmailCheckMessage] = useState('')
+  const [emailCheckStatus, setEmailCheckStatus] = useState(null)
 
-  // 도메인 값 결정 (직접 입력 vs 선택)
+  const emailId = watch('emailId') || ''
   const domainValue = isCustom ? customDomain : domain
 
-  // emailFull 값 자동 업데이트
   useEffect(() => {
     const emailFull = `${emailId}@${domainValue}`
     setValue('email', emailFull)
     setFullEmail(emailFull)
   }, [emailId, domainValue, setValue])
 
-  // 중복 확인 버튼 클릭 핸들러
   const handleCheckEmail = async () => {
     if (isCheckingEmail) {
       return
@@ -71,17 +67,14 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
 
   const handleIsExpiredEmail = async (code) => {
     try {
-      console.log('Email :', fullEmail)
-      console.log('code :', code)
       const response = await postJoinCheckEmailNum({ fullEmail, code })
-      console.log('인증번호 확인 API 응답 데이터:', response.data)
 
       if (response.data && response.data.message === 'success') {
         setEmailCheckMessage('사용 가능한 이메일일입니다.')
         setEmailCheckStatus('success')
         setValidationStatus('success')
-        setStartTimer(false) // 인증 성공 시 타이머 중지
-        trigger('emailId') // 유효성 검사 갱신
+        setStartTimer(false)
+        trigger('emailId')
       } else {
         setEmailCheckMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
         setEmailCheckStatus('error')

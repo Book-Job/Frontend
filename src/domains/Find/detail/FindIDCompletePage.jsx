@@ -9,12 +9,9 @@ import useFindIDStore from '../../../store/find/useFindIDStore'
 
 const FindIDCompletePage = () => {
   const { findID } = useFindIDStore()
-  console.log('findID 타입:', typeof findID, findID)
-  console.log('findID 아이디:', findID.loginId)
 
   const navigate = useNavigate()
 
-  // findID가 객체인지 문자열인지 확인하여 렌더링
   const displayID = findID?.loginId || findID || 'ID를 찾을 수 없습니다.'
 
   return (

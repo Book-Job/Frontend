@@ -27,11 +27,14 @@ import DetailCommunityPage from '../domains/community/detail/page/DetailCommunit
 import RecruitmentDetailPage from '../domains/job/recruitment/detail/page/RecruitmentDetailPage'
 import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecruitmentPostPage'
 import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPostPage'
+import KakaoSuccess from '../domains/login/page/KakaoSuccess'
+import NaverSuccess from '../domains/login/page/NaverSuccess'
 
 const routes = [
   {
     path: ROUTER_PATHS.MAIN_PAGE,
     element: <MainPage />,
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.LOGIN_MAIN,
@@ -180,6 +183,14 @@ const routes = [
   {
     path: '*',
     element: <ErrorPage />,
+  },
+  {
+    path: ROUTER_PATHS.KAKAO_SUCCESS,
+    element: <KakaoSuccess />,
+  },
+  {
+    path: ROUTER_PATHS.NAVER_SUCCESS,
+    element: <NaverSuccess />,
   },
 ]
 

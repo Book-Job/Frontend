@@ -12,15 +12,15 @@ const InputBox = forwardRef(({ placeholder, size, ...rest }, ref) => {
     <div className='flex flex-col items-start justify-center w-full line-clamp-1'>
       <input
         placeholder={placeholder}
-        className={`${InputBoxSize[size]} border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none `}
-        ref={ref} // react-hook-form에서 사용할 ref 추가
-        {...rest} // 기타 속성 전달
+        className={`${InputBoxSize[size]} border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none `}
+        ref={ref}
+        {...rest}
       />
     </div>
   )
 })
 
-InputBox.displayName = 'InputBox' // forwardRef 사용 시 필요
+InputBox.displayName = 'InputBox'
 
 InputBox.propTypes = {
   placeholder: PropTypes.string.isRequired,

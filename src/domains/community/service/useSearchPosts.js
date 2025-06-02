@@ -14,7 +14,6 @@ const useSearchPosts = () => {
 
     try {
       const res = await getAllPosts()
-      console.log('받은 데이터:', res)
 
       if (Array.isArray(res.boards)) {
         const filteredResults = res.boards.filter(

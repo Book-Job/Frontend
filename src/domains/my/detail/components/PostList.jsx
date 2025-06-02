@@ -13,20 +13,17 @@ const PostList = () => {
   const { choiceBoard } = useBoardStore()
   const boardData = choiceBoard === '구인구직' ? jobBoard : freeBoard
 
-  // 체크박스 토글
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     )
   }
 
-  // 전체 선택 토글
   const isAllChecked = boardData && boardData.length > 0 && boardData.length === checkedItems.length
   const toggleAll = () => {
     setCheckedItems(isAllChecked ? [] : boardData.map((item) => item.boardId || item.recruitmentId))
   }
 
-  // 삭제 API 호출 (공통 함수)
   const deleteItems = async (items, isJobBoard) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
@@ -36,22 +33,18 @@ const PostList = () => {
     try {
       let response
       if (isJobBoard) {
-        // 구인구직: items는 [{ id, recruitmentCategory }, ...] 형태
         const deleteRequest = items.map((item) => ({
           recruitmentId: item.id,
           recruitmentCategory: item.recruitmentCategory || 'JOB_POSTING',
         }))
         response = await deleteMyJobBoardData(token, deleteRequest)
       } else {
-        // 자유게시판: items는 ID 배열 [1, 3, 5]
         response = await deleteMyFreeBoardData(token, items)
       }
       if (response && response.message === 'success') {
-        console.log(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 성공:`, response)
-        setCheckedItems([]) // 선택 항목 초기화
+        setCheckedItems([])
         await (isJobBoard ? fetchJobBoard(token, true) : fetchFreeBoard(token, true))
       } else {
-        console.log(`${isJobBoard ? '구인구직' : '자유게시판'} 삭제 오류:`, response)
         ToastService.info('삭제에 실패했습니다.')
       }
     } catch (error) {
@@ -61,7 +54,6 @@ const PostList = () => {
       useMyBoardStore.setState({ [isJobBoard ? 'isJobLoading' : 'isFreeLoading']: false })
     }
   }
-  // 개별 삭제
   const handleDeleteItem = (id, title, recruitmentCategory) => {
     if (
       window.confirm(
@@ -73,7 +65,6 @@ const PostList = () => {
     }
   }
 
-  // 다중 삭제
   const handleDeleteSelected = () => {
     if (checkedItems.length === 0) {
       ToastService.info('삭제할 항목을 선택하세요.')

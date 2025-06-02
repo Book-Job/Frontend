@@ -15,7 +15,6 @@ const Header = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
-  // 드롭다운 옵션
   const options = [
     ...(isAuthenticated
       ? [
@@ -28,7 +27,6 @@ const Header = () => {
         ]),
   ]
 
-  // 드롭다운 선택 핸들러
   const handleOptionChange = (value) => {
     setIsDropdownOpen(false)
     if (value === 'login') {
@@ -41,7 +39,6 @@ const Header = () => {
       logout()
     }
   }
-  // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

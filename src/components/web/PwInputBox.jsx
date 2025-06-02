@@ -16,9 +16,9 @@ const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) =
       <input
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
-        className={`${PwInputBoxSize[size]} border border-dark-gray rounded pl-4 pr-12 text-[16px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
-        ref={ref} // react-hook-form에서 사용할 ref 추가
-        {...rest} // 기타 속성 전달
+        className={`${PwInputBoxSize[size]} border border-dark-gray rounded pl-4 pr-12 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
+        ref={ref}
+        {...rest}
       />
       <button
         type='button'
@@ -35,7 +35,7 @@ const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) =
   )
 })
 
-PwInputBox.displayName = 'PwInputBox' // forwardRef 사용 시 필요
+PwInputBox.displayName = 'PwInputBox'
 
 PwInputBox.propTypes = {
   placeholder: PropTypes.string.isRequired,

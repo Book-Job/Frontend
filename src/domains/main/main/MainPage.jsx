@@ -3,6 +3,7 @@ import BestList from '../common/components/BestList'
 import BoardButton from '../common/components/BoardButton'
 import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
+import BannerExample from '../../../components/common/BannerExample'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('자유게시판')
   const {
@@ -20,24 +21,23 @@ const MainPage = () => {
     setSelectedBoard(boardName)
   }
 
-  // 새로고침 버튼 핸들러
   const handleRefresh = () => {
-    fetchFreeBest(true) 
+    fetchFreeBest(true)
     fetchJobBest(true)
   }
 
   useEffect(() => {
-    Promise.all([fetchFreeBest(), fetchJobBest()]) // 병렬 호출로 최적화
+    Promise.all([fetchFreeBest(), fetchJobBest()])
   }, [fetchFreeBest, fetchJobBest])
 
   const currentList = selectedBoard === '자유게시판' ? freeBest : jobBest
   const isLoading = selectedBoard === '자유게시판' ? isFreeLoading : isJobLoading
-  // const isLoading = true
   const error = selectedBoard === '자유게시판' ? freeError : jobError
 
   return (
     <div className='flex flex-col items-center w-full'>
-      <div className='w-full mb-6 sm:mb-10'>
+      <BannerExample />
+      <div className='w-full my-6 sm:my-10'>
         <BoardButton
           onBoardSelect={handleBoardSelect}
           selectedBoard={selectedBoard}

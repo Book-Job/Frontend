@@ -23,22 +23,19 @@ const JoinForm = () => {
     getValues,
     formState: { errors, isValid },
   } = useForm({
-    mode: 'onChange', // 선택사항: 실시간 유효성 검사를 원할 경우 추가
+    mode: 'onChange',
   })
 
-  // 검증 상태 관리
   const [validationStatus, setValidationStatus] = useState({
-    idCheck: null, // 'success' or 'error'
-    nicknameCheck: null, // 'success' or 'error'
-    emailCheck: null, // 'success' or 'error'
+    idCheck: null,
+    nicknameCheck: null,
+    emailCheck: null,
   })
 
-  // 검증 상태 업데이트 함수
   const updateValidationStatus = (field, status) => {
     setValidationStatus((prev) => ({ ...prev, [field]: status }))
   }
 
-  // 모든 검증 통과 여부 확인
   const isAllValid = () =>
     isValid &&
     validationStatus.idCheck === 'success' &&
@@ -57,17 +54,14 @@ const JoinForm = () => {
     }
 
     const { emailId, passwordCheck, ...filteredData } = data
-    console.log('폼 데이터:', filteredData)
     handleJoinData(filteredData)
   }
 
   const handleJoinData = async (filteredData) => {
     try {
       const response = await postJoinData(filteredData)
-      console.log('가입 데이터 확인:', response.data)
 
       if (response.data && response.data.message === 'success') {
-        console.log('가입 성공:', response.data)
         openModal({
           title: '회원가입 성공',
           description: '로그인페이지로 이동합니다.',
@@ -75,7 +69,6 @@ const JoinForm = () => {
           onButtonClick: () => navigate(ROUTER_PATHS.LOGIN_MAIN),
         })
       } else {
-        console.log('가입 오류:', response.data)
         openModal({
           title: '회원가입 실패',
           description: '아이디 또는 비밀번호를 확인해주세요.',

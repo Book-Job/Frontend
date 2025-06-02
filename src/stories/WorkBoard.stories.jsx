@@ -23,7 +23,6 @@ export default {
   },
 }
 
-// export const Default = (args) => <WorkBoard {...args} />
 const Template = (args) => <WorkBoard {...args} />
 
 export const Test = Template.bind({})

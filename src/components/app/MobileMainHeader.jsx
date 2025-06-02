@@ -23,7 +23,6 @@ const MobileMainHeader = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
 
-  // 드롭다운 옵션
   const options = [
     ...(isAuthenticated
       ? [
@@ -36,9 +35,8 @@ const MobileMainHeader = () => {
         ]),
   ]
 
-  // 드롭다운 선택 핸들러
   const handleOptionChange = (value) => {
-    setIsDropdownOpen(false) // 선택 후 드롭다운 닫기
+    setIsDropdownOpen(false)
     if (value === 'login') {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
     } else if (value === 'join') {
@@ -50,7 +48,6 @@ const MobileMainHeader = () => {
     }
   }
 
-  // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

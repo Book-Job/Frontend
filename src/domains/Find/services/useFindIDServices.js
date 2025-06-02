@@ -1,14 +1,12 @@
-import { authApi } from '../../../services/api/axios'
-import useFindIDStore from '../../../store/find/useFindIDStore'
+import { publicApi } from '../../../services/api/axios'
 
-//아이디 찾기 이메일 인증 요청
 export const postFindIDEmail = async (fullEmail) => {
   if (!fullEmail || fullEmail.trim() === '') {
     throw new Error('이메일을 입력해주세요')
   }
 
   try {
-    const response = await authApi.post(
+    const response = await publicApi.post(
       '/auth/email-verification/id',
       { email: fullEmail },
       {
@@ -24,14 +22,13 @@ export const postFindIDEmail = async (fullEmail) => {
       '아이디 찾기 email 확인 중 오류 api:',
       error.response?.data?.message || error.message,
     )
-    throw new Error(error.response?.data?.message || error.message) // 에러 메시지 전달
+    throw new Error(error.response?.data?.message || error.message)
   }
 }
 
-//아이디 찾기 이메일 인증 번호 확인
 export const postFindIDEmailCode = async ({ fullEmail, code }) => {
   try {
-    const response = await authApi.post(
+    const response = await publicApi.post(
       '/auth/email-verification/id/code',
       { email: fullEmail, code: code, reason: '아이디 찾기' },
       {
