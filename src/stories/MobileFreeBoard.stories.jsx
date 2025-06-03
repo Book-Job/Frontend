@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import MobileFreeBoard from '../components/app/MobileFreeBoard'
+import { MemoryRouter } from 'react-router-dom'
 
 export default {
   title: 'components/app/MobileFreeBoard',
@@ -18,7 +19,11 @@ export default {
   },
 }
 
-const Template = (args) => <MobileFreeBoard {...args} />
+const Template = (args) => (
+  <MemoryRouter>
+    <MobileFreeBoard {...args} />
+  </MemoryRouter>
+)
 
 export const Test = Template.bind({})
 Test.args = {

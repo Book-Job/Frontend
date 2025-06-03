@@ -28,3 +28,4 @@ dev-dist
 #API KEY
 .env
 .env.local
+.vercel
