@@ -1,4 +1,4 @@
-name: Deploy Vite app to Vercel (Yarn)
+name: Deploy Vite app to Vercel (Yarn + Lighthouse)
 
 on:
   push:
@@ -21,3 +21,9 @@ jobs:
 
       - name: Deploy to Vercel
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --name bookjob --yes
+
+      - name: Run Lighthouse Audit
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: https://bookjob.vercel.app
+          configPath: ./lighthouserc.json
