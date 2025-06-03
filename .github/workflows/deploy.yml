@@ -20,4 +20,5 @@ jobs:
         run: yarn build
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm
+        run: |
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm
