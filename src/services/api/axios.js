@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const authApi = axios.create({
-  baseURL: 'http://43.200.107.80:8080/api/v1',
+  baseURL: 'https://api.bookjob.co.kr/api/v1',
   withCredentials: true,
 })
 
@@ -19,6 +19,6 @@ authApi.interceptors.request.use(
 )
 
 export const publicApi = axios.create({
-  baseURL: 'http://43.200.107.80:8080/api/v1',
+  baseURL: 'https://api.bookjob.co.kr/api/v1',
   withCredentials: false,
 })
