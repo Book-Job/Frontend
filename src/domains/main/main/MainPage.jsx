@@ -37,14 +37,14 @@ const MainPage = () => {
   return (
     <div className='flex flex-col items-center w-full'>
       <BannerExample />
-      <div className='w-full my-6 sm:my-10'>
+      <div className='w-full px-4 my-6 sm:px-10 sm:my-10'>
         <BoardButton
           onBoardSelect={handleBoardSelect}
           selectedBoard={selectedBoard}
           handleRefresh={handleRefresh}
         />
       </div>
-      <div className='flex justify-center w-full'>
+      <div className='flex justify-center w-full px-4 sm:px-10'>
         {isLoading ? (
           <Spinner size={48} color='main-pink' />
         ) : error ? (

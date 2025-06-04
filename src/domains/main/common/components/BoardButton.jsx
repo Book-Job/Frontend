@@ -23,8 +23,8 @@ const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
               <button
                 key={index}
                 onClick={() => handleClick(path, name)}
-                className={`sm:w-[157px] w-[100px] sm:h-[47px] h-[37px] border rounded-full sm:text-2xl text-lg ${
-                  isSelected ? 'bg-main-pink text-white' : 'bg-light-gray text-black'
+                className={`sm:w-[157px] w-[100px] sm:h-[47px] h-[32px]  rounded-full sm:text-2xl  text-lg font-bold ${
+                  isSelected ? 'bg-main-pink text-white' : 'text-black'
                 }`}
               >
                 {name}
@@ -36,9 +36,9 @@ const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
           onClick={() => {
             handleRefresh()
           }}
-          className='flex justify-end w-full mt-1 '
+          className='flex items-center justify-end w-full mt-1 '
         >
-          <div className='w-4 h-4 mr-1 sm:w-5 sm:h-5'>
+          <div className='w-3 h-3 mr-1 mb-[1px] sm:w-4 sm:h-4'>
             <img src={commonTime} alt='commonTime' />
           </div>
           <p className='text-sm font-semibold sm:text-base text-dark-gray hover:text-light-gray'>

@@ -18,7 +18,14 @@ const WriteRecruitmentPostPage = () => {
         <WriteRecruitmentPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
-          <Button size='small' label='임시저장' className='mr-[14px]' />
+          <Button
+            size='small'
+            label='임시저장'
+            className='mr-[14px]'
+            onClick={() => {
+              document.querySelector('#community-post-form button[type="button"]').click()
+            }}
+          />
           <PinkButton label='저장' type='submit' form='recruitment-post-form' />
         </div>
       </div>
