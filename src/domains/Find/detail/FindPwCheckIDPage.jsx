@@ -139,7 +139,7 @@ const FindPwCheckIDPage = () => {
     }
   }
   const formContent = (
-    <div>
+    <div className='w-full'>
       <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
       <div className='flex my-5 text-xl'>
         {isMobile ? (

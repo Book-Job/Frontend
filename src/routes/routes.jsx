@@ -121,32 +121,12 @@ const routes = [
   {
     path: ROUTER_PATHS.FIND_ID_COMPLETE_PAGE,
     element: <FindIDCompletePage />,
+    label: '아이디 찾기',
   },
   {
     path: ROUTER_PATHS.FIND_PW,
     element: <FindPwPage />,
     label: '비밀번호 찾기',
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW_CHECK_ID_PAGE,
-    element: <FindPwCheckIDPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
-    element: <ChangePwPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_ID,
-    element: <FindIDPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_ID_COMPLETE_PAGE,
-    element: <FindIDCompletePage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW,
-    element: <FindPwPage />,
-    label: '비밀번호 찾기22',
   },
   {
     path: ROUTER_PATHS.FIND_PW_CHECK_ID_PAGE,
@@ -171,6 +151,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_EDIT_PW,
     element: <EditPassword />,
+    label: '비밀번호 변경',
   },
   {
     path: ROUTER_PATHS.MY_PW_MIS,
