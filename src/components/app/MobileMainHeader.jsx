@@ -91,7 +91,7 @@ const MobileMainHeader = () => {
                   >
                     {option.value === 'default' ? (
                       <div className='flex items-center'>
-                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
+                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2 font-2' />
                         {option.label}
                       </div>
                     ) : (
@@ -104,8 +104,11 @@ const MobileMainHeader = () => {
           </div>
         ) : (
           <div className='flex gap-5'>
-            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold'>
+            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold text-sm'>
               로그인
+            </button>
+            <button onClick={() => navigate(ROUTER_PATHS.JOIN)} className='font-bold text-sm'>
+              회원가입
             </button>
           </div>
         )}
