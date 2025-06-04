@@ -145,7 +145,7 @@ const EditProfile = () => {
                 onClick={() => {
                   openMembershipDeleteModal()
                 }}
-                className={'hover:bg-main-pink'}
+                className={'hover:bg-main-pink transition'}
               />
               <Button
                 size='medium'
@@ -153,7 +153,7 @@ const EditProfile = () => {
                 onClick={() => {
                   userLogout()
                 }}
-                className={'hover:bg-main-pink'}
+                className={'hover:bg-main-pink transition'}
               />
             </div>
           </div>

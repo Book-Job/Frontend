@@ -10,10 +10,11 @@ import { useState } from 'react'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { postJoinData } from '../../services/useJoinServices'
 import { useNavigate } from 'react-router-dom'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 const JoinForm = () => {
   const navigate = useNavigate()
   const { openModal } = useModalStore()
-
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,
@@ -89,7 +90,7 @@ const JoinForm = () => {
 
   return (
     <div className='flex flex-col items-center w-full'>
-      <PageTitle title={'회원정보 입력'} />
+      {isMobile ? null : <PageTitle title={'회원정보 입력'} />}
       <div className='flex flex-col w-full max-w-[575px] gap-4'>
         <IDInput
           register={register}

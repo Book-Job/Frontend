@@ -25,7 +25,7 @@ const DomainSelector = ({
   ]
 
   return (
-    <div className='flex items-end w-full'>
+    <div className='flex items-end w-auto'>
       {isCustom ? (
         <input
           type='text'

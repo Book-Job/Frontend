@@ -39,14 +39,17 @@ const routes = [
   {
     path: ROUTER_PATHS.LOGIN_MAIN,
     element: <LoginMain />,
+    label: '로그인',
   },
   {
     path: ROUTER_PATHS.JOIN,
     element: <Join />,
+    label: '회원가입',
   },
   {
     path: ROUTER_PATHS.MEMBER_DATA_ENTRY,
     element: <MemberDataEntry />,
+    label: '회원정보 입력',
   },
   {
     path: ROUTER_PATHS.COMMUNITY,
@@ -113,38 +116,22 @@ const routes = [
   {
     path: ROUTER_PATHS.FIND_ID,
     element: <FindIDPage />,
+    label: '아이디 찾기',
   },
   {
     path: ROUTER_PATHS.FIND_ID_COMPLETE_PAGE,
     element: <FindIDCompletePage />,
+    label: '아이디 찾기',
   },
   {
     path: ROUTER_PATHS.FIND_PW,
     element: <FindPwPage />,
+    label: '비밀번호 찾기',
   },
   {
     path: ROUTER_PATHS.FIND_PW_CHECK_ID_PAGE,
     element: <FindPwCheckIDPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
-    element: <ChangePwPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_ID,
-    element: <FindIDPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_ID_COMPLETE_PAGE,
-    element: <FindIDCompletePage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW,
-    element: <FindPwPage />,
-  },
-  {
-    path: ROUTER_PATHS.FIND_PW_CHECK_ID_PAGE,
-    element: <FindPwCheckIDPage />,
+    label: '비밀번호 찾기',
   },
   {
     path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
@@ -153,6 +140,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_PAGE,
     element: <MyPage />,
+    label: '내정보',
     noMargin: true,
     isProtected: true,
   },
@@ -163,6 +151,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_EDIT_PW,
     element: <EditPassword />,
+    label: '비밀번호 변경',
   },
   {
     path: ROUTER_PATHS.MY_PW_MIS,

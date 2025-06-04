@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { postFindPWEmail, postTemPW } from '../services/useFindPWServices'
 import ToastService from '../../../utils/toastService'
 import useAuthStore from '../../../store/login/useAuthStore'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const FindPwCheckIDPage = () => {
   const [startTimer, setStartTimer] = useState(false)
@@ -23,6 +24,7 @@ const FindPwCheckIDPage = () => {
   const [validationStatusTemPW, setValidationStatusTemPW] = useState(null)
   const { setResetToken } = useAuthStore()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,
@@ -136,95 +138,115 @@ const FindPwCheckIDPage = () => {
       setEmailCodeMessage('임시 비밀번호 인증을 해주세요.')
     }
   }
-
+  const formContent = (
+    <div className='w-full'>
+      <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
+      <div className='flex my-5 text-xl'>
+        {isMobile ? (
+          <div className='flex flex-col'>
+            <span className='flex justify-start'>본인확인 이메일로 인증</span>
+            <span className='text-main-pink'>
+              {'( '}
+              {findPWMaskEmail}
+              {' )'}
+            </span>
+          </div>
+        ) : (
+          <div>
+            <span>본인확인 이메일로 인증</span>
+            <span className='text-main-pink'>
+              {'( '}
+              {findPWMaskEmail}
+              {' )'}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className='flex flex-col text-dark-gray'>
+        <p className='flex'>본인확인 이메일 주소와 이력한 이메일 주소가 같아야,</p>
+        <p className='flex'>임시비밀번호를 받을 수 있습니다.</p>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex flex-row gap-2 mt-7'>
+          <div className='w-full'>
+            <InputBox
+              type='email'
+              placeholder='이메일 주소를 입려해주세요'
+              size='medium'
+              {...register('userEmail', {
+                required: '이메일 주소를 입력해주세요',
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: '유효한 이메일 주소를 입력해주세요',
+                },
+                onChange: handleInputChange,
+              })}
+            />
+            {errors.userEmail && (
+              <p className='flex text-[14px] items-start text-red-500'>
+                {errors.userEmail.message}
+              </p>
+            )}
+            {emailCheckMessage && (
+              <p
+                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} flex items-start text-[14px]`}
+                aria-live='polite'
+              >
+                {emailCheckMessage}
+              </p>
+            )}
+          </div>
+          <Button
+            type='button'
+            label={buttonLabel}
+            size='semiMedium'
+            bgColor={isEmailValid && !isCheckingEmail ? 'main-pink' : 'light-gray'}
+            disabled={!isEmailValid || isCheckingEmail}
+            onClick={handleEmailAuth}
+          />
+        </div>
+        <div className='mt-7'>
+          <OTPInput
+            size='biggest'
+            placeholder='임시비밀번호를 입력해주세요'
+            startTimer={startTimer}
+            onVerify={(code) => handleTemporaryPW(code)}
+          />
+          <div className='flex items-start'>
+            {emailCodeMessage && (
+              <p
+                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                aria-live='polite'
+              >
+                {emailCodeMessage}
+              </p>
+            )}
+          </div>
+        </div>
+        <div className='mt-7'>
+          <Button
+            type='submit'
+            label='새로운 비밀번호 생성'
+            size='biggest'
+            disabled={validationStatusTemPW !== 'success'}
+            bgColor={validationStatusTemPW === 'success' ? 'main-pink' : 'light-gray'}
+          />
+        </div>
+      </form>
+    </div>
+  )
   return (
     <div>
-      <PageTitle title={'비밀번호 찾기'} subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'} />
+      {isMobile ? (
+        <PageTitle subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'} />
+      ) : (
+        <PageTitle
+          title={'비밀번호 찾기'}
+          subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'}
+        />
+      )}
       <div className='flex justify-center w-full'>
-        <PageBox>
-          <div>
-            <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
-            <div className='flex my-5 text-xl'>
-              <span>본인확인 이메일로 인증</span>
-              <span className='text-main-pink'>
-                {'( '}
-                {findPWMaskEmail}
-                {' )'}
-              </span>
-            </div>
-            <div className='flex flex-col text-dark-gray'>
-              <p className='flex'>본인확인 이메일 주소와 이력한 이메일 주소가 같아야,</p>
-              <p className='flex'>임시비밀번호를 받을 수 있습니다.</p>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='flex flex-row gap-2 mt-7'>
-                <div className='w-full'>
-                  <InputBox
-                    type='email'
-                    placeholder='이메일 주소를 입려해주세요'
-                    size='medium'
-                    {...register('userEmail', {
-                      required: '이메일 주소를 입력해주세요',
-                      pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                        message: '유효한 이메일 주소를 입력해주세요',
-                      },
-                      onChange: handleInputChange,
-                    })}
-                  />
-                  {errors.userEmail && (
-                    <p className='flex text-[14px] items-start text-red-500'>
-                      {errors.userEmail.message}
-                    </p>
-                  )}
-                  {emailCheckMessage && (
-                    <p
-                      className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} flex items-start text-[14px]`}
-                      aria-live='polite'
-                    >
-                      {emailCheckMessage}
-                    </p>
-                  )}
-                </div>
-                <Button
-                  type='button'
-                  label={buttonLabel}
-                  size='semiMedium'
-                  bgColor={isEmailValid && !isCheckingEmail ? 'main-pink' : 'light-gray'}
-                  disabled={!isEmailValid || isCheckingEmail}
-                  onClick={handleEmailAuth}
-                />
-              </div>
-              <div className='mt-7'>
-                <OTPInput
-                  size='biggest'
-                  placeholder='임시비밀번호를 입력해주세요'
-                  startTimer={startTimer}
-                  onVerify={(code) => handleTemporaryPW(code)}
-                />
-                <div className='flex items-start'>
-                  {emailCodeMessage && (
-                    <p
-                      className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-                      aria-live='polite'
-                    >
-                      {emailCodeMessage}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className='mt-7'>
-                <Button
-                  type='submit'
-                  label='새로운 비밀번호 생성'
-                  size='biggest'
-                  disabled={validationStatusTemPW !== 'success'}
-                  bgColor={validationStatusTemPW === 'success' ? 'main-pink' : 'light-gray'}
-                />
-              </div>
-            </form>
-          </div>
-        </PageBox>
+        {isMobile ? formContent : <PageBox>{formContent}</PageBox>}
       </div>
     </div>
   )
