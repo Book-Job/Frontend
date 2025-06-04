@@ -93,7 +93,7 @@ const JobMainPage = () => {
           onSearch={handleSearch}
         />
       </div>
-      <div className='px-4 md:px-10 mt-2 max-w-screen-xl mx-auto'>
+      <div className='px-2 md:px-10 mt-2 max-w-screen-xl mx-auto'>
         <div className='flex items-center justify-between mb-2'>
           {/*  div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
             전체: {counts.total}개 | 오늘: {counts.today}개

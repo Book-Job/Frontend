@@ -11,6 +11,15 @@ const Header = () => {
   const { user, isAuthenticated, logout } = useAuthStore()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const [hasShadow, setHasShadow] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setHasShadow(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
@@ -57,7 +66,11 @@ const Header = () => {
     { label: '문의', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
   ]
   return (
-    <header className=' w-full bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4 '>
+    <header
+      className={`w-full fixed top-0 left-0 z-50 bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4
+      ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
+    `}
+    >
       <div className='flex flex-col items-center gap-5 xl:gap-20 md:gap-10 md:flex-row '>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
