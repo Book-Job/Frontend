@@ -13,6 +13,7 @@ const MobileMainHeader = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { isAuthenticated, user, logout } = useAuthStore()
+  const [hasShadow, setHasShadow] = useState(false)
   const dropdownRef = useRef(null)
 
   const toggleSidebar = () => {
@@ -22,6 +23,14 @@ const MobileMainHeader = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
+
+  useEffect(() => {
+    const onScroll = () => {
+      setHasShadow(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const options = [
     ...(isAuthenticated
@@ -61,7 +70,11 @@ const MobileMainHeader = () => {
   }, [])
 
   return (
-    <div className='flex w-full h-[70px] px-5 items-center justify-between'>
+    <div
+      className={`flex w-full h-[70px] px-5 items-center justify-between fixed top-0 left-0 bg-white z-50
+        ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
+      `}
+    >
       <div
         onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
         className='flex text-2xl font-bold cursor-pointer text-main-pink font-logo'
@@ -104,8 +117,11 @@ const MobileMainHeader = () => {
           </div>
         ) : (
           <div className='flex gap-5'>
-            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold'>
+            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold text-sm'>
               로그인
+            </button>
+            <button onClick={() => navigate(ROUTER_PATHS.JOIN)} className='font-bold text-sm'>
+              회원가입
             </button>
           </div>
         )}
