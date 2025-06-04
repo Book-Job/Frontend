@@ -2,7 +2,8 @@ import navericon from '../../../../assets/icons/common/naverIcon.svg'
 
 const NaverLogin = () => {
   const handleNaverLogin = () => {
-    window.location.href = 'http://43.200.107.80:8080/oauth2/authorization/naver'
+    // window.location.href = 'http://43.200.107.80:8080/oauth2/authorization/naver'
+    window.location.href = 'https://api.bookjob.co.kr/oauth2/authorization/naver'
   }
   return (
     <div>

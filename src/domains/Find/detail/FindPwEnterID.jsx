@@ -10,6 +10,7 @@ import FindLink from '../common/components/FindLink'
 import { getFindPW } from './../services/useFindPWServices'
 import useModalStore from '../../../store/modal/useModalStore'
 import useFindPWStore from '../../../store/find/useFindPWStore'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const FindPwEnterID = () => {
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ const FindPwEnterID = () => {
   const [idCheckStatus, setIDCheckStatus] = useState(null)
   const { setFindPWMaskEmail } = useFindPWStore()
   const { openModal } = useModalStore()
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,
@@ -61,61 +63,66 @@ const FindPwEnterID = () => {
       })
     }
   }
+  const formContent = (
+    <div className='w-full'>
+      <div className='flex justify-start text-3xl font-bold'>임시비밀번호 발급</div>
+      <form className='flex-auto mt-8' onSubmit={handleSubmit(onSubmit)}>
+        <LabelWithInput
+          label='아이디'
+          type='text'
+          placeholder='가입했던 이메일을 입력해주세요'
+          size='biggest'
+          {...register('userID', {
+            required: '아이디를 입력하세요',
+            pattern: {
+              value: /^[a-zA-Z0-9]{4,12}$/,
+              message: '아이디는 영문, 숫자로 4~12자만 가능합니다.',
+            },
+          })}
+        />
+        <div className='flex items-start'>
+          {errors.userID && <p className='text-red-500 text-[14px]'>{errors.userID.message}</p>}
+          {idCheckMessage && (
+            <p
+              className={`${idCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              aria-live='polite'
+            >
+              {idCheckMessage}
+            </p>
+          )}
+        </div>
+        <div className='flex items-end mt-6'>
+          <Button
+            size='biggest'
+            label='다음'
+            bgColor={isValid ? 'main-pink' : 'light-gray'}
+            disabled={!isValid}
+            type='submit'
+          />
+        </div>
+      </form>
+      <div>
+        <FindLink
+          title={'가입한 아이디를 잊어버렸어요!'}
+          onClick={() => navigate(ROUTER_PATHS.FIND_ID)}
+          linkName={'아이디 찾기'}
+        />
+      </div>
+    </div>
+  )
   return (
     <div>
       <div className='flex flex-col items-center'>
-        <PageTitle
-          title={'비밀번호 찾기'}
-          subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'}
-        />
-        <div className='flex justify-center w-full'>
-          <PageBox>
-            <div className='flex justify-start text-3xl font-bold'>임시비밀번호 발급</div>
-            <form className='flex-auto mt-8' onSubmit={handleSubmit(onSubmit)}>
-              <LabelWithInput
-                label='아이디'
-                type='text'
-                placeholder='가입했던 이메일을 입력해주세요'
-                size='biggest'
-                {...register('userID', {
-                  required: '아이디를 입력하세요',
-                  pattern: {
-                    value: /^[a-zA-Z0-9]{4,12}$/,
-                    message: '아이디는 영문, 숫자로 4~12자만 가능합니다.',
-                  },
-                })}
-              />
-              <div className='flex items-start'>
-                {errors.userID && (
-                  <p className='text-red-500 text-[14px]'>{errors.userID.message}</p>
-                )}
-                {idCheckMessage && (
-                  <p
-                    className={`${idCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-                    aria-live='polite'
-                  >
-                    {idCheckMessage}
-                  </p>
-                )}
-              </div>
-              <div className='flex items-end mt-6'>
-                <Button
-                  size='biggest'
-                  label='다음'
-                  bgColor={isValid ? 'main-pink' : 'light-gray'}
-                  disabled={!isValid}
-                  type='submit'
-                />
-              </div>
-            </form>
-            <div>
-              <FindLink
-                title={'가입한 아이디를 잊어버렸어요!'}
-                onClick={() => navigate(ROUTER_PATHS.FIND_ID)}
-                linkName={'아이디 찾기'}
-              />
-            </div>
-          </PageBox>
+        {isMobile ? (
+          <PageTitle subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'} />
+        ) : (
+          <PageTitle
+            title={'비밀번호 찾기'}
+            subTitle={'북잡에서는 이메일로 본인인증을 진행합니다.'}
+          />
+        )}
+        <div className='flex w-full justify-evenly'>
+          {isMobile ? formContent : <PageBox>{formContent}</PageBox>}
         </div>
       </div>
     </div>

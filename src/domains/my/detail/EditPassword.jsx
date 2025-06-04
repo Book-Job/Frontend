@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react'
 import useAuthStore from '../../../store/login/useAuthStore'
 import PwInputBox from '../../../components/web/PwInputBox'
 import ToastService from '../../../utils/toastService'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const EditPassword = () => {
   const navigate = useNavigate()
   const [serverMessage, setServerMessage] = useState({ message: null, isSuccess: false })
   const [isLoading, setIsLoading] = useState(false)
   const { setResetToken, requireLogin } = useAuthStore()
-
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,

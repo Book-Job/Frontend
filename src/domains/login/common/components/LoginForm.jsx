@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 const LoginForm = () => {
   const {
     register,
@@ -26,6 +27,8 @@ const LoginForm = () => {
   const { login } = useAuthStore()
   const { openModal } = useModalStore()
   const [saveLoginID, setSaveLoginID] = useState(false)
+  const isMobile = useIsMobile()
+
   useEffect(() => {
     const savedID = localStorage.getItem('saveLoginID')
     if (typeof savedID === 'string' && savedID.length > 0) {
@@ -72,7 +75,7 @@ const LoginForm = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <PageTitle title={'로그인'} />
+      {isMobile ? null : <PageTitle title='로그인' />}
       <form className='w-full max-w-[532px]' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex w-full mt-11'>
           <InputBox
@@ -97,13 +100,13 @@ const LoginForm = () => {
           <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between mt-6'>
-          <div className='flex gap-2 text-lg sm:text-2xl'>
+          <div className='flex items-center gap-2 text-lg sm:text-2xl'>
             <input
               type='checkbox'
               name='SaveLoginID'
               checked={saveLoginID}
               onChange={handleSaveLoginID}
-              className='flex w-6 h-6 mt-[5px] cursor-pointer'
+              className='flex w-6 h-6 cursor-pointer'
             />
             아이디 저장
           </div>
