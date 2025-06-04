@@ -97,7 +97,11 @@ const Header = () => {
               onClick={toggleDropdown}
               className='flex items-center bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full px-6 font-bold'
             >
-              <img src={babyChick} alt='babyChick' className='w-6 h-6 mr-3 md:w-7 md:h-7' />
+              <img
+                src={babyChick}
+                alt='babyChick'
+                className='w-6 h-6 mr-3 md:w-7 md:h-7 hover:animate-bounce'
+              />
               <span>{user.nickname}님</span>
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-3' />
             </button>

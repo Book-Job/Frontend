@@ -131,7 +131,7 @@ const InputEmail = ({ register, errors, watch, setValue, trigger, setValidationS
             })}
           />
         </div>
-        <span className='flex items-end text-2xl'>@</span>
+        <span className='flex items-center text-2xl mt-9'>@</span>
         <DomainSelector
           domain={domain}
           customDomain={customDomain}

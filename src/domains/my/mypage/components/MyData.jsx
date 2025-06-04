@@ -25,7 +25,8 @@ const MyData = ({ userID, email }) => {
         </div>
         <div className='flex'>
           <button
-            className='border border-dark-gray rounded-[5px] sm:w-[254px] sm:h-[66px] w-28 h-10 font-bold sm:text-2xl text-base'
+            className='border border-dark-gray rounded-[5px] sm:w-[254px] sm:h-[66px] w-28 h-10 font-bold sm:text-2xl text-base transition
+        hover:shadow-inner'
             onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PROFILE)}
           >
             프로필 수정
