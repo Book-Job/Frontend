@@ -100,7 +100,7 @@ const LoginForm = () => {
           <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between mt-6'>
-          <div className='flex items-center gap-2 text-lg sm:text-2xl'>
+          <div className='flex items-center gap-2 text-base sm:text-xl'>
             <input
               type='checkbox'
               name='SaveLoginID'
