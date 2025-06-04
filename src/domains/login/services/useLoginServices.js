@@ -1,4 +1,4 @@
-import { authApi, publicApi } from '../../../services/api/axios'
+import { authApi } from '../../../services/api/axios'
 
 export const postLoginData = async (data) => {
   try {
@@ -39,16 +39,15 @@ export const postLogout = async () => {
   }
 }
 
-export const refreshAccessToken = async (accessToken) => {
+export const refreshAccessToken = async () => {
   try {
-    const response = await publicApi.post(
+    const response = await authApi.post(
       '/auth/refresh',
       {},
       {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `${accessToken}`,
         },
         withCredentials: true,
       },
