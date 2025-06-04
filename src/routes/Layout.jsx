@@ -8,6 +8,8 @@ import ScrollBtn from '../components/common/ScrollAndWriteButton'
 const Layout = ({ children, headerType, label, noMargin = false }) => {
   const isMobile = useIsMobile()
 
+  const headerHeight = isMobile ? (headerType === 'main' ? 70 : 0) : 100
+
   return (
     <div className='flex flex-col min-h-screen'>
       {isMobile ? (
@@ -23,7 +25,8 @@ const Layout = ({ children, headerType, label, noMargin = false }) => {
       <main
         className={`flex flex-col flex-1 ${
           noMargin ? 'mb-4 sm:mb-10' : 'm-4 sm:m-10 justify-center'
-        } ${!isMobile ? '' : ''} `}
+        }`}
+        style={{ paddingTop: `${headerHeight}px` }}
       >
         {children}
       </main>
