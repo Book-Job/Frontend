@@ -11,8 +11,8 @@ const NaverSuccess = () => {
       try {
         const response = await authApi.get('/auth/me')
         console.log('네이버 성공1')
-        if (response.data.success) {
-          const { email, nickname, loginId } = response.data
+        if (response.data || response.data.message === 'success') {
+          const { email, nickname, loginId } = response.data.data
           localStorage.setItem('email', email)
           localStorage.setItem('nickname', nickname)
           localStorage.setItem('loginId', loginId)
