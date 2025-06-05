@@ -1,4 +1,4 @@
-import { authApi } from '../../../services/api/axios'
+import { authApi, publicApi } from '../../../services/api/axios'
 
 export const postLoginData = async (data) => {
   try {
@@ -61,6 +61,22 @@ export const refreshAccessToken = async () => {
     throw new Error('새로운 액세스 토큰을 받지 못했습니다.')
   } catch (error) {
     console.error('토큰 갱신 오류:', error)
+    throw error
+  }
+}
+
+export const getKakaologin = async () => {
+  try {
+    const response = await authApi.get('/auth/me', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    console.log('카카오 성공', response)
+    return response
+  } catch (error) {
+    console.error('카카오 오류:', error)
     throw error
   }
 }
