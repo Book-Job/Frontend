@@ -57,10 +57,16 @@ const MyScrap = () => {
   return (
     <div>
       <PageTitle title={'스크랩'} />
-      <div className='flex justify-end max-w-[932px] mx-auto mb-2'>
-        <PostSortDropDown onSortChange={setSort} />
-      </div>
 
+      {!loading && sortedPosts.length === 0 && (
+        <div className='text-center text-dark-gray items-center'>스크랩한 글이 없습니다.</div>
+      )}
+
+      {sortedPosts.length > 0 && (
+        <div className='flex justify-end max-w-[932px] mx-auto mb-2'>
+          <PostSortDropDown onSortChange={setSort} />
+        </div>
+      )}
       <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center'>
         {sortedPosts.map((post) => (
           <WorkBoard
