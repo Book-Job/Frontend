@@ -8,7 +8,7 @@ const PersonalInfo = ({ register }) => {
   return (
     <>
       <FormItem label='닉네임' dot={false} name='writer'>
-        <div className='text-left text-4 w-full font-medium text-gray-800 block my-4'>
+        <div className='text-left w-full font-medium block my-4 ml-4 md:ml-0'>
           {user?.nickname ?? '닉네임 없음'}
         </div>
         <input type='hidden' {...register('writer')} value={user?.nickname ?? ''} />
