@@ -12,11 +12,10 @@ const Modal = () => {
 
   const handleButtonClick = () => {
     if (onButtonClick) {
-      onButtonClick()
+      onButtonClick(navigate)
     }
     closeModal()
   }
-
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'>
       <div className='relative w-[90%] max-w-md bg-white rounded-2xl p-6 shadow-xl animate-fadeIn'>

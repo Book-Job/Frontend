@@ -12,5 +12,9 @@ export const deleteScrap = async (bookMarkId) => {
 
 export const getAllScrap = async () => {
   const response = await authApi.get('/bookmarks')
-  return response.data.data.bookMarksResponses
+  return response.data.data.bookMarksResponses.map((item) => ({
+    ...item,
+    joboffer1: item.bookMarkType === 'JOB_POSTING',
+    jobsearch1: item.bookMarkType === 'JOB_SEEKING',
+  }))
 }
