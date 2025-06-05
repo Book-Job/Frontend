@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import ROUTER_PATHS from '../../routes/RouterPath'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
@@ -51,7 +52,7 @@ const WorkBoard = ({
         description: '로그인이 필요한 기능입니다.\n로그인 페이지로 이동하시겠습니까?',
         buttonLabel: '로그인하기',
         onButtonClick: (navigate) => {
-          navigate('/login')
+          navigate(ROUTER_PATHS.LOGIN_MAIN)
         },
       })
       return
