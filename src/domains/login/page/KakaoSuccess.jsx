@@ -10,26 +10,24 @@ const KakaoSuccess = () => {
     const fetchUserData = async () => {
       // const queryParams = new URLSearchParams(location.search)
       // const message = queryParams.get('message')
-      console.log('카카오 실행')
+      console.log('카카오 실행 0')
       try {
         // 백엔드에서 사용자 정보 요청 (JSESSIONID 기반)
         const response = await authApi.get('/auth/me')
+        console.log('카카오 성공1')
         if (response.data.success) {
           const { email, nickname, loginId } = response.data
           localStorage.setItem('email', email)
           localStorage.setItem('nickname', nickname)
           localStorage.setItem('loginId', loginId)
           ToastService.success('카카오 로그인 성공!')
-          console.log('이메일:', email)
-          console.log('nickname:', nickname)
-          console.log('loginId:', loginId)
-
+          console.log('카카오 성공2')
           navigate('/')
         } else {
           throw new Error(response.data.error || '사용자 정보 요청 실패')
         }
       } catch (error) {
-        console.error('사용자 정보 요청 오류:', error)
+        console.error('카카오 요청 오류:', error)
         // 쿼리 파라미터로 백업 로직
         // if (message === 'success') {
         //   const dataParam = queryParams.get('data')
@@ -61,7 +59,7 @@ const KakaoSuccess = () => {
     }
 
     fetchUserData()
-  }, [location, navigate])
+  }, [])
 
   // 쿼리 이용용
   // useEffect(() => {
