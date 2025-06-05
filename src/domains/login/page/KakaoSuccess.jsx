@@ -14,9 +14,9 @@ const KakaoSuccess = () => {
       try {
         // 백엔드에서 사용자 정보 요청 (JSESSIONID 기반)
         const response = await authApi.get('/auth/me')
-        console.log('카카오 성공1')
-        if (response.data.success) {
-          const { email, nickname, loginId } = response.data
+        console.log('카카오 성공11')
+        if (response.data || response.data.message === 'success') {
+          const { email, nickname, loginId } = response.data.data
           localStorage.setItem('email', email)
           localStorage.setItem('nickname', nickname)
           localStorage.setItem('loginId', loginId)
@@ -24,6 +24,7 @@ const KakaoSuccess = () => {
           console.log('카카오 성공2')
           navigate('/')
         } else {
+          console.log('카카오 성공3')
           throw new Error(response.data.error || '사용자 정보 요청 실패')
         }
       } catch (error) {
