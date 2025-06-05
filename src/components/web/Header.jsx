@@ -67,7 +67,7 @@ const Header = () => {
   ]
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-10 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4
+      className={`w-full fixed top-0 left-0 z-50 bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-1 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4
       ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
     `}
     >
@@ -78,7 +78,7 @@ const Header = () => {
         >
           bookjob
         </span>
-        <span className='flex gap-6 sm:gap-10 sm:text-[18px] text-[15px] sm:flex'>
+        <span className='flex gap-6 sm:gap-10 text-sm sm:text-base md:text-sm xl:text-lg'>
           {navButtons.map((item, index) => (
             <button
               key={index}
@@ -127,7 +127,7 @@ const Header = () => {
             )}
           </div>
         ) : (
-          <span className='flex gap-8 text-[15px]'>
+          <span className='flex gap-8  text-sm sm:text-base md:text-sm xl:text-lg'>
             <button
               onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
               className='font-bold row text-main-pink'
