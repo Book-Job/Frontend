@@ -178,7 +178,7 @@ const routes = [
     element: <KakaoSuccess />,
   },
   {
-    path: ROUTER_PATHS.NAVER_SUCCESS,
+    path: '/login/naver/success',
     element: <NaverSuccess />,
   },
 ]
