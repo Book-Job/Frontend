@@ -1,8 +1,9 @@
 import { publicApi, authApi } from '../../../services/api/axios'
 
-export const getAllPosts = async ({ last = null, size = 6 } = {}) => {
+export const getAllPosts = async ({ last = null, size = 6, searchType = 'NICKNAME' } = {}) => {
   try {
-    const params = { size }
+    const params = { size, searchType }
+
     if (last !== null) {
       params.last = last
     }

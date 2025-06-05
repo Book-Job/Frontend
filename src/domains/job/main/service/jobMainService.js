@@ -8,7 +8,11 @@ export const getAllRecruitmentPosts = async (lastId, order, keyword) => {
     size: 6,
   }
   if (lastId !== undefined && lastId !== null) params.last = lastId
-  if (keyword && keyword.trim() !== '') params.keyword = keyword
+
+  if (keyword && keyword.trim() !== '') {
+    params.keyword = keyword
+    params.searchType = 'NICKNAME'
+  }
 
   const response = await publicApi.get('/job-posting', { params })
   const data = response.data.data
@@ -25,7 +29,12 @@ export const getJobPosts = async (lastId, order, keyword) => {
   const apiOrder = seekingSortOrder[order] || 'LATEST'
   const params = { order: apiOrder, size: 6 }
   if (lastId !== undefined && lastId !== null) params.last = lastId
-  if (keyword && keyword.trim() !== '') params.keyword = keyword
+
+  if (keyword && keyword.trim() !== '') {
+    params.keyword = keyword
+    params.searchType = 'NICKNAME'
+  }
+
   const response = await publicApi.get('/job-seeking', { params })
   const data = response.data.data
   return {
