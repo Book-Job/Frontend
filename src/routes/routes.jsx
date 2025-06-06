@@ -68,9 +68,10 @@ const routes = [
     isProtected: true,
   },
   {
-    path: '/user-post/:nickname/posts',
+    path: ROUTER_PATHS.USER_POST,
     element: <UserPosts />,
   },
+
   {
     path: ROUTER_PATHS.JOB_MAIN,
     element: <JobMainPage />,
