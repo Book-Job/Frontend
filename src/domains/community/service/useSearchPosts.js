@@ -13,7 +13,7 @@ const useSearchPosts = () => {
     setSearchLoading(true)
 
     try {
-      const res = await getAllPosts()
+      const res = await getAllPosts({ keyword: searchTitle })
 
       if (Array.isArray(res.boards)) {
         const filteredResults = res.boards.filter(
@@ -24,8 +24,9 @@ const useSearchPosts = () => {
         console.error('받은 데이터의 boards는 배열이 아닙니다:', res.boards)
         setSearchResults([])
       }
-    } catch (err) {
-      console.error('검색 실패:', err)
+    } catch (error) {
+      console.error('검색 실패:', error)
+      setSearchResults([])
     } finally {
       setSearchLoading(false)
     }
