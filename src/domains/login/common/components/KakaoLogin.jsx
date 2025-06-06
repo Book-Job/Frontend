@@ -2,7 +2,6 @@ import kakaoicon from '../../../../assets/icons/common/kakaoIcon.svg'
 
 const KakaoLogin = () => {
   const handleKakaoLogin = () => {
-    // window.location.href = 'http://43.200.107.80:8080/oauth2/authorization/kakao'
     window.location.href = 'https://api.bookjob.co.kr/oauth2/authorization/kakao'
   }
 
