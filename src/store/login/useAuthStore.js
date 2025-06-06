@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import {
+  getSocialLogin,
   postLoginData,
   postLogout,
   refreshAccessToken,
@@ -113,6 +114,31 @@ const useAuthStore = create((set) => ({
   login: async (loginData) => {
     try {
       const response = await postLoginData(loginData)
+      console.log('로그인 정보', response)
+      if (response.data && response.data.message === 'success') {
+        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken)
+          set({
+            user: { nickname: response.data.data.nickname },
+            isAuthenticated: true,
+            accessToken,
+          })
+        } else {
+          throw new Error('액세스 토큰을 받지 못했습니다.')
+        }
+      } else {
+        throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error)
+      throw error
+    }
+  },
+  socialLogin: async () => {
+    try {
+      const response = await getSocialLogin()
+      console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['authorization']?.replace('Bearer ', '')
         if (accessToken) {
@@ -145,10 +171,6 @@ const useAuthStore = create((set) => ({
   },
 
   logout: async () => {
-    // localStorage.removeItem('accessToken')
-    // sessionStorage.removeItem('resetToken')
-    // set({ user: null, isAuthenticated: false, accessToken: null })
-    // window.location.href = ROUTER_PATHS.MAIN_PAGE
     try {
       const response = await postLogout()
       response.data && response.data.message === 'success'
@@ -159,10 +181,10 @@ const useAuthStore = create((set) => ({
       window.location.href = ROUTER_PATHS.MAIN_PAGE
     } catch (error) {
       console.error('로그아웃 실패:', error)
-      localStorage.removeItem('accessToken')
-      sessionStorage.removeItem('resetToken')
-      set({ user: null, isAuthenticated: false, accessToken: null })
-      window.location.href = ROUTER_PATHS.MAIN_PAGE
+      // localStorage.removeItem('accessToken')
+      // sessionStorage.removeItem('resetToken')
+      // set({ user: null, isAuthenticated: false, accessToken: null })
+      // window.location.href = ROUTER_PATHS.MAIN_PAGE
       throw error
     }
   },

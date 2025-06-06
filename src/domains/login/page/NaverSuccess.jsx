@@ -2,25 +2,20 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { authApi } from '../../../services/api/axios'
 import ToastService from '../../../utils/toastService'
+import Spinner from '../../../components/web/Spinner'
+import { getSocialLogin } from '../services/useLoginServices'
+import ROUTER_PATHS from '../../../routes/RouterPath'
 
 const NaverSuccess = () => {
   const navigate = useNavigate()
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log('네이버 실행 0')
       try {
-        const response = await authApi.get('/auth/me')
-        console.log('네이버 성공1')
+        const response = await getSocialLogin()
         if (response.data || response.data.message === 'success') {
-          const { email, nickname, loginId } = response.data.data
-          localStorage.setItem('email', email)
-          localStorage.setItem('nickname', nickname)
-          localStorage.setItem('loginId', loginId)
           ToastService.success('네이버 로그인 성공!')
-          console.log('네이버 성공2')
-          navigate('/')
+          navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
-          console.log('네이버 성공3')
           throw new Error(response.data.error || '사용자 정보 요청 실패')
         }
       } catch (error) {
@@ -31,7 +26,12 @@ const NaverSuccess = () => {
     fetchUserData()
   }, [])
 
-  return <div>네이버 로그인 처리 중...</div>
+  return (
+    <div className='flex flex-col'>
+      <span>네이버 로그인 처리 중...</span>
+      <Spinner size={48} color='main-pink' />
+    </div>
+  )
 }
 
 export default NaverSuccess

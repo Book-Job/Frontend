@@ -1,4 +1,4 @@
-import { authApi, publicApi } from '../../../services/api/axios'
+import { authApi } from '../../../services/api/axios'
 
 export const postLoginData = async (data) => {
   try {
@@ -21,17 +21,8 @@ export const postLoginData = async (data) => {
 
 export const postLogout = async () => {
   try {
-    const response = await authApi.post(
-      '/auth/logout',
-      {},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      },
-    )
+    const response = await authApi.post('/auth/logout')
+    console.log('로그아웃 성공1');
     return response
   } catch (error) {
     console.error('로그아웃 확인 중 오류:', error.response.data.message)
@@ -65,18 +56,21 @@ export const refreshAccessToken = async () => {
   }
 }
 
-export const getKakaologin = async () => {
+export const getSocialLogin = async () => {
   try {
-    const response = await authApi.get('/auth/me', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    console.log('카카오 성공', response)
+    const response = await authApi.get('/auth/me')
+    // if (response.data || response.data.message === 'success') {
+    //   const { email, nickname, loginId } = response.data.data
+    //   localStorage.setItem('email', email)
+    //   localStorage.setItem('nickname', nickname)
+    //   localStorage.setItem('loginId', loginId)
+    // } else {
+    //   throw new Error(response.data.error || '사용자 정보 요청 실패')
+    // }
+    console.log('소셜로그인 성공', response)
     return response
   } catch (error) {
-    console.error('카카오 오류:', error)
+    console.error('소셜로그인 오류:', error)
     throw error
   }
 }
