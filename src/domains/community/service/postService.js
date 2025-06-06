@@ -1,12 +1,16 @@
 import { publicApi, authApi } from '../../../services/api/axios'
 
-export const getAllPosts = async ({ last = null, size = 6, searchType = 'NICKNAME' } = {}) => {
+export const getAllPosts = async ({
+  last = null,
+  size = 6,
+  keyword = '',
+  searchType = '',
+} = {}) => {
   try {
-    const params = { size, searchType }
-
-    if (last !== null) {
-      params.last = last
-    }
+    const params = { size }
+    if (last !== null) params.last = last
+    if (keyword.trim() !== '') params.keyword = keyword
+    if (searchType) params.searchType = searchType
 
     const response = await publicApi.get('/boards', { params })
     return response.data.data
