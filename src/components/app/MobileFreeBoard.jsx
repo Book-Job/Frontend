@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import MobileShare from './MobileShare'
-import ROUTER_PATHS from '../../routes/RouterPath'
 
 const MobileFreeBoard = ({
   boardId,
@@ -26,7 +25,7 @@ const MobileFreeBoard = ({
 
   const goToAuthorPosts = (e) => {
     e.stopPropagation()
-    navigate(ROUTER_PATHS.USER_POST)
+    navigate(`/user-post/${name}/posts`)
   }
 
   const goToDetailPage = () => {
