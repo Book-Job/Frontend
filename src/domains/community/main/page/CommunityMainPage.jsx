@@ -16,7 +16,7 @@ const CommunityMainPage = () => {
   const isMobile = useIsMobile()
   const { searchResults, searchLoading, hasSearched, handleSearch } = useSearchPosts()
 
-  const rawPosts = searchResults.length > 0 ? searchResults : posts
+  const rawPosts = hasSearched ? searchResults : posts
   const displayedPosts = [...rawPosts].sort((a, b) => {
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
