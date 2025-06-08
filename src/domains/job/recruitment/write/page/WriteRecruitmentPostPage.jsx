@@ -2,9 +2,9 @@ import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Button from '../../../../../components/web/Button'
 import PinkButton from '../../../../../components/web/PinkButton'
-import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
 import { createRecruitmentPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
+import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm';
 const WriteRecruitmentPostPage = () => {
   const handleSubmitForm = usePostSubmit(createRecruitmentPost)
   return (
@@ -23,10 +23,10 @@ const WriteRecruitmentPostPage = () => {
             label='임시저장'
             className='mr-[14px]'
             onClick={() => {
-              document.querySelector('#community-post-form button[type="button"]').click()
+              document.querySelector('#recruitement-post-form button[type="button"]').click()
             }}
           />
-          <PinkButton label='저장' type='submit' form='recruitment-post-form' />
+          <PinkButton label='등록' type='submit' form='recruitment-post-form' />
         </div>
       </div>
     </>

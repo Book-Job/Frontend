@@ -26,7 +26,7 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch, setValidat
     try {
       const response = await getJoinCheckNickname(nowUserNickname)
       if (response.data && response.data.message === 'success') {
-        setNicknameCheckMessage('사용 가능한 닉네임임입니다.')
+        setNicknameCheckMessage('사용 가능한 닉네임입니다.')
         setNicknameCheckStatus('success')
         setValidationStatus('success')
         trigger('Nickname')

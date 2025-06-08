@@ -1,22 +1,24 @@
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
-import JobFormLine from '../../common/components/JobFormLine'
-import PersonalInfo from '../../common/components/form/PersonalInfo'
-import PostTitle from '../../common/components/form/PostTitle'
-import PostContent from '../../common/components/form/PostContent'
-import EmploymentType from '../../common/components/form/EmploymentType'
-import JobCategory from '../../common/components/form/JobCategory'
-import ClosingDate from './form/ClosingDate'
-import CompanyWebsite from './form/CompanyWebsite'
-import WorkPlace from './form/WorkPlace'
-import Experience from './form/Experience'
-import useAuthStore from '../../../../store/login/useAuthStore'
+import JobFormLine from '../../../common/components/JobFormLine'
+import PersonalInfo from '../../../common/components/form/PersonalInfo'
+import PostTitle from '../../../common/components/form/PostTitle'
+import PostContent from '../../../common/components/form/PostContent'
+import EmploymentType from '../../../common/components/form/EmploymentType'
+import JobCategory from '../../../common/components/form/JobCategory'
+import ClosingDate from './ClosingDate'
+import CompanyWebsite from './CompanyWebsite'
+import WorkPlace from './WorkPlace'
+import Experience from './Experience'
+import useAuthStore from '../../../../../store/login/useAuthStore'
 import draftToHtml from 'draftjs-to-html'
 import { convertToRaw } from 'draft-js'
+import useDraftHandler from '../../../../../hooks/writePost/useDraftHandler'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   const { user } = useAuthStore()
-
+  const { handleSaveDraft } = useDraftHandler()
+  
   const {
     register,
     reset,
@@ -56,6 +58,14 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
     onSubmit(formData)
   }
 
+  const onSave = () => {
+    const formData = {
+      nickname: control._formValues.nickname || '',
+      title: control._formValues.title || '',
+      text: control._formValues.text,
+    }
+    handleSaveDraft(formData, onSaveDraft, 'recruitment')
+  }
   return (
     <form id='recruitment-post-form' onSubmit={handleSubmit(handleFormSubmit)}>
       <PersonalInfo register={register} />
@@ -86,6 +96,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
       <div className='my-[30px]'>
         <PostContent control={control} errors={errors} />
       </div>
+      <button type='button' onClick={onSave} hidden />
     </form>
   )
 }

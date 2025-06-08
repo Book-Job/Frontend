@@ -22,7 +22,7 @@ export const postLoginData = async (data) => {
 export const postLogout = async () => {
   try {
     const response = await authApi.post('/auth/logout')
-    console.log('로그아웃 성공1');
+    console.log('로그아웃 성공1')
     return response
   } catch (error) {
     console.error('로그아웃 확인 중 오류:', error.response.data.message)
@@ -33,16 +33,18 @@ export const postLogout = async () => {
 export const refreshAccessToken = async () => {
   try {
     const response = await authApi.post(
-      '/auth/refresh',
-      {},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      },
+      '/api/v1/auth/refresh',
+      // {},
+      // {
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   withCredentials: true,
+      // },
     )
+    console.log('refreshAccessToken 성공1')
+
     const newAccessToken = response.headers['authorization']?.replace('Bearer ', '')
     if (newAccessToken) {
       localStorage.setItem('accessToken', newAccessToken)

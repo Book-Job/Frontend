@@ -12,7 +12,7 @@ const NaverSuccess = () => {
     const fetchUserData = async () => {
       try {
         const response = await getSocialLogin()
-        if (response.data || response.data.message === 'success') {
+        if (response.data && response.data.message === 'success') {
           ToastService.success('네이버 로그인 성공!')
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {

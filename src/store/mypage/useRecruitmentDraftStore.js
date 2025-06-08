@@ -3,12 +3,12 @@ import { v4 as uuidv4 } from 'uuid'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import ToastService from '../../utils/toastService'
 
-const useDraftStore = create((set) => ({
+const useRecruitmentDraftStore = create((set) => ({
   drafts: [],
   selectedDraft: null,
 
   loadDrafts: () => {
-    const savedDrafts = localStorage.getItem('communityPostDrafts')
+    const savedDrafts = localStorage.getItem('recruitmentPostDrafts')
     if (savedDrafts) {
       try {
         const drafts = JSON.parse(savedDrafts)
@@ -42,7 +42,7 @@ const useDraftStore = create((set) => ({
       let updatedDrafts = [newDraft, ...state.drafts]
       if (updatedDrafts.length > 5) {
         ToastService.info('임시저장은 최대 5개까지 저장할 수 있습니다.')
-        return { drafts: state.drafts }
+        throw new Error('임시저장은 최대 5개까지 저장할 수 있습니다.')
       }
       localStorage.setItem('communityPostDrafts', JSON.stringify(updatedDrafts))
       return { drafts: updatedDrafts }
@@ -81,4 +81,5 @@ const useDraftStore = create((set) => ({
   },
 }))
 
-export default useDraftStore
+
+export default useRecruitmentDraftStore;

@@ -12,7 +12,7 @@ const KakaoSuccess = () => {
     const fetchUserData = async () => {
       try {
         const response = await socialLogin()
-        if (response.data || response.data.message === 'success') {
+        if (response.data && response.data.message === 'success') {
           ToastService.success('카카오 로그인 성공!')
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {

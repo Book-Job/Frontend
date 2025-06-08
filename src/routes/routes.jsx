@@ -160,6 +160,8 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_SCRAP,
     element: <MyScrap />,
+    label: '스크랩',
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.MY_POST,
@@ -168,6 +170,8 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_DRAFTS,
     element: <MyDrafts />,
+    label: '임시저장 글',
+    noMargin: true,
   },
   {
     path: '*',

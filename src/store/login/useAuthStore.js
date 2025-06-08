@@ -6,7 +6,6 @@ import {
   postLogout,
   refreshAccessToken,
 } from './../../domains/login/services/useLoginServices'
-import { get } from 'react-hook-form'
 
 const parseJwt = (token) => {
   try {
@@ -46,6 +45,7 @@ const useAuthStore = create((set) => ({
         } catch (error) {
           localStorage.removeItem('accessToken')
           sessionStorage.removeItem('resetToken')
+          console.error('initialize 토큰 확인 오류 :', error)
           set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
         }
       }
@@ -78,15 +78,6 @@ const useAuthStore = create((set) => ({
     return true
   },
 
-  //로그인을 해야지 접근 가능하게 하는 로직
-  // requireLogin: (navigate) => {
-  //   const token = localStorage.getItem('accessToken')
-  //   if (!token) {
-  //     navigate(ROUTER_PATHS.LOGIN_MAIN)
-  //     return false
-  //   }
-  //   return true
-  // },
   requireLogin: async (navigate) => {
     const token = localStorage.getItem('accessToken')
     if (!token) {
@@ -103,6 +94,7 @@ const useAuthStore = create((set) => ({
       } catch (error) {
         localStorage.removeItem('accessToken')
         sessionStorage.removeItem('resetToken')
+        console.error('requireLogin 로그인 확인 오류 :', error)
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
         navigate(ROUTER_PATHS.LOGIN_MAIN)
         return false
@@ -135,6 +127,7 @@ const useAuthStore = create((set) => ({
       throw error
     }
   },
+
   socialLogin: async () => {
     try {
       const response = await getSocialLogin()
