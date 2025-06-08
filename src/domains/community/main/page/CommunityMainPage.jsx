@@ -9,7 +9,7 @@ import useIsMobile from '../../../../hooks/header/useIsMobile'
 import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import InfiniteScrollList from '../../../../components/common/InfiniteScrollList'
 import useCommunityPosts from '../hook/useCommunityPosts'
-
+import SeoHelmet from '../../../../components/common/SeoHelmet'
 const CommunityMainPage = () => {
   const { posts, loading, hasMore, loadMore } = useCommunityPosts()
   const [sortOrder, setSortOrder] = useState('latest')
@@ -26,6 +26,12 @@ const CommunityMainPage = () => {
   return (
     <>
       <BannerExample />
+      <SeoHelmet
+        title='북잡 | 출판업계 채용·구직 게시판'
+        description='출판 업계의 구인·구직 게시글을 한눈에 확인해보세요. 최신 채용 공고와 구직 글이 실시간으로 업데이트됩니다.'
+        image='https://book-job.co.kr/metatag.png'
+        url='https://book-job.co.kr/job'
+      />
       <section className='flex justify-center mt-7'>
         <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
       </section>
