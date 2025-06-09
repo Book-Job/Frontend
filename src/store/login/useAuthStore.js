@@ -36,25 +36,6 @@ const useAuthStore = create((set) => ({
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
     }
-    // if (token) {
-    //   const decoded = parseJwt(token)
-    //   if (decoded && decoded.exp * 1000 > Date.now()) {
-    //     set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
-    //   } else {
-    //     try {
-    //       const newAccessToken = await refreshAccessToken()
-    //       const newDecoded = parseJwt(newAccessToken)
-    //       set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
-    //     } catch (error) {
-    //       localStorage.removeItem('accessToken')
-    //       sessionStorage.removeItem('resetToken')
-    //       console.error('initialize 토큰 확인 오류 :', error)
-    //       set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-    //     }
-    //   }
-    // } else {
-    //   set({ resetToken })
-    // }
   },
 
   setResetToken: (token) => {
@@ -99,22 +80,6 @@ const useAuthStore = create((set) => ({
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
     }
-    // const decoded = parseJwt(token)
-    // if (decoded && decoded.exp * 1000 < Date.now()) {
-    //   try {
-    //     const newAccessToken = await refreshAccessToken(token)
-    //     const newDecoded = parseJwt(newAccessToken)
-    //     set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
-    //     return true
-    //   } catch (error) {
-    //     localStorage.removeItem('accessToken')
-    //     sessionStorage.removeItem('resetToken')
-    //     console.error('requireLogin 로그인 확인 오류 :', error)
-    //     set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-    //     navigate(ROUTER_PATHS.LOGIN_MAIN)
-    //     return false
-    //   }
-    // }
   },
 
   login: async (loginData) => {
