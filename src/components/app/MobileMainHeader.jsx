@@ -117,10 +117,10 @@ const MobileMainHeader = () => {
           </div>
         ) : (
           <div className='flex gap-5'>
-            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='font-bold text-sm'>
+            <button onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)} className='text-sm font-bold'>
               로그인
             </button>
-            <button onClick={() => navigate(ROUTER_PATHS.JOIN)} className='font-bold text-sm'>
+            <button onClick={() => navigate(ROUTER_PATHS.JOIN)} className='text-sm font-bold'>
               회원가입
             </button>
           </div>

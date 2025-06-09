@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import PageTitle from '../../Find/common/components/PageTitle'
 import MyDraftsList from './components/MyDraftsList'
-import useDraftStore from '../../../store/mypage/useDraftStore'
+import useDraftStore from '../../../store/mypage/useFreeDraftStore'
 import { useEffect } from 'react'
 import ROUTER_PATHS from '../../../routes/RouterPath'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const MyDrafts = () => {
   const { drafts, loadDrafts, setSelectedDraft } = useDraftStore()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     loadDrafts()
@@ -19,7 +21,7 @@ const MyDrafts = () => {
   }
   return (
     <div>
-      <PageTitle title={'임시저장 글'} />
+      <div className='sm:mt-10'>{isMobile ? '' : <PageTitle title={'임시저장 글'} />}</div>
       <MyDraftsList draftsListData={drafts} onDraftClick={handleDraftClick} />
     </div>
   )

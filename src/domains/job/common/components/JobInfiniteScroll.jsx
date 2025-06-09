@@ -1,54 +1,27 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import InfiniteScrollList from '../../../../components/common/InfiniteScrollList'
 import JobPostList from '../../main/components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
 import { useNavigate } from 'react-router-dom'
 
 const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, loadingComponent }) => {
-  const [posts, setPosts] = useState([])
-  const [lastId, setLastId] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
   const navigate = useNavigate()
 
-  const loadPosts = useCallback(async () => {
-    if (loading || !hasMore) return
-    setLoading(true)
-    try {
-      const response = await fetcher(lastId, order)
-      let newPosts = response?.[dataKey] || []
-      const newLastId = response?.lastId
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ['jobPosts', postType, order],
+    queryFn: ({ pageParam = null }) => fetcher(pageParam, order),
+    getNextPageParam: (lastPage) => {
+      const newPosts = lastPage?.[dataKey] ?? []
+      return newPosts.length > 0 ? lastPage.lastId : undefined
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+  })
 
-      setPosts((prev) => {
-        const existingIds = new Set(prev.map((post) => post.id))
-        const filtered = newPosts.filter((post) => !existingIds.has(post.id))
-        return [...prev, ...filtered]
-      })
-      setLastId(newLastId)
-      setHasMore(newPosts.length > 0)
-    } catch (error) {
-      console.error('게시물 로딩 중 오류 발생:', error)
-      setHasMore(false)
-    } finally {
-      setLoading(false)
-    }
-  }, [fetcher, lastId, order, dataKey, hasMore, loading])
-
-  useEffect(() => {
-    setPosts([])
-    setLastId(null)
-    setHasMore(true)
-    setLoading(false)
-  }, [order, postType])
-
-  useEffect(() => {
-    if (lastId === null && hasMore && !loading) {
-      loadPosts()
-    }
-  }, [loadPosts])
+  const posts = data?.pages.flatMap((page) => page?.[dataKey] || []) || []
 
   return (
-    <InfiniteScrollList onIntersect={loadPosts} disabled={!hasMore || loading}>
+    <InfiniteScrollList onIntersect={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage}>
       {renderList ? (
         renderList(posts)
       ) : (
@@ -56,15 +29,15 @@ const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, load
           <JobPostList posts={posts} navigate={navigate} />
         </div>
       )}
-      {loading &&
+      {isFetchingNextPage &&
         (loadingComponent ?? (
           <div className='flex justify-center items-center h-[100px]'>
             <Spinner size={32} color='main-pink' />
           </div>
         ))}
 
-      {!hasMore && posts.length > 0 && (
-        <div className='flex justify-center items-center py-8 text-gray-400 text-sm'>
+      {!hasNextPage && posts.length > 0 && (
+        <div className='flex justify-center items-center py-8 text-dark-gray text-sm'>
           더 이상 불러올 게시물이 없습니다.
         </div>
       )}

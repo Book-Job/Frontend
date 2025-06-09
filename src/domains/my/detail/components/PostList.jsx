@@ -25,7 +25,7 @@ const PostList = () => {
   }
 
   const deleteItems = async (items, isJobBoard) => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('Authorization')
     if (!token) {
       ToastService.error('로그인이 필요합니다.')
       return

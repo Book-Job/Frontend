@@ -12,7 +12,7 @@ const MyPost = () => {
     useMyBoardStore()
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('Authorization')
     if (token) {
       fetchFreeBoard(token, true)
       fetchJobBoard(token, true)
@@ -36,8 +36,8 @@ const MyPost = () => {
             <button
               onClick={() =>
                 choiceBoard === '자유게시판'
-                  ? fetchFreeBoard(localStorage.getItem('accessToken'), true)
-                  : fetchJobBoard(localStorage.getItem('accessToken'), true)
+                  ? fetchFreeBoard(localStorage.getItem('Authorization'), true)
+                  : fetchJobBoard(localStorage.getItem('Authorization'), true)
               }
               className='ml-2 text-blue-500'
             >

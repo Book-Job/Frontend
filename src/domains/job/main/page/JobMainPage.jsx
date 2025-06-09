@@ -10,7 +10,7 @@ import { getPostCounts } from '../../common/utils/getPostCounts'
 import useScrapStore from '../../scrap/store/useScrapStore'
 import useJobSearch from '../../common/hook/useJobSearch'
 import { recruitmentSortOptions, seekingSortOptions } from '../../common/constants/sortOptions'
-
+import SeoHelmet from '../../../../components/common/SeoHelmet'
 const JobMainPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -86,6 +86,12 @@ const JobMainPage = () => {
   return (
     <>
       <div className='flex justify-center'>
+        <SeoHelmet
+          title='북잡 | 출판업계 자유게시판'
+          description='출판 업계의 자유게시글을 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
+          image='https://book-job.co.kr/metatag.png'
+          url='https://book-job.co.kr/job'
+        />
         <SearchBar
           placeholder='검색어를 입력하세요'
           value={searchKeyword}
@@ -95,9 +101,6 @@ const JobMainPage = () => {
       </div>
       <div className='px-2 md:px-10 mt-2 max-w-screen-xl mx-auto'>
         <div className='flex items-center justify-between mb-2'>
-          {/*  div className='flex justify-between items-center px-7 mt-4 gap-5 text-xs sm:text-sm md:text-[15px] font-semibold'>
-            전체: {counts.total}개 | 오늘: {counts.today}개
-          </div>*/}
           <div className='flex items-end gap-2 ml-auto'>
             <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown

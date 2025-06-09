@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import WorkBoard from '../../../components/web/WorkBoard'
 import MobileWorkBoard from '../../../components/app/MobileWorkBoard'
 import PageTitle from '../../Find/common/components/PageTitle'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../../../store/login/useAuthStore'
 import Spinner from '../../../components/web/Spinner'
 import PostSortDropDown from '../../../components/common/PostSortDropDown'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const MyScrap = () => {
   const [scrapPosts, setScrapPosts] = useState([])
@@ -15,6 +16,7 @@ const MyScrap = () => {
   const [sort, setSort] = useState('latest')
   const navigate = useNavigate()
   const { user } = useAuthStore()
+  const isMobile = useIsMobile()
   const loggedInUserId = user ? user.userId : null
 
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
@@ -56,18 +58,18 @@ const MyScrap = () => {
 
   return (
     <div>
-      <PageTitle title={'스크랩'} />
+      <div className='sm:mt-10'>{isMobile ? '' : <PageTitle title={'스크랩'} />}</div>
 
       {!loading && sortedPosts.length === 0 && (
-        <div className='text-center text-dark-gray items-center'>스크랩한 글이 없습니다.</div>
+        <div className='items-center text-center text-dark-gray'>스크랩한 글이 없습니다.</div>
       )}
 
       {sortedPosts.length > 0 && (
-        <div className='flex justify-end max-w-[932px] mx-auto mb-2'>
+        <div className='flex justify-end max-w-[932px] pr-4 mx-auto mb-2'>
           <PostSortDropDown onSortChange={setSort} />
         </div>
       )}
-      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center'>
+      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center px-4'>
         {sortedPosts.map((post) => (
           <WorkBoard
             key={post.bookMarkId || post.id}
@@ -100,7 +102,7 @@ const MyScrap = () => {
         ))}
       </div>
 
-      <div className='flex flex-wrap block gap-4 mt-4 ml-4 sm:hidden'>
+      <div className='flex flex-wrap block gap-4 mx-4 sm:hidden'>
         {sortedPosts.map((post) => (
           <MobileWorkBoard
             key={post.bookMarkId || post.id}
