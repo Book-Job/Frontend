@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
-import ROUTER_PATHS from '../../routes/RouterPath'
 
 const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount, viewCount }) => {
   const [showButton, setShowButton] = useState(false)
@@ -17,7 +16,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
 
   const goToAuthorPosts = (e) => {
     e.stopPropagation()
-    navigate(ROUTER_PATHS.USER_POST)
+    navigate(`/user-post/${name}/posts`)
   }
 
   const goToDetailPage = () => {

@@ -7,7 +7,7 @@ const ROUTER_PATHS = {
   MEMBER_DATA_ENTRY: '/member-data-entry',
   JOB_MAIN: '/job',
   COMMUNITY: '/community',
-  USER_POST: '/user-post',
+  USER_POST: '/user-post/:nickname/posts',
   WRITE_COMMUNITY_POST: '/community/post',
   COMMUNITY_POST_DETAIL: '/community/post/:id',
   WRITE_RECRUITMENT_POST: '/job/recruitment/post',

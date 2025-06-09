@@ -9,14 +9,14 @@ import useIsMobile from '../../../../hooks/header/useIsMobile'
 import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import InfiniteScrollList from '../../../../components/common/InfiniteScrollList'
 import useCommunityPosts from '../hook/useCommunityPosts'
-
+import SeoHelmet from '../../../../components/common/SeoHelmet'
 const CommunityMainPage = () => {
   const { posts, loading, hasMore, loadMore } = useCommunityPosts()
   const [sortOrder, setSortOrder] = useState('latest')
   const isMobile = useIsMobile()
   const { searchResults, searchLoading, hasSearched, handleSearch } = useSearchPosts()
 
-  const rawPosts = searchResults.length > 0 ? searchResults : posts
+  const rawPosts = hasSearched ? searchResults : posts
   const displayedPosts = [...rawPosts].sort((a, b) => {
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
@@ -26,6 +26,12 @@ const CommunityMainPage = () => {
   return (
     <>
       <BannerExample />
+      <SeoHelmet
+        title='북잡 | 출판업계 커뮤니티'
+        description='출판업계 관련 정보와 소통을 위한 자유게시판입니다. 업계 종사자들의 다양한 이야기를 확인해보세요.'
+        image='https://book-job.co.kr/metatag.png'
+        url='https://book-job.co.kr/community'
+      />
       <section className='flex justify-center mt-7'>
         <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
       </section>
