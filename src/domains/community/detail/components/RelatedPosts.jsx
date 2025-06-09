@@ -15,7 +15,7 @@ const RelatedPosts = ({ currentId }) => {
       const { boards } = await getAllPosts({ last: pageParam, size: 6 })
       return boards.filter((p) => String(p.boardId) !== String(currentId))
     },
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       const lastItem = lastPage[lastPage.length - 1]
       return lastItem?.boardId ?? undefined
     },

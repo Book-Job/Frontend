@@ -27,10 +27,10 @@ const CommunityMainPage = () => {
     <>
       <BannerExample />
       <SeoHelmet
-        title='북잡 | 출판업계 채용·구직 게시판'
-        description='출판 업계의 구인·구직 게시글을 한눈에 확인해보세요. 최신 채용 공고와 구직 글이 실시간으로 업데이트됩니다.'
+        title='북잡 | 출판업계 커뮤니티'
+        description='출판업계 관련 정보와 소통을 위한 자유게시판입니다. 업계 종사자들의 다양한 이야기를 확인해보세요.'
         image='https://book-job.co.kr/metatag.png'
-        url='https://book-job.co.kr/job'
+        url='https://book-job.co.kr/community'
       />
       <section className='flex justify-center mt-7'>
         <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
