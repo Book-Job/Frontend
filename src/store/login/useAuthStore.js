@@ -7,23 +7,6 @@ import {
   refreshAccessToken,
 } from './../../domains/login/services/useLoginServices'
 
-const parseJwt = (token) => {
-  try {
-    const base64Url = token.split('.')[1]
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join(''),
-    )
-    return JSON.parse(jsonPayload)
-  } catch (error) {
-    console.error('JWT 파싱 오류:', error)
-    return null
-  }
-}
-
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
@@ -34,24 +17,44 @@ const useAuthStore = create((set) => ({
     const token = localStorage.getItem('accessToken')
     const resetToken = sessionStorage.getItem('resetToken')
     if (token) {
-      const decoded = parseJwt(token)
-      if (decoded && decoded.exp * 1000 > Date.now()) {
-        set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
-      } else {
-        try {
-          const newAccessToken = await refreshAccessToken()
-          const newDecoded = parseJwt(newAccessToken)
-          set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
-        } catch (error) {
-          localStorage.removeItem('accessToken')
-          sessionStorage.removeItem('resetToken')
-          console.error('initialize 토큰 확인 오류 :', error)
-          set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+      try {
+        const response = await refreshAccessToken()
+        if (response.data?.message === 'success') {
+          set({
+            user: { nickname: response.data.data.nickname },
+            isAuthenticated: true,
+            accessToken: token,
+            resetToken,
+          })
+        } else {
+          throw new Error('토큰 검증 실패')
         }
+      } catch (error) {
+        console.error('initialize 토큰 검증 오류:', error)
+        localStorage.removeItem('accessToken')
+        sessionStorage.removeItem('resetToken')
+        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
-    } else {
-      set({ resetToken })
     }
+    // if (token) {
+    //   const decoded = parseJwt(token)
+    //   if (decoded && decoded.exp * 1000 > Date.now()) {
+    //     set({ user: decoded, isAuthenticated: true, accessToken: token, resetToken })
+    //   } else {
+    //     try {
+    //       const newAccessToken = await refreshAccessToken()
+    //       const newDecoded = parseJwt(newAccessToken)
+    //       set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken, resetToken })
+    //     } catch (error) {
+    //       localStorage.removeItem('accessToken')
+    //       sessionStorage.removeItem('resetToken')
+    //       console.error('initialize 토큰 확인 오류 :', error)
+    //       set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+    //     }
+    //   }
+    // } else {
+    //   set({ resetToken })
+    // }
   },
 
   setResetToken: (token) => {
@@ -84,35 +87,49 @@ const useAuthStore = create((set) => ({
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
     }
-    const decoded = parseJwt(token)
-    if (decoded && decoded.exp * 1000 < Date.now()) {
-      try {
-        const newAccessToken = await refreshAccessToken(token)
-        const newDecoded = parseJwt(newAccessToken)
-        set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
-        return true
-      } catch (error) {
-        localStorage.removeItem('accessToken')
-        sessionStorage.removeItem('resetToken')
-        console.error('requireLogin 로그인 확인 오류 :', error)
-        set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
-        navigate(ROUTER_PATHS.LOGIN_MAIN)
-        return false
-      }
+    try {
+      const newAccessToken = await refreshAccessToken()
+      set({ isAuthenticated: true, accessToken: newAccessToken })
+      return true
+    } catch (error) {
+      localStorage.removeItem('accessToken')
+      sessionStorage.removeItem('resetToken')
+      console.error('requireLogin 로그인 확인 오류 :', error)
+      set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+      navigate(ROUTER_PATHS.LOGIN_MAIN)
+      return false
     }
-    return true
+    // const decoded = parseJwt(token)
+    // if (decoded && decoded.exp * 1000 < Date.now()) {
+    //   try {
+    //     const newAccessToken = await refreshAccessToken(token)
+    //     const newDecoded = parseJwt(newAccessToken)
+    //     set({ user: newDecoded, isAuthenticated: true, accessToken: newAccessToken })
+    //     return true
+    //   } catch (error) {
+    //     localStorage.removeItem('accessToken')
+    //     sessionStorage.removeItem('resetToken')
+    //     console.error('requireLogin 로그인 확인 오류 :', error)
+    //     set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
+    //     navigate(ROUTER_PATHS.LOGIN_MAIN)
+    //     return false
+    //   }
+    // }
   },
 
   login: async (loginData) => {
     try {
       const response = await postLoginData(loginData)
-      console.log('로그인 정보', response)
       if (response.data && response.data.message === 'success') {
-        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+        const accessToken = response.headers['authorization']
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
           set({
-            user: { nickname: response.data.data.nickname },
+            user: {
+              nickname: response.data.data.nickname,
+              email: response.data.data.email,
+              loginId: response.data.data.loginId,
+            },
             isAuthenticated: true,
             accessToken,
           })
@@ -127,17 +144,21 @@ const useAuthStore = create((set) => ({
       throw error
     }
   },
-
+  //엑세스 토큰을 받는 api에서 만료되면 401을 반환 그때 리프레시 기능 넣기
   socialLogin: async () => {
     try {
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
-        const accessToken = response.headers['authorization']?.replace('Bearer ', '')
+        const accessToken = response.headers['authorization']
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken)
           set({
-            user: { nickname: response.data.data.nickname },
+            user: {
+              nickname: response.data.data.nickname,
+              email: response.data.data.email,
+              loginId: response.data.data.loginId,
+            },
             isAuthenticated: true,
             accessToken,
           })
@@ -167,17 +188,12 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLogout()
       response.data && response.data.message === 'success'
-      console.log('로그아웃 성공:', response)
       localStorage.removeItem('accessToken')
       sessionStorage.removeItem('resetToken')
       set({ user: null, isAuthenticated: false, accessToken: null })
       window.location.href = ROUTER_PATHS.MAIN_PAGE
     } catch (error) {
       console.error('로그아웃 실패:', error)
-      // localStorage.removeItem('accessToken')
-      // sessionStorage.removeItem('resetToken')
-      // set({ user: null, isAuthenticated: false, accessToken: null })
-      // window.location.href = ROUTER_PATHS.MAIN_PAGE
       throw error
     }
   },

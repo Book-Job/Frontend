@@ -40,7 +40,7 @@ const useFreeDraftStore = create((set) => ({
     }
     set((state) => {
       let updatedDrafts = [newDraft, ...state.drafts]
-      if (updatedDrafts.length > 4) {
+      if (updatedDrafts.length > 5) {
         ToastService.info('임시저장은 최대 5개까지 저장할 수 있습니다.')
         throw new Error('임시저장은 최대 5개까지 저장할 수 있습니다.')
       }

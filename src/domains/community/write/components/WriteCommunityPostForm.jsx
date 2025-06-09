@@ -25,6 +25,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     handleSubmit,
     reset,
     setValue,
+    getValues,
     control,
     formState: { errors },
   } = useForm({
@@ -89,10 +90,11 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   //   }
   // }
   const onSave = () => {
+    const formValues = getValues()
     const formData = {
-      nickname: control._formValues.nickname || '',
-      title: control._formValues.title || '',
-      text: control._formValues.text,
+      nickname: formValues.nickname || '',
+      title: formValues.title || '',
+      text: formValues.text,
     }
     handleSaveDraft(formData, onSaveDraft, 'community')
   }

@@ -13,12 +13,9 @@ import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import draftToHtml from 'draftjs-to-html'
 import { convertToRaw } from 'draft-js'
-import useDraftHandler from '../../../../../hooks/writePost/useDraftHandler'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   const { user } = useAuthStore()
-  const { handleSaveDraft } = useDraftHandler()
-  
   const {
     register,
     reset,
@@ -36,6 +33,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
 
   const closingDateValue = watch('closingDate')
 
+  
   useEffect(() => {
     if (defaultValues && user?.nickname) {
       const writerToSet = defaultValues.writer || user.nickname
@@ -58,14 +56,6 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
     onSubmit(formData)
   }
 
-  const onSave = () => {
-    const formData = {
-      nickname: control._formValues.nickname || '',
-      title: control._formValues.title || '',
-      text: control._formValues.text,
-    }
-    handleSaveDraft(formData, onSaveDraft, 'recruitment')
-  }
   return (
     <form id='recruitment-post-form' onSubmit={handleSubmit(handleFormSubmit)}>
       <PersonalInfo register={register} />

@@ -3,12 +3,15 @@ import useDraftStore from '../../store/mypage/useFreeDraftStore'
 import ToastService from '../../utils/toastService'
 import ROUTER_PATHS from '../../routes/RouterPath'
 
-
 const useDraftHandler = () => {
   const { saveDraft } = useDraftStore()
   const navigate = useNavigate()
 
   const handleSaveDraft = (formData, onSaveDraft, draftType = 'community') => {
+    if (typeof onSaveDraft !== 'function') {
+      console.error('onSaveDraft는 함수여야 합니다')
+      return
+    }
     try {
       const safeFormData = {
         ...formData,

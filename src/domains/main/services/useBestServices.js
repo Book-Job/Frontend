@@ -1,8 +1,8 @@
-import { authApi, publicApi } from '../../../services/api/axios'
+import { publicApi } from '../../../services/api/axios'
 
 export const getFreeBest = async () => {
   try {
-    const response = await authApi.get('/boards/best', {
+    const response = await publicApi.get('/boards/best', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const getFreeBest = async () => {
 
 export const getJobBest = async () => {
   try {
-    const response = await authApi.get('/job-posting/best', {
+    const response = await publicApi.get('/job-posting/best', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

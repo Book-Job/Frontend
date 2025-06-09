@@ -38,13 +38,13 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
                 labelColor={'#2563EB'}
                 width={'60px'}
               />
-              <BoardCategory
+              {/* <BoardCategory
                 label={'구인'}
                 bgColor={'#FFEFEB'}
                 labelColor={'#DC2626'}
                 width={'60px'}
               />
-              <BoardCategory label={'자유게시판'} bgColor={'#ECFDF5'} />
+              <BoardCategory label={'자유게시판'} bgColor={'#ECFDF5'} /> */}
             </div>
             <div className='flex sm:text-[24px] text-[16px] text-start'>
               {getPreviewText(item.text)}
