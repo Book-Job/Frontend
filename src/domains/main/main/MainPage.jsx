@@ -4,6 +4,7 @@ import BoardButton from '../common/components/BoardButton'
 import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
 import BannerExample from '../../../components/common/BannerExample'
+import SeoHelmet from '../../../components/common/SeoHelmet'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('자유게시판')
   const {
@@ -36,6 +37,12 @@ const MainPage = () => {
 
   return (
     <div className='flex flex-col items-center w-full'>
+      <SeoHelmet
+        title='북잡 - 출판인을 위한 구인·구직 플랫폼'
+        description='출판업계 채용/구직 정보와 자유게시판을 북잡에서 확인해보세요.'
+        image='https://book-job.co.kr/metatag.png'
+        url='https://book-job.co.kr'
+      />
       <BannerExample />
       <div className='w-full px-4 my-6 sm:px-10 sm:my-10'>
         <BoardButton

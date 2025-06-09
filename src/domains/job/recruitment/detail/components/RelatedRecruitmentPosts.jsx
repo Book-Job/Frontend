@@ -7,8 +7,8 @@ import JobInfiniteScroll from '../../../common/components/JobInfiniteScroll'
 const RelatedRecruitmentPosts = ({ currentId }) => {
   const navigate = useNavigate()
 
-  const fetchRelatedPosts = async (lastId) => {
-    const data = await getAllRecruitmentPosts(lastId, 'LATEST')
+  const fetchRelatedPosts = async ({ lastId, order }) => {
+    const data = await getAllRecruitmentPosts(lastId, order)
     const filtered = (data?.jobPostings || []).filter((p) => String(p.id) !== String(currentId))
     return {
       ...data,
@@ -24,7 +24,7 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
       order='latest'
       renderList={(posts) =>
         posts.length === 0 ? (
-          <p className='text-gray-400'>관련 채용 글이 없습니다.</p>
+          <p className='text-dark-gray'>관련 채용 글이 없습니다.</p>
         ) : (
           <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
             <JobPostList posts={posts} navigate={navigate} />
