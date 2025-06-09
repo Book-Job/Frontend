@@ -78,7 +78,7 @@ const Header = () => {
         >
           bookjob
         </span>
-        <span className='flex gap-6 sm:gap-10 text-sm sm:text-base md:text-sm xl:text-lg'>
+        <span className='flex gap-6 text-sm sm:gap-10 sm:text-base md:text-sm xl:text-lg'>
           {navButtons.map((item, index) => (
             <button
               key={index}
@@ -127,7 +127,7 @@ const Header = () => {
             )}
           </div>
         ) : (
-          <span className='flex gap-8  text-sm sm:text-base md:text-sm xl:text-lg'>
+          <span className='flex gap-8 text-sm sm:text-base md:text-sm xl:text-lg'>
             <button
               onClick={() => navigate(ROUTER_PATHS.LOGIN_MAIN)}
               className='font-bold row text-main-pink'

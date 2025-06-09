@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import ToastService from '../../utils/toastService'
 
-const useDraftStore = create((set) => ({
+const useFreeDraftStore = create((set) => ({
   drafts: [],
-  selectedDraft: null,
+  selectedFreeDraft: null,
 
-  loadDrafts: () => {
+  loadFreeDrafts: () => {
     const savedDrafts = localStorage.getItem('communityPostDrafts')
     if (savedDrafts) {
       try {
@@ -19,7 +19,7 @@ const useDraftStore = create((set) => ({
     }
   },
 
-  saveDraft: (draftData) => {
+  saveFreeDraft: (draftData) => {
     const id = uuidv4()
     const date = new Date()
       .toLocaleDateString('ko-KR', {
@@ -42,7 +42,7 @@ const useDraftStore = create((set) => ({
       let updatedDrafts = [newDraft, ...state.drafts]
       if (updatedDrafts.length > 5) {
         ToastService.info('임시저장은 최대 5개까지 저장할 수 있습니다.')
-        return { drafts: state.drafts }
+        throw new Error('임시저장은 최대 5개까지 저장할 수 있습니다.')
       }
       localStorage.setItem('communityPostDrafts', JSON.stringify(updatedDrafts))
       return { drafts: updatedDrafts }
@@ -50,7 +50,7 @@ const useDraftStore = create((set) => ({
     return id
   },
 
-  deleteDraft: (id) => {
+  deleteFreeDraft: (id) => {
     set((state) => {
       const updatedDrafts = state.drafts.filter((draft) => draft.id !== id)
       localStorage.setItem('communityPostDrafts', JSON.stringify(updatedDrafts))
@@ -58,15 +58,15 @@ const useDraftStore = create((set) => ({
     })
   },
 
-  setSelectedDraft: (draft) => {
-    set({ selectedDraft: draft })
+  setSelectedFreeDraft: (draft) => {
+    set({ selectedFreeDraft: draft })
   },
 
-  clearSelectedDraft: () => {
-    set({ selectedDraft: null })
+  clearSelectedFreeDraft: () => {
+    set({ selectedFreeDraft: null })
   },
 
-  getDraftEditorState: (draft) => {
+  getFreeDraftEditorState: (draft) => {
     if (draft?.text) {
       try {
         const rawContent = JSON.parse(draft.text)
@@ -81,4 +81,4 @@ const useDraftStore = create((set) => ({
   },
 }))
 
-export default useDraftStore
+export default useFreeDraftStore

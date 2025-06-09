@@ -2,12 +2,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useRecruitmentPostDetail from '../../detail/hook/useRecruitmentPostDetail'
 import { editRecruitmentPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
-import WriteRecruitmentPostingForm from '../../components/WriteRecruitmentPostingForm'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
 import ToastService from '../../../../../utils/toastService'
 import { htmlToEditorState } from '../../../../community/detail/util/draftjsUtils'
+import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm';
 
 const EditRecruitmentPostPage = () => {
   const { id } = useParams()

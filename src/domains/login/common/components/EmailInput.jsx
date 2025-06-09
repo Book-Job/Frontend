@@ -70,7 +70,7 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
       const response = await postJoinCheckEmailNum({ fullEmail, code })
 
       if (response.data && response.data.message === 'success') {
-        setEmailCheckMessage('사용 가능한 이메일일입니다.')
+        setEmailCheckMessage('사용 가능한 이메일입니다.')
         setEmailCheckStatus('success')
         setValidationStatus('success')
         setStartTimer(false)

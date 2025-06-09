@@ -1,4 +1,4 @@
-import { authApi, publicApi } from '../../../services/api/axios'
+import { authApi } from '../../../services/api/axios'
 
 export const postLoginData = async (data) => {
   try {
@@ -21,40 +21,32 @@ export const postLoginData = async (data) => {
 
 export const postLogout = async () => {
   try {
-    const response = await authApi.post(
-      '/auth/logout',
-      {},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      },
-    )
+    const response = await authApi.post('/auth/logout')
     return response
   } catch (error) {
     console.error('로그아웃 확인 중 오류:', error.response.data.message)
-    throw new Error(error.response.data.message)
+    throw new Error(error)
   }
 }
 
 export const refreshAccessToken = async () => {
   try {
     const response = await authApi.post(
-      '/auth/refresh',
-      {},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      },
+      '/api/v1/auth/refresh',
+      // {},
+      // {
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   withCredentials: true,
+      // },
     )
-    const newAccessToken = response.headers['authorization']?.replace('Bearer ', '')
+    console.log('refreshAccessToken 성공1')
+
+    const newAccessToken = response.headers['authorization']
     if (newAccessToken) {
-      localStorage.setItem('accessToken', newAccessToken)
+      localStorage.setItem('Authorization', newAccessToken)
 
       return newAccessToken
     }
@@ -65,18 +57,12 @@ export const refreshAccessToken = async () => {
   }
 }
 
-export const getKakaologin = async () => {
+export const getSocialLogin = async () => {
   try {
-    const response = await authApi.get('/auth/me', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    console.log('카카오 성공', response)
+    const response = await authApi.get('/auth/me')
     return response
   } catch (error) {
-    console.error('카카오 오류:', error)
+    console.error('소셜로그인 오류:', error)
     throw error
   }
 }
