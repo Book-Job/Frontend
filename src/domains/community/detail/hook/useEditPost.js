@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react'
 import { editPost } from '../../service/postService'
 import ToastService from '../../../../utils/toastService'
-import { EditorState, convertToRaw } from 'draft-js'
-import { htmlToEditorState } from '../util/draftjsUtils'
-import draftToHtml from 'draftjs-to-html'
 
 const useEditPost = (id, fetchDetail) => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -15,7 +12,7 @@ const useEditPost = (id, fetchDetail) => {
       setLoading(true)
       try {
         const detail = await fetchDetail()
-        setEditorState(htmlToEditorState(detail.text || ''))
+        setContent(detail.text || '')
       } catch (err) {
         setError('게시글을 불러오는 데 오류가 발생했습니다.')
         console.error(err)
@@ -23,16 +20,16 @@ const useEditPost = (id, fetchDetail) => {
         setLoading(false)
       }
     }
+
     if (id && fetchDetail) fetchPostData()
   }, [id, fetchDetail])
 
   const handleSubmit = async (e) => {
-    if (e && e.preventDefault) e.preventDefault()
+    if (e?.preventDefault) e.preventDefault()
     setLoading(true)
     setError(null)
     try {
-      const html = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-      await editPost(id, { text: html })
+      await editPost(id, { text: content })
       ToastService.success('게시글이 수정되었습니다.')
     } catch (err) {
       setError('수정 중 오류가 발생했습니다.')
@@ -44,8 +41,8 @@ const useEditPost = (id, fetchDetail) => {
   }
 
   return {
-    editorState,
-    setEditorState,
+    content,
+    setContent,
     loading,
     error,
     handleSubmit,
