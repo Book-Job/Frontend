@@ -31,17 +31,7 @@ export const postLogout = async () => {
 
 export const refreshAccessToken = async () => {
   try {
-    const response = await authApi.post(
-      '/api/v1/auth/refresh',
-      // {},
-      // {
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   withCredentials: true,
-      // },
-    )
+    const response = await authApi.post('/auth/refresh')
     console.log('refreshAccessToken 성공1')
 
     const newAccessToken = response.headers['authorization']
