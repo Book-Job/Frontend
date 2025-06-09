@@ -17,7 +17,6 @@ import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../utils/toastService'
 import WriteEditor from '../../../../components/common/WriteEditor'
 import useEditPost from '../hook/useEditPost'
-import { htmlToEditorState } from '../util/draftjsUtils'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
@@ -29,8 +28,8 @@ const DetailCommunityPage = () => {
   const fetchComments = useCommentStore((state) => state.fetchComments)
 
   const {
-    editorState,
-    setEditorState,
+    content,
+    setContent,
     loading: editLoading,
     error: editError,
     handleSubmit,
@@ -62,9 +61,10 @@ const DetailCommunityPage = () => {
   }
 
   const handleEditClick = () => {
-    setEditorState(htmlToEditorState(post.text || ''))
+    setContent(post.text || '')
     setIsEditing(true)
   }
+
   const handleCancelEdit = () => setIsEditing(false)
 
   const handleBlockUserClick = () => {
@@ -131,9 +131,9 @@ const DetailCommunityPage = () => {
       <div className='mb-10'>
         {isEditing ? (
           <WriteEditor
-            editorState={editorState}
-            onEditorStateChange={setEditorState}
-            placeholder='내용을 입력하세요'
+            initialContent={content}
+            onChange={setContent}
+            onAddFileId={(fileId) => {}}
           />
         ) : (
           <div
