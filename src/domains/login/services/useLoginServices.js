@@ -46,7 +46,7 @@ export const refreshAccessToken = async () => {
 
     const newAccessToken = response.headers['authorization']
     if (newAccessToken) {
-      localStorage.setItem('accessToken', newAccessToken)
+      localStorage.setItem('Authorization', newAccessToken)
 
       return newAccessToken
     }
@@ -60,8 +60,6 @@ export const refreshAccessToken = async () => {
 export const getSocialLogin = async () => {
   try {
     const response = await authApi.get('/auth/me')
-
-    console.log('소셜로그인 성공', response)
     return response
   } catch (error) {
     console.error('소셜로그인 오류:', error)

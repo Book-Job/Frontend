@@ -14,7 +14,7 @@ const useAuthStore = create((set) => ({
   resetToken: null,
 
   initialize: async () => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('Authorization')
     const resetToken = sessionStorage.getItem('resetToken')
     if (token) {
       try {
@@ -31,7 +31,7 @@ const useAuthStore = create((set) => ({
         }
       } catch (error) {
         console.error('initialize 토큰 검증 오류:', error)
-        localStorage.removeItem('accessToken')
+        localStorage.removeItem('Authorization')
         sessionStorage.removeItem('resetToken')
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
@@ -70,7 +70,7 @@ const useAuthStore = create((set) => ({
   requireResetToken: async (navigate) => {
     const state = useAuthStore.getState()
     const resetToken = state.resetToken
-    const accessToken = localStorage.getItem('accessToken')
+    const accessToken = localStorage.getItem('Authorization')
     if (!resetToken && !accessToken) {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
@@ -82,7 +82,7 @@ const useAuthStore = create((set) => ({
   },
 
   requireLogin: async (navigate) => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('Authorization')
     if (!token) {
       navigate(ROUTER_PATHS.LOGIN_MAIN)
       return false
@@ -92,7 +92,7 @@ const useAuthStore = create((set) => ({
       set({ isAuthenticated: true, accessToken: newAccessToken })
       return true
     } catch (error) {
-      localStorage.removeItem('accessToken')
+      localStorage.removeItem('Authorization')
       sessionStorage.removeItem('resetToken')
       console.error('requireLogin 로그인 확인 오류 :', error)
       set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
@@ -123,7 +123,7 @@ const useAuthStore = create((set) => ({
       if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['authorization']
         if (accessToken) {
-          localStorage.setItem('accessToken', accessToken)
+          localStorage.setItem('Authorization', accessToken)
           set({
             user: {
               nickname: response.data.data.nickname,
@@ -152,7 +152,7 @@ const useAuthStore = create((set) => ({
       if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['authorization']
         if (accessToken) {
-          localStorage.setItem('accessToken', accessToken)
+          localStorage.setItem('Authorization', accessToken)
           set({
             user: {
               nickname: response.data.data.nickname,
@@ -176,7 +176,7 @@ const useAuthStore = create((set) => ({
 
   updateNickname: (nickname, newAccessToken = null) => {
     if (newAccessToken) {
-      localStorage.setItem('accessToken', newAccessToken)
+      localStorage.setItem('Authorization', newAccessToken)
     }
     set((state) => ({
       user: { ...state.user, nickname },
@@ -188,7 +188,7 @@ const useAuthStore = create((set) => ({
     try {
       const response = await postLogout()
       response.data && response.data.message === 'success'
-      localStorage.removeItem('accessToken')
+      localStorage.removeItem('Authorization')
       sessionStorage.removeItem('resetToken')
       set({ user: null, isAuthenticated: false, accessToken: null })
       window.location.href = ROUTER_PATHS.MAIN_PAGE
