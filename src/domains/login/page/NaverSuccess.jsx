@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { authApi } from '../../../services/api/axios'
 import ToastService from '../../../utils/toastService'
 import Spinner from '../../../components/web/Spinner'
 import { getSocialLogin } from '../services/useLoginServices'
@@ -17,7 +16,7 @@ const NaverSuccess = () => {
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
           throw new Error(response.data.error || '사용자 정보 요청 실패')
-        }
+        } 
       } catch (error) {
         console.error('네이버 요청 오류:', error)
       }
