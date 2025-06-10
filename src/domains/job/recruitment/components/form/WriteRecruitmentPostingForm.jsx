@@ -11,8 +11,6 @@ import CompanyWebsite from './CompanyWebsite'
 import WorkPlace from './WorkPlace'
 import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
-import draftToHtml from 'draftjs-to-html'
-import { convertToRaw } from 'draft-js'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   const { user } = useAuthStore()
@@ -23,6 +21,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
     control,
     handleSubmit,
     watch,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -31,9 +30,6 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
     },
   })
 
-  const closingDateValue = watch('closingDate')
-
-  
   useEffect(() => {
     if (defaultValues && user?.nickname) {
       const writerToSet = defaultValues.writer || user.nickname
@@ -45,14 +41,9 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   }, [defaultValues, user, reset])
 
   const handleFormSubmit = (formData) => {
-    if (formData.text && formData.text.getCurrentContent) {
-      const rawContent = convertToRaw(formData.text.getCurrentContent())
-      formData.text = draftToHtml(rawContent)
-    }
     if (formData.closingDate) {
       formData.closingDate = `${formData.closingDate}T00:00:00`
     }
-
     onSubmit(formData)
   }
 
@@ -86,7 +77,6 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
       <div className='my-[30px]'>
         <PostContent control={control} errors={errors} />
       </div>
-      <button type='button' onClick={onSave} hidden />
     </form>
   )
 }

@@ -6,8 +6,7 @@ import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
 import ToastService from '../../../../../utils/toastService'
-import { htmlToEditorState } from '../../../../community/detail/util/draftjsUtils'
-import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm';
+import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm'
 
 const EditRecruitmentPostPage = () => {
   const { id } = useParams()
@@ -37,7 +36,7 @@ const EditRecruitmentPostPage = () => {
 
   const defaultValues = {
     ...data,
-    text: htmlToEditorState(data.text ?? ''),
+    text: data.text ?? '',
   }
 
   return (
