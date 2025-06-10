@@ -15,7 +15,7 @@ import { deletePost } from '../../service/postService'
 import useCommentStore from '../../comment/store/useCommentStore'
 import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../utils/toastService'
-import WriteEditor from '../../../../components/common/WriteEditor'
+import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
 
 const DetailCommunityPage = () => {
