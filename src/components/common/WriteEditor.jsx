@@ -3,7 +3,6 @@ import { authApi } from '../../services/api/axios'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
-import axios from 'axios'
 import { useCallback } from 'react'
 
 const MenuBar = ({ editor }) => {
@@ -11,20 +10,23 @@ const MenuBar = ({ editor }) => {
   return (
     <div className='mb-2 flex gap-2'>
       <button
-        type='button'
+        className='px-2 py-1 border rounded hover:bg-gray-100 font-bold'
         onClick={() => editor.chain().focus().toggleBold().run()}
         style={{ fontWeight: editor.isActive('bold') ? 'bold' : 'normal' }}
       >
         Bold
       </button>
       <button
-        type='button'
+        className='px-2 py-1 border rounded hover:bg-gray-100 italic'
         onClick={() => editor.chain().focus().toggleItalic().run()}
         style={{ fontStyle: editor.isActive('italic') ? 'italic' : 'normal' }}
       >
         Italic
       </button>
-      <button type='button' onClick={() => document.querySelector('#file-input').click()}>
+      <button
+        className='px-2 py-1 border rounded hover:bg-gray-100'
+        onClick={() => document.querySelector('#file-input').click()}
+      >
         Image
       </button>
     </div>
@@ -34,47 +36,20 @@ const MenuBar = ({ editor }) => {
 const WriteEditor = ({ initialContent, onChange, onAddFileId }) => {
   const uploadImage = useCallback(
     async (file) => {
-      try {
-        const res = await authApi.post('/images', {
-          fileName: file.name,
-          fileSize: file.size,
-          boardType: 'BOARD',
-        })
-        const { presignedUrl, fileId } = res.data.data
-        const response = await axios.put(presignedUrl, file, {
-          headers: {
-            'Content-Type': 'image/jpeg',
-          },
-        })
-
-        if (response.status === 200 || response.status === 204) {
-        } else {
-          console.error('S3 업로드 실패:', response.status, response.statusText)
-          throw new Error(`이미지 업로드 실패: ${response.status} ${response.statusText}`)
-        }
-
-        const imageUrl = presignedUrl.split('?')[0]
-        onAddFileId?.(fileId)
-        return imageUrl
-      } catch (error) {
-        if (error.response) {
-          console.error('S3 업로드 403 에러 상세:', {
-            status: error.response.status,
-            statusText: error.response.statusText,
-            headers: error.response.headers,
-            data: error.response.data,
-          })
-          alert(
-            (error.response.data && error.response.data.message) ||
-              error.response.data ||
-              '이미지 업로드에 실패했습니다.',
-          )
-        } else {
-          console.error('S3 업로드 네트워크/기타 에러:', error.message)
-          alert(error.message || '이미지 업로드에 실패했습니다.')
-        }
-        throw error
-      }
+      const res = await authApi.post('/images', {
+        fileName: file.name,
+        fileSize: file.size,
+        boardType: 'BOARD',
+      })
+      const { presignedUrl, fileId } = res.data.data
+      await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      })
+      const imageUrl = presignedUrl.split('?')[0]
+      onAddFileId?.(fileId)
+      return imageUrl
     },
     [onAddFileId],
   )
@@ -94,7 +69,7 @@ const WriteEditor = ({ initialContent, onChange, onAddFileId }) => {
     editorProps: {
       attributes: {
         class:
-          'tiptap prose prose-lg min-h-[300px] border border-dark-gray rounded-md p-4 focus:outline-none bg-white',
+          'tiptap prose prose-lg min-h-[300px] border border-gray-300 rounded-md p-4 focus:outline-none bg-white',
       },
       handlePaste: async (view, event) => {
         const items = event.clipboardData?.items
@@ -103,10 +78,8 @@ const WriteEditor = ({ initialContent, onChange, onAddFileId }) => {
           if (item.type.startsWith('image/')) {
             const file = item.getAsFile()
             if (file) {
-              try {
-                const url = await uploadImage(file)
-                editor.chain().focus().setImage({ src: url }).run()
-              } catch (error) {}
+              const url = await uploadImage(file)
+              editor.chain().focus().setImage({ src: url }).run()
               return true
             }
           }
@@ -119,10 +92,8 @@ const WriteEditor = ({ initialContent, onChange, onAddFileId }) => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
-    try {
-      const url = await uploadImage(file)
-      editor.chain().focus().setImage({ src: url }).run()
-    } catch (error) {}
+    const url = await uploadImage(file)
+    editor.chain().focus().setImage({ src: url }).run()
   }
 
   return (
