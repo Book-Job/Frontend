@@ -32,25 +32,16 @@ export const postLogout = async () => {
 export const refreshAccessToken = async () => {
   try {
     const response = await authApi.post(
-      '/api/v1/auth/refresh',
-      // {},
-      // {
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   withCredentials: true,
-      // },
+      '/auth/refresh',
+      {},
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
     )
     console.log('refreshAccessToken 성공1')
-
-    const newAccessToken = response.headers['authorization']
-    if (newAccessToken) {
-      localStorage.setItem('Authorization', newAccessToken)
-
-      return newAccessToken
-    }
-    throw new Error('새로운 액세스 토큰을 받지 못했습니다.')
   } catch (error) {
     console.error('토큰 갱신 오류:', error)
     throw error

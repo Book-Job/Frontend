@@ -16,12 +16,16 @@ const useAuthStore = create((set) => ({
   initialize: async () => {
     const token = localStorage.getItem('Authorization')
     const resetToken = sessionStorage.getItem('resetToken')
+    console.log('ggg1', token)
     if (token) {
       try {
         const response = await refreshAccessToken()
+        console.log('ggg2', response)
         if (response.data?.message === 'success') {
           set({
-            user: { nickname: response.data.data.nickname },
+            user: { nickname: response.data.data.nickname,
+              email: response.data.data.email,
+              loginId: response.data.data.loginId,},
             isAuthenticated: true,
             accessToken: token,
             resetToken,
@@ -30,11 +34,15 @@ const useAuthStore = create((set) => ({
           throw new Error('토큰 검증 실패')
         }
       } catch (error) {
+        console.log('ggg3', error)
         console.error('initialize 토큰 검증 오류:', error)
         localStorage.removeItem('Authorization')
         sessionStorage.removeItem('resetToken')
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
+    } else {
+      console.log('ggg4', '토큰이 없습니다. 초기 상태로 설정합니다.')
+      set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
     }
   },
 
@@ -115,7 +123,7 @@ const useAuthStore = create((set) => ({
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
-        const accessToken = response.headers['authorization']
+        const accessToken = response.headers['Authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
           set({
@@ -133,6 +141,7 @@ const useAuthStore = create((set) => ({
       } else {
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
+      return response
     } catch (error) {
       console.error('로그인 실패:', error)
       throw error
