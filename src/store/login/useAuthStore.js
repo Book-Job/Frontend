@@ -137,7 +137,7 @@ const useAuthStore = create((set) => ({
             accessToken,
           })
         } else {
-          throw new Error('액세스 토큰을 받지 못했습니다.')
+          throw new Error('액세스 토큰을 받지 못했습니다.1')
         }
       } else {
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
