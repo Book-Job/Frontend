@@ -90,7 +90,9 @@ console.log('토큰 갱신 시작');
 
       try {
         const newAccessToken = await refreshAccessToken()
-        console.log('토큰 갱신 성공 2');
+        console.log('토큰 갱신 성공 2',newAccessToken.headers['Authorization']);
+        console.log('토큰 갱신 성공 3',newAccessToken);
+        // newAccessToken.headers['Authorization'] = 
         authApi.defaults.headers['Authorization'] = `${newAccessToken}`
         localStorage.setItem('Authorization', newAccessToken)
         originalRequest.headers['Authorization'] = `${newAccessToken}`
