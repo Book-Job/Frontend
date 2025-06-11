@@ -16,9 +16,11 @@ const useAuthStore = create((set) => ({
   initialize: async () => {
     const token = localStorage.getItem('Authorization')
     const resetToken = sessionStorage.getItem('resetToken')
+    console.log('ggg1', token)
     if (token) {
       try {
         const response = await refreshAccessToken()
+        console.log('ggg2', response)
         if (response.data?.message === 'success') {
           set({
             user: { nickname: response.data.data.nickname },
@@ -30,11 +32,15 @@ const useAuthStore = create((set) => ({
           throw new Error('토큰 검증 실패')
         }
       } catch (error) {
+        console.log('ggg3', error)
         console.error('initialize 토큰 검증 오류:', error)
         localStorage.removeItem('Authorization')
         sessionStorage.removeItem('resetToken')
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
+    } else {
+      console.log('ggg4', '토큰이 없습니다. 초기 상태로 설정합니다.')
+      set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
     }
   },
 
