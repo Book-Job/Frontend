@@ -41,7 +41,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   }, [defaultValues, user, reset])
 
   const handleFormSubmit = (formData) => {
-    if (formData.closingDate) {
+    if (formData.closingDate && !formData.closingDate.includes('T')) {
       formData.closingDate = `${formData.closingDate}T00:00:00`
     }
     onSubmit(formData)
