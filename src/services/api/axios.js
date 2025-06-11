@@ -6,24 +6,10 @@ export const authApi = axios.create({
   withCredentials: true,
 })
 
-// authApi.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('Authorization')
-//     if (token) {
-//       config.headers['Authorization'] = `${token}`
-//     }
-//     return config
-//   },
-//   (error) => {
-//     return Promise.reject(error)
-//   },
-// )
-
 export const publicApi = axios.create({
   baseURL: 'https://api.bookjob.co.kr/api/v1',
   withCredentials: false,
 })
-
 
 // 리프레시 토큰 요청 중인지 추적
 let isRefreshing = false
@@ -31,26 +17,16 @@ let isRefreshing = false
 let failedQueue = []
 
 // 큐에 있는 요청들을 처리하는 함수
-// const processQueue = (error, token = null) => {
-//   failedQueue.forEach((prom) => {
-//     if (error) {
-//       prom.reject(error)
-//     } else {
-//       prom.resolve(token)
-//     }
-//   })
-//   failedQueue = []
-// }
 const processQueue = (error, token = null) => {
-  failedQueue = failedQueue.filter((prom) => {
+  failedQueue.forEach((prom) => {
     if (error) {
-      prom.reject(error);
+      prom.reject(error)
     } else {
-      prom.resolve(token);
+      prom.resolve(token)
     }
-    return false;
-  });
-};
+  })
+  failedQueue = []
+}
 
 authApi.interceptors.request.use(
   (config) => {
@@ -58,6 +34,7 @@ authApi.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = token
     }
+    console.log('Sending request:', config.url)
     return config
   },
   (error) => {
@@ -101,7 +78,7 @@ authApi.interceptors.response.use(
         localStorage.setItem('Authorization', token)
         authApi.defaults.headers['Authorization'] = token
         originalRequest.headers['Authorization'] = token
-
+        console.log('Queue length:', failedQueue.length)
         processQueue(null, token)
         console.log('Retrying request:', originalRequest.url)
         return authApi(originalRequest)
