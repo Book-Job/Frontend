@@ -21,7 +21,9 @@ const useAuthStore = create((set) => ({
         const response = await refreshAccessToken()
         if (response.data?.message === 'success') {
           set({
-            user: { nickname: response.data.data.nickname },
+            user: { nickname: response.data.data.nickname,
+              email: response.data.data.email,
+              loginId: response.data.data.loginId,},
             isAuthenticated: true,
             accessToken: token,
             resetToken,
@@ -35,6 +37,9 @@ const useAuthStore = create((set) => ({
         sessionStorage.removeItem('resetToken')
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
+    } else {
+      console.log('ggg4', '토큰이 없습니다. 초기 상태로 설정합니다.')
+      set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
     }
   },
 
@@ -105,7 +110,7 @@ const useAuthStore = create((set) => ({
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
     } catch (error) {
-      console.error('로그인 실패:', error)
+      console.error('일반 로그인 실패 :', error)
       throw error
     }
   },
@@ -115,6 +120,7 @@ const useAuthStore = create((set) => ({
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
+        console.log('소셜 로그인 성공 2')
         const accessToken = response.headers['authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
@@ -128,13 +134,14 @@ const useAuthStore = create((set) => ({
             accessToken,
           })
         } else {
-          throw new Error('액세스 토큰을 받지 못했습니다.')
+          throw new Error('액세스 토큰을 받지 못했습니다.1')
         }
       } else {
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
+      return response
     } catch (error) {
-      console.error('로그인 실패:', error)
+      console.error('소셜 로그인 실패:', error)
       throw error
     }
   },
