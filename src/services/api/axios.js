@@ -103,6 +103,7 @@ authApi.interceptors.response.use(
         originalRequest.headers['Authorization'] = token
 
         processQueue(null, token)
+        console.log('Retrying request:', originalRequest.url)
         return authApi(originalRequest)
       } catch (refreshError) {
         console.error('토큰 갱신 실패');
