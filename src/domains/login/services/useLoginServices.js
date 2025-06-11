@@ -42,6 +42,7 @@ export const refreshAccessToken = async () => {
       },
     )
     console.log('refreshAccessToken 성공1')
+    return response
   } catch (error) {
     console.error('11 토큰 갱신 오류:', error)
     throw error
