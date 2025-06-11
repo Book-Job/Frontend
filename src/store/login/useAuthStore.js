@@ -113,7 +113,7 @@ const useAuthStore = create((set) => ({
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
     } catch (error) {
-      console.error('로그인 실패:', error)
+      console.error('일반 로그인 실패:', error)
       throw error
     }
   },
@@ -123,6 +123,7 @@ const useAuthStore = create((set) => ({
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
+        console.log('소셜 로그인 성공 2')
         const accessToken = response.headers['Authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
@@ -143,7 +144,7 @@ const useAuthStore = create((set) => ({
       }
       return response
     } catch (error) {
-      console.error('로그인 실패:', error)
+      console.error('소셜 로그인 실패:', error)
       throw error
     }
   },
