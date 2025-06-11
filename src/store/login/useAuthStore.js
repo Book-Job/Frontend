@@ -122,7 +122,7 @@ const useAuthStore = create((set) => ({
     try {
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
-      if (response.data || response.data.message === 'success') {
+      if (response.data && response.data.message === 'success') {
         const accessToken = response.headers['Authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)

@@ -88,6 +88,8 @@ authApi.interceptors.response.use(
 
       try {
         const newAccessToken = await refreshAccessToken()
+        authApi.defaults.headers['Authorization'] = `${newAccessToken}`
+        localStorage.setItem('Authorization', newAccessToken)
         originalRequest.headers['Authorization'] = `${newAccessToken}`
         processQueue(null, newAccessToken)
         return authApi(originalRequest)
