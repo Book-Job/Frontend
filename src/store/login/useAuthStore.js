@@ -16,11 +16,9 @@ const useAuthStore = create((set) => ({
   initialize: async () => {
     const token = localStorage.getItem('Authorization')
     const resetToken = sessionStorage.getItem('resetToken')
-    console.log('ggg1', token)
     if (token) {
       try {
         const response = await refreshAccessToken()
-        console.log('ggg2', response)
         if (response.data?.message === 'success') {
           set({
             user: { nickname: response.data.data.nickname,
