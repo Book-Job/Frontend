@@ -34,7 +34,7 @@ const MobileFreeBoard = ({
 
   return (
     <div className='w-full max-w-xs min-h-[140px] mb-3' onClick={goToDetailPage}>
-      <div className='flex flex-col h-full  border border-dark-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer'>
+      <div className='flex flex-col h-full  border border-dark-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer text-left'>
         <div className='flex-row' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
           <div className='mt-[5px] text-[14px] line-clamp-1'>{content}</div>
