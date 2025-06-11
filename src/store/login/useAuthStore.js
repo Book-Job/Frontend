@@ -34,7 +34,6 @@ const useAuthStore = create((set) => ({
           throw new Error('토큰 검증 실패')
         }
       } catch (error) {
-        console.log('ggg3', error)
         console.error('initialize 토큰 검증 오류:', error)
         localStorage.removeItem('Authorization')
         sessionStorage.removeItem('resetToken')
@@ -124,7 +123,7 @@ const useAuthStore = create((set) => ({
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
         console.log('소셜 로그인 성공 2')
-        const accessToken = response.headers['Authorization']
+        const accessToken = response.headers['authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
           set({
