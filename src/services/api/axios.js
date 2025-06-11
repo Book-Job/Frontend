@@ -67,7 +67,7 @@ authApi.interceptors.response.use(
     if (
       error.response &&
       error.response.status === 401 &&
-      error.response.data.message === '만료된 토큰입니다.' &&
+      (error.response.data.code === 'TOKEN_EXPIRED' || error.response.data.message === '만료된 토큰입니다.') &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
