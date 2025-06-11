@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify'
-import { useForm, Controller } from 'react-hook-form'
-import { EditorState, convertToRaw } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { createPost } from '../../service/postService'
@@ -14,11 +12,13 @@ import useAuthStore from '../../../../store/login/useAuthStore'
 import WriteEditor from '../../../../components/common/WriteEditor'
 import useDraftHandler from '../../../../hooks/writePost/useDraftHandler'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
+
 const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const { user } = useAuthStore()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const { handleSaveDraft } = useDraftHandler()
   const navigate = useNavigate()
+  const [content, setContent] = useState('')
 
   const {
     register,
@@ -32,7 +32,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     defaultValues: {
       nickname: '',
       title: '',
-      text: EditorState.createEmpty(),
     },
   })
 
@@ -52,13 +51,18 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   }, [selectedFreeDraft, user, setValue])
 
   const onSubmit = async (data) => {
-    const rawHtml = draftToHtml(convertToRaw(data.text.getCurrentContent()))
-    const htmlText = DOMPurify.sanitize(rawHtml)
+    if (!content || content.trim() === '') {
+      ToastService.error('내용은 필수입니다')
+      return
+    }
+    const htmlText = DOMPurify.sanitize(content)
     const postData = {
       nickname: data.nickname,
       title: data.title,
       text: htmlText,
     }
+    console.log('서버에 보낼 데이터:', postData)
+
     try {
       await createPost(postData)
       ToastService.success('게시글이 등록되었습니다.')
@@ -67,6 +71,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
         clearSelectedFreeDraft()
       }
       reset()
+      setContent('')
       navigate(ROUTER_PATHS.COMMUNITY)
     } catch (err) {
       console.error('게시글 작성 실패', err)
@@ -135,29 +140,16 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
 
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
-          <Controller
-            name='text'
-            control={control}
-            rules={{
-              required: '내용은 필수입니다',
-              validate: (value) => {
-                const content = value.getCurrentContent()
-                return content.hasText() || '내용은 필수입니다'
-              },
-            }}
-            render={({ field }) => (
-              <WriteEditor
-                editorState={field.value}
-                onEditorStateChange={field.onChange}
-                placeholder='내용을 입력하세요'
-              />
-            )}
+          <WriteEditor
+            initialContent={content}
+            onChange={setContent}
+            placeholder='내용을 입력하세요'
           />
-          {errors.text && (
-            <span className='self-start block mt-1 text-xs text-left text-red-500'>
-              {errors.text.message}
+          {!content || content.trim() === '' ? (
+            <span className='self-start text-red-500 text-xs mt-1 block text-left'>
+              내용은 필수입니다
             </span>
-          )}
+          ) : null}
         </FormItem>
       </div>
       <button type='button' onClick={onSave} hidden />
