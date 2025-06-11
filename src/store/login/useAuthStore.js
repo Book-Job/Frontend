@@ -113,7 +113,7 @@ const useAuthStore = create((set) => ({
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
     } catch (error) {
-      console.error('일반 로그인 실패:', error)
+      console.error('일반 로그인 실패 :', error)
       throw error
     }
   },
