@@ -23,7 +23,9 @@ const useAuthStore = create((set) => ({
         console.log('ggg2', response)
         if (response.data?.message === 'success') {
           set({
-            user: { nickname: response.data.data.nickname },
+            user: { nickname: response.data.data.nickname,
+              email: response.data.data.email,
+              loginId: response.data.data.loginId,},
             isAuthenticated: true,
             accessToken: token,
             resetToken,
@@ -120,8 +122,8 @@ const useAuthStore = create((set) => ({
     try {
       const response = await getSocialLogin()
       console.log('소셜 로그인 정보', response)
-      if (response.data && response.data.message === 'success') {
-        const accessToken = response.headers['authorization']
+      if (response.data || response.data.message === 'success') {
+        const accessToken = response.headers['Authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
           set({
@@ -139,6 +141,7 @@ const useAuthStore = create((set) => ({
       } else {
         throw new Error(response.data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')
       }
+      return response
     } catch (error) {
       console.error('로그인 실패:', error)
       throw error

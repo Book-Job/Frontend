@@ -42,12 +42,6 @@ export const refreshAccessToken = async () => {
       },
     )
     console.log('refreshAccessToken 성공1')
-    const newAccessToken = response.headers['Authorization']
-    if (newAccessToken) {
-      localStorage.setItem('Authorization', newAccessToken)
-      return newAccessToken
-    }
-    throw new Error('새로운 액세스 토큰을 받지 못했습니다.')
   } catch (error) {
     console.error('토큰 갱신 오류:', error)
     throw error
