@@ -93,9 +93,9 @@ console.log('토큰 갱신 시작');
         console.log('토큰 갱신 성공 2',newAccessToken.headers['authorization']);
         console.log('토큰 갱신 성공 3',newAccessToken);
         // newAccessToken.headers['Authorization'] = 
-        authApi.defaults.headers['authorization'] = `${newAccessToken}`
-        localStorage.setItem('authorization', newAccessToken)
-        originalRequest.headers['authorization'] = `${newAccessToken}`
+        authApi.defaults.headers['Authorization'] = `${newAccessToken.headers['authorization']}`
+        localStorage.setItem('Authorization', newAccessToken.headers['authorization'])
+        originalRequest.headers['Authorization'] = `${newAccessToken.headers['authorization']}`
         processQueue(null, newAccessToken)
         return authApi(originalRequest)
       } catch (refreshError) {
