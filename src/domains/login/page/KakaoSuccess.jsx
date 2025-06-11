@@ -27,7 +27,7 @@ const KakaoSuccess = () => {
 
   return (
     <div className='flex flex-col'>
-      <span>카카오 로그인 처리 중...</span>
+      카카오 로그인 처리 중...
       <Spinner size={48} color='main-pink' />
     </div>
   )
