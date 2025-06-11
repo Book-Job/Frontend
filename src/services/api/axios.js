@@ -32,6 +32,7 @@ let failedQueue = []
 
 // 큐에 있는 요청들을 처리하는 함수
 const processQueue = (error, token = null) => {
+  console.log('토큰 갱신 있음 1');
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error)
@@ -63,6 +64,7 @@ authApi.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config
+console.log('토큰 갱신 시작');
 
     if (
       error.response &&
@@ -88,12 +90,14 @@ authApi.interceptors.response.use(
 
       try {
         const newAccessToken = await refreshAccessToken()
+        console.log('토큰 갱신 성공 2');
         authApi.defaults.headers['Authorization'] = `${newAccessToken}`
         localStorage.setItem('Authorization', newAccessToken)
         originalRequest.headers['Authorization'] = `${newAccessToken}`
         processQueue(null, newAccessToken)
         return authApi(originalRequest)
       } catch (refreshError) {
+        console.error('토큰 갱신 실패');
         processQueue(refreshError, null)
         return Promise.reject(refreshError)
       } finally {
