@@ -31,19 +31,27 @@ let isRefreshing = false
 let failedQueue = []
 
 // 큐에 있는 요청들을 처리하는 함수
+// const processQueue = (error, token = null) => {
+//   failedQueue.forEach((prom) => {
+//     if (error) {
+//       prom.reject(error)
+//     } else {
+//       prom.resolve(token)
+//     }
+//   })
+//   failedQueue = []
+// }
 const processQueue = (error, token = null) => {
-  console.log('토큰 갱신 있음 1');
-  failedQueue.forEach((prom) => {
+  failedQueue = failedQueue.filter((prom) => {
     if (error) {
-      prom.reject(error)
+      prom.reject(error);
     } else {
-      prom.resolve(token)
+      prom.resolve(token);
     }
-  })
-  failedQueue = []
-}
+    return false;
+  });
+};
 
-// 요청 인터셉터: 모든 요청에 Authorization 헤더 추가
 authApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('Authorization')
@@ -64,12 +72,11 @@ authApi.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config
-console.log('토큰 갱신 시작');
 
     if (
       error.response &&
       error.response.status === 401 &&
-      (error.response.data.code === 'TOKEN_EXPIRED' || error.response.data.message === '만료된 토큰입니다.') &&
+      error.response.data.message === '만료된 토큰입니다.' &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
@@ -77,7 +84,7 @@ console.log('토큰 갱신 시작');
           failedQueue.push({ resolve, reject })
         })
           .then((token) => {
-            originalRequest.headers['Authorization'] = `${token}`
+            originalRequest.headers['Authorization'] = token
             return authApi(originalRequest)
           })
           .catch((err) => {
@@ -90,13 +97,12 @@ console.log('토큰 갱신 시작');
 
       try {
         const newAccessToken = await refreshAccessToken()
-        console.log('토큰 갱신 성공 2',newAccessToken.headers['authorization']);
-        console.log('토큰 갱신 성공 3',newAccessToken);
-        // newAccessToken.headers['Authorization'] = 
-        authApi.defaults.headers['Authorization'] = newAccessToken.headers['authorization']
-        localStorage.setItem('Authorization', newAccessToken.headers['authorization'])
-        originalRequest.headers['Authorization'] = newAccessToken.headers['authorization']
-        processQueue(null, newAccessToken)
+        const token = newAccessToken.headers['authorization']
+        localStorage.setItem('Authorization', token)
+        authApi.defaults.headers['Authorization'] = token
+        originalRequest.headers['Authorization'] = token
+
+        processQueue(null, token)
         return authApi(originalRequest)
       } catch (refreshError) {
         console.error('토큰 갱신 실패');
