@@ -124,7 +124,7 @@ const useAuthStore = create((set) => ({
       console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
         console.log('소셜 로그인 성공 2')
-        const accessToken = response.headers['authorization']
+        const accessToken = response.headers['Authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
           set({
