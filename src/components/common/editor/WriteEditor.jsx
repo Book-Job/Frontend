@@ -21,7 +21,15 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
         boardType: 'BOARD',
       })
       const { presignedUrl, fileId } = res.data.data
-      await axios.put(presignedUrl, file)
+      try {
+        await axios.put(presignedUrl, file, {
+          headers: { 'Content-Type': file.type },
+        })
+      } catch (e) {
+        ToastService.error('이미지 업로드 실패. 다시 시도해주세요.')
+        throw e
+      }
+
       const imageUrl = presignedUrl.split('?')[0]
       onAddFileId?.(fileId)
       return imageUrl
@@ -47,7 +55,9 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
     try {
       const url = await uploadImage(file)
       editor.chain().focus().setImage({ src: url }).run()
-    } catch (error) {}
+    } catch (error) {
+      ToastService.error('이미지 업로드 실패. 다시 시도해주세요.')
+    }
   }
 
   return (
