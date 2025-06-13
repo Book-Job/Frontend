@@ -6,7 +6,6 @@ import JobPostSortDropDown from '../../common/components/JobPostSortDropDown'
 import JobPostList from '../components/JobPostList'
 import JobInfiniteScroll from '../../common/components/JobInfiniteScroll'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
-import { getPostCounts } from '../../common/utils/getPostCounts'
 import useScrapStore from '../../scrap/store/useScrapStore'
 import useJobSearch from '../../common/hook/useJobSearch'
 import { recruitmentSortOptions, seekingSortOptions } from '../../common/constants/sortOptions'
@@ -81,8 +80,6 @@ const JobMainPage = () => {
     }
   }, [location.state])
 
-  const counts = getPostCounts(searchResults)
-
   return (
     <>
       <div className='flex justify-center'>
@@ -99,12 +96,12 @@ const JobMainPage = () => {
           onSearch={handleSearch}
         />
       </div>
-      <div className='px-2 md:px-10 mt-2 max-w-screen-xl mx-auto'>
+      <div className='board flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px] mt-2'>
         <div className='flex items-center justify-between mb-2'>
           <div className='flex items-end gap-2 ml-auto'>
             <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
             <JobPostSortDropDown
-              className='text-xs sm:text-sm md:text-[15px] font-semibold '
+              className='text-xs sm:text-sm md:text-[15px] font-semibold'
               onSortChange={(value) => {
                 setOrder(value)
               }}

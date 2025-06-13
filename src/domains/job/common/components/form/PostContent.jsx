@@ -1,6 +1,6 @@
 import FormItem from '../FormItem'
 import { Controller } from 'react-hook-form'
-import WriteEditor from '../../../../../components/common/WriteEditor'
+import WriteEditor from '../../../../../components/common/editor/WriteEditor'
 
 const PostContent = ({ control, errors }) => {
   return (
@@ -11,25 +11,23 @@ const PostContent = ({ control, errors }) => {
         rules={{
           required: '내용은 필수입니다',
           validate: (value) => {
-            const content = value.getCurrentContent?.()
-            return (content && content.hasText()) || '내용은 필수입니다'
+            if (!value) return '내용은 필수입니다'
+            const plain = value.replace(/<[^>]*>/g, '').trim()
+            if (plain.length > 0) return true
+            const hasImage = /<img\s+[^>]*src=['"][^'"]+['"][^>]*>/i.test(value)
+            if (hasImage) return true
+            return '내용은 필수입니다'
           },
         }}
-        render={({ field }) => {
-          return (
-            <WriteEditor
-              editorState={field.value}
-              onEditorStateChange={field.onChange}
-              placeholder='내용을 입력하세요'
-            />
-          )
-        }}
-      />
-      <div className='flex items-start'>
-        {errors.text && (
-          <span className='text-red-500 text-[14px] mt-1'>{errors.text.message}</span>
+        render={({ field }) => (
+          <div className='w-full'>
+            <WriteEditor value={field.value ?? ''} onChange={field.onChange} />
+            {errors.text && (
+              <span className='text-red-500 text-[14px] mt-1 block'>{errors.text.message}</span>
+            )}
+          </div>
         )}
-      </div>
+      />
     </FormItem>
   )
 }

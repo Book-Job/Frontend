@@ -9,8 +9,7 @@ import JobCategory from '../../common/components/form/JobCategory'
 import WorkExperience from './form/WorkExperience'
 import ContactEmail from './form/ContactEmail'
 import useAuthStore from '../../../../store/login/useAuthStore'
-import draftToHtml from 'draftjs-to-html'
-import { convertToRaw } from 'draft-js'
+
 const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
   const { user } = useAuthStore()
 
@@ -39,11 +38,6 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
   }, [defaultValues, user, reset])
 
   const handleFormSubmit = (formData) => {
-    if (formData.text && formData.text.getCurrentContent) {
-      const rawContent = convertToRaw(formData.text.getCurrentContent())
-      formData.text = draftToHtml(rawContent)
-    }
-
     onSubmit(formData)
   }
 
