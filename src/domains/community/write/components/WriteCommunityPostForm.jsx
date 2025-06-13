@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import useCommunityPostForm from '../hook/useCommunityPostForm'
 import DOMPurify from 'dompurify'
-import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { createPost } from '../../service/postService'
@@ -9,7 +9,7 @@ import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
-import WriteEditor from '../../../../components/common/WriteEditor'
+import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useDraftHandler from '../../../../hooks/writePost/useDraftHandler'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 
@@ -20,20 +20,12 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const navigate = useNavigate()
   const [content, setContent] = useState('')
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    getValues,
-    control,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      nickname: '',
-      title: '',
-    },
-  })
+  const { register, handleSubmit, reset, setValue, getValues, control, errors } =
+    useCommunityPostForm()
+
+  const handleChange = (value) => {
+    setContent(value)
+  }
 
   useEffect(() => {
     if (selectedFreeDraft) {
@@ -61,7 +53,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       title: data.title,
       text: htmlText,
     }
-    console.log('서버에 보낼 데이터:', postData)
 
     try {
       await createPost(postData)
@@ -142,7 +133,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
         <FormItem label='내용' dot={true}>
           <WriteEditor
             initialContent={content}
-            onChange={setContent}
+            onChange={handleChange}
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
