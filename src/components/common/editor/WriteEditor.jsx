@@ -6,12 +6,14 @@ import ImageBubbleMenu from './ImageBubbleMenu'
 import useEditorInstance from '../../../hooks/writePost/useEditorInstance'
 import { EditorContent } from '@tiptap/react'
 import ToastService from '../../../utils/toastService'
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024
+
 const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
   const uploadImage = useCallback(
     async (file) => {
       if (file.size > MAX_FILE_SIZE) {
-        ToastService('이미지 크기는 5MB를 초과할 수 없습니다.')
+        ToastService.error('이미지 크기는 5MB를 초과할 수 없습니다.')
         throw new Error('파일 크기 초과')
       }
 
@@ -20,14 +22,18 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
         fileSize: file.size,
         boardType: 'BOARD',
       })
+
       const { presignedUrl, fileId } = res.data.data
+
       try {
+        const contentType = 'image/jpeg'
         await axios.put(presignedUrl, file, {
-          headers: { 'Content-Type': file.type },
+          headers: { 'Content-Type': contentType },
+          withCredentials: false,
         })
-      } catch (e) {
+      } catch (error) {
         ToastService.error('이미지 업로드 실패. 다시 시도해주세요.')
-        throw e
+        throw error
       }
 
       const imageUrl = presignedUrl.split('?')[0]
