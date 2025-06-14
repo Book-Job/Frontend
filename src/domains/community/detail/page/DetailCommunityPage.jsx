@@ -134,6 +134,7 @@ const DetailCommunityPage = () => {
           weblink={currentUrl}
           title={post.title}
           post={post}
+          isShare={true}
         />
       </div>
       <div className='mb-10'>

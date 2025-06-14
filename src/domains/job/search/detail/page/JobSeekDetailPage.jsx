@@ -125,6 +125,7 @@ const JobSeekDetailPage = () => {
           weblink={currentUrl}
           title={data.title}
           post={data}
+          isShare={true}
         />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import ToastService from '../../utils/toastService'
 
-const MobileShare = ({ label, icon, textColor, weblink, post }) => {
+const MobileShare = ({ label, icon, textColor, weblink, post, isShare }) => {
   const handleShare = async () => {
+    if (!isShare) return
+
     if (navigator.share) {
       try {
         await navigator.share({
@@ -40,17 +42,18 @@ const MobileShare = ({ label, icon, textColor, weblink, post }) => {
 MobileShare.propTypes = {
   label: PropTypes.string.isRequired,
   icon: PropTypes.string,
-  weblink: PropTypes.string.isRequired,
+  weblink: PropTypes.string,
+  post: PropTypes.object,
   textColor: PropTypes.string,
-  post: PropTypes.shape({
-    title: PropTypes.string,
-    nickname: PropTypes.string,
-  }).isRequired,
+  isShare: PropTypes.bool,
 }
 
 MobileShare.defaultProps = {
   icon: null,
+  weblink: '',
+  post: null,
   textColor: '',
+  isShare: false,
 }
 
 export default MobileShare
