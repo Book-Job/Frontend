@@ -24,6 +24,7 @@ const JobSeekDetailPage = () => {
   const { data, loading, error } = useJobSeekPostDetail(id)
   const { scraps, toggleScrap, loading: scrapLoading } = useScrapStore()
   const isScrapped = Boolean(scraps[id])
+  const currentUrl = window.location.href
   const navigate = useNavigate()
 
   if (loading) {
@@ -117,7 +118,14 @@ const JobSeekDetailPage = () => {
       </dl>
       <LastFormLine />
       <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
-        <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
+        <MobileShare
+          label='공유'
+          icon={share}
+          textColor='text-dark-gray'
+          weblink={currentUrl}
+          title={data.title}
+          post={data}
+        />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
