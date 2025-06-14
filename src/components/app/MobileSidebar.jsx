@@ -80,6 +80,7 @@ const MobileSidebar = ({ onClose }) => {
                   onMouseEnter={() => setHoveredMenu(menu.label)}
                   onMouseLeave={() => setHoveredMenu(null)}
                   className={classNames}
+                  onClick={onClose}
                 >
                   <img
                     src={iconSrc}

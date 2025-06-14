@@ -8,13 +8,13 @@ const Footer = ({ email, onClick }) => {
   return (
     <footer className='w-full bg-[#FDF8FA] py-10 px-6 text-left'>
       <div className='max-w-7xl mx-auto flex flex-col gap-4'>
-        <a
-          role='button'
+        <button
+          type='button'
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
           className='text-3xl font-bold text-main-pink font-logo cursor-pointer'
         >
           bookjob
-        </a>
+        </button>
         <div className='flex flex-wrap gap-6 text-sm text-dark-gray text-left items-center'>
           <span className='font-semibold'>북잡</span>
           <span>대표 | 이신지</span>

@@ -42,7 +42,10 @@ MobileShare.propTypes = {
   icon: PropTypes.string,
   weblink: PropTypes.string.isRequired,
   textColor: PropTypes.string,
-  post: PropTypes.object,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    nickname: PropTypes.string,
+  }).isRequired,
 }
 
 MobileShare.defaultProps = {
