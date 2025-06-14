@@ -30,7 +30,7 @@ const Layout = ({ children, headerType, label, noMargin = false }) => {
       >
         {children}
       </main>
-      <Footer email='bookjob@gmail.com' />
+      <Footer email='bookjob.help@gmail.com' />
       <ScrollBtn />
     </div>
   )
