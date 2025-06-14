@@ -90,10 +90,16 @@ const JobMainPage = () => {
           url='https://book-job.co.kr/job'
         />
         <SearchBar
-          placeholder='검색어를 입력하세요'
           value={searchKeyword}
-          onChange={setSearchKeyword}
-          onSearch={handleSearch}
+          onChange={(value) => {
+            setSearchKeyword(value)
+            if (value.trim() === '') resetSearch()
+          }}
+          onSearch={(value) => {
+            setSearchKeyword(value)
+            if (value.trim() === '') resetSearch()
+            else handleSearch(value)
+          }}
         />
       </div>
       <div className='board flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px] mt-2'>
