@@ -25,7 +25,6 @@ const MyPost = () => {
     <div className='w-full'>
       <div className='sm:max-w-[940px] mx-auto'>
         <MyPostHead choiceBoard={choiceBoard} />
-
         {isLoading ? (
           <div className='text-center'>
             <Spinner size={48} color='main-pink' />

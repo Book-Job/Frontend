@@ -77,7 +77,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
   }
 
   return (
-    <div className='h-32'>
+    <div>
       <div className='text-[22px] font-semibold flex mb-5'>{title}</div>
       <div className='flex justify-between py-2 text-lg border-b border-dark-gray'>
         {isEditing ? (

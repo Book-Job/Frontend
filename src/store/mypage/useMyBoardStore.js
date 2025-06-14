@@ -9,7 +9,7 @@ const useMyBoardStore = create((set) => ({
   freeError: null,
   jobError: null,
 
-  fetchBoardData: async (boardType, fetchService, dataExtractor, token, force = false) => {
+  fetchBoardData: async (boardType, fetchService, dataExtractor, force = false) => {
     const stateKey = boardType === 'free' ? 'freeBoard' : 'jobBoard'
     const loadingKey = boardType === 'free' ? 'isFreeLoading' : 'isJobLoading'
     const errorKey = boardType === 'free' ? 'freeError' : 'jobError'
@@ -19,7 +19,7 @@ const useMyBoardStore = create((set) => ({
       set({ [loadingKey]: true, [errorKey]: null })
 
       try {
-        const response = await fetchService(token)
+        const response = await fetchService()
         if (response.message === 'success') {
           set({ [stateKey]: dataExtractor(response.data) || [] })
         } else {
@@ -40,22 +40,16 @@ const useMyBoardStore = create((set) => ({
     }
   },
 
-  fetchFreeBoard: async (token, force = false) => {
+  fetchFreeBoard: async (force = false) => {
     return useMyBoardStore
       .getState()
-      .fetchBoardData(
-        'free',
-        getMyFreeBoardData,
-        (data) => data.myPostingsInBoardList,
-        token,
-        force,
-      )
+      .fetchBoardData('free', getMyFreeBoardData, (data) => data.myPostingsInBoardList, force)
   },
 
-  fetchJobBoard: async (token, force = false) => {
+  fetchJobBoard: async (force = false) => {
     return useMyBoardStore
       .getState()
-      .fetchBoardData('job', getMyJobBoardData, (data) => data.postings, token, force)
+      .fetchBoardData('job', getMyJobBoardData, (data) => data.postings, force)
   },
 }))
 

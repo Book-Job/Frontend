@@ -1,11 +1,15 @@
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
+import PageTitle from '../../../Find/common/components/PageTitle'
 
 const MyPostHead = () => {
   const { choiceBoard, setChoiceBoard } = useBoardStore()
+  const isMobile = useIsMobile()
 
   return (
     <div className='flex flex-col items-center'>
-      <div className='sm:text-[30px] font-bold mb-[30px] text-[20px]'>내가 작성한 글</div>
+      {isMobile ? '' : <PageTitle title={'내가 작성한 글'} />}
+
       <div className='bg-[#F4F6FA] flex justify-center sm:gap-[130px] gap-10 sm:h-[52px] h-[38px] sm:w-[492px] w-[300px] items-center sm:text-xl text-base font-bold rounded-full'>
         <button
           className={choiceBoard === '구인구직' ? 'text-main-pink' : 'text-dark-gray'}

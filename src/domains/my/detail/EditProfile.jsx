@@ -10,12 +10,14 @@ import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
 import useAuthStore from '../../../store/login/useAuthStore.js'
 import MembershipPwCheck from './components/MembershipPwCheck.jsx'
 import ToastService from '../../../utils/toastService.js'
+import useIsMobile from '../../../hooks/header/useIsMobile.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
   const { logout, updateNickname } = useAuthStore()
+  const isMobile = useIsMobile()
   const [alertState, setAlertState] = useState({
     isOpen: false,
     onButtonClick: null,
@@ -109,12 +111,15 @@ const EditProfile = () => {
       onButtonClick: null,
     })
   }
+
+  const isSocialLogin =
+    userData.data.loginId.includes('naver') || userData.data.loginId.includes('kakao')
   return (
     <div>
-      <PageTitle title={'내 정보'} />
+      {isMobile ? '' : <PageTitle title={'내 정보'} />}
       <div className='flex justify-center'>
         <div className='w-[580px]'>
-          <div className='flex flex-col w-full gap-8 sm:gap-12 '>
+          <div className='flex flex-col w-full gap-10 sm:gap-14 '>
             <ProfileInfo
               title={'닉네임'}
               content={userData.data.nickname}
@@ -134,6 +139,7 @@ const EditProfile = () => {
               <button
                 className='font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
+                disabled={isSocialLogin}
               >
                 변경
               </button>

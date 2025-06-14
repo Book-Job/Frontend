@@ -147,6 +147,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_EDIT_PROFILE,
     element: <EditProfile />,
+    label: '내 정보',
   },
   {
     path: ROUTER_PATHS.MY_EDIT_PW,
@@ -166,6 +167,8 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_POST,
     element: <MyPost />,
+    label: '내가 작성한 글',
+    noMargin: true,
   },
   {
     path: ROUTER_PATHS.MY_DRAFTS,
