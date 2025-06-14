@@ -11,6 +11,8 @@ import useAuthStore from '../../../store/login/useAuthStore.js'
 import MembershipPwCheck from './components/MembershipPwCheck.jsx'
 import ToastService from '../../../utils/toastService.js'
 import useIsMobile from '../../../hooks/header/useIsMobile.js'
+import useModalStore from '../../../store/modal/useModalStore.js'
+import { HELP_DESK_URL } from '../../../utils/urls.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()
@@ -18,6 +20,7 @@ const EditProfile = () => {
   const [serverError, setServerError] = useState(null)
   const { logout, updateNickname } = useAuthStore()
   const isMobile = useIsMobile()
+  const { openModal } = useModalStore()
   const [alertState, setAlertState] = useState({
     isOpen: false,
     onButtonClick: null,
@@ -104,16 +107,30 @@ const EditProfile = () => {
       </div>
     )
   }
-
-  const openMembershipDeleteModal = () => {
-    setAlertState({
-      isOpen: true,
-      onButtonClick: null,
-    })
-  }
-
   const isSocialLogin =
     userData.data.loginId.includes('naver') || userData.data.loginId.includes('kakao')
+
+  const openMembershipDeleteModal = () => {
+    if (isSocialLogin) {
+      openModal({
+        title: '회원탈퇴',
+        description: '소셜 로그인 탈퇴는 관리자에게 문의해 주세요.',
+        buttonLabel: '탈퇴 문의하기',
+        onButtonClick: () => {
+          window.open(HELP_DESK_URL, '_blank', 'noopener,noreferrer')
+        },
+      })
+    } else {
+      setAlertState({
+        isOpen: true,
+        onButtonClick: null,
+      })
+    }
+  }
+  const pwChangButton = isSocialLogin
+    ? 'font-bold text-dark-gray px-3 py-1'
+    : 'font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+
   return (
     <div>
       {isMobile ? '' : <PageTitle title={'내 정보'} />}
@@ -137,7 +154,7 @@ const EditProfile = () => {
             <div className='flex justify-between py-1 text-lg border-dark-gray'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
-                className='font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+                className={pwChangButton}
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
                 disabled={isSocialLogin}
               >
@@ -152,6 +169,7 @@ const EditProfile = () => {
                   openMembershipDeleteModal()
                 }}
                 className={'hover:bg-main-pink transition'}
+                disabled={isSocialLogin}
               />
               <Button
                 size='medium'
