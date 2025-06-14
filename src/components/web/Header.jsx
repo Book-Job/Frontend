@@ -63,7 +63,11 @@ const Header = () => {
     { label: '자유게시판', nav: `${ROUTER_PATHS.COMMUNITY}` },
     { label: '구인/구직', nav: `${ROUTER_PATHS.JOB_MAIN}` },
     { label: '오픈채팅', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
-    { label: '문의', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
+    {
+      label: '문의',
+      external: true,
+      nav: 'https://docs.google.com/forms/d/e/1FAIpQLScMzPL_8D56hPRXe-Y3a8iBu4LF9VCTUUd63EnMGtdMCmS_0A/viewform?usp=header',
+    },
   ]
   return (
     <header
@@ -79,15 +83,27 @@ const Header = () => {
           bookjob
         </span>
         <span className='flex gap-6 text-sm sm:gap-10 sm:text-base md:text-sm xl:text-lg'>
-          {navButtons.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => navigate(item.nav)}
-              className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
-            >
-              {item.label}
-            </button>
-          ))}
+          {navButtons.map((item, index) =>
+            item.external ? (
+              <a
+                key={index}
+                href={item.nav}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+              >
+                {item.label}
+              </a>
+            ) : (
+              <button
+                key={index}
+                onClick={() => navigate(item.nav)}
+                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+              >
+                {item.label}
+              </button>
+            ),
+          )}
         </span>
       </div>
       <div className='flex justify-end'>
