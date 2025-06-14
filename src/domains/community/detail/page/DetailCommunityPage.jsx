@@ -26,6 +26,7 @@ const DetailCommunityPage = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(true)
   const comments = useCommentStore((state) => state.comments)
   const fetchComments = useCommentStore((state) => state.fetchComments)
+  const currentUrl = window.location.href
 
   const {
     content,
@@ -124,9 +125,26 @@ const DetailCommunityPage = () => {
       <LastFormLine />
 
       <div className='flex flex-wrap gap-2 mb-4 ml-0 sm:ml-5 justify-end'>
-        <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-main-pink' />
-        <MobileShare label={comments.length.toString()} icon={comment} textColor='text-dark-gray' />
-        <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
+        <MobileShare
+          label={post.viewCount.toString()}
+          icon={viewPink}
+          textColor='text-main-pink'
+          weblink={currentUrl}
+        />
+        <MobileShare
+          label={comments.length.toString()}
+          icon={comment}
+          textColor='text-dark-gray'
+          weblink={currentUrl}
+        />
+        <MobileShare
+          label='공유'
+          icon={share}
+          textColor='text-dark-gray'
+          weblink={currentUrl}
+          title={post.title}
+          post={post}
+        />
       </div>
       <div className='mb-10'>
         {isEditing ? (
