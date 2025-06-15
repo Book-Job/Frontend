@@ -83,7 +83,7 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
+      <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-10 text-[20px]'>
         {choiceBoard === '구인구직' ? '구인 | 구직' : '자유게시판'}
       </div>
       <div className='flex flex-row justify-between my-3'>
