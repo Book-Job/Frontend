@@ -124,7 +124,7 @@ const PostList = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(boardData) &&
+          {Array.isArray(boardData) && boardData.length > 0 ? (
             boardData.map((item, index) => (
               <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
                 <td>
@@ -181,7 +181,14 @@ const PostList = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan='8' className='py-10 text-center'>
+                목록이 없습니다.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
