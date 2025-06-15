@@ -11,12 +11,9 @@ export const publicApi = axios.create({
   withCredentials: false,
 })
 
-// 리프레시 토큰 요청 중인지 추적
 let isRefreshing = false
-// 대기 중인 요청들을 저장하는 큐
 let failedQueue = []
 
-// 큐에 있는 요청들을 처리하는 함수
 const processQueue = (error, token = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
@@ -42,7 +39,6 @@ authApi.interceptors.request.use(
   },
 )
 
-// 응답 인터셉터: 401 에러 처리 및 리프레시 토큰 로직
 authApi.interceptors.response.use(
   (response) => {
     return response

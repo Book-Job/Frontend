@@ -10,12 +10,17 @@ import { getJoinCheckNickname } from '../../login/services/useJoinServices.js'
 import useAuthStore from '../../../store/login/useAuthStore.js'
 import MembershipPwCheck from './components/MembershipPwCheck.jsx'
 import ToastService from '../../../utils/toastService.js'
+import useIsMobile from '../../../hooks/header/useIsMobile.js'
+import useModalStore from '../../../store/modal/useModalStore.js'
+import { HELP_DESK_URL } from '../../../utils/urls.js'
 
 const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
   const { logout, updateNickname } = useAuthStore()
+  const isMobile = useIsMobile()
+  const { openModal } = useModalStore()
   const [alertState, setAlertState] = useState({
     isOpen: false,
     onButtonClick: null,
@@ -102,19 +107,36 @@ const EditProfile = () => {
       </div>
     )
   }
+  const isSocialLogin =
+    userData.data.loginId.includes('naver') || userData.data.loginId.includes('kakao')
 
   const openMembershipDeleteModal = () => {
-    setAlertState({
-      isOpen: true,
-      onButtonClick: null,
-    })
+    if (isSocialLogin) {
+      openModal({
+        title: '회원탈퇴',
+        description: '소셜 로그인 탈퇴는 관리자에게 문의해 주세요.',
+        buttonLabel: '탈퇴 문의하기',
+        onButtonClick: () => {
+          window.open(HELP_DESK_URL, '_blank', 'noopener,noreferrer')
+        },
+      })
+    } else {
+      setAlertState({
+        isOpen: true,
+        onButtonClick: null,
+      })
+    }
   }
+  const pwChangButton = isSocialLogin
+    ? 'font-bold text-dark-gray px-3 py-1'
+    : 'font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+
   return (
     <div>
-      <PageTitle title={'내 정보'} />
+      {isMobile ? null : <PageTitle title={'내 정보'} />}
       <div className='flex justify-center'>
         <div className='w-[580px]'>
-          <div className='flex flex-col w-full gap-8 sm:gap-12 '>
+          <div className='flex flex-col w-full gap-10 sm:gap-14 '>
             <ProfileInfo
               title={'닉네임'}
               content={userData.data.nickname}
@@ -132,8 +154,9 @@ const EditProfile = () => {
             <div className='flex justify-between py-1 text-lg border-dark-gray'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
-                className='font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
+                className={pwChangButton}
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
+                disabled={isSocialLogin}
               >
                 변경
               </button>
@@ -146,6 +169,7 @@ const EditProfile = () => {
                   openMembershipDeleteModal()
                 }}
                 className={'hover:bg-main-pink transition'}
+                disabled={isSocialLogin}
               />
               <Button
                 size='medium'
