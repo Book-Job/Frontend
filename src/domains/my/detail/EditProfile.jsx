@@ -133,7 +133,7 @@ const EditProfile = () => {
 
   return (
     <div>
-      {isMobile ? '' : <PageTitle title={'내 정보'} />}
+      {isMobile ? null : <PageTitle title={'내 정보'} />}
       <div className='flex justify-center'>
         <div className='w-[580px]'>
           <div className='flex flex-col w-full gap-10 sm:gap-14 '>

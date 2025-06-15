@@ -7,8 +7,8 @@ const MyData = ({ userID, email }) => {
   const isMobile = useIsMobile()
 
   return (
-    <div>
-      <div className='flex flex-row items-center justify-between bg-[#F0F0F0] w-full sm:h-[275px] h-[190px] sm:pl-16 sm:pr-12 pl-7 pr-5 py-7'>
+    <div className='bg-[#F0F0F0]'>
+      <div className='flex flex-row items-center justify-between sm:h-[275px] h-[190px] sm:max-w-[940px] mx-auto sm:px-10 px-7 py-7'>
         <div className='flex flex-col'>
           {isMobile ? (
             <div className='flex flex-col items-start '>
