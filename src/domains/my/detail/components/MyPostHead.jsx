@@ -7,9 +7,8 @@ const MyPostHead = () => {
   const isMobile = useIsMobile()
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center mt-10'>
       {isMobile ? '' : <PageTitle title={'내가 작성한 글'} />}
-
       <div className='bg-[#F4F6FA] flex justify-center sm:gap-[130px] gap-10 sm:h-[52px] h-[38px] sm:w-[492px] w-[300px] items-center sm:text-xl text-base font-bold rounded-full'>
         <button
           className={choiceBoard === '구인구직' ? 'text-main-pink' : 'text-dark-gray'}

@@ -83,7 +83,7 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-[40px] text-[20px]'>
+      <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-10 text-[20px]'>
         {choiceBoard === '구인구직' ? '구인 | 구직' : '자유게시판'}
       </div>
       <div className='flex flex-row justify-between my-3'>
@@ -124,7 +124,7 @@ const PostList = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(boardData) &&
+          {Array.isArray(boardData) && boardData.length > 0 ? (
             boardData.map((item, index) => (
               <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
                 <td>
@@ -181,7 +181,14 @@ const PostList = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan='8' className='py-10 text-center'>
+                목록이 없습니다.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

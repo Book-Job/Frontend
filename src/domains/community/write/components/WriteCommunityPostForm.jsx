@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useCommunityPostForm from '../hook/useCommunityPostForm'
 import DOMPurify from 'dompurify'
 import { useNavigate } from 'react-router-dom'
@@ -10,18 +10,16 @@ import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
-import useDraftHandler from '../../../../hooks/writePost/useDraftHandler'
+import useSaveDraft from '../../../../hooks/writePost/useSaveDraft'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 
 const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const { user } = useAuthStore()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
-  const { handleSaveDraft } = useDraftHandler()
   const navigate = useNavigate()
   const [content, setContent] = useState('')
-
-  const { register, handleSubmit, reset, setValue, getValues, control, errors } =
-    useCommunityPostForm()
+  const { register, handleSubmit, reset, setValue, getValues, errors } = useCommunityPostForm()
+  const { handleSaveDraft } = useSaveDraft() // 훅 사용
 
   const handleChange = (value) => {
     setContent(value)
@@ -70,29 +68,18 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     }
   }
 
-  // const handleSaveDraft = () => {
-  //   const formData = {
-  //     nickname: control._formValues.nickname || '',
-  //     title: control._formValues.title || '',
-  //     text: control._formValues.text,
-  //   }
-  //   try {
-  //     const draftId = useDraftStore.getState().saveDraft(formData)
-  //     ToastService.success('게시글이 임시 저장되었습니다.')
-  //     onSaveDraft(draftId)
-  //   } catch (error) {
-  //     console.error('임시 저장 실패:', error)
-  //     ToastService.error('임시 저장에 실패했습니다.')
-  //   }
-  // }
   const onSave = () => {
     const formValues = getValues()
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',
-      text: formValues.text,
+      text: content, // 에디터 내용 사용
     }
-    handleSaveDraft(formData, onSaveDraft, 'community')
+    handleSaveDraft({
+      formData,
+      saveDraft: (data) => onSaveDraft(data), // 상위 컴포넌트의 onSaveDraft 전달
+      draftType: 'community',
+    })
   }
 
   return (
@@ -137,7 +124,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
-            <span className='self-start text-red-500 text-xs mt-1 block text-left'>
+            <span className='self-start block mt-1 text-xs text-left text-red-500'>
               내용은 필수입니다
             </span>
           ) : null}
