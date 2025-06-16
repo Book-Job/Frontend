@@ -3,14 +3,13 @@ import LastFormLine from '../../../job/common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 import PinkButton from '../../../../components/web/PinkButton'
-import { useNavigate } from 'react-router-dom'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
 
 const WriteCommunityPost = () => {
-  const navigate = useNavigate()
 
-  const handleSaveDraft = (draftId) => {
-    navigate(ROUTER_PATHS.MY_DRAFTS)
+  const handleSaveDraft = (draftData) => {
+    // 실제 임시 저장 API 호출 로직 (예: API 호출 또는 스토어에 저장)
+    console.log('Saving draft:', draftData)
+    return 'mock-draft-id' // 임시로 ID 반환
   }
   return (
     <main className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -31,7 +30,8 @@ const WriteCommunityPost = () => {
           label='임시저장'
           className='mr-[14px]'
           onClick={() => {
-            document.querySelector('#community-post-form button[type="button"]').click()
+            const form = document.getElementById('community-post-form')
+            form.querySelector('button[hidden]').click() // onSave 트리거
           }}
         />
         <PinkButton label='등록' type='submit' form='community-post-form' />

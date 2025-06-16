@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-import { v4 as uuidv4 } from 'uuid'
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
+import { v4 as uuidv4 } from 'uuid' // 추가
 import ToastService from '../../utils/toastService'
 
 const useFreeDraftStore = create((set) => ({
@@ -15,12 +14,13 @@ const useFreeDraftStore = create((set) => ({
         set({ drafts })
       } catch (error) {
         console.error('임시 저장 데이터 로드 오류:', error)
+        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
       }
     }
   },
 
   saveFreeDraft: (draftData) => {
-    const id = uuidv4()
+    const id = uuidv4() // 고유 ID 생성
     const date = new Date()
       .toLocaleDateString('ko-KR', {
         timeZone: 'Asia/Seoul',
@@ -35,14 +35,14 @@ const useFreeDraftStore = create((set) => ({
       id,
       nickname: draftData.nickname || '',
       title: draftData.title || '',
-      text: JSON.stringify(convertToRaw(draftData.text.getCurrentContent())),
+      text: draftData.text || '',
       date,
     }
     set((state) => {
       let updatedDrafts = [newDraft, ...state.drafts]
       if (updatedDrafts.length > 5) {
         ToastService.info('임시저장은 최대 5개까지 저장할 수 있습니다.')
-        throw new Error('임시저장은 최대 5개까지 저장할 수 있습니다.')
+        return state
       }
       localStorage.setItem('communityPostDrafts', JSON.stringify(updatedDrafts))
       return { drafts: updatedDrafts }
@@ -67,17 +67,7 @@ const useFreeDraftStore = create((set) => ({
   },
 
   getFreeDraftEditorState: (draft) => {
-    if (draft?.text) {
-      try {
-        const rawContent = JSON.parse(draft.text)
-        const contentState = convertFromRaw(rawContent)
-        return EditorState.createWithContent(contentState)
-      } catch (error) {
-        console.error('드래프트 복원 오류:', error)
-        return EditorState.createEmpty()
-      }
-    }
-    return EditorState.createEmpty()
+    return draft?.text || ''
   },
 }))
 
