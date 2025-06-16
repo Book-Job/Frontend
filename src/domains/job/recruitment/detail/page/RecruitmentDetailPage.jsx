@@ -143,7 +143,7 @@ const RecruitmentDetailPage = () => {
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
-        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'
+        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words text-left'
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />

@@ -146,7 +146,7 @@ const DetailCommunityPage = () => {
           />
         ) : (
           <div
-            className='whitespace-pre-line break-words'
+            className='whitespace-pre-line break-words text-left'
             dangerouslySetInnerHTML={{ __html: post.text }}
           />
         )}
