@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, loadingComponent }) => {
   const navigate = useNavigate()
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['jobPosts', postType, order],
     queryFn: ({ pageParam = null }) => fetcher(pageParam, order),
     getNextPageParam: (lastPage) => {
