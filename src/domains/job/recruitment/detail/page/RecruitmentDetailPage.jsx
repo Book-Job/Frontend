@@ -24,6 +24,7 @@ const RecruitmentDetailPage = () => {
   const { data, loading, error } = useRecruitmentPostDetail(id)
   const { scraps, toggleScrap, loading: scrapLoading } = useScrapStore()
   const isScrapped = Boolean(scraps[id])
+  const currentUrl = window.location.href
   const navigate = useNavigate()
 
   if (loading) {
@@ -34,7 +35,7 @@ const RecruitmentDetailPage = () => {
     )
   }
   if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
-  if (!data) return <p className='text-center text-gray-500'>게시글이 없습니다.</p>
+  if (!data) return <p className='text-center text-dark-gray'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
     navigate(ROUTER_PATHS.RECRUITMENT_POST_EDIT.replace(':id', id))
@@ -130,7 +131,15 @@ const RecruitmentDetailPage = () => {
       </dl>
       <LastFormLine />
       <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
-        <MobileShare label='공유' icon={share} textColor='text-dark-gray' />
+        <MobileShare
+          label='공유'
+          icon={share}
+          textColor='text-dark-gray'
+          weblink={currentUrl}
+          title={data.title}
+          post={data}
+          isShare={true}
+        />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div

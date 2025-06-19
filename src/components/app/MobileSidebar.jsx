@@ -37,7 +37,8 @@ const MobileSidebar = ({ onClose }) => {
     {
       label: '문의',
       icon: { active: questionPink, inactive: questionGray },
-      path: ROUTER_PATHS.INQUIRY,
+      external: true,
+      href: 'https://docs.google.com/forms/d/e/1FAIpQLScMzPL_8D56hPRXe-Y3a8iBu4LF9VCTUUd63EnMGtdMCmS_0A/viewform?usp=header',
     },
   ]
 
@@ -61,24 +62,46 @@ const MobileSidebar = ({ onClose }) => {
             const isActive = activeMenu === menu.label
             const isHovered = hoveredMenu === menu.label
 
+            const classNames = `
+              group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300
+              ${isHovered || isActive ? 'bg-[rgba(253,236,249,0.43)] text-main-pink' : 'text-gray-800'}
+              hover:bg-[rgba(253,236,249,0.43)] hover:text-main-pink
+            `
+
+            const iconSrc = isHovered || isActive ? menu.icon.active : menu.icon.inactive
+
+            if (menu.external) {
+              return (
+                <a
+                  key={menu.label}
+                  href={menu.href}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  onMouseEnter={() => setHoveredMenu(menu.label)}
+                  onMouseLeave={() => setHoveredMenu(null)}
+                  className={classNames}
+                  onClick={onClose}
+                >
+                  <img
+                    src={iconSrc}
+                    alt={`${menu.label} 아이콘`}
+                    className='w-[20px] h-[20px] ml-3'
+                  />
+                  <span>{menu.label}</span>
+                </a>
+              )
+            }
+
             return (
               <div
                 key={menu.label}
                 onClick={() => handleMenuClick(menu)}
-                onMouseEnter={() => {
-                  setHoveredMenu(menu.label)
-                }}
-                onMouseLeave={() => {
-                  setHoveredMenu(null)
-                }}
-                className={`
-                  group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300
-                  ${isHovered || isActive ? 'bg-[rgba(253,236,249,0.43)] text-main-pink' : 'text-gray-800'}
-                  hover:bg-[rgba(253,236,249,0.43)] hover:text-main-pink
-                `}
+                onMouseEnter={() => setHoveredMenu(menu.label)}
+                onMouseLeave={() => setHoveredMenu(null)}
+                className={classNames}
               >
                 <img
-                  src={isHovered || isActive ? menu.icon.active : menu.icon.inactive}
+                  src={iconSrc}
                   alt={`${menu.label} 아이콘`}
                   className='w-[20px] h-[20px] ml-3'
                 />

@@ -5,6 +5,7 @@ import ROUTER_PATHS from '../../routes/RouterPath'
 import useAuthStore from '../../store/login/useAuthStore'
 import { useEffect, useRef, useState } from 'react'
 import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
+import { HELP_DESK_URL } from '../../utils/urls'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -60,10 +61,14 @@ const Header = () => {
     }
   }, [])
   const navButtons = [
-    { label: '자유게시판', nav: `${ROUTER_PATHS.COMMUNITY}` },
-    { label: '구인/구직', nav: `${ROUTER_PATHS.JOB_MAIN}` },
-    { label: '오픈채팅', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
-    { label: '문의', nav: `${ROUTER_PATHS.MAIN_PAGE}` },
+    { label: '자유게시판', nav: ROUTER_PATHS.COMMUNITY },
+    { label: '구인/구직', nav: ROUTER_PATHS.JOB_MAIN },
+    { label: '오픈채팅', nav: ROUTER_PATHS.MAIN_PAGE },
+    {
+      label: '문의',
+      external: true,
+      nav: HELP_DESK_URL,
+    },
   ]
   return (
     <header
@@ -79,15 +84,27 @@ const Header = () => {
           bookjob
         </span>
         <span className='flex gap-6 text-sm sm:gap-10 sm:text-base md:text-sm xl:text-lg'>
-          {navButtons.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => navigate(item.nav)}
-              className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
-            >
-              {item.label}
-            </button>
-          ))}
+          {navButtons.map((item, index) =>
+            item.external ? (
+              <a
+                key={index}
+                href={item.nav}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+              >
+                {item.label}
+              </a>
+            ) : (
+              <button
+                key={index}
+                onClick={() => navigate(item.nav)}
+                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+              >
+                {item.label}
+              </button>
+            ),
+          )}
         </span>
       </div>
       <div className='flex justify-end'>
