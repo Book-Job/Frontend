@@ -1,4 +1,4 @@
-import kakaoicon from '../../../../assets/icons/common/kakaoIcon.svg'
+import kakaoicon_lg from '../../../../assets/icons/common/kakaoIcon_lg.png'
 
 const KakaoLogin = () => {
   const handleKakaoLogin = () => {
@@ -6,12 +6,9 @@ const KakaoLogin = () => {
   }
 
   return (
-    <div>
-      <button
-        onClick={handleKakaoLogin}
-        className='transition-transform duration-200 rounded-full hover:scale-110 w-14 h-14 sm:w-20 sm:h-20'
-      >
-        <img src={kakaoicon} alt='Kakao Login' />
+    <div className='bg-[#fee500] max-w-[532px] h-[58px] rounded-[5px] flex justify-center'>
+      <button onClick={handleKakaoLogin} className=''>
+        <img src={kakaoicon_lg} alt='카카오 로그인' className='h-[58px]' />
       </button>
     </div>
   )

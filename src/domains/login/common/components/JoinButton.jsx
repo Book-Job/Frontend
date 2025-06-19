@@ -9,7 +9,7 @@ const JoinButton = () => {
   const isMobile = useIsMobile()
 
   return (
-    <div className='mb-16'>
+    <div className=''>
       <div className='mb-20'>
         {isMobile ? (
           <PageTitle subTitle={'아직 bookjob 회원이 아니신가요?'} />
