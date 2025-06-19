@@ -20,16 +20,22 @@ const useAuthStore = create((set) => ({
       try {
         const response = await refreshAccessToken()
         if (response.data?.message === 'success') {
-          set({
-            // user: {
-            //   nickname: response.data.data.nickname,
-            //   email: response.data.data.email,
-            //   loginId: response.data.data.loginId,
-            // },
-            isAuthenticated: true,
-            accessToken: token,
-            resetToken,
-          })
+          const userResponse = await getSocialLogin()
+          if (userResponse.data?.message === 'success') {
+            set({
+              user: {
+                nickname: userResponse.data.data.nickname,
+                email: userResponse.data.data.email,
+                loginId: userResponse.data.data.loginId,
+                provider: userResponse.data.data.provider,
+              },
+              isAuthenticated: true,
+              accessToken: token,
+              resetToken,
+            })
+          } else {
+            throw new Error('사용자 정보 가져오기 실패')
+          }
         } else {
           throw new Error('토큰 검증 실패')
         }
@@ -40,7 +46,6 @@ const useAuthStore = create((set) => ({
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
     } else {
-      console.log('토큰이 없습니다. 초기 상태로 설정합니다.')
       set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
     }
   },
@@ -101,6 +106,7 @@ const useAuthStore = create((set) => ({
               nickname: response.data.data.nickname,
               email: response.data.data.email,
               loginId: response.data.data.loginId,
+              provider: response.data.data.provider,
             },
             isAuthenticated: true,
             accessToken,
@@ -116,13 +122,11 @@ const useAuthStore = create((set) => ({
       throw error
     }
   },
-  //엑세스 토큰을 받는 api에서 만료되면 401을 반환 그때 리프레시 기능 넣기
+
   socialLogin: async () => {
     try {
       const response = await getSocialLogin()
-      console.log('소셜 로그인 정보', response)
       if (response.data && response.data.message === 'success') {
-        console.log('소셜 로그인 성공 2')
         const accessToken = response.headers['authorization']
         if (accessToken) {
           localStorage.setItem('Authorization', accessToken)
@@ -131,6 +135,7 @@ const useAuthStore = create((set) => ({
               nickname: response.data.data.nickname,
               email: response.data.data.email,
               loginId: response.data.data.loginId,
+              provider: response.data.data.provider,
             },
             isAuthenticated: true,
             accessToken,
