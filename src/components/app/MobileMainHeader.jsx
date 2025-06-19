@@ -32,8 +32,6 @@ const MobileMainHeader = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  console.log('isAuthenticated:', isAuthenticated, 'user:', user)
-  
   const options = [
     ...(isAuthenticated
       ? [
