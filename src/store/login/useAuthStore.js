@@ -21,9 +21,11 @@ const useAuthStore = create((set) => ({
         const response = await refreshAccessToken()
         if (response.data?.message === 'success') {
           set({
-            user: { nickname: response.data.data.nickname,
-              email: response.data.data.email,
-              loginId: response.data.data.loginId,},
+            // user: {
+            //   nickname: response.data.data.nickname,
+            //   email: response.data.data.email,
+            //   loginId: response.data.data.loginId,
+            // },
             isAuthenticated: true,
             accessToken: token,
             resetToken,
@@ -38,7 +40,7 @@ const useAuthStore = create((set) => ({
         set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
       }
     } else {
-      console.log('ggg4', '토큰이 없습니다. 초기 상태로 설정합니다.')
+      console.log('토큰이 없습니다. 초기 상태로 설정합니다.')
       set({ user: null, isAuthenticated: false, accessToken: null, resetToken: null })
     }
   },
