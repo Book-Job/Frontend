@@ -4,9 +4,10 @@ import ROUTER_PATHS from '../../routes/RouterPath'
 import arrow from '../../assets/icons/common/common_arrow_up.svg'
 import writePencil from '../../assets/icons/common/common_pencil2.svg'
 import ChooseWriteForm from './ChooseWriteForm'
+import useWriteModalStore from '../../store/modal/useWriteModalStore'
 
 const ScrollBtn = () => {
-  const [showModal, setShowModal] = useState(false)
+  const { showModal, setShowModal } = useWriteModalStore()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const navigate = useNavigate()
 

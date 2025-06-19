@@ -1,16 +1,11 @@
 import { authApi } from '../../../services/api/axios'
 
-export const getMyFreeBoardData = async (token, page = 0, limit = 10) => {
+export const getMyFreeBoardData = async (page = 0, limit = 10) => {
   try {
     const response = await authApi.get('/boards/members', {
       params: {
         page,
         limit,
-      },
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
       },
     })
     return response.data
@@ -22,17 +17,12 @@ export const getMyFreeBoardData = async (token, page = 0, limit = 10) => {
   }
 }
 
-export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
+export const getMyJobBoardData = async (page = 0, limit = 10) => {
   try {
     const response = await authApi.get('/recruitments/members', {
       params: {
         page,
         limit,
-      },
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
       },
     })
     return response.data
@@ -44,14 +34,9 @@ export const getMyJobBoardData = async (token, page = 0, limit = 10) => {
   }
 }
 
-export const deleteMyFreeBoardData = async (token, id) => {
+export const deleteMyFreeBoardData = async (id) => {
   try {
     const response = await authApi.delete('/boards/members', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
       data: {
         ids: Array.isArray(id) ? id : [id],
       },
@@ -63,14 +48,9 @@ export const deleteMyFreeBoardData = async (token, id) => {
   }
 }
 
-export const deleteMyJobBoardData = async (token, deleteRequest) => {
+export const deleteMyJobBoardData = async (deleteRequest) => {
   try {
     const response = await authApi.delete('/recruitments/members', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
       data: {
         deleteRequest: Array.isArray(deleteRequest) ? deleteRequest : [deleteRequest],
       },

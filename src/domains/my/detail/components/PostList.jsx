@@ -6,11 +6,13 @@ import PropTypes from 'prop-types'
 import { deleteMyFreeBoardData, deleteMyJobBoardData } from '../../services/useMyBoardServices'
 import useMyBoardStore from '../../../../store/mypage/useMyBoardStore'
 import ToastService from '../../../../utils/toastService'
+import useWriteModalStore from '../../../../store/modal/useWriteModalStore'
 
 const PostList = () => {
   const [checkedItems, setCheckedItems] = useState([])
   const { freeBoard, jobBoard, fetchFreeBoard, fetchJobBoard } = useMyBoardStore()
   const { choiceBoard } = useBoardStore()
+  const { setShowModal } = useWriteModalStore()
   const boardData = choiceBoard === '구인구직' ? jobBoard : freeBoard
 
   const toggleCheck = (id) => {
@@ -25,11 +27,6 @@ const PostList = () => {
   }
 
   const deleteItems = async (items, isJobBoard) => {
-    const token = localStorage.getItem('Authorization')
-    if (!token) {
-      ToastService.error('로그인이 필요합니다.')
-      return
-    }
     try {
       let response
       if (isJobBoard) {
@@ -37,13 +34,13 @@ const PostList = () => {
           recruitmentId: item.id,
           recruitmentCategory: item.recruitmentCategory || 'JOB_POSTING',
         }))
-        response = await deleteMyJobBoardData(token, deleteRequest)
+        response = await deleteMyJobBoardData(deleteRequest)
       } else {
-        response = await deleteMyFreeBoardData(token, items)
+        response = await deleteMyFreeBoardData(items)
       }
       if (response && response.message === 'success') {
         setCheckedItems([])
-        await (isJobBoard ? fetchJobBoard(token, true) : fetchFreeBoard(token, true))
+        await (isJobBoard ? fetchJobBoard(true) : fetchFreeBoard(true))
       } else {
         ToastService.info('삭제에 실패했습니다.')
       }
@@ -99,7 +96,9 @@ const PostList = () => {
             선택삭제
           </button>
           <div className='text-dark-gray'>|</div>
-          <button className='text-main-pink'>글 작성</button>
+          <button className='text-main-pink' onClick={() => setShowModal(true)}>
+            글 작성
+          </button>
         </div>
       </div>
       <div className='border border-b-black'></div>
