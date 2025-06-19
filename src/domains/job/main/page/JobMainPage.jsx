@@ -8,18 +8,21 @@ import JobInfiniteScroll from '../../common/components/JobInfiniteScroll'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
 import useScrapStore from '../../scrap/store/useScrapStore'
 import useJobSearch from '../../common/hook/useJobSearch'
-import { recruitmentSortOptions, seekingSortOptions } from '../../common/constants/sortOptions'
 import SeoHelmet from '../../../../components/common/SeoHelmet'
 import useJobMainState from '../hook/useJobMainState'
+import useSortOptions from '../../common/hook/useSortOptions'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 const JobMainPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const loadScraps = useScrapStore((state) => state.loadScraps)
+  const isMobile = useIsMobile()
 
   const { selectedTab, setSelectedTab, order, setOrder, keyword, setKeyword } = useJobMainState()
 
   const recruitmentFetcher = useCallback(getAllRecruitmentPosts, [])
+  const { recruitmentSortOptions, seekingSortOptions } = useSortOptions()
   const seekingFetcher = useCallback(getJobPosts, [])
 
   const {
@@ -68,7 +71,7 @@ const JobMainPage = () => {
 
   return (
     <>
-      <div className='flex justify-center'>
+      <section className='flex justify-center mt-7'>
         <SeoHelmet
           title='북잡 | 출판업계 구인 & 구직'
           description='출판 업계의 구인 | 구직 공고를 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
@@ -88,19 +91,18 @@ const JobMainPage = () => {
             else handleSearch(value)
           }}
         />
-      </div>
-      <div className='board flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px] mt-2'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='flex items-end gap-2 ml-auto'>
-            <JobDropDown selectedJobTabs={selectedTab} handleTabChange={setSelectedTab} />
-            <JobPostSortDropDown onSortChange={setOrder} options={sortOptions} selected={order} />
-          </div>
+      </section>
+      <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
+        <div className='flex items-end ml-auto'>
+          <JobDropDown selectedJobTabs={selectedTab} handleTabChange={setSelectedTab} />
+          <JobPostSortDropDown onSortChange={setOrder} options={sortOptions} selected={order} />
         </div>
         {hasSearched && searchResults.length > 0 && (
-          <div className='grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
             <JobPostList posts={searchResults} navigate={navigate} />
           </div>
         )}
+
         {hasSearched && searchResults.length === 0 && (
           <div className='flex justify-center items-center min-h-[300px] w-full'>
             <p className='text-lg text-gray-500'>검색 결과가 없습니다.</p>
@@ -114,6 +116,7 @@ const JobMainPage = () => {
             dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
             postType={isRecruitment ? 'recruitment' : 'seeking'}
             order={order}
+            isMobile={isMobile}
           />
         )}
       </div>
