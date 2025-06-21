@@ -120,7 +120,7 @@ const JobMainPage = () => {
 
         {!hasSearched && (
           <JobInfiniteScroll
-            key={`${selectedTab}-${order}`}
+            key={`${selectedTab}-${order}-${refreshToken}`}
             fetcher={isRecruitment ? recruitmentFetcher : seekingFetcher}
             dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
             postType={isRecruitment ? 'recruitment' : 'seeking'}
