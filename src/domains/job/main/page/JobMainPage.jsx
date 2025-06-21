@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SearchBar from '../../../../components/web/SearchBar'
 import JobDropDown from '../components/JobDropDown'
@@ -18,6 +18,7 @@ const JobMainPage = () => {
   const navigate = useNavigate()
   const loadScraps = useScrapStore((state) => state.loadScraps)
   const isMobile = useIsMobile()
+  const [refreshToken, setRefreshToken] = useState(0)
 
   const { selectedTab, setSelectedTab, order, setOrder, keyword, setKeyword } = useJobMainState()
 
@@ -65,6 +66,14 @@ const JobMainPage = () => {
     if (location.state?.refresh) {
       resetSearch()
       loadScraps()
+      if (selectedTab === 'job list') {
+        handleRecruitmentSearch('')
+      } else {
+        handleJobSeekingSearch('')
+      }
+      if (location.state.triggerRefresh) {
+        setRefreshToken((prev) => prev + 1)
+      }
       window.history.replaceState({}, document.title)
     }
   }, [location.state])
@@ -116,6 +125,7 @@ const JobMainPage = () => {
             dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
             postType={isRecruitment ? 'recruitment' : 'seeking'}
             order={order}
+            refreshToken={refreshToken}
             isMobile={isMobile}
           />
         )}

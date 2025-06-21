@@ -45,7 +45,9 @@ const RecruitmentDetailPage = () => {
     try {
       await deleteRecruitmentPost(id)
       ToastService.success('성공적으로 삭제되었습니다.')
-      navigate(ROUTER_PATHS.JOB_MAIN, { state: { refresh: true } })
+      navigate(ROUTER_PATHS.JOB_MAIN, {
+        state: { refresh: true, triggerRefresh: true },
+      })
     } catch (error) {
       ToastService.error('삭제 중 오류 발생')
       console.error(error)

@@ -4,11 +4,19 @@ import JobPostList from '../../main/components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
 import { useNavigate } from 'react-router-dom'
 
-const JobInfiniteScroll = ({ fetcher, dataKey, postType, order, renderList, loadingComponent }) => {
+const JobInfiniteScroll = ({
+  fetcher,
+  dataKey,
+  postType,
+  order,
+  renderList,
+  loadingComponent,
+  refreshToken,
+}) => {
   const navigate = useNavigate()
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['jobPosts', postType, order],
+    queryKey: ['jobPosts', postType, order, refreshToken],
     queryFn: ({ pageParam = null }) => fetcher(pageParam, order),
     getNextPageParam: (lastPage) => {
       const newPosts = lastPage?.[dataKey] ?? []
