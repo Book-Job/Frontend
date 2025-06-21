@@ -36,7 +36,12 @@ export const usePostSubmit = (createPostFn) => {
       await createPostFn(postData)
       ToastService.success('등록이 완료되었습니다!')
       fetchJobBest(true)
-      navigate(ROUTER_PATHS.JOB_MAIN)
+      navigate(ROUTER_PATHS.JOB_MAIN, {
+        state: {
+          refresh: true,
+          triggerRefresh: true,
+        },
+      })
     } catch (error) {
       ToastService.error('등록 중 오류가 발생했습니다.')
       console.error(error)

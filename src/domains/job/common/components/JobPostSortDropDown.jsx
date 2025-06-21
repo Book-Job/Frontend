@@ -15,7 +15,7 @@ const JobPostSortDropDown = ({ className = '', onSortChange, options, value }) =
 
   return (
     <SortDropdown
-      className={`cursor-pointer ${className}`}
+      className={`sort-dropdown cursor-pointer ${className}`}
       options={options}
       selected={selectedSort}
       onChange={handleSortChange}

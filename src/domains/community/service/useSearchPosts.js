@@ -7,13 +7,19 @@ const useSearchPosts = () => {
   const [hasSearched, setHasSearched] = useState(false)
 
   const handleSearch = async (searchTitle) => {
-    if (!searchTitle) return
+    const trimmed = searchTitle.trim()
+
+    if (trimmed === '') {
+      setHasSearched(false)
+      setSearchResults([])
+      return
+    }
 
     setHasSearched(true)
     setSearchLoading(true)
 
     try {
-      const res = await getAllPosts({ keyword: searchTitle })
+      const res = await getAllPosts({ keyword: trimmed })
 
       if (Array.isArray(res.boards)) {
         const filteredResults = res.boards.filter(

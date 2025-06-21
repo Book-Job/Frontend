@@ -9,9 +9,7 @@ const SearchBar = ({ onSearch, placeholder }) => {
   const debouncedValue = useDebounce(input, 500)
 
   useEffect(() => {
-    if (debouncedValue.trim() !== '') {
-      onSearch(debouncedValue)
-    }
+    onSearch(debouncedValue.trim())
   }, [debouncedValue])
 
   const handleKeyDown = (e) => {
@@ -22,6 +20,7 @@ const SearchBar = ({ onSearch, placeholder }) => {
 
   const handleClear = () => {
     setInput('')
+    onSearch('')
   }
 
   return (
