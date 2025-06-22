@@ -11,7 +11,7 @@ const Footer = ({ email, onClick }) => {
         <button
           type='button'
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-          className='text-3xl font-bold text-main-pink font-logo cursor-pointer'
+          className='text-3xl font-bold text-main-pink font-logo cursor-pointer text-left'
         >
           bookjob
         </button>
