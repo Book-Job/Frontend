@@ -9,14 +9,15 @@ import Spinner from '../../../components/web/Spinner'
 import PostSortDropDown from '../../../components/common/PostSortDropDown'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 import useScrapStore from '../../job/scrap/store/useScrapStore'
+import ToastService from '../../../utils/toastService'
+
 const MyScrap = () => {
-  const [scrapPosts, setScrapPosts] = useState([])
   const { scraps, loadScraps } = useScrapStore()
   const [loading, setLoading] = useState(false)
   const [sort, setSort] = useState('latest')
-  const navigate = useNavigate()
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
+  const navigate = useNavigate()
   const loggedInUserId = user ? user.userId : null
 
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
@@ -26,30 +27,25 @@ const MyScrap = () => {
       setLoading(true)
       try {
         await loadScraps()
-        const response = await import('../../job/scrap/service/scrapService')
-        const { getAllScrap } = response
-        const data = await getAllScrap()
-        setScrapPosts(data)
       } catch (err) {
         console.error(err)
+        ToastService.error('스크랩 데이터를 불러오는 데 실패했습니다.')
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [scraps])
+  }, [])
 
   const sortedPosts = useMemo(() => {
-    if (!scrapPosts) return []
-    return [...scrapPosts].sort((a, b) => {
-      if (sort === 'latest') {
-        return new Date(b.createdAt) - new Date(a.createdAt)
-      } else {
-        return new Date(a.createdAt) - new Date(b.createdAt)
-      }
+    const posts = Object.values(scraps || {})
+    return posts.sort((a, b) => {
+      return sort === 'latest'
+        ? new Date(b.createdAt) - new Date(a.createdAt)
+        : new Date(a.createdAt) - new Date(b.createdAt)
     })
-  }, [scrapPosts, sort])
+  }, [scraps, sort])
 
   if (loading) {
     return (
@@ -61,7 +57,7 @@ const MyScrap = () => {
 
   return (
     <div>
-      <div className='sm:mt-10'>{isMobile ? '' : <PageTitle title={'스크랩'} />}</div>
+      <div className='sm:mt-10'>{!isMobile && <PageTitle title={'스크랩'} />}</div>
 
       {!loading && sortedPosts.length === 0 && (
         <div className='items-center text-center text-dark-gray'>스크랩한 글이 없습니다.</div>
@@ -72,10 +68,11 @@ const MyScrap = () => {
           <PostSortDropDown onSortChange={setSort} />
         </div>
       )}
+
       <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center px-4'>
         {sortedPosts.map((post) => (
           <WorkBoard
-            key={post.bookMarkId || post.id}
+            key={post.bookMarkId ?? post.entityId ?? post.id}
             postId={post.entityId || post.id}
             title={post.title}
             name={post.nickname}
@@ -90,15 +87,16 @@ const MyScrap = () => {
             employmentType={post.employmentType}
             view={post.viewCount || post.view}
             userId={loggedInUserId}
-            initialScrapped={true}
+            initialScrapped={!!scraps[post.entityId || post.id]}
             type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
             onClick={() => {
+              const id = post.entityId
               if (post.joboffer1) {
-                navigate(`/job/recruitment/post/${post.entityId}`)
+                navigate(`/job/recruitment/post/${id}`)
               } else if (post.jobsearch1) {
-                navigate(`/job/job-seek/post/${post.entityId}`)
+                navigate(`/job/job-seek/post/${id}`)
               } else {
-                navigate(`/detail/${post.entityId}`)
+                navigate(`/detail/${id}`)
               }
             }}
           />
@@ -123,15 +121,16 @@ const MyScrap = () => {
             employmentType={post.employmentType}
             view={post.viewCount || post.view}
             userId={loggedInUserId}
-            initialScrapped={true}
+            initialScrapped={!!scraps[post.entityId || post.id]}
             type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
             onClick={() => {
+              const id = post.entityId
               if (post.joboffer1) {
-                navigate(`/job/recruitment/post/${post.entityId}`)
+                navigate(`/job/recruitment/post/${id}`)
               } else if (post.jobsearch1) {
-                navigate(`/job/job-seek/post/${post.entityId}`)
+                navigate(`/job/job-seek/post/${id}`)
               } else {
-                navigate(`/detail/${post.entityId}`)
+                navigate(`/detail/${id}`)
               }
             }}
           />
