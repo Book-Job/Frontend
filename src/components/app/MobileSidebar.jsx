@@ -12,6 +12,7 @@ import workPink from '../../assets/icons/mobile/mobile_work_pink.svg'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useModalStore from '../../store/modal/useModalStore'
+import { HELP_DESK_URL } from '../../utils/urls'
 
 const MobileSidebar = ({ onClose }) => {
   const [hoveredMenu, setHoveredMenu] = useState(null)
@@ -40,7 +41,7 @@ const MobileSidebar = ({ onClose }) => {
       label: '문의',
       icon: { active: questionPink, inactive: questionGray },
       external: true,
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLScMzPL_8D56hPRXe-Y3a8iBu4LF9VCTUUd63EnMGtdMCmS_0A/viewform?usp=header',
+      href: HELP_DESK_URL,
     },
   ]
   const handleMenuClick = (menu) => {
