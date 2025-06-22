@@ -2,16 +2,16 @@ import { useEffect, useState, useMemo } from 'react'
 import WorkBoard from '../../../components/web/WorkBoard'
 import MobileWorkBoard from '../../../components/app/MobileWorkBoard'
 import PageTitle from '../../Find/common/components/PageTitle'
-import { getAllScrap } from '../../job/scrap/service/scrapService'
 import getExperienceLabel from '../../job/common/utils/getExperienceLabel'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../../../store/login/useAuthStore'
 import Spinner from '../../../components/web/Spinner'
 import PostSortDropDown from '../../../components/common/PostSortDropDown'
 import useIsMobile from '../../../hooks/header/useIsMobile'
-
+import useScrapStore from '../../job/scrap/store/useScrapStore'
 const MyScrap = () => {
   const [scrapPosts, setScrapPosts] = useState([])
+  const { scraps, loadScraps } = useScrapStore()
   const [loading, setLoading] = useState(false)
   const [sort, setSort] = useState('latest')
   const navigate = useNavigate()
@@ -22,20 +22,23 @@ const MyScrap = () => {
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
-    getAllScrap()
-      .then((data) => {
-        if (isMounted) setScrapPosts(data)
-      })
-      .catch(console.error)
-      .finally(() => {
-        if (isMounted) setLoading(false)
-      })
-    return () => {
-      isMounted = false
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        await loadScraps()
+        const response = await import('../../job/scrap/service/scrapService')
+        const { getAllScrap } = response
+        const data = await getAllScrap()
+        setScrapPosts(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [])
+
+    fetchData()
+  }, [scraps])
 
   const sortedPosts = useMemo(() => {
     if (!scrapPosts) return []
