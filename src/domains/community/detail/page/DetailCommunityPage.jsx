@@ -17,6 +17,7 @@ import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../utils/toastService'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
+import DOMPurify from 'dompurify'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
@@ -147,7 +148,7 @@ const DetailCommunityPage = () => {
         ) : (
           <div
             className='whitespace-pre-line break-words text-left'
-            dangerouslySetInnerHTML={{ __html: post.text }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
           />
         )}
       </div>
