@@ -89,12 +89,7 @@ const JobMainPage = () => {
         />
         <div className='w-full max-w-[940px]'>
           <SearchBar
-            value={keyword}
             placeholder='검색어를 입력하세요'
-            onChange={(value) => {
-              setKeyword(value)
-              if (value.trim() === '') resetSearch()
-            }}
             onSearch={(value) => {
               setKeyword(value)
               if (value.trim() === '') resetSearch()
