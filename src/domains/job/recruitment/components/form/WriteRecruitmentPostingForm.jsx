@@ -13,7 +13,7 @@ import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
 
-const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
+const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues,editorRef }) => {
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
   const {
@@ -33,6 +33,8 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   })
 
   useEffect(() => {
+    console.log("defaultValues",defaultValues);
+    
     if (defaultValues && user?.nickname) {
       const writerToSet = defaultValues.writer || user.nickname
       reset({
@@ -43,7 +45,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   }, [defaultValues, user, reset])
 
   const handleFormSubmit = (formData) => {
-    if (formData.closingDate && !formData.closingDate.includes('T')) {
+    if (formData.closingDate && !formData.closingDate.includes('kr')) {
       formData.closingDate = `${formData.closingDate}T00:00:00`
     }
     onSubmit(formData)
@@ -77,7 +79,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
       </div>
       {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
-        <PostContent control={control} errors={errors} />
+        <PostContent control={control} errors={errors} name='text' editorRef={editorRef} />
       </div>
     </form>
   )

@@ -25,7 +25,7 @@ const WriteCommunityPost = () => {
           className='mr-[14px]'
           onClick={() => {
             const form = document.getElementById('community-post-form')
-            form.querySelector('button[hidden]').click() // onSave 트리거
+            form.querySelector('button[hidden]').click()
           }}
         />
         <PinkButton label='등록' type='submit' form='community-post-form' />

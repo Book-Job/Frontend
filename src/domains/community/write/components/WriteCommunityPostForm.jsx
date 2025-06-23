@@ -21,14 +21,14 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const navigate = useNavigate()
   const [content, setContent] = useState('')
   const { register, handleSubmit, reset, setValue, getValues, errors } = useCommunityPostForm()
-  const { handleSaveDraft } = useSaveDraft() // 훅 사용
+  const { handleSaveDraft } = useSaveDraft()
   const editorRef = useRef(null)
   const handleChange = (value) => {
     setContent(value)
   }
 
   useEffect(() => {
-    console.log('useEffect triggered with selectedFreeDraft:', selectedFreeDraft);
+    console.log('자유글:', selectedFreeDraft);
     if (selectedFreeDraft) {
       try {
         const nickname = selectedFreeDraft.nickname || user?.nickname || '';
@@ -87,7 +87,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   }
 
   const onSave = () => {
-    console.log('onSave triggered')
     const formValues = getValues()
     console.log('Form values:', formValues)
     const editorHTML = editorRef.current?.getHTML() || content;
@@ -97,7 +96,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       title: formValues.title || '',
       text: editorHTML || '',
     }
-    console.log('Form data to save:', formData)
+    console.log('formData 저장:', formData)
     handleSaveDraft({
       formData,
       draftType: 'community',

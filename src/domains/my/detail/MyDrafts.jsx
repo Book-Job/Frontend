@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 import ToastService from '../../../utils/toastService'
-import useFreeDraftStore from './../../../store/mypage/useFreeDraftStore';
+import useFreeDraftStore from './../../../store/mypage/useFreeDraftStore'
 
 const MyDrafts = () => {
   const { drafts, loadFreeDrafts, setSelectedFreeDraft } = useFreeDraftStore()
@@ -31,8 +31,15 @@ const MyDrafts = () => {
   }, [loadFreeDrafts])
 
   const handleDraftClick = (draft) => {
+    console.log('draft', draft)
     setSelectedFreeDraft(draft)
-    navigate(ROUTER_PATHS.WRITE_COMMUNITY_POST)
+    if (draft.draftType === 'community') {
+      navigate(ROUTER_PATHS.WRITE_COMMUNITY_POST)
+    } else if (draft.draftType === 'job') {
+      navigate(ROUTER_PATHS.WRITE_RECRUITMENT_POST)
+    } else {
+      navigate(ROUTER_PATHS.WRITE_JOB_SEARCH_POST)
+    }
   }
 
   return (

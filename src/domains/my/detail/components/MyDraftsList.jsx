@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
-
+  const navigate = useNavigate()
   const getPreviewText = (text) => {
     const fullText = text || ''
     const preview = fullText.slice(0, 50)

@@ -11,7 +11,7 @@ const ScrollBtn = () => {
   const { showModal, setShowModal } = useWriteModalStore()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const navigate = useNavigate()
-  const { clearSelectedFreeDraft } = useFreeDraftStore(); // 추가
+  const { clearSelectedFreeDraft } = useFreeDraftStore();
 
   const handleCreatePostClick = () => setShowModal(true)
   const handleTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
