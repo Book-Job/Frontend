@@ -6,9 +6,12 @@ const NaverLogin = () => {
   }
   return (
     <div className='w-full max-w-[532px] h-[58px] '>
-      <button onClick={handleNaverLogin} className='bg-[#03C75A] gap-8 w-full h-full rounded-[5px] justify-center items-center flex flex-row'>
-        <img src={navericon_s} alt='네이버 로그인' className='h-1/3' /> 
-        <span className='text-xl text-white'>네이버 로그인</span>
+      <button
+        onClick={handleNaverLogin}
+        className='bg-[#03C75A] w-full h-full rounded-[5px] items-center flex flex-row px-8 relative'
+      >
+        <img src={navericon_s} alt='네이버 로그인' className='h-[30%] absolute' />
+        <span className='flex-grow text-xl text-center text-white'>네이버 로그인</span>
       </button>
     </div>
   )

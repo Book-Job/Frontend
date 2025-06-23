@@ -6,10 +6,13 @@ const KakaoLogin = () => {
   }
 
   return (
-    <div className='w-full max-w-[532px] h-[58px] '>
-      <button onClick={handleKakaoLogin} className='bg-[#fee500] gap-8 w-full h-full rounded-[5px] flex justify-center h-full rounded-[5px] justify-center items-center flex flex-row'>
-        <img src={kakaoicon_s} alt='카카오 로그인' className='h-1/3' />
-        <span className='text-[#000000]/85 text-xl'>카카오 로그인</span>
+    <div className='w-full max-w-[532px] h-[58px]'>
+      <button
+        onClick={handleKakaoLogin}
+        className='bg-[#fee500]  w-full h-full rounded-[5px] items-center flex flex-row px-8 relative '
+      >
+        <img src={kakaoicon_s} alt='카카오 로그인' className='absolute h-[35%]' />
+        <span className='text-[#000000]/85 flex-grow text-xl text-center'>카카오 로그인</span>
       </button>
     </div>
   )

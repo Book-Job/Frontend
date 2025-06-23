@@ -100,7 +100,7 @@ const FindIDPage = () => {
         trigger('emailId')
         ToastService.success('이메일 인증이 완료되었습니다.')
       } else {
-        setEmailCodeMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
+        setEmailCodeMessage(response.data?.message || '인증번호가 일치하지 않습니다.')
         setEmailCheckStatus('error')
         setValidation('error')
         trigger('emailId')
