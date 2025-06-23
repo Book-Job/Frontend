@@ -11,6 +11,7 @@ const Button = ({ label, size = 'medium', onClick, bgColor = 'light-gray', class
 
   return (
     <button
+    type='button'
       className={`${buttonSize[size]} bg-${bgColor} rounded-[5px] ${className}`}
       onClick={onClick}
     >

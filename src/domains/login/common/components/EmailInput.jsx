@@ -3,17 +3,27 @@ import LabelWithInput from '../../../../components/web/LabelWithInput'
 import Button from '../../../../components/web/Button'
 import DomainSelector from './DomainSelector'
 import OTPInput from '../../../Find/common/components/OTPInput'
-import { postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/useJoinServices'
-import ToastService from '../../../../utils/toastService'
+import CustomDomain from './CustomDomain'
 
-const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationStatus }) => {
+const EmailInput = ({
+  register,
+  errors,
+  watch,
+  setValue,
+  trigger,
+  setValidationStatus,
+  onCheckEmail,
+  onVerifyEmail,
+  buttonLabel: externalButtonLabel,
+  isCheckingEmail: externalIsCheckingEmail,
+}) => {
   const [domain, setDomain] = useState('naver.com')
   const [customDomain, setCustomDomain] = useState('')
   const [isCustom, setIsCustom] = useState(false)
   const [fullEmail, setFullEmail] = useState()
   const [startTimer, setStartTimer] = useState(false)
-  const [isCheckingEmail, setIsCheckingEmail] = useState(false)
   const [emailCheckMessage, setEmailCheckMessage] = useState('')
+  const [emailCodeMessage, setEmailCodeMessage] = useState('')
   const [emailCheckStatus, setEmailCheckStatus] = useState(null)
 
   const emailId = watch('emailId') || ''
@@ -26,78 +36,58 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
   }, [emailId, domainValue, setValue])
 
   const handleCheckEmail = async () => {
-    if (isCheckingEmail) {
+    console.log('Button clicked, emailCheckStatus:', emailCheckStatus, 'disabled:', !emailId || externalIsCheckingEmail || (isCustom && !customDomain.trim()) || emailCheckStatus === 'success')
+    if (externalIsCheckingEmail) {
       return
     }
 
     const isValEmail = await trigger('emailId')
     if (!isValEmail) {
-      setIsCheckingEmail(false)
       return
     }
 
     setEmailCheckMessage('')
     setEmailCheckStatus(null)
-    setIsCheckingEmail(true)
-
-    try {
-      const response = await postJoinCheckEmail(fullEmail)
-      if (response.data && response.data.message === 'success') {
-        setEmailCheckMessage('인증번호가 전송되었습니다.')
-        setEmailCheckStatus('pending')
-        setStartTimer(true)
-        ToastService.success('인증번호가 전송되었습니다. 이메일을 확인하세요.')
-      } else {
-        setEmailCheckMessage(response.data?.message || '이미 사용 중인 이메일입니다.')
-        setEmailCheckStatus('error')
-        setValidationStatus('error')
-        trigger('emailId')
-      }
-    } catch (error) {
-      console.error('Email 중복 확인 중 오류:', error)
-      setEmailCheckMessage(error?.message || '이메일 확인 중 오류가 발생했습니다.')
-      setEmailCheckStatus('error')
-      setValidationStatus('error')
-      trigger('emailId')
-      ToastService.error(error?.message || '인증번호 전송 중 오류가 발생했습니다.')
-    } finally {
-      setIsCheckingEmail(false)
+    setEmailCodeMessage('')
+    if (onCheckEmail) {
+      await onCheckEmail(
+        fullEmail,
+        setEmailCheckMessage,
+        setEmailCodeMessage,
+        setEmailCheckStatus,
+        setStartTimer,
+        setValidationStatus,
+        trigger,
+      )
     }
   }
 
   const handleIsExpiredEmail = async (code) => {
-    try {
-      const response = await postJoinCheckEmailNum({ fullEmail, code })
-
-      if (response.data && response.data.message === 'success') {
-        setEmailCheckMessage('사용 가능한 이메일입니다.')
-        setEmailCheckStatus('success')
-        setValidationStatus('success')
-        setStartTimer(false)
-        trigger('emailId')
-      } else {
-        setEmailCheckMessage(response.data?.message || '인증번호가 일치하지 않습니다다.')
-        setEmailCheckStatus('error')
-        setValidationStatus('error')
-        trigger('emailId')
-      }
-    } catch (error) {
-      console.error('인증번호 확인 중 오류:', error)
-      setEmailCheckMessage('인증번호가 일치하지 않습니다.')
-      setEmailCheckStatus('error')
-      setValidationStatus('error')
-      trigger('emailId')
+    if (onVerifyEmail) {
+      await onVerifyEmail(
+        fullEmail,
+        code,
+        setEmailCheckMessage,
+        setEmailCodeMessage,
+        setEmailCheckStatus,
+        setStartTimer,
+        setValidationStatus,
+        trigger,
+      )
     }
   }
 
-  const buttonLabel = isCheckingEmail
-    ? '확인 중...'
-    : emailCheckStatus === 'success'
-      ? '사용가능'
-      : '인증확인'
+  const buttonLabel =
+    externalButtonLabel ||
+    (externalIsCheckingEmail
+      ? '확인 중...'
+      : emailCheckStatus === 'success'
+        ? '사용가능'
+        : '인증확인')
 
   const handleInputChange = (e) => {
     if (emailCheckMessage) setEmailCheckMessage('')
+    if (emailCodeMessage) setEmailCodeMessage('')
     if (emailCheckStatus) setEmailCheckStatus(null)
     setStartTimer(false)
   }
@@ -122,46 +112,66 @@ const EmailInput = ({ register, errors, watch, setValue, trigger, setValidationS
               })}
             />
           </div>
-          <span className='flex items-end text-2xl'>@</span>
-          <div className='flex w-auto'>
+          <span className='flex items-center pt-8 text-2xl'>@</span>
+          <div className='flex w-[148px]'>
             <DomainSelector
-              domain={domain}
-              customDomain={customDomain}
+              domain={isCustom ? customDomain : domain}
               isCustom={isCustom}
               setDomain={setDomain}
-              setCustomDomain={setCustomDomain}
               setIsCustom={setIsCustom}
+              setCustomDomain={setCustomDomain}
+            />
+          </div>
+          <div className='flex w-[148px]'>
+            <CustomDomain
+              customDomain={customDomain}
+              setCustomDomain={setCustomDomain}
+              disabled={!isCustom}
             />
           </div>
         </div>
-        <div className='flex items-end sm:min-w-[148px] '>
+      </div>
+
+      <div className='flex flex-col w-full gap-2 mt-3 sm:flex-row'>
+        <div className='flex flex-col w-full'>
+          <div className='w-full'>
+            <OTPInput
+              size='biggest'
+              placeholder='이메일로 전송된 인증코드를 입력해주세요'
+              startTimer={startTimer}
+              onVerify={(code) => handleIsExpiredEmail(code)}
+            />
+          </div>
+
+          <div className='flex items-start'>
+            {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
+            {emailCheckMessage && (
+              <p
+                className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              >
+                {emailCheckMessage}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className='flex min-w-[148px]'>
           <Button
             size='biggest'
             label={buttonLabel}
-            bgColor={emailId && !isCheckingEmail ? 'main-pink' : 'light-gray'}
+            bgColor={
+              emailId && !externalIsCheckingEmail && !(isCustom && !customDomain.trim()) && emailCheckStatus !== 'success'
+                ? 'main-pink'
+                : 'light-gray'
+            }
             onClick={handleCheckEmail}
-            disabled={!emailId || isCheckingEmail}
+            disabled={
+              !emailId ||
+              externalIsCheckingEmail ||
+              (isCustom && !customDomain.trim()) ||
+              emailCheckStatus === 'success'
+            }
           />
-        </div>
-      </div>
-      <div className='mt-3'>
-        <div className='mt-3'>
-          <OTPInput
-            size='biggest'
-            placeholder='이메일로 전송된 인증코드를 입력해주세요'
-            startTimer={startTimer}
-            onVerify={(code) => handleIsExpiredEmail(code)}
-          />
-        </div>
-        <div className='flex items-start'>
-          {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
-          {emailCheckMessage && (
-            <p
-              className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-            >
-              {emailCheckMessage}
-            </p>
-          )}
         </div>
       </div>
     </div>
