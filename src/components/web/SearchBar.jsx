@@ -26,10 +26,10 @@ const SearchBar = ({ onSearch, placeholder }) => {
   return (
     <form
       role='search'
-      className='flex items-center border border-light-gray bg-lightBlueGray
-        w-full max-w-[82%] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[940px]
+      className='flex items-center border border-light-gray bg-lightBlueGray w-full
+        sm:max-w-[500px] md:max-w-[700px] lg:max-w-[940px]
         h-[40px] sm:h-[60px] rounded-md mt-4
-        shadow-sm hover:shadow-md transition-shadow duration-200 px-4'
+        shadow-sm hover:shadow-md transition-shadow duration-200 px-2'
       onSubmit={(e) => {
         e.preventDefault()
         handleKeyDown({ key: 'Enter' })

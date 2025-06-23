@@ -32,11 +32,13 @@ const CommunityMainPage = () => {
         image='https://book-job.co.kr/metatag.png'
         url='https://book-job.co.kr/community'
       />
-      <section className='flex justify-center mt-7'>
-        <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' />
+      <section className='w-full flex justify-center mt-7 px-5 md:px-10 lg:px-[100px]'>
+        <div className='w-full max-w-[940px]'>
+          <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' className='w-full' />
+        </div>
       </section>
       <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
-        <div className='w-full flex justify-end mt-5 text-[14px] mb-3'>
+        <div className='w-full flex justify-end mt-5 text-[14px] mb-3 px-4 sm:px-6 lg:px-0'>
           <PostSortDropDown onSortChange={setSortOrder} />
         </div>
         <div className='mt-[15px] overflow-x-auto'>
