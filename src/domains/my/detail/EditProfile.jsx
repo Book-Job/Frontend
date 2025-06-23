@@ -18,7 +18,7 @@ const EditProfile = () => {
   const navigate = useNavigate()
   const [userData, setUserData] = useState()
   const [serverError, setServerError] = useState(null)
-  const { logout, updateNickname } = useAuthStore()
+  const { logout, updateNickname, user } = useAuthStore()
   const isMobile = useIsMobile()
   const { openModal } = useModalStore()
   const [alertState, setAlertState] = useState({
@@ -66,6 +66,8 @@ const EditProfile = () => {
   }
 
   const handleCheckNickname = async (nickname) => {
+    console.log('user', user)
+    console.log('userData', userData)
     try {
       const response = await getJoinCheckNickname(nickname)
       return response
