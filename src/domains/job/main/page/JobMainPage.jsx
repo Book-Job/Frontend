@@ -102,7 +102,7 @@ const JobMainPage = () => {
         />
       </section>
       <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
-        <div className='flex items-end ml-auto'>
+        <div className='flex items-end ml-auto px-5 sm:px-0'>
           <JobDropDown selectedJobTabs={selectedTab} handleTabChange={setSelectedTab} />
           <JobPostSortDropDown onSortChange={setOrder} options={sortOptions} selected={order} />
         </div>
