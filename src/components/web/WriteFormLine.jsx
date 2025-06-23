@@ -1,8 +1,20 @@
 const WriteFormLine = () => {
   return (
-    <div className='flex'>
-      <div className='w-[150px] h-[3px] bg-main-pink mr-[35px]' />
-      <div className='w-[780px] h-[3px] bg-dark-gray' />
+    <div className='flex w-full max-w-[940px] mx-auto my-[15px]'>
+      <div
+        className='
+          h-[3px] bg-main-pink mr-4
+          flex-shrink-0
+          basis-[20%] sm:basis-[150px]
+          '
+      />
+      <div
+        className='
+          h-[3px] bg-dark-gray
+          flex-grow
+          basis-[80%] sm:basis-auto
+          '
+      />
     </div>
   )
 }
