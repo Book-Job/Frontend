@@ -32,11 +32,9 @@ const FindIDPage = () => {
   // }
   const onSubmit = (data) => {
     // validationStatus가 'success'일 때만 페이지 이동
+    console.log('Button clicked', validationStatus)
     if (validationStatus === 'success') {
-      console.log('Form submitted, navigating to FIND_ID_COMPLETE_PAGE');
       navigate(ROUTER_PATHS.FIND_ID_COMPLETE_PAGE)
-    } else {
-      console.log('Form submission blocked, validationStatus:', validationStatus);
     }
   }
 
@@ -140,6 +138,8 @@ const FindIDPage = () => {
             label='확인'
             bgColor={validationStatus === 'success' ? 'main-pink' : 'light-gray'}
             disabled={validationStatus !== 'success'}
+            // disabled={false} // 테스트용
+            // onClick={() => console.log('Button clicked', validationStatus)}
           />
         </div>
       </form>

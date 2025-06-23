@@ -36,14 +36,14 @@ const EmailInput = ({
   }, [emailId, domainValue, setValue])
 
   const handleCheckEmail = async () => {
-    if (
-      externalIsCheckingEmail ||
-      emailCheckStatus === 'success' ||
-      (isCustom && !customDomain.trim()) 
-    ) {
-      return
-    }
-
+    // if (
+    //   externalIsCheckingEmail
+    //   // ||
+    //   // emailCheckStatus === 'success' ||
+    //   // (isCustom && !customDomain.trim())
+    // ) {
+    //   return
+    // }
     const isValEmail = await trigger('emailId')
     if (!isValEmail) {
       return
@@ -163,11 +163,7 @@ const EmailInput = ({
             size='biggest'
             label={buttonLabel}
             bgColor={
-              emailId &&
-              !externalIsCheckingEmail &&
-              !(isCustom && !customDomain.trim()) &&
-              emailCheckStatus !== 'success' 
-              
+              emailId && !externalIsCheckingEmail && !(isCustom && !customDomain.trim())
                 ? 'main-pink'
                 : 'light-gray'
             }
@@ -176,7 +172,8 @@ const EmailInput = ({
               !emailId ||
               externalIsCheckingEmail ||
               (isCustom && !customDomain.trim()) ||
-              emailCheckStatus === 'success'
+              emailCheckStatus === 'success' ||
+              startTimer
             }
           />
         </div>
