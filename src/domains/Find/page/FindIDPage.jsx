@@ -119,7 +119,7 @@ const FindIDPage = () => {
   }
 
   const formContent = (
-    <div className='w-full'>
+    <div className='max-w-[575px]'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <EmailInput
           register={register}

@@ -36,8 +36,11 @@ const EmailInput = ({
   }, [emailId, domainValue, setValue])
 
   const handleCheckEmail = async () => {
-    console.log('Button clicked, emailCheckStatus:', emailCheckStatus, 'disabled:', !emailId || externalIsCheckingEmail || (isCustom && !customDomain.trim()) || emailCheckStatus === 'success')
-    if (externalIsCheckingEmail) {
+    if (
+      externalIsCheckingEmail ||
+      emailCheckStatus === 'success' ||
+      (isCustom && !customDomain.trim()) 
+    ) {
       return
     }
 
@@ -93,10 +96,10 @@ const EmailInput = ({
   }
 
   return (
-    <div className='w-full'>
+    <div className='flex flex-col gap-2'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex flex-row justify-between w-full gap-2'>
-          <div className='flex-auto'>
+        <div className='flex flex-row w-full gap-2'>
+          <div className='flex-1'>
             <LabelWithInput
               label='이메일'
               type='text'
@@ -132,7 +135,7 @@ const EmailInput = ({
         </div>
       </div>
 
-      <div className='flex flex-col w-full gap-2 mt-3 sm:flex-row'>
+      <div className='flex flex-col w-full gap-2 sm:flex-row'>
         <div className='flex flex-col w-full'>
           <div className='w-full'>
             <OTPInput
@@ -160,7 +163,11 @@ const EmailInput = ({
             size='biggest'
             label={buttonLabel}
             bgColor={
-              emailId && !externalIsCheckingEmail && !(isCustom && !customDomain.trim()) && emailCheckStatus !== 'success'
+              emailId &&
+              !externalIsCheckingEmail &&
+              !(isCustom && !customDomain.trim()) &&
+              emailCheckStatus !== 'success' 
+              
                 ? 'main-pink'
                 : 'light-gray'
             }

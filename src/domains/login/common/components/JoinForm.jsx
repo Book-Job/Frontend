@@ -8,7 +8,11 @@ import PageTitle from './../../../Find/common/components/PageTitle'
 import useModalStore from '../../../../store/modal/useModalStore'
 import { useState } from 'react'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
-import { postJoinData, postJoinCheckEmail, postJoinCheckEmailNum } from '../../services/useJoinServices'
+import {
+  postJoinData,
+  postJoinCheckEmail,
+  postJoinCheckEmailNum,
+} from '../../services/useJoinServices'
 import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import ToastService from '../../../../utils/toastService'
@@ -92,7 +96,15 @@ const JoinForm = () => {
 
   const [isCheckingEmail, setIsCheckingEmail] = useState(false)
 
-  const handleCheckEmail = async (email, setEmailCheckMessage, setEmailCodeMessage, setEmailCheckStatus, setStartTimer, setValidation, trigger) => {
+  const handleCheckEmail = async (
+    email,
+    setEmailCheckMessage,
+    setEmailCodeMessage,
+    setEmailCheckStatus,
+    setStartTimer,
+    setValidation,
+    trigger,
+  ) => {
     try {
       setIsCheckingEmail(true)
       const response = await postJoinCheckEmail(email)
@@ -120,7 +132,16 @@ const JoinForm = () => {
     }
   }
 
-  const handleVerifyEmail = async (email, code, setEmailCheckMessage, setEmailCodeMessage, setEmailCheckStatus, setStartTimer, setValidation, trigger) => {
+  const handleVerifyEmail = async (
+    email,
+    code,
+    setEmailCheckMessage,
+    setEmailCodeMessage,
+    setEmailCheckStatus,
+    setStartTimer,
+    setValidation,
+    trigger,
+  ) => {
     try {
       const response = await postJoinCheckEmailNum({ fullEmail: email, code })
       if (response.data && response.data.message === 'success') {
