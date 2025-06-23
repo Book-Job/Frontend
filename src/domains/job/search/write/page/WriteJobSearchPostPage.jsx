@@ -5,9 +5,29 @@ import Button from '../../../../../components/web/Button'
 import PinkButton from '../../../../../components/web/PinkButton'
 import { createJobSeekPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
+import useSaveDraft from '../../../../../hooks/writePost/useSaveDraft'
 
 const WriteJobSearchPostPage = () => {
   const handleSubmitForm = usePostSubmit(createJobSeekPost)
+  const { handleSaveDraft } = useSaveDraft()
+
+  const handleSaveDraftClick = () => {
+    const form = document.getElementById('job-search-post-form')
+    const formValues = {
+      writer: form.querySelector('[name="writer"]').value,
+      title: form.querySelector('[name="title"]').value,
+      employmentType: form.querySelector('[name="employmentType"]').value,
+      jobCategory: form.querySelector('[name="jobCategory"]').value,
+      workExperience: form.querySelector('[name="workExperience"]').value,
+      contactEmail: form.querySelector('[name="contactEmail"]').value,
+      content: form.querySelector('textarea')?.value || '', // PostContent의 값
+    }
+    handleSaveDraft({
+      formData: formValues,
+      saveDraft: () => 'mock-draft-id', // 상위 전달
+      draftType: 'job',
+    })
+  }
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -19,7 +39,12 @@ const WriteJobSearchPostPage = () => {
         <WriteJobSearchPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
-          <Button size='small' label='임시저장' className='mr-[14px]' />
+          <Button
+            size='small'
+            label='임시저장'
+            className='mr-[14px]'
+            onClick={handleSaveDraftClick}
+          />
           <PinkButton label='저장' type='submit' form='job-search-post-form' />
         </div>
       </div>

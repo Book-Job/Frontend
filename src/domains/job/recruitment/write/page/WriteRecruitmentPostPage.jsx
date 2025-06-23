@@ -5,8 +5,30 @@ import PinkButton from '../../../../../components/web/PinkButton'
 import { createRecruitmentPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm'
+import useSaveDraft from '../../../../../hooks/writePost/useSaveDraft'
 const WriteRecruitmentPostPage = () => {
   const handleSubmitForm = usePostSubmit(createRecruitmentPost)
+  const { handleSaveDraft } = useSaveDraft()
+
+  const handleSaveDraftClick = () => {
+    const form = document.getElementById('recruitment-post-form')
+    const formValues = {
+      writer: form.querySelector('[name="writer"]').value,
+      title: form.querySelector('[name="title"]').value,
+      closingDate: form.querySelector('[name="closingDate"]').value,
+      companyWebsite: form.querySelector('[name="websiteUrl"]').value,
+      workPlace: form.querySelector('[name="location"]').value,
+      jobCategory: form.querySelector('[name="jobCategory"]').value,
+      employmentType: form.querySelector('[name="employmentType"]').value,
+      experience: form.querySelector('[name="experienceMin"]').value,
+      content: form.querySelector('textarea')?.value || '', // PostContent의 값
+    }
+    handleSaveDraft({
+      formData: formValues,
+      saveDraft: () => 'mock-draft-id', // 상위 전달
+      draftType: 'job',
+    })
+  }
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -18,7 +40,12 @@ const WriteRecruitmentPostPage = () => {
         <WriteRecruitmentPostingForm onSubmit={handleSubmitForm} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
-          <Button size='small' label='임시저장' className='mr-[14px]' />
+          <Button
+            size='small'
+            label='임시저장'
+            className='mr-[14px]'
+            onClick={handleSaveDraftClick}
+          />
           <PinkButton label='등록' type='submit' form='recruitment-post-form' />
         </div>
       </div>

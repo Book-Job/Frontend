@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useCommunityPostForm from '../hook/useCommunityPostForm'
 import DOMPurify from 'dompurify'
 import { useNavigate } from 'react-router-dom'
@@ -22,17 +22,41 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const [content, setContent] = useState('')
   const { register, handleSubmit, reset, setValue, getValues, errors } = useCommunityPostForm()
   const { handleSaveDraft } = useSaveDraft() // 훅 사용
-
+  const editorRef = useRef(null)
   const handleChange = (value) => {
     setContent(value)
   }
 
+  // useEffect(() => {
+  //   if (selectedFreeDraft) {
+  //     try {
+  //       setValue('nickname', selectedFreeDraft.nickname || user?.nickname || '')
+  //       setValue('title', selectedFreeDraft.title || '')
+  //       setValue('text', useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft))
+  //     } catch (error) {
+  //       console.error('드래프트 복원 오류:', error)
+  //       ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
+  //     }
+  //   } else if (user?.nickname) {
+  //     setValue('nickname', user.nickname)
+  //   }
+  // }, [selectedFreeDraft, user, setValue])
+
   useEffect(() => {
+    console.log('useEffect triggered with selectedFreeDraft:', selectedFreeDraft)
     if (selectedFreeDraft) {
       try {
-        setValue('nickname', selectedFreeDraft.nickname || user?.nickname || '')
-        setValue('title', selectedFreeDraft.title || '')
-        setValue('text', useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft))
+        const nickname = selectedFreeDraft.nickname || user?.nickname || ''
+        const title = selectedFreeDraft.title || ''
+        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || ''
+        console.log('Restoring draft:', { nickname, title, text })
+        setValue('nickname', nickname)
+        setValue('title', title)
+        setValue('text', text)
+        setContent(text) // WriteEditor 상태 업데이트
+        if (editorRef.current) {
+          editorRef.current.commands.setContent(text || '', false)
+        }
       } catch (error) {
         console.error('드래프트 복원 오류:', error)
         ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
@@ -71,17 +95,32 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   }
 
   const onSave = () => {
+    console.log('onSave triggered')
     const formValues = getValues()
+    console.log('Form values:', formValues)
+    const editorHTML = editorRef.current?.getHTML() || content; // 실제 에디터 HTML 사용
+    console.log('Editor HTML:', editorHTML);
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',
-      text: content, // 에디터 내용 사용
+      text: editorHTML || '', // WriteEditor 내용
     }
+    console.log('Form data to save:', formData)
     handleSaveDraft({
       formData,
-      saveDraft: (data) => onSaveDraft(data), // 상위 컴포넌트의 onSaveDraft 전달
       draftType: 'community',
     })
+      .then((draftId) => {
+        if (draftId) {
+          console.log('Draft saved with ID:', draftId)
+          ToastService.success('게시글이 임시 저장되었습니다.')
+          navigate(ROUTER_PATHS.MY_DRAFTS)
+        }
+      })
+      .catch((error) => {
+        console.error('Save draft error:', error)
+        ToastService.error('임시 저장에 실패했습니다.')
+      })
   }
 
   return (
@@ -123,6 +162,8 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           <WriteEditor
             initialContent={content}
             onChange={handleChange}
+            value={content} // 현재 값 전달
+            ref={editorRef} // ref 전달
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (

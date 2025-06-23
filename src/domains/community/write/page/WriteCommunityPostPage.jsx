@@ -5,12 +5,6 @@ import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 import PinkButton from '../../../../components/web/PinkButton'
 
 const WriteCommunityPost = () => {
-
-  const handleSaveDraft = (draftData) => {
-    // 실제 임시 저장 API 호출 로직 (예: API 호출 또는 스토어에 저장)
-    console.log('Saving draft:', draftData)
-    return 'mock-draft-id' // 임시로 ID 반환
-  }
   return (
     <main className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>
@@ -21,7 +15,7 @@ const WriteCommunityPost = () => {
       </p>
       <section>
         <WriteFormLine />
-        <WriteCommunityPostForm onSaveDraft={handleSaveDraft} />
+        <WriteCommunityPostForm />
         <LastFormLine />
       </section>
       <section className='flex justify-end'>
