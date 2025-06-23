@@ -11,10 +11,13 @@ import workGray from '../../assets/icons/mobile/mobile_work_gray.svg'
 import workPink from '../../assets/icons/mobile/mobile_work_pink.svg'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
+import useModalStore from '../../store/modal/useModalStore'
+import { HELP_DESK_URL } from '../../utils/urls'
 
 const MobileSidebar = ({ onClose }) => {
   const [hoveredMenu, setHoveredMenu] = useState(null)
   const [activeMenu, setActiveMenu] = useState(null)
+  const { openModal } = useModalStore()
 
   const navigate = useNavigate()
 
@@ -38,16 +41,26 @@ const MobileSidebar = ({ onClose }) => {
       label: '문의',
       icon: { active: questionPink, inactive: questionGray },
       external: true,
-      href: 'https://docs.google.com/forms/d/e/1FAIpQLScMzPL_8D56hPRXe-Y3a8iBu4LF9VCTUUd63EnMGtdMCmS_0A/viewform?usp=header',
+      href: HELP_DESK_URL,
     },
   ]
-
   const handleMenuClick = (menu) => {
     setActiveMenu(menu.label)
+
+    if (menu.label === '오픈채팅') {
+      openModal({
+        title: '서비스 준비 중',
+        description: '아직 준비 중인 서비스입니다.',
+        buttonLabel: '확인',
+        onButtonClick: () => useModalStore.getState().closeModal(),
+      })
+      onClose()
+      return
+    }
+
     navigate(menu.path)
     onClose()
   }
-
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 z-20'>
       <div className='bg-white w-[250px] h-full absolute right-0 top-0 rounded-tl-2xl rounded-bl-2xl'>

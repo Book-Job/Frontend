@@ -10,7 +10,7 @@ const JobDropDown = ({ selectedJobTabs, handleTabChange }) => {
         <button
           key={tab.value}
           onClick={() => handleTabChange(tab.value)}
-          className={`text-xs sm:text-sm md:text-[15px] transition-all duration-200 
+          className={`text-[15px] transition-all duration-200 
           ${selectedJobTabs === tab.value ? 'text-main-pink font-semibold' : 'text-gray-600 font-medium'} bg-white`}
         >
           {tab.label}
