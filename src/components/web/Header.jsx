@@ -6,13 +6,14 @@ import useAuthStore from '../../store/login/useAuthStore'
 import { useEffect, useRef, useState } from 'react'
 import arrowDown from '../../assets/icons/common/common_arrow_down.svg'
 import { HELP_DESK_URL } from '../../utils/urls'
-
+import useModalStore from '../../store/modal/useModalStore'
 const Header = () => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuthStore()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
   const [hasShadow, setHasShadow] = useState(false)
+  const { openModal } = useModalStore()
 
   useEffect(() => {
     const onScroll = () => {
@@ -63,13 +64,26 @@ const Header = () => {
   const navButtons = [
     { label: '자유게시판', nav: ROUTER_PATHS.COMMUNITY },
     { label: '구인/구직', nav: ROUTER_PATHS.JOB_MAIN },
-    { label: '오픈채팅', nav: ROUTER_PATHS.MAIN_PAGE },
+    { label: '오픈채팅', nav: null },
     {
       label: '문의',
       external: true,
       nav: HELP_DESK_URL,
     },
   ]
+
+  const handleNavButtonClick = (nav, label) => {
+    if (label === '오픈채팅') {
+      openModal({
+        title: '서비스 준비 중',
+        description: '아직 준비 중인 서비스입니다.',
+        buttonLabel: '확인',
+        onButtonClick: () => useModalStore.getState().closeModal(),
+      })
+    } else if (nav) {
+      navigate(nav)
+    }
+  }
   return (
     <header
       className={`w-full fixed top-0 left-0 z-50 bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-1 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4
@@ -98,7 +112,7 @@ const Header = () => {
             ) : (
               <button
                 key={index}
-                onClick={() => navigate(item.nav)}
+                onClick={() => handleNavButtonClick(item.nav, item.label)}
                 className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
               >
                 {item.label}

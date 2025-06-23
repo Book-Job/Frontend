@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SearchBar from '../../../../components/web/SearchBar'
 import JobDropDown from '../components/JobDropDown'
@@ -8,20 +8,22 @@ import JobInfiniteScroll from '../../common/components/JobInfiniteScroll'
 import { getAllRecruitmentPosts, getJobPosts } from '../service/jobMainService'
 import useScrapStore from '../../scrap/store/useScrapStore'
 import useJobSearch from '../../common/hook/useJobSearch'
-import { recruitmentSortOptions, seekingSortOptions } from '../../common/constants/sortOptions'
 import SeoHelmet from '../../../../components/common/SeoHelmet'
+import useJobMainState from '../hook/useJobMainState'
+import useSortOptions from '../../common/hook/useSortOptions'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
+
 const JobMainPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const loadScraps = useScrapStore((state) => state.loadScraps)
+  const isMobile = useIsMobile()
+  const [refreshToken, setRefreshToken] = useState(0)
 
-  const [selectedJobTabs, setSelectedJobTabs] = useState('job list')
-  const [searchKeyword, setSearchKeyword] = useState('')
-
-  const [recruitmentOrder, setRecruitmentOrder] = useState('latest')
-  const [seekingOrder, setSeekingOrder] = useState('latest')
+  const { selectedTab, setSelectedTab, order, setOrder, keyword, setKeyword } = useJobMainState()
 
   const recruitmentFetcher = useCallback(getAllRecruitmentPosts, [])
+  const { recruitmentSortOptions, seekingSortOptions } = useSortOptions()
   const seekingFetcher = useCallback(getJobPosts, [])
 
   const {
@@ -40,21 +42,8 @@ const JobMainPage = () => {
     reset: resetRecruitmentSearch,
   } = useJobSearch(getAllRecruitmentPosts, 'jobPostings')
 
-  const isRecruitment = selectedJobTabs === 'job list'
+  const isRecruitment = selectedTab === 'job list'
   const sortOptions = isRecruitment ? recruitmentSortOptions : seekingSortOptions
-
-  const currentOrder = useMemo(
-    () => (isRecruitment ? recruitmentOrder : seekingOrder),
-    [isRecruitment, recruitmentOrder, seekingOrder],
-  )
-
-  const setOrder = isRecruitment
-    ? (value) => {
-        setRecruitmentOrder(value)
-      }
-    : (value) => {
-        setSeekingOrder(value)
-      }
 
   const searchResults = isRecruitment ? recruitmentResults : jobSeekingResults
   const searchLoading = isRecruitment ? recruitmentLoading : jobSeekingLoading
@@ -71,50 +60,55 @@ const JobMainPage = () => {
         console.error('데이터 로딩 실패', error)
       }
     })()
-  }, [selectedJobTabs, currentOrder])
+  }, [selectedTab, order])
 
   useEffect(() => {
     if (location.state?.refresh) {
+      resetSearch()
       loadScraps()
+      if (selectedTab === 'job list') {
+        handleRecruitmentSearch('')
+      } else {
+        handleJobSeekingSearch('')
+      }
+      if (location.state.triggerRefresh) {
+        setRefreshToken((prev) => prev + 1)
+      }
       window.history.replaceState({}, document.title)
     }
   }, [location.state])
 
   return (
     <>
-      <div className='flex justify-center'>
+      <section className='w-full flex justify-center mt-7 px-7'>
         <SeoHelmet
-          title='북잡 | 출판업계 자유게시판'
-          description='출판 업계의 자유게시글을 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
+          title='북잡 | 출판업계 구인 & 구직'
+          description='출판 업계의 구인 | 구직 공고를 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
           image='https://book-job.co.kr/metatag.png'
           url='https://book-job.co.kr/job'
         />
-        <SearchBar
-          placeholder='검색어를 입력하세요'
-          value={searchKeyword}
-          onChange={setSearchKeyword}
-          onSearch={handleSearch}
-        />
-      </div>
-      <div className='board flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px] mt-2'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='flex items-end gap-2 ml-auto'>
-            <JobDropDown selectedJobTabs={selectedJobTabs} handleTabChange={setSelectedJobTabs} />
-            <JobPostSortDropDown
-              className='text-xs sm:text-sm md:text-[15px] font-semibold'
-              onSortChange={(value) => {
-                setOrder(value)
-              }}
-              options={sortOptions}
-              selected={currentOrder}
-            />
-          </div>
+        <div className='w-full max-w-[940px]'>
+          <SearchBar
+            placeholder='검색어를 입력하세요'
+            onSearch={(value) => {
+              setKeyword(value)
+              if (value.trim() === '') resetSearch()
+              else handleSearch(value)
+            }}
+          />
+        </div>
+      </section>
+      <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
+        <div className='flex items-end ml-auto px-5 sm:px-0'>
+          <JobDropDown selectedJobTabs={selectedTab} handleTabChange={setSelectedTab} />
+          <JobPostSortDropDown onSortChange={setOrder} options={sortOptions} selected={order} />
         </div>
         {hasSearched && searchResults.length > 0 && (
-          <div className='grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
             <JobPostList posts={searchResults} navigate={navigate} />
           </div>
         )}
+
         {hasSearched && searchResults.length === 0 && (
           <div className='flex justify-center items-center min-h-[300px] w-full'>
             <p className='text-lg text-gray-500'>검색 결과가 없습니다.</p>
@@ -123,10 +117,13 @@ const JobMainPage = () => {
 
         {!hasSearched && (
           <JobInfiniteScroll
+            key={`${selectedTab}-${order}-${refreshToken}`}
             fetcher={isRecruitment ? recruitmentFetcher : seekingFetcher}
             dataKey={isRecruitment ? 'jobPostings' : 'jobSeekings'}
             postType={isRecruitment ? 'recruitment' : 'seeking'}
-            order={currentOrder}
+            order={order}
+            refreshToken={refreshToken}
+            isMobile={isMobile}
           />
         )}
       </div>

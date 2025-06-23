@@ -23,7 +23,9 @@ const PostContent = ({ control, errors }) => {
           <div className='w-full'>
             <WriteEditor value={field.value ?? ''} onChange={field.onChange} />
             {errors.text && (
-              <span className='text-red-500 text-[14px] mt-1 block'>{errors.text.message}</span>
+              <span className='text-red-500 text-[14px] mt-1 block text-left'>
+                {errors.text.message}
+              </span>
             )}
           </div>
         )}

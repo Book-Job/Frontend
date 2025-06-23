@@ -11,7 +11,7 @@ const useScrapStore = create((set, get) => ({
       const data = await getAllScrap()
       const scrapsMap = {}
       data.forEach((s) => {
-        scrapsMap[s.entityId] = s.bookMarkId
+        scrapsMap[s.entityId] = s
       })
       set({ scraps: scrapsMap })
     } finally {
@@ -23,9 +23,10 @@ const useScrapStore = create((set, get) => ({
     set({ loading: true })
     try {
       const scraps = get().scraps
-      const bookMarkId = scraps[postId]
-      if (bookMarkId) {
-        await deleteScrap(bookMarkId)
+      const scrapItem = scraps[postId]
+
+      if (scrapItem) {
+        await deleteScrap(scrapItem.id)
         set((state) => {
           const newScraps = { ...state.scraps }
           delete newScraps[postId]
@@ -40,6 +41,7 @@ const useScrapStore = create((set, get) => ({
       }
     } catch (error) {
       set({ loading: false })
+      console.error('스크랩 처리 에러:', error)
       throw error
     }
   },

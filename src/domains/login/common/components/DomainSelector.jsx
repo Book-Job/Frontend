@@ -1,12 +1,6 @@
-const DomainSelector = ({
-  domain,
-  customDomain,
-  isCustom,
-  setDomain,
-  setCustomDomain,
-  setIsCustom,
-}) => {
+const DomainSelector = ({ domain, isCustom, setDomain, setIsCustom, setCustomDomain }) => {
   const domainOptions = [
+    'custom',
     'naver.com',
     'gmail.com',
     'daum.net',
@@ -21,52 +15,32 @@ const DomainSelector = ({
     'orgio.net',
     'chol.com',
     'hitel.net',
-    'custom',
   ]
 
   return (
-    <div className='flex items-end w-auto'>
-      {isCustom ? (
-        <input
-          type='text'
-          placeholder='직접 입력'
-          value={customDomain}
-          onChange={(e) => setCustomDomain(e.target.value)}
-          className='border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
-        />
-      ) : (
-        <select
-          value={domain}
-          onChange={(e) => {
-            if (e.target.value === 'custom') {
-              setIsCustom(true)
-              setDomain('')
-            } else {
-              setIsCustom(false)
-              setDomain(e.target.value)
-              setCustomDomain('')
-            }
-          }}
-          className='border border-dark-gray rounded px-4 text-[16px] text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
-        >
-          {domainOptions.map((option) => (
-            <option key={option} value={option}>
-              {option === 'custom' ? '직접 입력' : option}
-            </option>
-          ))}
-        </select>
-      )}
+    <div className='flex items-end'>
+      <select
+        value={isCustom ? 'custom' : domain}
+        onChange={(e) => {
+          if (e.target.value === 'custom') {
+            setIsCustom(true)
+            setDomain('')
+          } else {
+            setIsCustom(false)
+            setDomain(e.target.value)
+            setCustomDomain('')
+          }
+        }}
+        className='border border-dark-gray rounded px-4 sm:text-base text-sm text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
+      >
+        {domainOptions.map((option) => (
+          <option key={option} value={option}>
+            {option === 'custom' ? '직접 입력' : option}
+          </option>
+        ))}
+      </select>
     </div>
   )
 }
-
-// DomainSelector.propTypes = {
-//   domain: PropTypes.string.isRequired,
-//   customDomain: PropTypes.string.isRequired,
-//   isCustom: PropTypes.bool.isRequired,
-//   setDomain: PropTypes.func.isRequired,
-//   setCustomDomain: PropTypes.func.isRequired,
-//   setIsCustom: PropTypes.func.isRequired,
-// }
 
 export default DomainSelector
