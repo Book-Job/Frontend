@@ -1,17 +1,17 @@
-import navericon from '../../../../assets/icons/common/naverIcon.svg'
+import navericon_s from '../../../../assets/icons/common/naverIcon_s.svg'
 
 const NaverLogin = () => {
   const handleNaverLogin = () => {
-    // window.location.href = 'http://43.200.107.80:8080/oauth2/authorization/naver'
     window.location.href = 'https://api.bookjob.co.kr/oauth2/authorization/naver'
   }
   return (
-    <div>
+    <div className='w-full max-w-[532px] h-[58px] '>
       <button
         onClick={handleNaverLogin}
-        className='transition-transform duration-200 rounded-full w-14 h-14 sm:w-20 sm:h-20 hover:scale-110 '
+        className='bg-[#03C75A] w-full h-full rounded-[5px] items-center flex flex-row px-8 relative'
       >
-        <img src={navericon} alt='네이버 로그인' />
+        <img src={navericon_s} alt='네이버 로그인' className='h-[30%] absolute' />
+        <span className='flex-grow text-xl text-center text-white'>네이버 로그인</span>
       </button>
     </div>
   )
