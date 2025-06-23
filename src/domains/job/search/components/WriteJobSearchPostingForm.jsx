@@ -9,10 +9,11 @@ import JobCategory from '../../common/components/form/JobCategory'
 import WorkExperience from './form/WorkExperience'
 import ContactEmail from './form/ContactEmail'
 import useAuthStore from '../../../../store/login/useAuthStore'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
   const { user } = useAuthStore()
-
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,
@@ -45,30 +46,30 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
     <form id='job-search-post-form' onSubmit={handleSubmit(handleFormSubmit)}>
       <PersonalInfo register={register} />
 
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <PostTitle register={register} errors={errors} />
       </div>
 
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <EmploymentType register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <JobCategory register={register} errors={errors} watch={watch} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
         <WorkExperience register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
         <ContactEmail register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
         <PostContent control={control} errors={errors} />

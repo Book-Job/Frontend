@@ -11,9 +11,11 @@ import CompanyWebsite from './CompanyWebsite'
 import WorkPlace from './WorkPlace'
 import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
+import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
   const { user } = useAuthStore()
+  const isMobile = useIsMobile()
   const {
     register,
     reset,
@@ -53,27 +55,27 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues }) => {
       <div className='my-[30px]'>
         <PostTitle register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <ClosingDate control={control} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <CompanyWebsite register={register} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <WorkPlace register={register} errors={errors} />
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <JobCategory register={register} errors={errors} watch={watch} setValue={setValue} />
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <EmploymentType register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <Experience register={register} errors={errors} />
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
         <PostContent control={control} errors={errors} />
       </div>

@@ -80,29 +80,26 @@ const JobMainPage = () => {
 
   return (
     <>
-      <section className='flex justify-center mt-7'>
+      <section className='w-full flex justify-center mt-7 px-7'>
         <SeoHelmet
           title='북잡 | 출판업계 구인 & 구직'
           description='출판 업계의 구인 | 구직 공고를 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
           image='https://book-job.co.kr/metatag.png'
           url='https://book-job.co.kr/job'
         />
-        <SearchBar
-          value={keyword}
-          placeholder='검색어를 입력하세요'
-          onChange={(value) => {
-            setKeyword(value)
-            if (value.trim() === '') resetSearch()
-          }}
-          onSearch={(value) => {
-            setKeyword(value)
-            if (value.trim() === '') resetSearch()
-            else handleSearch(value)
-          }}
-        />
+        <div className='w-full max-w-[940px]'>
+          <SearchBar
+            placeholder='검색어를 입력하세요'
+            onSearch={(value) => {
+              setKeyword(value)
+              if (value.trim() === '') resetSearch()
+              else handleSearch(value)
+            }}
+          />
+        </div>
       </section>
       <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
-        <div className='flex items-end ml-auto'>
+        <div className='flex items-end ml-auto px-5 sm:px-0'>
           <JobDropDown selectedJobTabs={selectedTab} handleTabChange={setSelectedTab} />
           <JobPostSortDropDown onSortChange={setOrder} options={sortOptions} selected={order} />
         </div>
