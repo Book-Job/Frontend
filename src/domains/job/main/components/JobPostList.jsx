@@ -5,8 +5,8 @@ import getExperienceLabel from '../../common/utils/getExperienceLabel'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 const JobPostList = ({ posts, navigate }) => {
-  const isMobile = useIsMobile()
   const { user } = useAuthStore()
+  const isMobile = useIsMobile()
   const loggedInUserId = user ? user.userId : null
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 

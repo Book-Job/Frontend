@@ -45,7 +45,9 @@ const RecruitmentDetailPage = () => {
     try {
       await deleteRecruitmentPost(id)
       ToastService.success('성공적으로 삭제되었습니다.')
-      navigate(ROUTER_PATHS.JOB_MAIN, { state: { refresh: true } })
+      navigate(ROUTER_PATHS.JOB_MAIN, {
+        state: { refresh: true, triggerRefresh: true },
+      })
     } catch (error) {
       ToastService.error('삭제 중 오류 발생')
       console.error(error)
@@ -143,7 +145,7 @@ const RecruitmentDetailPage = () => {
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
-        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words'
+        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words text-left'
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />

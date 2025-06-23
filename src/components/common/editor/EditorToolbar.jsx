@@ -1,4 +1,4 @@
-import { FaBold, FaItalic, FaImage, FaUnderline } from 'react-icons/fa'
+import { FaBold, FaItalic, FaImage } from 'react-icons/fa'
 
 const EditorToolbar = ({ editor }) => {
   if (!editor) return null

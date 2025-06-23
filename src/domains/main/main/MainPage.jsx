@@ -5,6 +5,7 @@ import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
 import BannerExample from '../../../components/common/BannerExample'
 import SeoHelmet from '../../../components/common/SeoHelmet'
+import { CUSTOMER_INQUIRY } from '../../../utils/urls'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('자유게시판')
   const {
@@ -43,7 +44,9 @@ const MainPage = () => {
         image='https://book-job.co.kr/metatag.png'
         url='https://book-job.co.kr'
       />
-      <BannerExample />
+      <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer' className='w-full'>
+        <BannerExample className='w-full h-full' />
+      </a>
       <div className='w-full px-4 my-6 sm:px-10 sm:my-10'>
         <BoardButton
           onBoardSelect={handleBoardSelect}
