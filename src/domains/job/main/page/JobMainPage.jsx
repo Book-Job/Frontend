@@ -80,7 +80,7 @@ const JobMainPage = () => {
 
   return (
     <>
-      <section className='w-full flex justify-center mt-7 px-6'>
+      <section className='w-full flex justify-center mt-7 px-7'>
         <SeoHelmet
           title='북잡 | 출판업계 구인 & 구직'
           description='출판 업계의 구인 | 구직 공고를 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
