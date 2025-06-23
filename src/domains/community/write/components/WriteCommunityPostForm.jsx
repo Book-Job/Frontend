@@ -27,44 +27,36 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     setContent(value)
   }
 
-  // useEffect(() => {
-  //   if (selectedFreeDraft) {
-  //     try {
-  //       setValue('nickname', selectedFreeDraft.nickname || user?.nickname || '')
-  //       setValue('title', selectedFreeDraft.title || '')
-  //       setValue('text', useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft))
-  //     } catch (error) {
-  //       console.error('드래프트 복원 오류:', error)
-  //       ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
-  //     }
-  //   } else if (user?.nickname) {
-  //     setValue('nickname', user.nickname)
-  //   }
-  // }, [selectedFreeDraft, user, setValue])
-
   useEffect(() => {
-    console.log('useEffect triggered with selectedFreeDraft:', selectedFreeDraft)
+    console.log('useEffect triggered with selectedFreeDraft:', selectedFreeDraft);
     if (selectedFreeDraft) {
       try {
-        const nickname = selectedFreeDraft.nickname || user?.nickname || ''
-        const title = selectedFreeDraft.title || ''
-        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || ''
-        console.log('Restoring draft:', { nickname, title, text })
-        setValue('nickname', nickname)
-        setValue('title', title)
-        setValue('text', text)
-        setContent(text) // WriteEditor 상태 업데이트
+        const nickname = selectedFreeDraft.nickname || user?.nickname || '';
+        const title = selectedFreeDraft.title || '';
+        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || '';
+        console.log('Restoring draft:', { nickname, title, text });
+        setValue('nickname', nickname);
+        setValue('title', title);
+        setValue('text', text);
+        setContent(text);
         if (editorRef.current) {
-          editorRef.current.commands.setContent(text || '', false)
+          editorRef.current.commands.setContent(text || '', false);
         }
       } catch (error) {
-        console.error('드래프트 복원 오류:', error)
-        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
+        console.error('드래프트 복원 오류:', error);
+        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.');
       }
-    } else if (user?.nickname) {
-      setValue('nickname', user.nickname)
+    } else {
+      console.log('Initializing empty form');
+      setValue('nickname', user?.nickname || '');
+      setValue('title', '');
+      setValue('text', '');
+      setContent('');
+      if (editorRef.current) {
+        editorRef.current.commands.setContent('', false);
+      }
     }
-  }, [selectedFreeDraft, user, setValue])
+  }, [selectedFreeDraft, user, setValue]);
 
   const onSubmit = async (data) => {
     if (!content || content.trim() === '') {
@@ -98,12 +90,12 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     console.log('onSave triggered')
     const formValues = getValues()
     console.log('Form values:', formValues)
-    const editorHTML = editorRef.current?.getHTML() || content; // 실제 에디터 HTML 사용
+    const editorHTML = editorRef.current?.getHTML() || content;
     console.log('Editor HTML:', editorHTML);
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',
-      text: editorHTML || '', // WriteEditor 내용
+      text: editorHTML || '',
     }
     console.log('Form data to save:', formData)
     handleSaveDraft({
@@ -162,8 +154,8 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           <WriteEditor
             initialContent={content}
             onChange={handleChange}
-            value={content} // 현재 값 전달
-            ref={editorRef} // ref 전달
+            value={content}
+            ref={editorRef}
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
