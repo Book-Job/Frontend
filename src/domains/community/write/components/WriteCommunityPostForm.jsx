@@ -12,9 +12,11 @@ import useAuthStore from '../../../../store/login/useAuthStore'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useDraftHandler from '../../../../hooks/writePost/useDraftHandler'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const { user } = useAuthStore()
+  const isMobile = useIsMobile()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const { handleSaveDraft } = useDraftHandler()
   const navigate = useNavigate()
@@ -111,7 +113,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           </div>
         </FormItem>
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
         <FormItem label='글 제목' dot={true}>
@@ -127,7 +129,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           </div>
         </FormItem>
       </div>
-      <JobFormLine />
+      {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
