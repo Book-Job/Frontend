@@ -1,4 +1,5 @@
-const CustomDomain = ({ customDomain, setCustomDomain,disabled }) => {
+import PropTypes from 'prop-types'
+const CustomDomain = ({ customDomain, setCustomDomain, disabled }) => {
   return (
     <div className='flex items-end'>
       <input
@@ -12,5 +13,9 @@ const CustomDomain = ({ customDomain, setCustomDomain,disabled }) => {
     </div>
   )
 }
-
+CustomDomain.propTypes = {
+  customDomain: PropTypes.string.isRequired,
+  setCustomDomain: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+}
 export default CustomDomain

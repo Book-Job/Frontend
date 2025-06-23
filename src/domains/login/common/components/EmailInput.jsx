@@ -4,6 +4,7 @@ import Button from '../../../../components/web/Button'
 import DomainSelector from './DomainSelector'
 import OTPInput from '../../../Find/common/components/OTPInput'
 import CustomDomain from './CustomDomain'
+import PropTypes from 'prop-types'
 
 const EmailInput = ({
   register,
@@ -36,14 +37,6 @@ const EmailInput = ({
   }, [emailId, domainValue, setValue])
 
   const handleCheckEmail = async () => {
-    // if (
-    //   externalIsCheckingEmail
-    //   // ||
-    //   // emailCheckStatus === 'success' ||
-    //   // (isCustom && !customDomain.trim())
-    // ) {
-    //   return
-    // }
     const isValEmail = await trigger('emailId')
     if (!isValEmail) {
       return
@@ -88,7 +81,7 @@ const EmailInput = ({
         ? '사용가능'
         : '인증확인')
 
-  const handleInputChange = (e) => {
+  const handleInputChange = () => {
     if (emailCheckMessage) setEmailCheckMessage('')
     if (emailCodeMessage) setEmailCodeMessage('')
     if (emailCheckStatus) setEmailCheckStatus(null)
@@ -98,8 +91,8 @@ const EmailInput = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex flex-row w-full gap-2'>
-          <div className='flex-1'>
+        <div className='flex flex-row max-w-[575px] gap-2'>
+          <div className='flex-auto'>
             <LabelWithInput
               label='이메일'
               type='text'
@@ -181,5 +174,16 @@ const EmailInput = ({
     </div>
   )
 }
-
+EmailInput.propTypes = {
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  watch: PropTypes.func.isRequired,
+  setValue: PropTypes.func.isRequired,
+  trigger: PropTypes.func.isRequired,
+  setValidationStatus: PropTypes.func.isRequired,
+  onCheckEmail: PropTypes.func,
+  onVerifyEmail: PropTypes.func,
+  buttonLabel: PropTypes.string,
+  isCheckingEmail: PropTypes.bool,
+}
 export default EmailInput
