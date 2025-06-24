@@ -75,16 +75,16 @@ const JobSeekDetailPage = () => {
           <img
             src={isScrapped ? ScrapIcon : unScrapIcon}
             alt='스크랩 상태 아이콘'
-            className='w-5 h-5'
+            className='w-6 h-6'
           />
         </button>
       </div>
 
-      <div className='flex flex-col sm:flex-row justify-between items-start mt-3 gap-2'>
-        <h1 className='flex-1 min-w-0 mt-2 text-lg sm:text-2xl md:text-3xl font-bold text-left break-words'>
+      <div className='flex sm:flex-row justify-between items-start mt-3 gap-2'>
+        <h1 className='flex-1 min-w-0 text-[24px] sm:text-2xl md:text-3xl font-bold text-left break-words mt-2'>
           {data.title}
         </h1>
-        <span className='block text-dark-gray mt-2 font-bold text-xs sm:text-sm self-start shrink-0'>
+        <span className='block text-dark-gray mt-4 font-bold text-xs sm:text-sm self-start shrink-0 '>
           [구인 | 구직]
         </span>
       </div>

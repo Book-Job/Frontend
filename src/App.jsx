@@ -20,7 +20,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <ToastContainer position='top-center' autoClose={2000} theme='colored' />
+        <ToastContainer
+          position='bottom-center'
+          autoClose={2000}
+          theme='colored'
+          toastClassName='!rounded-xl !shadow-md !p-4 !text-sm w-full max-w-[360px] mx-auto'
+          bodyClassName='text-sm font-semibold'
+          hideProgressBar={true}
+          style={{ marginBottom: '60px' }}
+        />
         <PageScrollToTop />
         <AppRoutes />
         <ReactQueryDevtools initialIsOpen={false} />
