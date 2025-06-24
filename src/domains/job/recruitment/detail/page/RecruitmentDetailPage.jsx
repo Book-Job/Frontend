@@ -65,7 +65,7 @@ const RecruitmentDetailPage = () => {
   return (
     <div className='w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 xl:px-0'>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
-        <span className='font-semibold text-[16px] sm:text-xl md:text-2xl truncate max-w-[70%]'>
+        <span className='font-semibold text-base sm:text-xl md:text-2xl truncate max-w-[70%]'>
           {data.nickname}
         </span>
         <button
