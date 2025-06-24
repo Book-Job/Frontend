@@ -44,7 +44,7 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-base font-bold truncate sm:text-lg'>{title}</div>
-          <div className='mt-2 text-sm sm:text-base line-clamp-2'>{content}</div>
+          <div className='mt-2 text-sm sm:text-base line-clamp-1'>{content}</div>
         </div>
 
         <div className='mt-4 text-xs text-dark-gray sm:text-sm'>

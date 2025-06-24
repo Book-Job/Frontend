@@ -5,6 +5,7 @@ import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import Spinner from '../../../../components/web/Spinner'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import { getAllPosts } from '../../service/postService'
+import { BsCardImage } from 'react-icons/bs'
 
 const RelatedPosts = ({ currentId }) => {
   const isMobile = useIsMobile()
@@ -43,31 +44,44 @@ const RelatedPosts = ({ currentId }) => {
               : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'
           }
         >
-          {posts.map((post) => (
-            <div key={post.boardId} className='w-full max-w-xs mx-auto'>
-              {isMobile ? (
-                <MobileFreeBoard
-                  boardId={post.boardId}
-                  title={post.title}
-                  content={post.text.replace(/<[^>]*>/g, '')}
-                  name={post.nickname}
-                  date={new Date(post.createdAt).toLocaleDateString()}
-                  commentCount={post.commentCount}
-                  viewCount={post.viewCount}
-                />
+          {posts.map((post) => {
+            const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
+            const content =
+              strippedText.length === 0 ? (
+                <span className='text-gray-500 flex items-center gap-1'>
+                  <BsCardImage className='text-lg' />
+                  이미지 게시글입니다
+                </span>
               ) : (
-                <FreeBoard
-                  boardId={post.boardId}
-                  title={post.title}
-                  content={post.text.replace(/<[^>]*>/g, '')}
-                  name={post.nickname}
-                  date={new Date(post.createdAt).toLocaleDateString()}
-                  commentCount={post.commentCount}
-                  viewCount={post.viewCount}
-                />
-              )}
-            </div>
-          ))}
+                strippedText
+              )
+
+            return (
+              <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+                {isMobile ? (
+                  <MobileFreeBoard
+                    boardId={post.boardId}
+                    title={post.title}
+                    content={content}
+                    name={post.nickname}
+                    date={new Date(post.createdAt).toLocaleDateString()}
+                    commentCount={post.commentCount}
+                    viewCount={post.viewCount}
+                  />
+                ) : (
+                  <FreeBoard
+                    boardId={post.boardId}
+                    title={post.title}
+                    content={content}
+                    name={post.nickname}
+                    date={new Date(post.createdAt).toLocaleDateString()}
+                    commentCount={post.commentCount}
+                    viewCount={post.viewCount}
+                  />
+                )}
+              </div>
+            )
+          })}
         </div>
       )}
     </InfiniteScrollList>
