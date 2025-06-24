@@ -40,7 +40,6 @@ const useSaveDraft = () => {
           date: currentDate,
         }
 
-        // 최대 5개 제한
         let updatedDrafts = [...storedDrafts, newDraft]
         if (updatedDrafts.length > 10) {
           updatedDrafts = updatedDrafts
@@ -48,11 +47,8 @@ const useSaveDraft = () => {
             .slice(0, 10)
           ToastService.info('최대 10개까지만 저장 가능합니다. 오래된 항목이 삭제되었습니다.')
         }
-
         // 로컬 스토리지에 저장
         localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
-        console.log('Draft saved with ID:', newDraft.id)
-
         ToastService.success('게시글이 임시 저장되었습니다.')
         navigate(redirectPath)
         return newDraft.id

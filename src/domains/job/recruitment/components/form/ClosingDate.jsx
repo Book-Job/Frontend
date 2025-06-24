@@ -20,6 +20,7 @@ const ClosingDate = ({ control }) => {
           return (
             <input
               id='closingDate'
+              name='closingDate'
               type='date'
               aria-describedby='closingDateHelp'
               className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer  text-left'

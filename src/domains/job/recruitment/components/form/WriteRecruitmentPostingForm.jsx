@@ -13,7 +13,7 @@ import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
 
-const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues,editorRef }) => {
+const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues, editorRef }) => {
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
   const {
@@ -33,8 +33,9 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues,editorRef }) => {
   })
 
   useEffect(() => {
-    console.log("defaultValues",defaultValues);
-    
+    console.log('defaultValues:', defaultValues)
+    console.log('editorRef useEffect:', editorRef)
+
     if (defaultValues && user?.nickname) {
       const writerToSet = defaultValues.writer || user.nickname
       reset({
@@ -42,10 +43,10 @@ const WriteRecruitmentPostingForm = ({ onSubmit, defaultValues,editorRef }) => {
         writer: writerToSet,
       })
     }
-  }, [defaultValues, user, reset])
+  }, [defaultValues, user, reset, editorRef])
 
   const handleFormSubmit = (formData) => {
-    if (formData.closingDate && !formData.closingDate.includes('kr')) {
+    if (formData.closingDate && !formData.closingDate.includes('T')) {
       formData.closingDate = `${formData.closingDate}T00:00:00`
     }
     onSubmit(formData)

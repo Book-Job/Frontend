@@ -34,7 +34,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
         const nickname = selectedFreeDraft.nickname || user?.nickname || '';
         const title = selectedFreeDraft.title || '';
         const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || '';
-        console.log('Restoring draft:', { nickname, title, text });
         setValue('nickname', nickname);
         setValue('title', title);
         setValue('text', text);
@@ -43,11 +42,10 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           editorRef.current.commands.setContent(text || '', false);
         }
       } catch (error) {
-        console.error('드래프트 복원 오류:', error);
+        console.error('임시저장 복원 오류:', error);
         ToastService.error('임시 저장 데이터를 불러오지 못했습니다.');
       }
     } else {
-      console.log('Initializing empty form');
       setValue('nickname', user?.nickname || '');
       setValue('title', '');
       setValue('text', '');
@@ -88,9 +86,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
 
   const onSave = () => {
     const formValues = getValues()
-    console.log('Form values:', formValues)
     const editorHTML = editorRef.current?.getHTML() || content;
-    console.log('Editor HTML:', editorHTML);
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',

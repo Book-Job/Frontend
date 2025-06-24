@@ -1,8 +1,12 @@
 import FormItem from '../FormItem'
 import { Controller } from 'react-hook-form'
 import WriteEditor from '../../../../../components/common/editor/WriteEditor'
+import { useEffect } from 'react'
 
 const PostContent = ({ control, errors, editorRef }) => {
+  useEffect(() => {
+    console.log('editorRef PostContent:', editorRef)
+  }, [editorRef])
   return (
     <FormItem label='내용' dot={true}>
       <Controller

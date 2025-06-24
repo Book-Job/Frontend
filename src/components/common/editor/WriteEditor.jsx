@@ -50,11 +50,6 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
     onPasteImage: uploadImage,
   })
 
-  // useEffect(() => {
-  //   if (editor && value !== undefined && value !== editor.getHTML()) {
-  //     editor.commands.setContent(value || '', false)
-  //   }
-  // }, [value, editor])
   useEffect(() => {
     if (editor) {
       editorRef.current = editor
