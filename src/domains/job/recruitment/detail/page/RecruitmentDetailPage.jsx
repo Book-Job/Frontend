@@ -65,7 +65,7 @@ const RecruitmentDetailPage = () => {
   return (
     <div className='w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 xl:px-0'>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
-        <span className='font-semibold text-base sm:text-xl md:text-2xl truncate max-w-[70%]'>
+        <span className='font-semibold text-[16px] sm:text-xl md:text-2xl truncate max-w-[70%]'>
           {data.nickname}
         </span>
         <button
@@ -77,16 +77,16 @@ const RecruitmentDetailPage = () => {
           <img
             src={isScrapped ? ScrapIcon : unScrapIcon}
             alt='스크랩 상태 아이콘'
-            className='w-5 h-5'
+            className='w-6 h-6'
           />
         </button>
       </div>
 
-      <div className='flex flex-col sm:flex-row justify-between items-start mt-3 gap-2'>
-        <h1 className='flex-1 min-w-0 mt-2 text-lg sm:text-2xl md:text-3xl font-bold text-left break-words'>
+      <div className='flex sm:flex-row justify-between items-start mt-3 gap-2'>
+        <h1 className='flex-1 min-w-0 text-[24px] sm:text-2xl md:text-3xl font-bold text-left break-words'>
           {data.title}
         </h1>
-        <span className='block text-dark-gray mt-2 font-bold text-xs sm:text-sm self-start shrink-0'>
+        <span className='block text-dark-gray mt-4 font-bold text-xs sm:text-sm self-start shrink-0 '>
           [구인 | 구직]
         </span>
       </div>
@@ -102,35 +102,24 @@ const RecruitmentDetailPage = () => {
       )}
       <DetailPostLine />
       <dl className='grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 my-5'>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>근무형태</dt>
-          <dd>{getEmploymentTypeLabel(data.employmentType)}</dd>
-        </div>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>경력</dt>
-          <dd>
-            {data.experienceMin}년 ~ {data.experienceMax}년
-          </dd>
-        </div>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>근무지역</dt>
-          <dd>{data.location}</dd>
-        </div>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>직군</dt>
-          <dd>{getJobCategoryLabel(data.jobCategory)}</dd>
-        </div>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>지원 마감일</dt>
-          <dd>
-            {data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용'}
-          </dd>
-        </div>
-        <div className='grid grid-cols-[6rem_1fr] items-center gap-x-2'>
-          <dt className='font-semibold text-dark-gray'>자사 웹사이트</dt>
-          <dd>{data.websiteUrl}</dd>
-        </div>
+        {[
+          ['근무형태', getEmploymentTypeLabel(data.employmentType)],
+          ['경력', `${data.experienceMin}년 ~ ${data.experienceMax}년`],
+          ['근무지역', data.location],
+          ['직군', getJobCategoryLabel(data.jobCategory)],
+          [
+            '지원 마감일',
+            data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용',
+          ],
+          ['자사 웹사이트', data.websiteUrl],
+        ].map(([label, value]) => (
+          <div key={label} className='grid grid-cols-[6rem_1fr] items-start gap-x-2'>
+            <dt className='font-semibold text-dark-gray text-left text-sm sm:text-base'>{label}</dt>
+            <dd className='text-left text-sm sm:text-base break-words'>{value}</dd>
+          </div>
+        ))}
       </dl>
+
       <LastFormLine />
       <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
         <MobileShare
