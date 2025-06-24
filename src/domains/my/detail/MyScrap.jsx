@@ -106,10 +106,10 @@ const MyScrap = () => {
       <div className='flex flex-wrap block gap-4 mx-4 sm:hidden'>
         {sortedPosts.map((post) => (
           <MobileWorkBoard
-            key={post.bookMarkId || post.id}
+            key={post.bookMarkId ?? post.entityId ?? post.id}
             postId={post.entityId || post.id}
             title={post.title}
-            name={post.nickname || post.recruitmentCategory || '작성자 없음'}
+            name={post.nickname}
             date={formatDate(post.createdAt)}
             like={post.like || false}
             popular1={post.popular1 || false}

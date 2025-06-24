@@ -12,6 +12,7 @@ export const deleteScrap = async (bookMarkId) => {
 
 export const getAllScrap = async () => {
   const response = await authApi.get('/bookmarks')
+  console.log('[GET] /bookmarks 응답:', response.data)
   return response.data.data.bookMarksResponses.map((item) => ({
     ...item,
     id: item.bookMarkId,
