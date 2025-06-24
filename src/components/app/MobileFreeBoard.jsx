@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import MobileShare from './MobileShare'
+import { BsCardImage } from 'react-icons/bs'
 
 const MobileFreeBoard = ({
   boardId,
@@ -14,6 +15,7 @@ const MobileFreeBoard = ({
   onClick,
   commentCount,
   viewCount,
+  isImagePost,
 }) => {
   const [showButton, setShowButton] = useState(false)
   const navigate = useNavigate()
@@ -37,7 +39,16 @@ const MobileFreeBoard = ({
       <div className='flex flex-col h-full  border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer text-left'>
         <div className='flex-row' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
-          <div className='mt-[5px] text-[14px] line-clamp-1'>{content}</div>
+          <div className='mt-2 text-sm sm:text-base line-clamp-1'>
+            {isImagePost ? (
+              <span className='flex items-center gap-1 text-gray-500'>
+                <BsCardImage className='text-lg' />
+                이미지 게시글입니다
+              </span>
+            ) : (
+              content
+            )}
+          </div>
         </div>
         <div className='flex-row  text-dark-gray text-[14px]'>
           <div onClick={onClick} className='flex justify-between font-bold '>

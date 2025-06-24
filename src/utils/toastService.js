@@ -2,9 +2,9 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const defaultOptions = {
-  position: 'top-center',
+  position: 'bottom-center',
   autoClose: 2000,
-  hideProgressBar: false,
+  hideProgressBar: true,
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
@@ -15,6 +15,9 @@ const baseStyle = {
   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
   fontWeight: '600',
   transition: 'transform 0.3s ease, opacity 0.3s ease',
+  margin: '0 auto',
+  borderRadius: '36px',
+  padding: '12px 16px',
 }
 
 const ToastService = {

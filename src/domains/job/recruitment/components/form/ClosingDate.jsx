@@ -22,7 +22,12 @@ const ClosingDate = ({ control }) => {
               id='closingDate'
               type='date'
               aria-describedby='closingDateHelp'
-              className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer  text-left'
+              className='
+              w-full h-[58px] border border-dark-gray rounded px-4 text-black 
+              focus:border-main-pink focus:outline-none cursor-pointer appearance-none
+              text-left
+            '
+              style={{ WebkitAppearance: 'none' }}
               min={minDate}
               value={dateValue}
               onChange={field.onChange}
