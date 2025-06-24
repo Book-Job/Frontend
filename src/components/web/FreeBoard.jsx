@@ -4,8 +4,19 @@ import { useNavigate } from 'react-router-dom'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
+import { BsCardImage } from 'react-icons/bs'
 
-const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount, viewCount }) => {
+const FreeBoard = ({
+  boardId,
+  title,
+  content,
+  name,
+  date,
+  onClick,
+  commentCount,
+  viewCount,
+  isImagePost,
+}) => {
   const [showButton, setShowButton] = useState(false)
   const navigate = useNavigate()
 
@@ -44,7 +55,16 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-base font-bold truncate sm:text-lg'>{title}</div>
-          <div className='mt-2 text-sm sm:text-base line-clamp-1'>{content}</div>
+          <div className='mt-2 text-sm sm:text-base line-clamp-1'>
+            {isImagePost ? (
+              <span className='flex items-center gap-1 text-gray-500'>
+                <BsCardImage className='text-lg' />
+                이미지 게시글입니다
+              </span>
+            ) : (
+              content
+            )}
+          </div>
         </div>
 
         <div className='mt-4 text-xs text-dark-gray sm:text-sm'>
@@ -81,11 +101,12 @@ const FreeBoard = ({ boardId, title, content, name, date, onClick, commentCount,
 FreeBoard.propTypes = {
   boardId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   viewCount: PropTypes.number.isRequired,
+  content: PropTypes.string.isRequired,
+  isImagePost: PropTypes.bool,
   onClick: PropTypes.func,
 }
 

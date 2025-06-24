@@ -5,8 +5,6 @@ import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import Spinner from '../../../../components/web/Spinner'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import { getAllPosts } from '../../service/postService'
-import { BsCardImage } from 'react-icons/bs'
-
 const RelatedPosts = ({ currentId }) => {
   const isMobile = useIsMobile()
 
@@ -46,15 +44,8 @@ const RelatedPosts = ({ currentId }) => {
         >
           {posts.map((post) => {
             const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
-            const content =
-              strippedText.length === 0 ? (
-                <span className='text-gray-500 flex items-center gap-1'>
-                  <BsCardImage className='text-lg' />
-                  이미지 게시글입니다
-                </span>
-              ) : (
-                strippedText
-              )
+            const content = strippedText.length === 0 ? '이미지 게시글입니다' : strippedText
+            const isImagePost = strippedText.length === 0
 
             return (
               <div key={post.boardId} className='w-full max-w-xs mx-auto'>
@@ -63,6 +54,7 @@ const RelatedPosts = ({ currentId }) => {
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
+                    isImagePost={isImagePost}
                     name={post.nickname}
                     date={new Date(post.createdAt).toLocaleDateString()}
                     commentCount={post.commentCount}
@@ -73,6 +65,7 @@ const RelatedPosts = ({ currentId }) => {
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
+                    isImagePost={isImagePost}
                     name={post.nickname}
                     date={new Date(post.createdAt).toLocaleDateString()}
                     commentCount={post.commentCount}
