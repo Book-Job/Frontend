@@ -17,7 +17,7 @@ const Modal = () => {
     closeModal()
   }
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40'>
       <div className='relative w-[90%] max-w-md bg-white rounded-2xl p-6 shadow-xl animate-fadeIn'>
         <button
           onClick={() => {

@@ -10,6 +10,8 @@ import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import InfiniteScrollList from '../../../../components/common/InfiniteScrollList'
 import useCommunityPosts from '../hook/useCommunityPosts'
 import SeoHelmet from '../../../../components/common/SeoHelmet'
+import { BsCardImage } from 'react-icons/bs'
+
 const CommunityMainPage = () => {
   const { posts, loading, hasMore, loadMore } = useCommunityPosts()
   const [sortOrder, setSortOrder] = useState('latest')
@@ -37,10 +39,12 @@ const CommunityMainPage = () => {
           <SearchBar onSearch={handleSearch} placeholder='검색어를 입력하세요' className='w-full' />
         </div>
       </section>
+
       <div className='flex flex-col mx-4 md:mx-10 lg:mx-[100px] xl:mx-[250px]'>
         <div className='w-full flex justify-end mt-5 text-[14px] mb-3 px-4 sm:px-6 lg:px-0'>
           <PostSortDropDown onSortChange={setSortOrder} />
         </div>
+
         <div className='mt-[15px] overflow-x-auto'>
           {!posts.length && (loading || searchLoading) ? (
             <div className='flex justify-center items-center h-[300px]'>
@@ -67,34 +71,47 @@ const CommunityMainPage = () => {
                       : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2'
                   }
                 >
-                  {displayedPosts.map((post) => (
-                    <div
-                      key={`${post.boardId}-${post.createdAt}`}
-                      className='w-full max-w-xs mx-auto'
-                    >
-                      {isMobile ? (
-                        <MobileFreeBoard
-                          boardId={post.boardId}
-                          title={post.title}
-                          content={post.text.replace(/<[^>]*>/g, '')}
-                          name={post.nickname}
-                          date={new Date(post.createdAt).toLocaleDateString()}
-                          commentCount={post.commentCount}
-                          viewCount={post.viewCount}
-                        />
+                  {displayedPosts.map((post) => {
+                    const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
+                    const content =
+                      strippedText.length === 0 ? (
+                        <span className='text-gray-500 flex items-center gap-1'>
+                          <BsCardImage className='text-lg' />
+                          이미지 게시글입니다
+                        </span>
                       ) : (
-                        <FreeBoard
-                          boardId={post.boardId}
-                          title={post.title}
-                          content={post.text.replace(/<[^>]*>/g, '')}
-                          name={post.nickname}
-                          date={new Date(post.createdAt).toLocaleDateString()}
-                          commentCount={post.commentCount}
-                          viewCount={post.viewCount}
-                        />
-                      )}
-                    </div>
-                  ))}
+                        strippedText
+                      )
+
+                    return (
+                      <div
+                        key={`${post.boardId}-${post.createdAt}`}
+                        className='w-full max-w-xs mx-auto'
+                      >
+                        {isMobile ? (
+                          <MobileFreeBoard
+                            boardId={post.boardId}
+                            title={post.title}
+                            content={content}
+                            name={post.nickname}
+                            date={new Date(post.createdAt).toLocaleDateString()}
+                            commentCount={post.commentCount}
+                            viewCount={post.viewCount}
+                          />
+                        ) : (
+                          <FreeBoard
+                            boardId={post.boardId}
+                            title={post.title}
+                            content={content}
+                            name={post.nickname}
+                            date={new Date(post.createdAt).toLocaleDateString()}
+                            commentCount={post.commentCount}
+                            viewCount={post.viewCount}
+                          />
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </InfiniteScrollList>
 
