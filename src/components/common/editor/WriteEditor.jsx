@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { forwardRef, useCallback, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { authApi } from '../../../services/api/axios'
 import EditorToolbar from './EditorToolbar'
@@ -9,7 +9,8 @@ import ToastService from '../../../utils/toastService'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 
-const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
+// const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
+const WriteEditor = forwardRef(({ value, initialContent, onChange, onAddFileId }, ref) => {
   const editorRef = useRef(null)
   const uploadImage = useCallback(
     async (file) => {
@@ -53,11 +54,19 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
   useEffect(() => {
     if (editor) {
       editorRef.current = editor
+      if (ref) {
+        if (typeof ref === 'function') {
+          ref(editor)
+        } else {
+          ref.current = editor
+        }
+      }
       if (value !== undefined && value !== editor.getHTML()) {
         editor.commands.setContent(value || '', false)
       }
     }
-  }, [value, editor])
+    // }, [value, editor])
+  }, [value, editor, ref])
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0]
@@ -78,6 +87,6 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
       <input id='file-input' type='file' accept='image/*' onChange={handleFileChange} hidden />
     </div>
   )
-}
+})
 
 export default WriteEditor

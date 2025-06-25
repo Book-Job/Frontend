@@ -28,7 +28,6 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   }
 
   useEffect(() => {
-    console.log('자유글:', selectedFreeDraft);
     if (selectedFreeDraft) {
       try {
         const nickname = selectedFreeDraft.nickname || user?.nickname || '';
@@ -92,14 +91,12 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
       title: formValues.title || '',
       text: editorHTML || '',
     }
-    console.log('formData 저장:', formData)
     handleSaveDraft({
       formData,
       draftType: 'community',
     })
       .then((draftId) => {
         if (draftId) {
-          console.log('Draft saved with ID:', draftId)
           ToastService.success('게시글이 임시 저장되었습니다.')
           navigate(ROUTER_PATHS.MY_DRAFTS)
         }

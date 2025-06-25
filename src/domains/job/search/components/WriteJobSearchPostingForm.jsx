@@ -10,8 +10,10 @@ import WorkExperience from './form/WorkExperience'
 import ContactEmail from './form/ContactEmail'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 
-const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
+const WriteJobSearchPostingForm = ({ onSubmit, editorRef }) => {
+  const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
   const {
@@ -22,24 +24,31 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
+    selectedFreeDraft: {
       writer: user?.nickname || '',
-      ...defaultValues,
+      ...selectedFreeDraft,
     },
   })
 
   useEffect(() => {
-    if (defaultValues && user?.nickname) {
-      const writerToSet = defaultValues.writer || user.nickname
+    if (selectedFreeDraft && user?.nickname) {
+      const writerToSet = selectedFreeDraft.writer || user.nickname
       reset({
-        ...defaultValues,
+        ...selectedFreeDraft,
         writer: writerToSet,
       })
     }
-  }, [defaultValues, user, reset])
+  }, [selectedFreeDraft, user, reset, editorRef])
 
   const handleFormSubmit = (formData) => {
+    if (formData.closingDate && !formData.closingDate.includes('T')) {
+      formData.closingDate = `${formData.closingDate}T00:00:00`
+    }
     onSubmit(formData)
+    if (selectedFreeDraft) {
+      deleteFreeDraft(selectedFreeDraft.id)
+      clearSelectedFreeDraft()
+    }
   }
 
   return (
@@ -72,7 +81,7 @@ const WriteJobSearchPostingForm = ({ defaultValues, onSubmit }) => {
       {!isMobile && <JobFormLine />}
 
       <div className='my-[30px]'>
-        <PostContent control={control} errors={errors} />
+        <PostContent control={control} errors={errors} name='text' editorRef={editorRef} />
       </div>
     </form>
   )

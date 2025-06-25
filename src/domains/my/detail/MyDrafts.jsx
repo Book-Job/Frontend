@@ -11,31 +11,19 @@ const MyDrafts = () => {
   const { drafts, loadFreeDrafts, setSelectedFreeDraft } = useFreeDraftStore()
   const navigate = useNavigate()
   const isMobile = useIsMobile()
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const fetchDrafts = async () => {
-      setIsLoading(true)
-      setError(null)
-      try {
-        await loadFreeDrafts()
-      } catch (error) {
-        setError('임시 저장 글을 불러오지 못했습니다.')
-        ToastService.error('임시 저장 글을 불러오지 못했습니다.')
-      } finally {
-        setIsLoading(false)
-      }
+    const fetchDrafts = () => {
+      loadFreeDrafts()
     }
     fetchDrafts()
   }, [loadFreeDrafts])
 
   const handleDraftClick = (draft) => {
-    console.log('draft', draft)
     setSelectedFreeDraft(draft)
     if (draft.draftType === 'community') {
       navigate(ROUTER_PATHS.WRITE_COMMUNITY_POST)
-    } else if (draft.draftType === 'job') {
+    } else if (draft.draftType === 'jobPostings') {
       navigate(ROUTER_PATHS.WRITE_RECRUITMENT_POST)
     } else {
       navigate(ROUTER_PATHS.WRITE_JOB_SEARCH_POST)
@@ -45,13 +33,7 @@ const MyDrafts = () => {
   return (
     <div>
       <div className='sm:mt-10'>{isMobile ? null : <PageTitle title={'임시저장 글'} />}</div>
-      {isLoading ? (
-        <p className='py-10 text-center text-gray-500'>로딩 중...</p>
-      ) : error ? (
-        <p className='py-10 text-center text-red-500'>{error}</p>
-      ) : (
-        <MyDraftsList draftsListData={drafts} onDraftClick={handleDraftClick} />
-      )}
+      <MyDraftsList draftsListData={drafts} onDraftClick={handleDraftClick} />
     </div>
   )
 }

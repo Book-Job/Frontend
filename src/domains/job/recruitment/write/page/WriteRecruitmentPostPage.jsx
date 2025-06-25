@@ -6,23 +6,17 @@ import { createRecruitmentPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm'
 import useSaveDraft from '../../../../../hooks/writePost/useSaveDraft'
-import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 import { useEffect, useRef } from 'react'
 const WriteRecruitmentPostPage = () => {
   const handleSubmitForm = usePostSubmit(createRecruitmentPost)
   const { handleSaveDraft } = useSaveDraft()
-  const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const editorRef = useRef(null)
 
   useEffect(() => {
     if (editorRef.current && !editorRef.current.getHTML) {
-      console.error('Editor ref is not properly initialized')
+      console.error('구인 Editor ref is not properly initialized')
     }
   }, [])
-
-  // useEffect(() => {
-  //   console.log('selectedFreeDraft:', selectedFreeDraft)
-  // }, [selectedFreeDraft])
 
   const handleSaveDraftClick = () => {
     const form = document.getElementById('recruitment-post-form')
@@ -32,24 +26,22 @@ const WriteRecruitmentPostPage = () => {
     }
     const contentElement = form.querySelector('[name="text"]')
     const content = editorRef.current ? editorRef.current.getHTML() : contentElement?.value || ''
-    console.log('content :', content, 'contentElement :', contentElement)
 
     const formValues = {
       writer: form.querySelector('[name="writer"]')?.value || '',
       title: form.querySelector('[name="title"]')?.value || '',
       closingDate: form.querySelector('[name="closingDate"]')?.value || '',
-      companyWebsite: form.querySelector('[name="websiteUrl"]')?.value || '',
-      workPlace: form.querySelector('[name="location"]')?.value || '',
+      websiteUrl: form.querySelector('[name="websiteUrl"]')?.value || '',
+      location: form.querySelector('[name="location"]')?.value || '',
       jobCategory: form.querySelector('[name="jobCategory"]')?.value || '',
       employmentType: form.querySelector('[name="employmentType"]')?.value || '',
       experienceMin: form.querySelector('[name="experienceMin"]')?.value || '',
       experienceMax: form.querySelector('[name="experienceMax"]')?.value || '',
       text: content,
     }
-    console.log('구인글 :', formValues) // 디버깅용
     handleSaveDraft({
       formData: formValues,
-      draftType: 'job',
+      draftType: 'jobPostings',
     })
       .then()
       .catch((error) => {
@@ -65,11 +57,7 @@ const WriteRecruitmentPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <WriteRecruitmentPostingForm
-          onSubmit={handleSubmitForm}
-          defaultValues={selectedFreeDraft || {}}
-          editorRef={editorRef}
-        />
+        <WriteRecruitmentPostingForm onSubmit={handleSubmitForm} editorRef={editorRef} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button

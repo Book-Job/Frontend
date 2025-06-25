@@ -6,28 +6,43 @@ import PinkButton from '../../../../../components/web/PinkButton'
 import { createJobSeekPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 import useSaveDraft from '../../../../../hooks/writePost/useSaveDraft'
+import { useEffect, useRef } from 'react'
 
 const WriteJobSearchPostPage = () => {
   const handleSubmitForm = usePostSubmit(createJobSeekPost)
   const { handleSaveDraft } = useSaveDraft()
+  const editorRef = useRef(null)
+
+  useEffect(() => {
+    if (editorRef.current && !editorRef.current.getHTML) {
+      console.error('구직 Editor ref is not properly initialized')
+    }
+  }, [])
 
   const handleSaveDraftClick = () => {
     const form = document.getElementById('job-search-post-form')
+    if (!form) {
+      console.error('Form not found')
+      return
+    }
+    const contentElement = form.querySelector('[name="text"]')
+    const content = editorRef.current ? editorRef.current.getHTML() : contentElement?.value || ''
+
     const formValues = {
       writer: form.querySelector('[name="writer"]').value,
       title: form.querySelector('[name="title"]').value,
       employmentType: form.querySelector('[name="employmentType"]').value,
       jobCategory: form.querySelector('[name="jobCategory"]').value,
-      workExperience: form.querySelector('[name="workExperience"]').value,
+      experience: form.querySelector('[name="experience"]').value,
       contactEmail: form.querySelector('[name="contactEmail"]').value,
-      content: form.querySelector('textarea')?.value || '', // PostContent의 값
+      text: content,
     }
     handleSaveDraft({
       formData: formValues,
-      saveDraft: () => 'mock-draft-id', // 상위 전달
-      draftType: 'job',
+      draftType: 'jobSeekings',
     })
   }
+
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -36,7 +51,7 @@ const WriteJobSearchPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <WriteJobSearchPostingForm onSubmit={handleSubmitForm} />
+        <WriteJobSearchPostingForm onSubmit={handleSubmitForm} editorRef={editorRef} />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button

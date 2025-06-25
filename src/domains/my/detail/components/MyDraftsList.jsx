@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
-
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
   const getPreviewText = (text) => {
@@ -13,10 +13,12 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
     switch (draftType) {
       case 'community':
         return { label: '자유게시판', bgColor: '#ECFDF5', labelColor: '#065F46', width: '80px' }
-      case 'job':
+      case 'jobPostings':
         return { label: '구인', bgColor: '#EBF7FF', labelColor: '#2563EB', width: '60px' }
+      case 'jobSeekings':
+        return { label: '구직', bgColor: '#FFEFEB', labelColor: '#DC2626', width: '60px' }
       default:
-        return { label: '기타', bgColor: '#F3F4F6', labelColor: '#374151', width: '60px' }
+        return { label: '기타', bgColor: '#cecece', labelColor: '#2e2e2e', width: '60px' }
     }
   }
 
@@ -60,4 +62,16 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   )
 }
 
+MyDraftsList.propTypes = {
+  draftsListData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string,
+      text: PropTypes.string,
+      date: PropTypes.string,
+      draftType: PropTypes.string,
+    }),
+  ).isRequired,
+  onDraftClick: PropTypes.func.isRequired,
+}
 export default MyDraftsList
