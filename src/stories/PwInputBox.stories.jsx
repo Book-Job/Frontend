@@ -1,4 +1,4 @@
-import PwInputBox from '../components/web/PwInputBox';
+import PwInputBox from '../components/web/PwInputBox'
 
 export default {
   title: 'Components/web/PwInputBox',
@@ -14,4 +14,4 @@ export default {
 
 const Template = (args) => <PwInputBox {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})

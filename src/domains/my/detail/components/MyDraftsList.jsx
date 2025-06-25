@@ -50,7 +50,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
                 <BoardCategory {...getCategoryProps(item.draftType || 'community')} />
               </div>
               <div className='flex items-center text-base sm:text-xl text-dark-gray text-start'>
-                {previewText}
+                {hasImage && previewText === '내용 없음' ? '' : previewText}
                 {hasImage && (
                   <>
                     <BsCardImage className='inline-block mx-2 text-xl sm:text-2xl' /> 이미지
