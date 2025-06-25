@@ -30,30 +30,30 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   useEffect(() => {
     if (selectedFreeDraft) {
       try {
-        const nickname = selectedFreeDraft.nickname || user?.nickname || '';
-        const title = selectedFreeDraft.title || '';
-        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || '';
-        setValue('nickname', nickname);
-        setValue('title', title);
-        setValue('text', text);
-        setContent(text);
+        const nickname = selectedFreeDraft.nickname || user?.nickname || ''
+        const title = selectedFreeDraft.title || ''
+        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || ''
+        setValue('nickname', nickname)
+        setValue('title', title)
+        setValue('text', text)
+        setContent(text)
         if (editorRef.current) {
-          editorRef.current.commands.setContent(text || '', false);
+          editorRef.current.commands.setContent(text || '', false)
         }
       } catch (error) {
-        console.error('임시저장 복원 오류:', error);
-        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.');
+        console.error('임시저장 복원 오류:', error)
+        ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
       }
     } else {
-      setValue('nickname', user?.nickname || '');
-      setValue('title', '');
-      setValue('text', '');
-      setContent('');
+      setValue('nickname', user?.nickname || '')
+      setValue('title', '')
+      setValue('text', '')
+      setContent('')
       if (editorRef.current) {
-        editorRef.current.commands.setContent('', false);
+        editorRef.current.commands.setContent('', false)
       }
     }
-  }, [selectedFreeDraft, user, setValue]);
+  }, [selectedFreeDraft, user, setValue])
 
   const onSubmit = async (data) => {
     if (!content || content.trim() === '') {
@@ -85,7 +85,7 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
 
   const onSave = () => {
     const formValues = getValues()
-    const editorHTML = editorRef.current?.getHTML() || content;
+    const editorHTML = editorRef.current?.getHTML() || content
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',

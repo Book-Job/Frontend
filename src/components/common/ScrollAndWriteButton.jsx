@@ -11,7 +11,7 @@ const ScrollBtn = () => {
   const { showModal, setShowModal } = useWriteModalStore()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const navigate = useNavigate()
-  const { clearSelectedFreeDraft } = useFreeDraftStore();
+  const { clearSelectedFreeDraft } = useFreeDraftStore()
 
   const handleCreatePostClick = () => setShowModal(true)
   const handleTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -22,7 +22,7 @@ const ScrollBtn = () => {
       recruitment: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
       jobsearch: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     }
-    clearSelectedFreeDraft();
+    clearSelectedFreeDraft()
     navigate(paths[type])
     setShowModal(false)
   }

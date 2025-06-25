@@ -18,7 +18,7 @@ const WriteEditor = forwardRef(({ value, initialContent, onChange, onAddFileId }
         throw new Error('파일 크기 초과')
       }
 
-      const res = await authApi.post('/images', {F
+      const res = await authApi.post('/images', {
         fileName: file.name,
         fileSize: file.size,
         boardType: 'BOARD',
@@ -86,5 +86,5 @@ const WriteEditor = forwardRef(({ value, initialContent, onChange, onAddFileId }
     </div>
   )
 })
-
+WriteEditor.displayName = 'WriteEditor';
 export default WriteEditor
