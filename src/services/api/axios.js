@@ -79,7 +79,7 @@ authApi.interceptors.response.use(
         console.log('Retrying request:', originalRequest.url)
         return authApi(originalRequest)
       } catch (refreshError) {
-        console.error('토큰 갱신 실패');
+        console.error('토큰 갱신 실패')
         processQueue(refreshError, null)
         return Promise.reject(refreshError)
       } finally {

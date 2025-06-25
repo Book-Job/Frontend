@@ -24,7 +24,7 @@ const Modal = () => {
             closeModal()
             navigate(ROUTER_PATHS.MAIN_PAGE)
           }}
-          className='absolute top-4 right-4 text-gray-400 hover:text-gray-600'
+          className='absolute text-gray-400 top-4 right-4 hover:text-gray-600'
         >
           <img src={cancelIcon} alt='닫는 아이콘' />
         </button>
@@ -32,7 +32,7 @@ const Modal = () => {
         <p className='mb-6 text-sm text-center text-gray-600 whitespace-pre-line'>{description}</p>
         <button
           onClick={handleButtonClick}
-          className='w-full py-3 rounded-xl bg-pink-500 text-white font-semibold text-sm shadow-md hover:bg-hover-pink active:scale-95 transition-all duration-200'
+          className='w-full py-3 text-sm font-semibold text-white transition-all duration-200 bg-pink-500 shadow-md rounded-xl hover:bg-hover-pink active:scale-95'
         >
           {buttonLabel}
         </button>

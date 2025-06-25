@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useCommunityPostForm from '../hook/useCommunityPostForm'
 import DOMPurify from 'dompurify'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +10,7 @@ import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
-import useDraftHandler from '../../../../hooks/writePost/useDraftHandler'
+import useSaveDraft from '../../../../hooks/writePost/useSaveDraft'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 
@@ -18,13 +18,11 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
-  const { handleSaveDraft } = useDraftHandler()
   const navigate = useNavigate()
   const [content, setContent] = useState('')
-
-  const { register, handleSubmit, reset, setValue, getValues, control, errors } =
-    useCommunityPostForm()
-
+  const { register, handleSubmit, reset, setValue, getValues, errors } = useCommunityPostForm()
+  const { handleSaveDraft } = useSaveDraft()
+  const editorRef = useRef(null)
   const handleChange = (value) => {
     setContent(value)
   }
@@ -32,15 +30,28 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
   useEffect(() => {
     if (selectedFreeDraft) {
       try {
-        setValue('nickname', selectedFreeDraft.nickname || user?.nickname || '')
-        setValue('title', selectedFreeDraft.title || '')
-        setValue('text', useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft))
+        const nickname = selectedFreeDraft.nickname || user?.nickname || ''
+        const title = selectedFreeDraft.title || ''
+        const text = useFreeDraftStore.getState().getDraftEditorState(selectedFreeDraft) || ''
+        setValue('nickname', nickname)
+        setValue('title', title)
+        setValue('text', text)
+        setContent(text)
+        if (editorRef.current) {
+          editorRef.current.commands.setContent(text || '', false)
+        }
       } catch (error) {
-        console.error('드래프트 복원 오류:', error)
+        console.error('임시저장 복원 오류:', error)
         ToastService.error('임시 저장 데이터를 불러오지 못했습니다.')
       }
-    } else if (user?.nickname) {
-      setValue('nickname', user.nickname)
+    } else {
+      setValue('nickname', user?.nickname || '')
+      setValue('title', '')
+      setValue('text', '')
+      setContent('')
+      if (editorRef.current) {
+        editorRef.current.commands.setContent('', false)
+      }
     }
   }, [selectedFreeDraft, user, setValue])
 
@@ -72,29 +83,26 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     }
   }
 
-  // const handleSaveDraft = () => {
-  //   const formData = {
-  //     nickname: control._formValues.nickname || '',
-  //     title: control._formValues.title || '',
-  //     text: control._formValues.text,
-  //   }
-  //   try {
-  //     const draftId = useDraftStore.getState().saveDraft(formData)
-  //     ToastService.success('게시글이 임시 저장되었습니다.')
-  //     onSaveDraft(draftId)
-  //   } catch (error) {
-  //     console.error('임시 저장 실패:', error)
-  //     ToastService.error('임시 저장에 실패했습니다.')
-  //   }
-  // }
   const onSave = () => {
     const formValues = getValues()
+    const editorHTML = editorRef.current?.getHTML() || content
     const formData = {
       nickname: formValues.nickname || '',
       title: formValues.title || '',
-      text: formValues.text,
+      text: editorHTML || '',
     }
-    handleSaveDraft(formData, onSaveDraft, 'community')
+    handleSaveDraft({
+      formData,
+      draftType: 'community',
+    })
+      .then((draftId) => {
+        if (draftId) {
+          navigate(ROUTER_PATHS.MY_DRAFTS)
+        }
+      })
+      .catch((error) => {
+        console.error('Save draft error:', error)
+      })
   }
 
   return (
@@ -136,10 +144,12 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
           <WriteEditor
             initialContent={content}
             onChange={handleChange}
+            value={content}
+            ref={editorRef}
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
-            <span className='self-start text-red-500 text-xs mt-1 block text-left'>
+            <span className='self-start block mt-1 text-xs text-left text-red-500'>
               내용은 필수입니다
             </span>
           ) : null}

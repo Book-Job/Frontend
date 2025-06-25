@@ -66,8 +66,6 @@ const EditProfile = () => {
   }
 
   const handleCheckNickname = async (nickname) => {
-    console.log('user', user)
-    console.log('userData', userData)
     try {
       const response = await getJoinCheckNickname(nickname)
       return response
@@ -109,11 +107,10 @@ const EditProfile = () => {
       </div>
     )
   }
-  const isSocialLogin =
-    userData.data.loginId.includes('naver') || userData.data.loginId.includes('kakao')
+  const loginProvider = user.provider === 'BOOKJOB'
 
   const openMembershipDeleteModal = () => {
-    if (isSocialLogin) {
+    if (!loginProvider) {
       openModal({
         title: '회원탈퇴',
         description: '소셜 로그인 탈퇴는 관리자에게 문의해 주세요.',
@@ -129,7 +126,7 @@ const EditProfile = () => {
       })
     }
   }
-  const pwChangButton = isSocialLogin
+  const pwChangButton = !loginProvider
     ? 'font-bold text-dark-gray px-3 py-1'
     : 'font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
 
@@ -153,12 +150,12 @@ const EditProfile = () => {
               text={'인증된 이메일입니다'}
             />
             <ProfileInfo title={'로그인 아이디'} content={userData.data.loginId} />
-            <div className='flex justify-between py-1 text-lg border-dark-gray'>
+            <div className='flex justify-between py-1 text-lg'>
               <span className='text-[22px] font-semibold'>비밀번호</span>
               <button
                 className={pwChangButton}
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
-                disabled={isSocialLogin}
+                disabled={!loginProvider}
               >
                 변경
               </button>
@@ -171,7 +168,6 @@ const EditProfile = () => {
                   openMembershipDeleteModal()
                 }}
                 className={'hover:bg-main-pink transition'}
-                disabled={isSocialLogin}
               />
               <Button
                 size='medium'

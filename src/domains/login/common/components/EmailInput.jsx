@@ -92,7 +92,7 @@ const EmailInput = ({
     <div className='flex flex-col gap-2'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
         <div className='flex flex-row max-w-[575px] gap-2'>
-          <div className='flex-auto'>
+          <div className='flex-1'>
             <LabelWithInput
               label='이메일'
               type='text'
@@ -109,7 +109,7 @@ const EmailInput = ({
             />
           </div>
           <span className='flex items-center pt-8 text-2xl'>@</span>
-          <div className='flex w-[148px]'>
+          <div className='flex flex-1 max-w-[148px]'>
             <DomainSelector
               domain={isCustom ? customDomain : domain}
               isCustom={isCustom}
@@ -118,7 +118,7 @@ const EmailInput = ({
               setCustomDomain={setCustomDomain}
             />
           </div>
-          <div className='flex w-[148px]'>
+          <div className=' flex flex-1 max-w-[148px]'>
             <CustomDomain
               customDomain={customDomain}
               setCustomDomain={setCustomDomain}
