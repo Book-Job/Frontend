@@ -41,7 +41,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
             <div
               key={item.id}
               onClick={() => onDraftClick(item)}
-              className='cursor-pointer pt-[40px]'
+              className='pt-8 cursor-pointer sm:pt-10 '
             >
               <div className='flex pb-5 sm:pb-[30px] items-center justify-between'>
                 <div className='sm:text-[26px] font-semibold text-[20px]'>
