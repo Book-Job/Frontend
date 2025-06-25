@@ -1,7 +1,13 @@
 {
   "ci": {
     "collect": {
-      "url": ["https://www.bookjob.co.kr/"],
+      "url": [
+        "https://www.bookjob.co.kr/",
+        "https://www.bookjob.co.kr/login-main",
+        "https://www.bookjob.co.kr/join",
+        "https://www.bookjob.co.kr/job",
+        "https://www.bookjob.co.kr/community"
+      ],
       "numberOfRuns": 3,
       "startServerReadyPattern": "listening on",
       "startServerReadyTimeout": 60000
