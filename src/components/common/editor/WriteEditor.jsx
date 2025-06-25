@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { authApi } from '../../../services/api/axios'
 import EditorToolbar from './EditorToolbar'
