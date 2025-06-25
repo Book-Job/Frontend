@@ -7,12 +7,7 @@ const useSaveDraft = () => {
   const navigate = useNavigate()
 
   const handleSaveDraft = useCallback(
-    async ({
-      formData,
-      saveDraft,
-      draftType = 'community',
-      redirectPath = ROUTER_PATHS.MY_DRAFTS,
-    }) => {
+    async ({ formData, draftType = 'community', redirectPath = ROUTER_PATHS.MY_DRAFTS }) => {
       try {
         if (!formData || Object.keys(formData).length === 0) {
           throw new Error('폼 데이터가 없습니다.')
@@ -49,11 +44,7 @@ const useSaveDraft = () => {
         return newDraft.id
       } catch (error) {
         console.error('임시 저장 실패:', error)
-        if (error.message === 'DRAFT_LIMIT_EXCEEDED') {
-          ToastService.info('임시저장은 최대 10개까지 저장할 수 있습니다.')
-        } else {
-          ToastService.error('임시 저장에 실패했습니다.')
-        }
+        ToastService.error('임시 저장에 실패했습니다.')
         return null
       }
     },
