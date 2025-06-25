@@ -97,13 +97,11 @@ const WriteCommunityPostForm = ({ onSaveDraft }) => {
     })
       .then((draftId) => {
         if (draftId) {
-          ToastService.success('게시글이 임시 저장되었습니다.')
           navigate(ROUTER_PATHS.MY_DRAFTS)
         }
       })
       .catch((error) => {
         console.error('Save draft error:', error)
-        ToastService.error('임시 저장에 실패했습니다.')
       })
   }
 
