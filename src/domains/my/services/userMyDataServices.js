@@ -90,16 +90,10 @@ export const deleteMember = async (PW) => {
 
 export const postNewPW = async (PW, resetToken) => {
   try {
-    const response = await publicApi.post(
-      '/members/password/change',
-      { password: PW, resetToken: resetToken },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await publicApi.post('/members/password/change', {
+      password: PW,
+      resetToken: resetToken,
+    })
     return response
   } catch (error) {
     console.error('회원 pw변경 중 오류 api:', error.response.data.message)
