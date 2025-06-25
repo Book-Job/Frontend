@@ -23,7 +23,7 @@ const MyPost = () => {
   const error = choiceBoard === '자유게시판' ? freeError : jobError
   return (
     <div className='w-full'>
-      <div className='sm:max-w-[940px] mx-auto'>
+      <div className=' sm:max-w-[940px] mx-auto px-4'>
         <MyPostHead choiceBoard={choiceBoard} />
         {isLoading ? (
           <div className='text-center'>

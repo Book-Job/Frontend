@@ -2,7 +2,7 @@ import FormItem from '../FormItem'
 import { Controller } from 'react-hook-form'
 import WriteEditor from '../../../../../components/common/editor/WriteEditor'
 
-const PostContent = ({ control, errors }) => {
+const PostContent = ({ control, errors, editorRef }) => {
   return (
     <FormItem label='내용' dot={true}>
       <Controller
@@ -21,7 +21,7 @@ const PostContent = ({ control, errors }) => {
         }}
         render={({ field }) => (
           <div className='w-full'>
-            <WriteEditor value={field.value ?? ''} onChange={field.onChange} />
+            <WriteEditor value={field.value ?? ''} onChange={field.onChange} ref={editorRef} />
             {errors.text && (
               <span className='text-red-500 text-[14px] mt-1 block text-left'>
                 {errors.text.message}

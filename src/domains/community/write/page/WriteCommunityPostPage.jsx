@@ -3,15 +3,8 @@ import LastFormLine from '../../../job/common/components/LastFormLine'
 import Button from '../../../../components/web/Button'
 import WriteCommunityPostForm from '../components/WriteCommunityPostForm'
 import PinkButton from '../../../../components/web/PinkButton'
-import { useNavigate } from 'react-router-dom'
-import ROUTER_PATHS from '../../../../routes/RouterPath'
 
 const WriteCommunityPost = () => {
-  const navigate = useNavigate()
-
-  const handleSaveDraft = (draftId) => {
-    navigate(ROUTER_PATHS.MY_DRAFTS)
-  }
   return (
     <main className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>
@@ -22,7 +15,7 @@ const WriteCommunityPost = () => {
       </p>
       <section>
         <WriteFormLine />
-        <WriteCommunityPostForm onSaveDraft={handleSaveDraft} />
+        <WriteCommunityPostForm />
         <LastFormLine />
       </section>
       <section className='flex justify-end'>
@@ -31,7 +24,8 @@ const WriteCommunityPost = () => {
           label='임시저장'
           className='mr-[14px]'
           onClick={() => {
-            document.querySelector('#community-post-form button[type="button"]').click()
+            const form = document.getElementById('community-post-form')
+            form.querySelector('button[hidden]').click()
           }}
         />
         <PinkButton label='등록' type='submit' form='community-post-form' />

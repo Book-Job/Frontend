@@ -5,11 +5,13 @@ import arrow from '../../assets/icons/common/common_arrow_up.svg'
 import writePencil from '../../assets/icons/common/common_pencil2.svg'
 import ChooseWriteForm from './ChooseWriteForm'
 import useWriteModalStore from '../../store/modal/useWriteModalStore'
+import useFreeDraftStore from '../../store/mypage/useFreeDraftStore'
 
 const ScrollBtn = () => {
   const { showModal, setShowModal } = useWriteModalStore()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const navigate = useNavigate()
+  const { clearSelectedFreeDraft } = useFreeDraftStore();
 
   const handleCreatePostClick = () => setShowModal(true)
   const handleTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -20,6 +22,7 @@ const ScrollBtn = () => {
       recruitment: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
       jobsearch: ROUTER_PATHS.WRITE_JOB_SEARCH_POST,
     }
+    clearSelectedFreeDraft();
     navigate(paths[type])
     setShowModal(false)
   }

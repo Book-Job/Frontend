@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { authApi } from '../../../services/api/axios'
 import EditorToolbar from './EditorToolbar'
@@ -10,6 +10,7 @@ import ToastService from '../../../utils/toastService'
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 
 const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
+  const editorRef = useRef(null)
   const uploadImage = useCallback(
     async (file) => {
       if (file.size > MAX_FILE_SIZE) {
@@ -50,8 +51,11 @@ const WriteEditor = ({ value, initialContent, onChange, onAddFileId }) => {
   })
 
   useEffect(() => {
-    if (editor && value !== undefined && value !== editor.getHTML()) {
-      editor.commands.setContent(value || '', false)
+    if (editor) {
+      editorRef.current = editor
+      if (value !== undefined && value !== editor.getHTML()) {
+        editor.commands.setContent(value || '', false)
+      }
     }
   }, [value, editor])
 
