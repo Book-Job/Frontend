@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
-import { BsCardImage } from 'react-icons/bs' // react-icons에서 가져오기
+import { BsCardImage } from 'react-icons/bs'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
@@ -44,16 +44,16 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
               className='cursor-pointer pt-[40px]'
             >
               <div className='flex pb-5 sm:pb-[30px] items-center justify-between'>
-                <div className='sm:text-[30px] font-semibold text-[20px]'>
+                <div className='sm:text-[26px] font-semibold text-[20px]'>
                   {item.title || '제목 없음'}
                 </div>
                 <BoardCategory {...getCategoryProps(item.draftType || 'community')} />
               </div>
-              <div className='flex sm:text-[24px] text-[16px] text-start items-center'>
+              <div className='flex items-center text-base sm:text-xl text-dark-gray text-start'>
                 {previewText}
                 {hasImage && (
                   <>
-                    <BsCardImage className='inline-block mx-2 text-2xl' /> 이미지
+                    <BsCardImage className='inline-block mx-2 text-xl sm:text-2xl' /> 이미지
                   </>
                 )}
               </div>
