@@ -7,13 +7,14 @@ import { deleteMyFreeBoardData, deleteMyJobBoardData } from '../../services/useM
 import useMyBoardStore from '../../../../store/mypage/useMyBoardStore'
 import ToastService from '../../../../utils/toastService'
 import useWriteModalStore from '../../../../store/modal/useWriteModalStore'
+import { useQueryClient } from '@tanstack/react-query'
 
-const PostList = () => {
+const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
-  const { freeBoard, jobBoard, fetchFreeBoard, fetchJobBoard } = useMyBoardStore()
   const { choiceBoard } = useBoardStore()
+  const { resetBoard } = useMyBoardStore()
   const { setShowModal } = useWriteModalStore()
-  const boardData = choiceBoard === '구인구직' ? jobBoard : freeBoard
+  const queryClient = useQueryClient()
 
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
@@ -35,12 +36,15 @@ const PostList = () => {
           recruitmentCategory: item.recruitmentCategory || 'JOB_POSTING',
         }))
         response = await deleteMyJobBoardData(deleteRequest)
+        ToastService.success('성공적으로 삭제되었습니다.1')
       } else {
         response = await deleteMyFreeBoardData(items)
+        ToastService.success('성공적으로 삭제되었습니다.2')
       }
       if (response && response.message === 'success') {
         setCheckedItems([])
-        await (isJobBoard ? fetchJobBoard(true) : fetchFreeBoard(true))
+        resetBoard(isJobBoard ? 'job' : 'free')
+        queryClient.invalidateQueries(['myPosts', choiceBoard])
       } else {
         ToastService.info('삭제에 실패했습니다.')
       }
@@ -51,6 +55,7 @@ const PostList = () => {
       useMyBoardStore.setState({ [isJobBoard ? 'isJobLoading' : 'isFreeLoading']: false })
     }
   }
+
   const handleDeleteItem = (id, title, recruitmentCategory) => {
     if (
       window.confirm(
@@ -194,6 +199,7 @@ const PostList = () => {
     </div>
   )
 }
+
 PostList.propTypes = {
   boardData: PropTypes.arrayOf(
     PropTypes.shape({
@@ -207,4 +213,5 @@ PostList.propTypes = {
     }),
   ).isRequired,
 }
+
 export default PostList
