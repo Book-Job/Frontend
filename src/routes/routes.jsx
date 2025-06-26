@@ -136,6 +136,7 @@ const routes = [
   {
     path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
     element: <ChangePwPage />,
+    label: '비밀번호 변경',
   },
   {
     path: ROUTER_PATHS.MY_PAGE,

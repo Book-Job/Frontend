@@ -9,12 +9,14 @@ import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'
 import { postNewPW } from '../../my/services/userMyDataServices'
 import ToastService from '../../../utils/toastService'
+import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const ChangePwPage = () => {
   const navigate = useNavigate()
   const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { resetToken, requireResetToken, clearResetToken } = useAuthStore()
+  const isMobile = useIsMobile()
   const {
     register,
     handleSubmit,
@@ -68,26 +70,28 @@ const ChangePwPage = () => {
       setIsLoading(false)
     }
   }
-
+  const formContent = (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+        <div className='flex justify-start text-3xl font-bold mb-9'>비밀번호 변경</div>
+        <NewPasswordInput register={register} errors={errors} watch={watch} />
+        <div className='mt-8'>
+          <Button
+            label='완료'
+            size='biggest'
+            bgColor={isSuccess && !isLoading ? 'main-pink' : 'light-gray'}
+            disabled={!isSuccess || isLoading}
+            type='submit'
+          />
+        </div>
+      </form>
+    </>
+  )
   return (
     <div>
-      <PageTitle title={'비밀번호 변경'} />
+      {isMobile ? null : <PageTitle title={'비밀번호 변경'} />}
       <div className='flex justify-center w-full'>
-        <PageBox>
-          <div className='flex justify-start text-3xl font-bold mb-9'>비밀번호 변경</div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <NewPasswordInput register={register} errors={errors} watch={watch} />
-            <div className='mt-8'>
-              <Button
-                label='완료'
-                size='biggest'
-                bgColor={isSuccess && !isLoading ? 'main-pink' : 'light-gray'}
-                disabled={!isSuccess || isLoading}
-                type='submit'
-              />
-            </div>
-          </form>
-        </PageBox>
+        {isMobile ? formContent : <PageBox>{formContent}</PageBox>}
       </div>
     </div>
   )
