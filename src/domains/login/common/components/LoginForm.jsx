@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
+import ToastService from '../../../../utils/toastService'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 const LoginForm = () => {
   const {
@@ -49,12 +50,8 @@ const LoginForm = () => {
       } else {
         localStorage.removeItem('saveLoginID')
       }
-      openModal({
-        title: '로그인 성공',
-        description: '메인 페이지로 이동합니다.',
-        buttonLabel: '메인 페이지로',
-        onButtonClick: () => navigate(ROUTER_PATHS.MAIN_PAGE),
-      })
+      ToastService.success('로그인 성공')
+      navigate(ROUTER_PATHS.MAIN_PAGE)
     } catch (error) {
       console.error('로그인 오류:', error)
       openModal({
