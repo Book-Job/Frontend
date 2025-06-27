@@ -68,7 +68,7 @@ const MobileSidebar = ({ onClose }) => {
           onClick={onClose}
           className='absolute top-6 left-6 text-xl text-gray-600 hover:text-main-pink transition-colors'
         >
-          <img src={cancel} alt='닫기' />
+          <img src={cancel} alt='닫기' className='w-3 h-3' />
         </button>
         <div className='flex flex-col gap-2 text-left mt-[97px]'>
           {menus.map((menu) => {

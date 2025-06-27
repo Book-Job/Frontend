@@ -26,7 +26,7 @@ const Modal = () => {
           }}
           className='absolute text-gray-400 top-4 right-4 hover:text-gray-600'
         >
-          <img src={cancelIcon} alt='닫는 아이콘' />
+          <img src={cancelIcon} alt='닫는 아이콘' className='w-3 h-3' />
         </button>
         <h2 className='mb-3 text-xl font-semibold text-center text-gray-900'>{title}</h2>
         <p className='mb-6 text-sm text-center text-gray-600 whitespace-pre-line'>{description}</p>
