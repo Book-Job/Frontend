@@ -26,7 +26,7 @@ const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
           <img
             src={isOpen ? foldComment : spreadComment}
             alt='댓글 토글 아이콘'
-            className='w-3 ml-1'
+            className='w-3 ml-1 h-3'
           />
         </button>
       </nav>
