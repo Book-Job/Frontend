@@ -30,14 +30,12 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
     }
   }
   const sortedDrafts = useMemo(() => {
-    console.log('draftsListData', draftsListData)
-
     return draftsListData.sort((a, b) => {
       return sort === 'latest'
         ? new Date(b.date) - new Date(a.date)
         : new Date(a.date) - new Date(b.date)
     })
-  }, [sort])
+  }, [draftsListData, sort])
   return (
     <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
       {sortedDrafts.length > 0 && (
@@ -45,10 +43,10 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
           <PostSortDropDown onSortChange={setSort} />
         </div>
       )}
-      {draftsListData.length === 0 ? (
+      {sortedDrafts.length === 0 ? (
         <p className='text-center text-dark-gray'>임시 저장된 글이 없습니다.</p>
       ) : (
-        draftsListData.map((item) => {
+        sortedDrafts.map((item) => {
           const previewText = getPreviewText(item.text)
           const hasImage = item.text && item.text.includes('<img')
 
