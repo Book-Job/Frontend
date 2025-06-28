@@ -47,11 +47,10 @@ const DetailCommunityPage = () => {
 
   useEffect(() => {
     if (post && !hasSaved.current) {
-      saveTOStorage(post, id, 'community');
+      saveTOStorage(post, id, 'community')
       hasSaved.current = true
     }
   }, [post, id])
-
 
   if (loading) {
     return (
@@ -165,7 +164,7 @@ const DetailCommunityPage = () => {
 
       <div className='w-full h-[1px] bg-light-gray mb-[20px]' />
 
-      <div className='w-full max-w-full sm:max-w-[870px] mx-auto'>
+      <div className='w-full max-w-full sm:max-w-[940px] mx-auto'>
         <CommentHeader
           isOpen={isCommentOpen}
           toggleOpen={() => setIsCommentOpen((prev) => !prev)}
