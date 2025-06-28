@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const BoardCategory = ({ label = '자유게시판' }) => {
+const BoardCategory = ({ label = '기타' }) => {
   const boardLabel = {
     자유게시판: 'bg-[#ECFDF5] text-[#1B7500] w-[81px]',
     구인: 'bg-[#EBF7FF] text-[#2563EB] w-[60px]',
