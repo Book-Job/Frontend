@@ -1,42 +1,56 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
 import MyPostHead from './components/MyPostHead'
 import PostList from './components/PostList'
 import useBoardStore from '../../../store/mypage/useBoardStore'
 import useMyBoardStore from '../../../store/mypage/useMyBoardStore'
-import { useEffect } from 'react'
 import Spinner from '../../../components/web/Spinner'
+import InfiniteScrollList from '../../../components/common/InfiniteScrollList'
+import { useEffect } from 'react'
 
 const MyPost = () => {
   const { choiceBoard } = useBoardStore()
+  const { fetchFreeBoard, fetchJobBoard, resetBoard, freeError, jobError } = useMyBoardStore()
 
-  const { isFreeLoading, isJobLoading, freeError, jobError, fetchFreeBoard, fetchJobBoard } =
-    useMyBoardStore()
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ['myPosts', choiceBoard],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await (choiceBoard === '자유게시판'
+        ? fetchFreeBoard(pageParam, 10)
+        : fetchJobBoard(pageParam, 10))
+      return response
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.hasNext ? lastPage.data.currentPage + 1 : undefined
+    },
+  })
+
+  const posts =
+    data?.pages.flatMap((page) =>
+      choiceBoard === '자유게시판'
+        ? page.data.myPostingsInBoardList || []
+        : page.data.postings || [],
+    ) || []
 
   useEffect(() => {
-    const token = localStorage.getItem('Authorization')
-    if (token) {
-      fetchFreeBoard(token, true)
-      fetchJobBoard(token, true)
-    }
-  }, [fetchFreeBoard, fetchJobBoard])
+    resetBoard(choiceBoard === '자유게시판' ? 'free' : 'job')
+  }, [choiceBoard, resetBoard])
 
-  const isLoading = choiceBoard === '자유게시판' ? isFreeLoading : isJobLoading
-  const error = choiceBoard === '자유게시판' ? freeError : jobError
   return (
     <div className='w-full'>
-      <div className=' sm:max-w-[940px] mx-auto px-4'>
+      <div className='sm:max-w-[940px] mx-auto px-4'>
         <MyPostHead choiceBoard={choiceBoard} />
-        {isLoading ? (
-          <div className='text-center'>
+        {isLoading && posts.length === 0 ? (
+          <div className='flex justify-center items-center h-[100px]'>
             <Spinner size={48} color='main-pink' />
           </div>
-        ) : error ? (
+        ) : posts.length === 0 ? (
+          <p className='text-dark-gray'>작성 글이 없습니다.</p>
+        ) : (choiceBoard === '자유게시판' ? freeError : jobError) ? (
           <div className='flex flex-col text-center text-red-500'>
-            {error}
+            {choiceBoard === '자유게시판' ? freeError : jobError}
             <button
               onClick={() =>
-                choiceBoard === '자유게시판'
-                  ? fetchFreeBoard(localStorage.getItem('Authorization'), true)
-                  : fetchJobBoard(localStorage.getItem('Authorization'), true)
+                choiceBoard === '자유게시판' ? fetchFreeBoard(0, 10) : fetchJobBoard(0, 10)
               }
               className='ml-2 text-blue-500'
             >
@@ -44,7 +58,22 @@ const MyPost = () => {
             </button>
           </div>
         ) : (
-          <PostList />
+          <InfiniteScrollList
+            onIntersect={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            <PostList boardData={posts} />
+            {isFetchingNextPage && (
+              <div className='flex justify-center items-center h-[100px]'>
+                <Spinner size={38} color='main-pink' />
+              </div>
+            )}
+            {!hasNextPage && posts.length > 0 && (
+              <div className='flex items-center justify-center py-8 text-sm text-dark-gray'>
+                더 이상 불러올 작성글이 없습니다.
+              </div>
+            )}
+          </InfiniteScrollList>
         )}
       </div>
     </div>

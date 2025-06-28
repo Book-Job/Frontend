@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useDetailPost from '../hook/useDetailPost'
 import Spinner from '../../../../components/web/Spinner'
 import MobileShare from '../../../../components/app/MobileShare'
@@ -18,6 +18,7 @@ import ToastService from '../../../../utils/toastService'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
 import DOMPurify from 'dompurify'
+import { saveTOStorage } from '../../../my/detail/components/saveToStorage'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
@@ -28,6 +29,7 @@ const DetailCommunityPage = () => {
   const comments = useCommentStore((state) => state.comments)
   const fetchComments = useCommentStore((state) => state.fetchComments)
   const currentUrl = window.location.href
+  const hasSaved = useRef(false)
 
   const {
     content,
@@ -42,6 +44,14 @@ const DetailCommunityPage = () => {
       fetchComments(id)
     }
   }, [id])
+
+  useEffect(() => {
+    if (post && !hasSaved.current) {
+      saveTOStorage(post, id, 'community');
+      hasSaved.current = true
+    }
+  }, [post, id])
+
 
   if (loading) {
     return (
@@ -73,8 +83,8 @@ const DetailCommunityPage = () => {
     ToastService.warn('이 사용자를 차단합니다.')
   }
 
-  if (error) return <div className='text-center text-red-500 mt-10'>오류가 발생했어요.</div>
-  if (!post) return <div className='text-center text-gray-500 mt-10'>게시글이 존재하지 않아요.</div>
+  if (error) return <div className='mt-10 text-center text-red-500'>오류가 발생했어요.</div>
+  if (!post) return <div className='mt-10 text-center text-gray-500'>게시글이 존재하지 않아요.</div>
 
   return (
     <div className='w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-[100px] xl:px-[250px] py-6 sm:py-10'>
@@ -86,7 +96,7 @@ const DetailCommunityPage = () => {
       </div>
 
       {post?.isWriter ? (
-        <div className='flex gap-4 mt-4 mb-2 justify-end'>
+        <div className='flex justify-end gap-4 mt-4 mb-2'>
           {!isEditing ? (
             <>
               <button className='text-dark-gray text-[13px]' onClick={handleEditClick}>
@@ -116,7 +126,7 @@ const DetailCommunityPage = () => {
           )}
         </div>
       ) : (
-        <div className='flex gap-4 mt-4 mb-2 justify-end'>
+        <div className='flex justify-end gap-4 mt-4 mb-2'>
           <button className='text-dark-gray text-[13px]' onClick={handleBlockUserClick}>
             차단
           </button>
@@ -125,7 +135,7 @@ const DetailCommunityPage = () => {
 
       <LastFormLine />
 
-      <div className='flex flex-wrap gap-2 mb-4 ml-0 sm:ml-5 justify-end'>
+      <div className='flex flex-wrap justify-end gap-2 mb-4 ml-0 sm:ml-5'>
         <MobileShare label={post.viewCount.toString()} icon={viewPink} textColor='text-main-pink' />
         <MobileShare label={comments.length.toString()} icon={comment} textColor='text-dark-gray' />
         <MobileShare
@@ -147,7 +157,7 @@ const DetailCommunityPage = () => {
           />
         ) : (
           <div
-            className='whitespace-pre-line break-words text-left'
+            className='text-left break-words whitespace-pre-line'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
           />
         )}
@@ -164,7 +174,7 @@ const DetailCommunityPage = () => {
         <CommentForm boardId={id} onCommentAdded={() => fetchComments(id)} />
         {isCommentOpen && <CommentList boardId={id} />}
         <LastFormLine />
-        <h2 className='font-bold text-lg sm:text-xl my-5 flex self-start'>관련 글</h2>
+        <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl'>관련 글</h2>
         <RelatedPosts currentId={id} />
       </div>
     </div>

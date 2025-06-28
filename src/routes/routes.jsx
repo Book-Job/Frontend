@@ -29,6 +29,7 @@ import EditRecruitmentPost from '../domains/job/recruitment/edit/page/EditRecrui
 import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPostPage'
 import KakaoSuccess from '../domains/login/page/KakaoSuccess'
 import NaverSuccess from '../domains/login/page/NaverSuccess'
+import MyRecentList from '../domains/my/detail/MyRecentList'
 
 const routes = [
   {
@@ -136,6 +137,7 @@ const routes = [
   {
     path: ROUTER_PATHS.FIND_PW_CHANGE_PW,
     element: <ChangePwPage />,
+    label: '비밀번호 변경',
   },
   {
     path: ROUTER_PATHS.MY_PAGE,
@@ -168,6 +170,12 @@ const routes = [
     path: ROUTER_PATHS.MY_POST,
     element: <MyPost />,
     label: '내가 작성한 글',
+    noMargin: true,
+  },
+  {
+    path: ROUTER_PATHS.MY_RECENT_LIST,
+    element: <MyRecentList />,
+    label: '최근본 목록',
     noMargin: true,
   },
   {

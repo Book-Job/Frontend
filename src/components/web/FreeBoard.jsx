@@ -36,7 +36,7 @@ const FreeBoard = ({
 
   return (
     <div
-      className='w-full max-w-md sm:max-w-[350px] md:max-w-[400px] mx-auto'
+      className='w-full max-w-md sm:max-w-[350px] md:max-w-[400px] mx-auto '
       onClick={goToDetailPage}
     >
       <div
