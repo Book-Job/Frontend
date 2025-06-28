@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
 import { BsCardImage } from 'react-icons/bs'
-import ToastService from '../../../../utils/toastService'
-import { useCallback } from 'react'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
@@ -29,15 +27,6 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
         return { label: '기타', bgColor: '#cecece', labelColor: '#2e2e2e', width: '60px' }
     }
   }
-
-  const handleDeleteClick = useCallback(
-    (e, id) => {
-      e.stopPropagation()
-      deleteFreeDraft(id)
-      ToastService.success('임시 저장을 삭제했습니다.')
-    },
-    [deleteFreeDraft],
-  )
 
   return (
     <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
@@ -72,7 +61,10 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
                 <span className='text-main-pink sm:text-[20px] text-[14px]'>{item.date}</span>
                 <span
                   className='text-dark-gray sm:text-[20px] text-[14px] px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
-                  onClick={(e) => handleDeleteClick(e, item.id)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deleteFreeDraft(item.id)
+                  }}
                 >
                   삭제
                 </span>

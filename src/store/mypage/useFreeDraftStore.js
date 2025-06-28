@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import ToastService from '../../utils/toastService'
 
 const useFreeDraftStore = create((set, get) => ({
   drafts: [],
@@ -19,6 +20,7 @@ const useFreeDraftStore = create((set, get) => ({
     const updatedDrafts = get().drafts.filter((draft) => draft.id !== draftId)
     localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
     set({ drafts: updatedDrafts })
+    ToastService.success('임시 저장을 삭제했습니다.')
   },
   clearSelectedFreeDraft: () => set({ selectedFreeDraft: null }),
   getDraftEditorState: (draft) => draft.text || '',
