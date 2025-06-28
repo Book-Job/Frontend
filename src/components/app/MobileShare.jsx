@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import ToastService from '../../utils/toastService'
+import ToastService from '../../services/toast/ToastService'
 
 const MobileShare = ({ label, icon, textColor, weblink, post, isShare }) => {
   const handleShare = async () => {

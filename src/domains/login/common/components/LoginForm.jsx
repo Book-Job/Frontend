@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 const LoginForm = () => {
   const {

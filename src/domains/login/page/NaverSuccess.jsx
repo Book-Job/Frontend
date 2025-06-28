@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 import Spinner from '../../../components/web/Spinner'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'

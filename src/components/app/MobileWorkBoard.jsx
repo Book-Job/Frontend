@@ -15,7 +15,7 @@ import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
 import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
-import ToastService from '../../utils/toastService'
+import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value

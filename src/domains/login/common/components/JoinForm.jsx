@@ -15,7 +15,7 @@ import {
 } from '../../services/useJoinServices'
 import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import confetti from 'canvas-confetti'
 
 const JoinForm = () => {
