@@ -50,7 +50,7 @@ const LoginForm = () => {
       } else {
         localStorage.removeItem('saveLoginID')
       }
-      ToastService.success('로그인 성공')
+      ToastService.success('북잡에 오신 걸 환영해요! 😊')
       navigate(ROUTER_PATHS.MAIN_PAGE)
     } catch (error) {
       console.error('로그인 오류:', error)
