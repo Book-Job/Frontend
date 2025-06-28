@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import ToastService from '../../../../services/toast/ToastService'
 import confetti from 'canvas-confetti'
+import { CELEBRATION_CONFETTI } from '../../../../constants/animations'
 
 const JoinForm = () => {
   const navigate = useNavigate()
@@ -70,11 +71,7 @@ const JoinForm = () => {
       const response = await postJoinData(filteredData)
 
       if (response.data && response.data.message === 'success') {
-        confetti({
-          particleCount: 200,
-          spread: 360,
-          origin: { x: 0.2, y: 0.7 },
-        })
+        confetti(CELEBRATION_CONFETTI)
         ToastService.success('회원가입을 축하합니다!')
         navigate(ROUTER_PATHS.MAIN_PAGE)
       } else {

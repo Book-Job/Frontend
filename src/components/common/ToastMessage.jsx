@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 const ToastMessage = ({ children }) => (
   <span
     style={{
@@ -11,5 +12,9 @@ const ToastMessage = ({ children }) => (
     {children}
   </span>
 )
+
+ToastMessage.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
 export default ToastMessage
