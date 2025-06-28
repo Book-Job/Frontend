@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import PageTitle from '../../Find/common/components/PageTitle'
 import MyDraftsList from './components/MyDraftsList'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useIsMobile from '../../../hooks/header/useIsMobile'
-import ToastService from '../../../utils/toastService'
 import useFreeDraftStore from './../../../store/mypage/useFreeDraftStore'
 
 const MyDrafts = () => {

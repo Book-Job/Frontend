@@ -2,10 +2,12 @@ import PropTypes from 'prop-types'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
 import { BsCardImage } from 'react-icons/bs'
+import PostSortDropDown from '../../../../components/common/PostSortDropDown'
+import { useMemo, useState } from 'react'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
-
+  const [sort, setSort] = useState('latest')
   const getPreviewText = (text) => {
     if (!text) return '내용 없음'
 
@@ -27,9 +29,22 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
         return { label: '기타', bgColor: '#cecece', labelColor: '#2e2e2e', width: '60px' }
     }
   }
+  const sortedDrafts = useMemo(() => {
+    console.log('draftsListData', draftsListData)
 
+    return draftsListData.sort((a, b) => {
+      return sort === 'latest'
+        ? new Date(b.date) - new Date(a.date)
+        : new Date(a.date) - new Date(b.date)
+    })
+  }, [sort])
   return (
     <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
+      {sortedDrafts.length > 0 && (
+        <div className='flex justify-end mx-auto'>
+          <PostSortDropDown onSortChange={setSort} />
+        </div>
+      )}
       {draftsListData.length === 0 ? (
         <p className='text-center text-dark-gray'>임시 저장된 글이 없습니다.</p>
       ) : (

@@ -26,6 +26,7 @@ const RecruitmentDetailPage = () => {
   const isScrapped = Boolean(scraps[id])
   const currentUrl = window.location.href
   const navigate = useNavigate()
+  console.log('목록 data', data)
 
   if (loading) {
     return (
@@ -63,7 +64,7 @@ const RecruitmentDetailPage = () => {
   }
 
   return (
-    <div className='w-full max-w-3xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 xl:px-0'>
+    <div className='w-full max-w-3xl px-4 mx-auto sm:px-8 md:px-12 lg:px-20 xl:px-0'>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
         <span className='font-semibold text-base sm:text-xl md:text-2xl truncate max-w-[70%]'>
           {data.nickname}
@@ -82,16 +83,16 @@ const RecruitmentDetailPage = () => {
         </button>
       </div>
 
-      <div className='flex sm:flex-row justify-between items-start mt-3 gap-2'>
+      <div className='flex items-start justify-between gap-2 mt-3 sm:flex-row'>
         <h1 className='flex-1 min-w-0 text-[24px] sm:text-2xl md:text-3xl font-bold text-left break-words'>
           {data.title}
         </h1>
-        <span className='block text-dark-gray mt-4 font-bold text-xs sm:text-sm self-start shrink-0 '>
+        <span className='self-start block mt-4 text-xs font-bold text-dark-gray sm:text-sm shrink-0 '>
           [구인 | 구직]
         </span>
       </div>
       {user && user.nickname === data.nickname && (
-        <div className='flex justify-end mt-5 gap-4 text-sm text-dark-gray'>
+        <div className='flex justify-end gap-4 mt-5 text-sm text-dark-gray'>
           <span className='cursor-pointer' onClick={handleEditClick}>
             수정
           </span>
@@ -101,7 +102,7 @@ const RecruitmentDetailPage = () => {
         </div>
       )}
       <DetailPostLine />
-      <dl className='grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 my-5'>
+      <dl className='grid grid-cols-1 my-5 sm:grid-cols-2 gap-x-8 gap-y-5'>
         {[
           ['근무형태', getEmploymentTypeLabel(data.employmentType)],
           ['경력', `${data.experienceMin}년 ~ ${data.experienceMax}년`],
@@ -114,14 +115,14 @@ const RecruitmentDetailPage = () => {
           ['자사 웹사이트', data.websiteUrl],
         ].map(([label, value]) => (
           <div key={label} className='grid grid-cols-[6rem_1fr] items-start gap-x-2'>
-            <dt className='font-semibold text-dark-gray text-left text-sm sm:text-base'>{label}</dt>
-            <dd className='text-left text-sm sm:text-base break-words'>{value}</dd>
+            <dt className='text-sm font-semibold text-left text-dark-gray sm:text-base'>{label}</dt>
+            <dd className='text-sm text-left break-words sm:text-base'>{value}</dd>
           </div>
         ))}
       </dl>
 
       <LastFormLine />
-      <div className='flex gap-2 mb-4 ml-0 sm:ml-5 justify-end mr-0 sm:mr-3'>
+      <div className='flex justify-end gap-2 mb-4 ml-0 mr-0 sm:ml-5 sm:mr-3'>
         <MobileShare
           label='공유'
           icon={share}
@@ -134,11 +135,11 @@ const RecruitmentDetailPage = () => {
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
-        className='block mt-4 mb-10 whitespace-pre-line text-sm sm:text-base break-words text-left'
+        className='block mt-4 mb-10 text-sm text-left break-words whitespace-pre-line sm:text-base'
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />
-      <h2 className='font-bold text-lg sm:text-xl my-5 flex self-start'>관련 글</h2>
+      <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl'>관련 글</h2>
       <RelatedRecruitmentPosts currentId={id} />
     </div>
   )
