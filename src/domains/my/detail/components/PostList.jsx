@@ -16,6 +16,7 @@ const PostList = ({ boardData }) => {
   const { resetBoard } = useMyBoardStore()
   const { setShowModal } = useWriteModalStore()
   const queryClient = useQueryClient()
+  const [sort, setSort] = useState('latest')
 
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
@@ -86,17 +87,7 @@ const PostList = ({ boardData }) => {
       deleteItems(items, choiceBoard === '구인구직')
     }
   }
-  const [sort, setSort] = useState('latest')
 
-  // const sortedBoardData = useMemo(() => {
-  //   return boardData.sort((a, b) => {
-  //     return sort === 'latest'
-  //       ? new Date(a.createdAt) - new Date(b.createdAt)
-  //       : new Date(b.createdAt) - new Date(a.createdAt)
-  //   })
-  // }, [sort])
-
-  // 정렬된 데이터 계산
   const sortedBoardData = useMemo(() => {
     return [...boardData].sort((a, b) => {
       const dateA = new Date(a.createdAt)
@@ -105,7 +96,6 @@ const PostList = ({ boardData }) => {
     })
   }, [boardData, sort])
 
-  // 날짜 헤더 클릭 시 정렬 토글
   const handleSortToggle = () => {
     setSort((prev) => (prev === 'latest' ? 'oldest' : 'latest'))
   }

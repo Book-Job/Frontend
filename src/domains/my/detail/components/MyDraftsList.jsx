@@ -20,13 +20,13 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const getCategoryProps = (draftType) => {
     switch (draftType) {
       case 'community':
-        return { label: '자유게시판', bgColor: '#ECFDF5', labelColor: '#065F46', width: '80px' }
+        return { label: '자유게시판' }
       case 'jobPostings':
-        return { label: '구인', bgColor: '#EBF7FF', labelColor: '#2563EB', width: '60px' }
+        return { label: '구인' }
       case 'jobSeekings':
-        return { label: '구직', bgColor: '#FFEFEB', labelColor: '#DC2626', width: '60px' }
+        return { label: '구직' }
       default:
-        return { label: '기타', bgColor: '#cecece', labelColor: '#2e2e2e', width: '60px' }
+        return { label: '기타' }
     }
   }
   const sortedDrafts = useMemo(() => {
