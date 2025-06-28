@@ -31,7 +31,7 @@ authApi.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = token
     }
-    console.log('Sending request:', config.url)
+    // console.log('Sending request:', config.url)
     return config
   },
   (error) => {

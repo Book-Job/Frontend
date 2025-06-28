@@ -2,10 +2,12 @@ import PropTypes from 'prop-types'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import BoardCategory from './../../../../components/web/BoardCategory'
 import { BsCardImage } from 'react-icons/bs'
+import PostSortDropDown from '../../../../components/common/PostSortDropDown'
+import { useMemo, useState } from 'react'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
-
+  const [sort, setSort] = useState('latest')
   const getPreviewText = (text) => {
     if (!text) return '내용 없음'
 
@@ -18,22 +20,33 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const getCategoryProps = (draftType) => {
     switch (draftType) {
       case 'community':
-        return { label: '자유게시판', bgColor: '#ECFDF5', labelColor: '#065F46', width: '80px' }
+        return { label: '자유게시판' }
       case 'jobPostings':
-        return { label: '구인', bgColor: '#EBF7FF', labelColor: '#2563EB', width: '60px' }
+        return { label: '구인' }
       case 'jobSeekings':
-        return { label: '구직', bgColor: '#FFEFEB', labelColor: '#DC2626', width: '60px' }
+        return { label: '구직' }
       default:
-        return { label: '기타', bgColor: '#cecece', labelColor: '#2e2e2e', width: '60px' }
+        return { label: '기타' }
     }
   }
-
+  const sortedDrafts = useMemo(() => {
+    return draftsListData.sort((a, b) => {
+      return sort === 'latest'
+        ? new Date(b.date) - new Date(a.date)
+        : new Date(a.date) - new Date(b.date)
+    })
+  }, [draftsListData, sort])
   return (
     <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
-      {draftsListData.length === 0 ? (
+      {sortedDrafts.length > 0 && (
+        <div className='flex justify-end mx-auto'>
+          <PostSortDropDown onSortChange={setSort} />
+        </div>
+      )}
+      {sortedDrafts.length === 0 ? (
         <p className='text-center text-dark-gray'>임시 저장된 글이 없습니다.</p>
       ) : (
-        draftsListData.map((item) => {
+        sortedDrafts.map((item) => {
           const previewText = getPreviewText(item.text)
           const hasImage = item.text && item.text.includes('<img')
 

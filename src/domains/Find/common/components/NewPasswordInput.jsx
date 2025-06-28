@@ -7,7 +7,7 @@ const NewPasswordInput = ({ register, errors, watch }) => {
       <div className='flex flex-col w-full gap-3'>
         <div>
           <PwInputBox
-            placeholder='비밀번호는 영문 숫자 포함 최소 8자 이상을 입력해주세요'
+            placeholder='영문 숫자 포함 최소 8자 이상을 입력해주세요'
             size='biggest'
             {...register('newPassword', {
               required: '새로 사용할 비밀번호를 입력하세요',
