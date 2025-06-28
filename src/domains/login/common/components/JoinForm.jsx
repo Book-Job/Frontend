@@ -16,6 +16,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import ToastService from '../../../../utils/toastService'
+import confetti from 'canvas-confetti'
 
 const JoinForm = () => {
   const navigate = useNavigate()
@@ -69,12 +70,13 @@ const JoinForm = () => {
       const response = await postJoinData(filteredData)
 
       if (response.data && response.data.message === 'success') {
-        openModal({
-          title: '회원가입 성공',
-          description: '로그인페이지로 이동합니다.',
-          buttonLabel: '로그인 페이지로',
-          onButtonClick: () => navigate(ROUTER_PATHS.LOGIN_MAIN),
+        confetti({
+          particleCount: 200,
+          spread: 360,
+          origin: { x: 0.2, y: 0.7 },
         })
+        ToastService.success('회원가입을 축하합니다!')
+        navigate(ROUTER_PATHS.MAIN_PAGE)
       } else {
         openModal({
           title: '회원가입 실패',

@@ -4,6 +4,7 @@ import ToastService from '../../../utils/toastService'
 import Spinner from '../../../components/web/Spinner'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'
+import confetti from 'canvas-confetti'
 
 const NaverSuccess = () => {
   const { socialLogin } = useAuthStore()
@@ -13,7 +14,12 @@ const NaverSuccess = () => {
       try {
         const response = await socialLogin()
         if (response.data && response.data.message === 'success') {
-          ToastService.success('네이버 로그인 성공!')
+          ToastService.success('네이버 계정으로 로그인되었습니다.')
+          confetti({
+            particleCount: 200,
+            spread: 360,
+            origin: { x: 0.2, y: 0.7 },
+          })
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
           throw new Error(response.data.error || '사용자 정보 요청 실패')
