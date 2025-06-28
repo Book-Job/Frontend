@@ -30,7 +30,7 @@ const RecentList = ({ sortedPosts }) => {
               worktype1={post.worktype1 || post.employmentType}
               employmentType={post.employmentType}
               view={post.viewCount || post.view}
-              type={post.draftType ? 'jobPostings' : post.draftType ? 'jobSeekings' : 'community'}
+              type={post.draftType || 'community'}
               onClick={() => {
                 const id = post.id
                 if (post.draftType === 'jobPostings') {

@@ -1,5 +1,5 @@
 import commentImg from '../../../../assets/icons/common/comment.svg'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import useBoardStore from '../../../../store/mypage/useBoardStore'
 import BoardCategory from '../../../../components/web/BoardCategory'
 import PropTypes from 'prop-types'
@@ -8,6 +8,7 @@ import useMyBoardStore from '../../../../store/mypage/useMyBoardStore'
 import ToastService from '../../../../utils/toastService'
 import useWriteModalStore from '../../../../store/modal/useWriteModalStore'
 import { useQueryClient } from '@tanstack/react-query'
+import PostSortDropDown from '../../../../components/common/PostSortDropDown'
 
 const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -36,10 +37,10 @@ const PostList = ({ boardData }) => {
           recruitmentCategory: item.recruitmentCategory || 'JOB_POSTING',
         }))
         response = await deleteMyJobBoardData(deleteRequest)
-        ToastService.success('성공적으로 삭제되었습니다.1')
+        ToastService.success('성공적으로 삭제되었습니다.')
       } else {
         response = await deleteMyFreeBoardData(items)
-        ToastService.success('성공적으로 삭제되었습니다.2')
+        ToastService.success('성공적으로 삭제되었습니다.')
       }
       if (response && response.message === 'success') {
         setCheckedItems([])
@@ -85,6 +86,29 @@ const PostList = ({ boardData }) => {
       deleteItems(items, choiceBoard === '구인구직')
     }
   }
+  const [sort, setSort] = useState('latest')
+
+  // const sortedBoardData = useMemo(() => {
+  //   return boardData.sort((a, b) => {
+  //     return sort === 'latest'
+  //       ? new Date(a.createdAt) - new Date(b.createdAt)
+  //       : new Date(b.createdAt) - new Date(a.createdAt)
+  //   })
+  // }, [sort])
+
+  // 정렬된 데이터 계산
+  const sortedBoardData = useMemo(() => {
+    return [...boardData].sort((a, b) => {
+      const dateA = new Date(a.createdAt)
+      const dateB = new Date(b.createdAt)
+      return sort === 'latest' ? dateB - dateA : dateA - dateB
+    })
+  }, [boardData, sort])
+
+  // 날짜 헤더 클릭 시 정렬 토글
+  const handleSortToggle = () => {
+    setSort((prev) => (prev === 'latest' ? 'oldest' : 'latest'))
+  }
 
   return (
     <div>
@@ -116,21 +140,25 @@ const PostList = ({ boardData }) => {
             <th>No</th>
             <th>제목</th>
             <th>
-              날짜 <span className='text-[10px]'>▲</span>
+              <button onClick={handleSortToggle}>
+                <PostSortDropDown onSortChange={setSort} className='hidden' />
+                날짜 <span className='text-[10px]'>{sort === 'latest' ? '▲' : '▼'}</span>
+              </button>
             </th>
-            {Array.isArray(boardData) &&
-              boardData.some((item) => item.recruitmentCategory !== undefined) && <th>카테고리</th>}
-            {Array.isArray(boardData) &&
-              boardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
-            {Array.isArray(boardData) && boardData.some((item) => item.viewCount !== undefined) && (
-              <th>조회수</th>
-            )}
+            {Array.isArray(sortedBoardData) &&
+              sortedBoardData.some((item) => item.recruitmentCategory !== undefined) && (
+                <th>카테고리</th>
+              )}
+            {Array.isArray(sortedBoardData) &&
+              sortedBoardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
+            {Array.isArray(sortedBoardData) &&
+              sortedBoardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>}
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(boardData) && boardData.length > 0 ? (
-            boardData.map((item, index) => (
+          {Array.isArray(sortedBoardData) && sortedBoardData.length > 0 ? (
+            sortedBoardData.map((item, index) => (
               <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
                 <td>
                   <input

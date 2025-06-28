@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 
 const MyPost = () => {
   const { choiceBoard } = useBoardStore()
-  const { fetchFreeBoard, fetchJobBoard, resetBoard } = useMyBoardStore()
+  const { fetchFreeBoard, fetchJobBoard, resetBoard, freeError, jobError } = useMyBoardStore()
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ['myPosts', choiceBoard],
@@ -17,14 +17,11 @@ const MyPost = () => {
       const response = await (choiceBoard === '자유게시판'
         ? fetchFreeBoard(pageParam, 10)
         : fetchJobBoard(pageParam, 10))
-      console.log('API Response:', response)
       return response
     },
     getNextPageParam: (lastPage) => {
-      console.log('Last Page:', lastPage)
       return lastPage.data.hasNext ? lastPage.data.currentPage + 1 : undefined
     },
-    onError: (err) => console.error('Query Error:', err),
   })
 
   const posts =
@@ -33,7 +30,6 @@ const MyPost = () => {
         ? page.data.myPostingsInBoardList || []
         : page.data.postings || [],
     ) || []
-  console.log('Posts:', posts, 'isLoading:', isLoading)
 
   useEffect(() => {
     resetBoard(choiceBoard === '자유게시판' ? 'free' : 'job')
@@ -49,9 +45,9 @@ const MyPost = () => {
           </div>
         ) : posts.length === 0 ? (
           <p className='text-dark-gray'>작성 글이 없습니다.</p>
-        ) : useMyBoardStore.getState()[choiceBoard === '자유게시판' ? 'freeError' : 'jobError'] ? (
+        ) : (choiceBoard === '자유게시판' ? freeError : jobError) ? (
           <div className='flex flex-col text-center text-red-500'>
-            {useMyBoardStore.getState()[choiceBoard === '자유게시판' ? 'freeError' : 'jobError']}
+            {choiceBoard === '자유게시판' ? freeError : jobError}
             <button
               onClick={() =>
                 choiceBoard === '자유게시판' ? fetchFreeBoard(0, 10) : fetchJobBoard(0, 10)
@@ -69,7 +65,7 @@ const MyPost = () => {
             <PostList boardData={posts} />
             {isFetchingNextPage && (
               <div className='flex justify-center items-center h-[100px]'>
-              <Spinner size={38} color='main-pink' />
+                <Spinner size={38} color='main-pink' />
               </div>
             )}
             {!hasNextPage && posts.length > 0 && (

@@ -9,7 +9,13 @@ const MyRecentList = () => {
   const [sort, setSort] = useState('latest')
 
   const sortedPosts = useMemo(() => {
-    const recentList = JSON.parse(sessionStorage.getItem('RecentListSave')) || []
+    let recentList = []
+    try {
+      recentList = JSON.parse(sessionStorage.getItem('RecentListSave')) || []
+    } catch (error) {
+      console.warn('최근 본 목록 데이터를 불러오는데 실패했습니다:', error)
+      sessionStorage.removeItem('RecentListSave')
+    }
     return recentList.sort((a, b) => {
       return sort === 'latest'
         ? new Date(b.date) - new Date(a.date)
