@@ -1,50 +1,59 @@
-const RecentList = () => {
+import { useNavigate } from 'react-router-dom'
+import WorkBoard from '../../../../components/web/WorkBoard'
+import getExperienceLabel from '../../../job/common/utils/getExperienceLabel'
+import FreeBoard from '../../../../components/web/FreeBoard'
+
+const RecentList = ({ sortedPosts }) => {
+  const navigate = useNavigate()
+  const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
+
   return (
     <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
-      {draftsListData.length === 0 ? (
-        <p className='text-center text-dark-gray'>최근본 목록이 없습니다.</p>
-      ) : (
-        draftsListData.map((item) => {
-          const previewText = getPreviewText(item.text)
-          const hasImage = item.text && item.text.includes('<img')
-
-          return (
-            <div
-              key={item.id}
-              onClick={() => onDraftClick(item)}
-              className='pt-8 cursor-pointer sm:pt-10 '
-            >
-              <div className='flex pb-5 sm:pb-[30px] items-center justify-between'>
-                <div className='sm:text-[26px] font-semibold text-[20px]'>
-                  {item.title || '제목 없음'}
-                </div>
-                <BoardCategory {...getCategoryProps(item.draftType || 'community')} />
-              </div>
-              <div className='flex items-center text-base sm:text-xl text-dark-gray text-start'>
-                {hasImage && previewText === '내용 없음' ? '' : previewText}
-                {hasImage && (
-                  <div>
-                    <BsCardImage className='inline-block mx-2 text-xl sm:text-2xl' /> 이미지
-                  </>
-                )}
-              </div>
-              <div className='flex justify-between py-3 sm:py-6'>
-                <span className='text-main-pink sm:text-[20px] text-[14px]'>{item.date}</span>
-                <span
-                  className='text-dark-gray sm:text-[20px] text-[14px] px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    deleteFreeDraft(item.id)
-                  }}
-                >
-                  삭제
-                </span>
-              </div>
-              <div className='border border-light-gray'></div>
-            </div>
-          )
-        })
-      )}
+      <div className='sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center px-4'>
+        {sortedPosts.map((post) =>
+          post.draftType !== 'community' ? (
+            <WorkBoard
+              key={post.id}
+              postId={post.id}
+              title={post.title}
+              name={post.nickname}
+              date={formatDate(post.createdAt)}
+              like={post.like || false}
+              popular1={post.popular1 || false}
+              joboffer1={post.draftType === 'jobPostings' || false}
+              experienceLabel={
+                getExperienceLabel(post.experienceMin, post.experienceMax) ||
+                getExperienceLabel(post.experience)
+              }
+              jobsearch1={post.draftType === 'jobSeekings' || false}
+              othersite1={post.othersite1 || false}
+              worktype1={post.worktype1 || post.employmentType}
+              employmentType={post.employmentType}
+              view={post.viewCount || post.view}
+              type={post.draftType ? 'jobPostings' : post.draftType ? 'jobSeekings' : 'community'}
+              onClick={() => {
+                const id = post.id
+                if (post.draftType === 'jobPostings') {
+                  navigate(`/job/recruitment/post/${id}`)
+                } else {
+                  navigate(`/job/job-seek/post/${id}`)
+                }
+              }}
+            />
+          ) : (
+            <FreeBoard
+              key={post.id}
+              boardId={post.id}
+              title={post.title}
+              content={post.text}
+              name={post.nickname}
+              date={formatDate(post.createdAt)}
+              commentCount={post.commentCount}
+              viewCount={post.viewCount}
+            />
+          ),
+        )}
+      </div>
     </div>
   )
 }

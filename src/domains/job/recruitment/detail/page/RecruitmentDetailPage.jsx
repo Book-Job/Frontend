@@ -17,6 +17,8 @@ import useAuthStore from '../../../../../store/login/useAuthStore'
 import useScrapStore from '../../../scrap/store/useScrapStore'
 import ToastService from '../../../../../utils/toastService'
 import DOMPurify from 'dompurify'
+import { useEffect, useRef } from 'react'
+import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
 
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
@@ -25,8 +27,15 @@ const RecruitmentDetailPage = () => {
   const { scraps, toggleScrap, loading: scrapLoading } = useScrapStore()
   const isScrapped = Boolean(scraps[id])
   const currentUrl = window.location.href
+  const hasSaved = useRef(false)
+
   const navigate = useNavigate()
-  console.log('목록 data', data)
+  useEffect(() => {
+    if (data && !hasSaved.current) {
+      saveTOStorage(data, id, 'jobPostings');
+      hasSaved.current = true
+    }
+  }, [data, id])
 
   if (loading) {
     return (
@@ -62,7 +71,7 @@ const RecruitmentDetailPage = () => {
       console.error('오류')
     }
   }
-
+  
   return (
     <div className='w-full max-w-3xl px-4 mx-auto sm:px-8 md:px-12 lg:px-20 xl:px-0'>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
