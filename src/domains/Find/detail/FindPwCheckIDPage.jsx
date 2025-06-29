@@ -9,7 +9,7 @@ import useFindPWStore from '../../../store/find/useFindPWStore'
 import OTPInput from '../common/components/OTPInput'
 import { useEffect, useState } from 'react'
 import { postFindPWEmail, postTemPW } from '../services/useFindPWServices'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 import useAuthStore from '../../../store/login/useAuthStore'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 

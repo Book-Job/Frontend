@@ -15,7 +15,7 @@ import { deleteRecruitmentPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useScrapStore from '../../../scrap/store/useScrapStore'
-import ToastService from '../../../../../utils/toastService'
+import ToastService from '../../../../../services/toast/ToastService'
 import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
@@ -32,7 +32,7 @@ const RecruitmentDetailPage = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (data && !hasSaved.current) {
-      saveTOStorage(data, id, 'jobPostings');
+      saveTOStorage(data, id, 'jobPostings')
       hasSaved.current = true
     }
   }, [data, id])
@@ -71,7 +71,7 @@ const RecruitmentDetailPage = () => {
       console.error('오류')
     }
   }
-  
+
   return (
     <div className='w-full max-w-3xl px-4 mx-auto sm:px-8 md:px-12 lg:px-20 xl:px-0'>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>

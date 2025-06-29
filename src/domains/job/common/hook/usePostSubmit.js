@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import draftToHtml from 'draftjs-to-html'
 import DOMPurify from 'dompurify'
 import { convertToRaw } from 'draft-js'

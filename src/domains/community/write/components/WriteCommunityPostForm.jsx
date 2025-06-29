@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 import { createPost } from '../../service/postService'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import FormItem from '../../../job/common/components/FormItem'
 import JobInputBox from '../../../../components/web/JobInputBox'
 import JobFormLine from '../../../job/common/components/JobFormLine'
@@ -14,7 +14,7 @@ import useSaveDraft from '../../../../hooks/writePost/useSaveDraft'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 
-const WriteCommunityPostForm = ({ onSaveDraft }) => {
+const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
