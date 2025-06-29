@@ -11,6 +11,8 @@ import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
 import ToastService from '../../../../utils/toastService'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+import CryptoJS from 'crypto-js'
+
 const LoginForm = () => {
   const {
     register,
@@ -30,23 +32,38 @@ const LoginForm = () => {
   const [saveLoginID, setSaveLoginID] = useState(false)
   const isMobile = useIsMobile()
 
+  const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY
+
   useEffect(() => {
-    const savedID = localStorage.getItem('saveLoginID')
-    if (typeof savedID === 'string' && savedID.length > 0) {
-      const sanitizedID = DOMPurify.sanitize(savedID, {
-        ALLOWED_TAGS: [],
-        ALLOWED_ATTR: [],
-      })
-      setValue('userID', sanitizedID)
-      setSaveLoginID(true)
+    const encryptedID = localStorage.getItem('saveLoginID')
+    if (encryptedID) {
+      try {
+        const decryptedID = CryptoJS.AES.decrypt(encryptedID, ENCRYPTION_KEY).toString(
+          CryptoJS.enc.Utf8,
+        )
+        const sanitizedID = DOMPurify.sanitize(decryptedID, {
+          ALLOWED_TAGS: [],
+          ALLOWED_ATTR: [],
+        })
+        if (decryptedID) {
+          setValue('userID', sanitizedID)
+          setSaveLoginID(true)
+        }
+      } catch (error) {
+        console.error('복호화 오류:', error)
+        localStorage.removeItem('saveLoginID')
+      }
     }
   }, [setValue])
 
   const onSubmit = async (data) => {
     try {
       await login(data)
+      console.log('data', data)
+
       if (saveLoginID) {
-        localStorage.setItem('saveLoginID', data.userID)
+        const encryptedID = CryptoJS.AES.encrypt(data.userID, ENCRYPTION_KEY).toString()
+        localStorage.setItem('saveLoginID', encryptedID)
       } else {
         localStorage.removeItem('saveLoginID')
       }
