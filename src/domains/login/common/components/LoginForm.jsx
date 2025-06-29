@@ -11,7 +11,6 @@ import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
 import ToastService from '../../../../services/toast/ToastService'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
-import CryptoJS from 'crypto-js'
 
 const LoginForm = () => {
   const {
@@ -32,40 +31,51 @@ const LoginForm = () => {
   const [saveLoginID, setSaveLoginID] = useState(false)
   const isMobile = useIsMobile()
 
-  const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY
+  const saveUserID = (userID) => {
+    const encoded = btoa(encodeURIComponent(userID))
+    localStorage.setItem('saveLoginID', encoded)
+  }
 
-  useEffect(() => {
-    const encryptedID = localStorage.getItem('saveLoginID')
-    if (encryptedID) {
+  const loadUserID = () => {
+    const encoded = localStorage.getItem('saveLoginID')
+    if (encoded) {
       try {
-        const decryptedID = CryptoJS.AES.decrypt(encryptedID, ENCRYPTION_KEY).toString(
-          CryptoJS.enc.Utf8,
-        )
-        const sanitizedID = DOMPurify.sanitize(decryptedID, {
+        const decoded = decodeURIComponent(atob(encoded))
+        const sanitizedID = DOMPurify.sanitize(decoded, {
           ALLOWED_TAGS: [],
           ALLOWED_ATTR: [],
         })
-        if (decryptedID) {
-          setValue('userID', sanitizedID)
-          setSaveLoginID(true)
-        }
+        return sanitizedID
       } catch (error) {
         console.error('복호화 오류:', error)
         localStorage.removeItem('saveLoginID')
+        return null
       }
+    }
+    return null
+  }
+
+  useEffect(() => {
+    const savedID = loadUserID()
+    if (savedID) {
+      setValue('userID', savedID)
+      setSaveLoginID(true)
     }
   }, [setValue])
 
   const onSubmit = async (data) => {
     try {
-      await login(data)
+      const sanitizedData = {
+        userID: DOMPurify.sanitize(data.userID, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }),
+        password: DOMPurify.sanitize(data.password, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }),
+      }
+      await login(sanitizedData)
       if (saveLoginID) {
-        const encryptedID = CryptoJS.AES.encrypt(data.userID, ENCRYPTION_KEY).toString()
-        localStorage.setItem('saveLoginID', encryptedID)
+        saveUserID(sanitizedData.userID)
       } else {
         localStorage.removeItem('saveLoginID')
       }
-      ToastService.success('북잡에 오신 걸 환영해요! 😊')
+      ToastService.success('북잡에 오신 걸 환영해요!')
       navigate(ROUTER_PATHS.MAIN_PAGE)
     } catch (error) {
       console.error('로그인 오류:', error)
