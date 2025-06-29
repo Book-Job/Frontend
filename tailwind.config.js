@@ -18,6 +18,23 @@ export default {
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],
       },
+      animation: {
+        'move-left': 'move-left 1s ease-in-out',
+      },
+      keyframes: {
+        'move-left': {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(-20px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+      screens: {
+        sm: '640px',
+        md: '769px', // 기본값 768px → 800px로 변경
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
     },
   },
   plugins: [import('@tailwindcss/typography')],

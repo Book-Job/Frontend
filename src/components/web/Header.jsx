@@ -86,18 +86,18 @@ const Header = () => {
   }
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 bg-white flex h-auto md:h-[100px] items-center sm:justify-between sm:px-1 px-1 xl:px-32 py-4 md:py-0 flex-col md:flex-row gap-4
+      className={`w-full fixed top-0 left-0 z-50 bg-white/50 flex h-auto md:h-[100px] items-center sm:justify-between xl:px-32 px-12 py-4 flex-row gap-4 backdrop-blur-lg
       ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
     `}
     >
-      <div className='flex flex-col items-center gap-5 xl:gap-20 md:gap-10 md:flex-row '>
+      <div className='flex flex-row items-center gap-5 xl:gap-20 md:gap-10 '>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-          className='text-main-pink text-2xl md:text-[35px] font-logo cursor-pointer'
+          className='text-2xl cursor-pointer text-main-pink md:text-4xl font-logo'
         >
           bookjob
         </span>
-        <span className='flex gap-6 text-sm sm:gap-10 sm:text-base md:text-sm xl:text-lg'>
+        <span className='flex gap-4 text-sm md:flex-row xl:gap-10 sm:text-base xl:text-lg'>
           {navButtons.map((item, index) =>
             item.external ? (
               <a
@@ -105,7 +105,7 @@ const Header = () => {
                 href={item.nav}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+                className='md:px-4 py-2 px-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
               >
                 {item.label}
               </a>
@@ -113,7 +113,7 @@ const Header = () => {
               <button
                 key={index}
                 onClick={() => handleNavButtonClick(item.nav, item.label)}
-                className='px-4 py-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+                className='px-2 py-2 transition-colors rounded-md md:px-4 hover:text-hover-pink hover:font-bold'
               >
                 {item.label}
               </button>
@@ -121,7 +121,7 @@ const Header = () => {
           )}
         </span>
       </div>
-      <div className='flex justify-end'>
+      <div className='flex justify-end whitespace-nowrap'>
         {isAuthenticated && user ? (
           <div className='relative' ref={dropdownRef}>
             <button
@@ -131,7 +131,7 @@ const Header = () => {
               <img
                 src={babyChick}
                 alt='babyChick'
-                className='w-6 h-6 mr-3 md:w-7 md:h-7 hover:animate-bounce'
+                className='w-6 h-6 mr-3 md:w-7 md:h-7 hover:animate-move-left'
               />
               <span>{user.nickname}님</span>
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-3' />
