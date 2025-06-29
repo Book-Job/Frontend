@@ -59,8 +59,6 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       await login(data)
-      console.log('data', data)
-
       if (saveLoginID) {
         const encryptedID = CryptoJS.AES.encrypt(data.userID, ENCRYPTION_KEY).toString()
         localStorage.setItem('saveLoginID', encryptedID)

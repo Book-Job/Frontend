@@ -146,7 +146,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                 {edit}
               </button>
             ) : (
-              <span className='flex flex-wrap px-2 font-bold cursor-default text-main-pink'>
+              <span className='flex flex-wrap px-2 font-bold cursor-default text-end text-main-pink break-keep overflow-wrap-break-word'>
                 {text || ''}
               </span>
             )}
