@@ -6,7 +6,7 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import Spinner from '../../../../../components/web/Spinner'
 import LastFormLine from '../../../common/components/LastFormLine'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
-import ToastService from '../../../../../utils/toastService'
+import ToastService from '../../../../../services/toast/ToastService'
 const EditJobSeekPostPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()

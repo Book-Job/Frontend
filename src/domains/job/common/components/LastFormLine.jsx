@@ -3,13 +3,13 @@ const LastFormLine = () => {
     <div
       className='
         w-full
-        max-w-[850px]
+        max-w-[940px]
         h-[1px]
         bg-dark-gray
-        mt-[15px]
-        mb-[10px]
+        mt-4 sm:mt-6
+        mb-3 sm:mb-4
         mx-auto
-        px-4
+        px-2 sm:px-4
       '
     />
   )

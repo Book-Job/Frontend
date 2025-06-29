@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { editPost } from '../../service/postService'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 
 const useEditPost = (id, fetchDetail) => {
   const [content, setContent] = useState('')

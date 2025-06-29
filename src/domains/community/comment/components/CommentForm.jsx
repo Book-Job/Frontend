@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import { postComment } from '../../service/commentService'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import useBestStore from '../../../../store/main/useBestStore'
 
 const CommentForm = ({ boardId, onCommentAdded }) => {

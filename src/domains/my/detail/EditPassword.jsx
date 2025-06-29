@@ -8,7 +8,7 @@ import { postPWCheck } from '../services/userMyDataServices'
 import { useEffect, useState } from 'react'
 import useAuthStore from '../../../store/login/useAuthStore'
 import PwInputBox from '../../../components/web/PwInputBox'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const EditPassword = () => {
