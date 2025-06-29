@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'
 import { postNewPW } from '../../my/services/userMyDataServices'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 
 const ChangePwPage = () => {

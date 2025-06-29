@@ -12,7 +12,7 @@ import WorkPlace from './WorkPlace'
 import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
-import ToastService from '../../../../../utils/toastService'
+import ToastService from '../../../../../services/toast/ToastService'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore.js'
 import { validateExperience } from '../../write/utils/validateExperience'
 

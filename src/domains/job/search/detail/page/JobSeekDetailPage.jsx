@@ -15,7 +15,7 @@ import { deleteJobSeekPost } from '../../../common/service/postService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import RelatedJobSearchPosts from '../components/RelatedJobSearchPosts'
 import useScrapStore from '../../../scrap/store/useScrapStore'
-import ToastService from '../../../../../utils/toastService'
+import ToastService from '../../../../../services/toast/ToastService'
 import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
@@ -32,7 +32,7 @@ const JobSeekDetailPage = () => {
 
   useEffect(() => {
     if (data && !hasSaved.current) {
-      saveTOStorage(data, id, 'jobSeekings');
+      saveTOStorage(data, id, 'jobSeekings')
       hasSaved.current = true
     }
   }, [data, id])
