@@ -24,11 +24,11 @@ const SearchBar = ({ onSearch, placeholder, className }) => {
   }
 
   return (
+    // sm:max-w-[500px] md:max-w-[700px] lg:max-w-[940px]
     <form
       role='search'
       className={`flex items-center border border-light-gray bg-lightBlueGray w-full
-    sm:max-w-[500px] md:max-w-[700px] lg:max-w-[940px]
-    h-[40px] sm:h-[60px] rounded-md mt-4
+    h-[40px] sm:h-[60px] rounded-md mt-4 max-w-xs sm:max-w-[940px]
     shadow-sm hover:shadow-md transition-shadow duration-200 px-2 ${className ?? ''}`}
       onSubmit={(e) => {
         e.preventDefault()
@@ -42,7 +42,7 @@ const SearchBar = ({ onSearch, placeholder, className }) => {
       <input
         id='search-input'
         type='text'
-        className='flex-1 outline-none text-base md:text-lg p-2 bg-transparent placeholder-dark-gray'
+        className='flex-1 p-2 text-base bg-transparent outline-none md:text-lg placeholder-dark-gray'
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder={placeholder}

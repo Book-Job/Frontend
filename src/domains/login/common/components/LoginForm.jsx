@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify'
 import useModalStore from '../../../../store/modal/useModalStore'
 import ToastService from '../../../../services/toast/ToastService'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+
 const LoginForm = () => {
   const {
     register,
@@ -30,27 +31,51 @@ const LoginForm = () => {
   const [saveLoginID, setSaveLoginID] = useState(false)
   const isMobile = useIsMobile()
 
+  const saveUserID = (userID) => {
+    const encoded = btoa(encodeURIComponent(userID))
+    localStorage.setItem('saveLoginID', encoded)
+  }
+
+  const loadUserID = () => {
+    const encoded = localStorage.getItem('saveLoginID')
+    if (encoded) {
+      try {
+        const decoded = decodeURIComponent(atob(encoded))
+        const sanitizedID = DOMPurify.sanitize(decoded, {
+          ALLOWED_TAGS: [],
+          ALLOWED_ATTR: [],
+        })
+        return sanitizedID
+      } catch (error) {
+        console.error('복호화 오류:', error)
+        localStorage.removeItem('saveLoginID')
+        return null
+      }
+    }
+    return null
+  }
+
   useEffect(() => {
-    const savedID = localStorage.getItem('saveLoginID')
-    if (typeof savedID === 'string' && savedID.length > 0) {
-      const sanitizedID = DOMPurify.sanitize(savedID, {
-        ALLOWED_TAGS: [],
-        ALLOWED_ATTR: [],
-      })
-      setValue('userID', sanitizedID)
+    const savedID = loadUserID()
+    if (savedID) {
+      setValue('userID', savedID)
       setSaveLoginID(true)
     }
   }, [setValue])
 
   const onSubmit = async (data) => {
     try {
-      await login(data)
+      const sanitizedData = {
+        userID: DOMPurify.sanitize(data.userID, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }),
+        password: DOMPurify.sanitize(data.password, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }),
+      }
+      await login(sanitizedData)
       if (saveLoginID) {
-        localStorage.setItem('saveLoginID', data.userID)
+        saveUserID(sanitizedData.userID)
       } else {
         localStorage.removeItem('saveLoginID')
       }
-      ToastService.success('북잡에 오신 걸 환영해요! 😊')
+      ToastService.success('북잡에 오신 걸 환영해요!')
       navigate(ROUTER_PATHS.MAIN_PAGE)
     } catch (error) {
       console.error('로그인 오류:', error)

@@ -5,7 +5,7 @@ const JobDropDown = ({ selectedJobTabs, handleTabChange }) => {
   ]
 
   return (
-    <div className='flex mt-3 mr-2 gap-x-3'>
+    <div className='flex mr-2 gap-x-3'>
       {tabs.map((tab) => (
         <button
           key={tab.value}

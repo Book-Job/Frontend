@@ -57,7 +57,7 @@ const ChangePwPage = () => {
     try {
       const response = await postNewPW(newPW, resetToken)
       if (response.data && response.data.message === 'success') {
-        navigate(ROUTER_PATHS.MY_PROFILE)
+        navigate(ROUTER_PATHS.MAIN_PAGE)
         ToastService.success('비밀번호 변경이 완료되었습니다.')
         clearResetToken()
       } else {

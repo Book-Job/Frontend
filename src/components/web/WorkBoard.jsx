@@ -70,7 +70,7 @@ const WorkBoard = ({
   }
   return (
     <>
-      <div className='w-full h-[200px] mb-3 mt-3 relative'>
+      <div className='w-full h-[200px] relative'>
         <button
           className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
           onClick={handleToggleScrap}

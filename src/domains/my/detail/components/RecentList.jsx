@@ -2,17 +2,23 @@ import { useNavigate } from 'react-router-dom'
 import WorkBoard from '../../../../components/web/WorkBoard'
 import getExperienceLabel from '../../../job/common/utils/getExperienceLabel'
 import FreeBoard from '../../../../components/web/FreeBoard'
+import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
+import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
+import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 const RecentList = ({ sortedPosts }) => {
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
   const formatDate = (dateStr) => (dateStr ? dateStr.slice(0, 10) : '')
 
+  const WorkBoardComponent = isMobile ? MobileWorkBoard : WorkBoard
+  const FreeBoardComponent = isMobile ? MobileFreeBoard : FreeBoard
   return (
-    <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
-      <div className='sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center px-4'>
+    <div className='w-full sm:max-w-[940px] mx-auto '>
+      <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-4 justify-items-center '>
         {sortedPosts.map((post) =>
           post.draftType !== 'community' ? (
-            <WorkBoard
+            <WorkBoardComponent
               key={post.id}
               postId={post.id}
               title={post.title}
@@ -41,7 +47,7 @@ const RecentList = ({ sortedPosts }) => {
               }}
             />
           ) : (
-            <FreeBoard
+            <FreeBoardComponent
               key={post.id}
               boardId={post.id}
               title={post.title}
