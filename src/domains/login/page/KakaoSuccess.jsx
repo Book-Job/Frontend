@@ -31,7 +31,7 @@ const KakaoSuccess = () => {
   return (
     <div className='flex flex-col'>
       카카오 로그인 처리 중...
-      <div className='flex justify-center w-full'>
+      <div className='flex justify-center w-full mt-10'>
         <Spinner size={48} color='main-pink' />
       </div>
     </div>

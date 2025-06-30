@@ -32,7 +32,7 @@ const NaverSuccess = () => {
   return (
     <div className='flex flex-col'>
       네이버 로그인 처리 중...
-      <div className='flex justify-center w-full'>
+      <div className='flex justify-center w-full mt-10'>
         <Spinner size={48} color='main-pink' />
       </div>
     </div>
