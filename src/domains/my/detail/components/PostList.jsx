@@ -105,14 +105,10 @@ const PostList = ({ boardData }) => {
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-10 text-[20px]'>
         {choiceBoard === '구인구직' ? '구인 | 구직' : '자유게시판'}
       </div>
-      <div className='flex flex-row justify-between my-3'>
-        <div className='flex gap-3'>
-          <input type='checkbox' checked={isAllChecked} onChange={toggleAll} />
-          전체 선택
-        </div>
+      <div className='flex flex-row justify-end my-3'>
         <div className='flex gap-2'>
           <button onClick={handleDeleteSelected} className='text-dark-gray'>
-            선택삭제
+            삭제
           </button>
           <div className='text-dark-gray'>|</div>
           <button className='text-main-pink' onClick={() => setShowModal(true)}>
@@ -124,7 +120,7 @@ const PostList = ({ boardData }) => {
       <table className='w-full text-sm'>
         <thead className='border-b'>
           <tr className='h-12'>
-            <th>
+            <th className='w-10'>
               <input type='checkbox' checked={isAllChecked} onChange={toggleAll} />
             </th>
             <th>No</th>
