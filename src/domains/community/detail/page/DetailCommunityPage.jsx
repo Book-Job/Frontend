@@ -50,6 +50,9 @@ const DetailCommunityPage = () => {
       saveTOStorage(post, id, 'community')
       hasSaved.current = true
     }
+    return () => {
+      hasSaved.current = false
+    }
   }, [post, id])
 
   if (loading) {

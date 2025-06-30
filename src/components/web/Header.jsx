@@ -105,7 +105,7 @@ const Header = () => {
                 href={item.nav}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='md:px-4 py-2 px-2 rounded-md hover:bg-[#F4F6FA] hover:text-hover-pink hover:font-bold transition-colors'
+                className='px-2 py-2 transition-colors rounded-md md:px-4 hover:text-hover-pink hover:font-bold'
               >
                 {item.label}
               </a>
