@@ -28,7 +28,12 @@ const ClosingDate = ({ control }) => {
               focus:border-main-pink focus:outline-none cursor-pointer appearance-none
               text-left
             '
-              style={{ WebkitAppearance: 'none', textAlign: 'left' }}
+              style={{
+                WebkitAppearance: 'none',
+                appearance: 'none',
+                textAlign: 'left',
+                paddingLeft: '16px',
+              }}
               min={minDate}
               value={dateValue}
               onChange={field.onChange}
