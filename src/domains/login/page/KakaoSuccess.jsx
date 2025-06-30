@@ -16,7 +16,6 @@ const KakaoSuccess = () => {
         if (response.message === 'success') {
           if (response.data) {
             ToastService.success('카카오 계정으로 로그인되었습니다.')
-            fireCelebrationConfetti()
           } else {
             ToastService.success('회원가입이 완료되었습니다!')
             fireCelebrationConfetti()
