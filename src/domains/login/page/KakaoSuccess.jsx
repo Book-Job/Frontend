@@ -13,16 +13,12 @@ const KakaoSuccess = () => {
     const fetchUserData = async () => {
       try {
         const response = await socialLogin()
-        if (response.message === 'success') {
-          if (response.data) {
-            ToastService.success('카카오 계정으로 로그인되었습니다.')
-          } else {
-            ToastService.success('회원가입이 완료되었습니다!')
-            fireCelebrationConfetti()
-          }
+        if (response.data && response.data.message === 'success') {
+          ToastService.success('카카오 계정으로 로그인되었습니다.')
+          fireCelebrationConfetti()
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
-          throw new Error(response.error || '사용자 정보 요청 실패')
+          throw new Error(response.data.error || '사용자 정보 요청 실패')
         }
       } catch (error) {
         console.error('카카오 요청 오류:', error)
