@@ -111,7 +111,7 @@ const LoginForm = () => {
           <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
         )}
         <div className='flex w-full mt-7'>
-          <InputBox
+          <PwInputBox
             placeholder='비밀번호'
             size='big'
             {...register('password', { required: '비밀번호를 입력하세요' })}
