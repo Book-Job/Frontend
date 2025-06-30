@@ -16,7 +16,7 @@ const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) =
       <input
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
-        className={`${PwInputBoxSize[size]} border border-dark-gray rounded pl-4 pr-12 sm:text-base text-sm text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
+        className={`${PwInputBoxSize[size]} border border-dark-gray rounded pl-4 pr-12 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
         ref={ref}
         {...rest}
       />
@@ -26,9 +26,9 @@ const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) =
         onClick={() => setShowPassword(!showPassword)}
       >
         {showPassword ? (
-          <img src={viewPink} className='w-6 h-6' />
+          <img src={viewPink} className='w-6 h-6' alt='비밀번호 표시' />
         ) : (
-          <img src={viewGray} className='w-6 h-6' />
+          <img src={viewGray} className='w-6 h-6' alt='비밀번호 숨김' />
         )}
       </button>
     </div>
