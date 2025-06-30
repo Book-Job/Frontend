@@ -35,6 +35,9 @@ const JobSeekDetailPage = () => {
       saveTOStorage(data, id, 'jobSeekings')
       hasSaved.current = true
     }
+    return () => {
+      hasSaved.current = false
+    }
   }, [data, id])
 
   if (loading) {
