@@ -27,6 +27,7 @@ const ROUTER_PATHS = {
   MY_PW_MIS: '/my-page/password-mis',
   MY_SCRAP: '/my-page/my-scrap',
   MY_POST: '/my-page/my-post',
+  MY_RECENT_LIST: '/my-page/my-recent-list',
   MY_DRAFTS: '/my-page/my-drafts',
   ERROR: '/error',
   KAKAO_SUCCESS: '/login/kakao/success',

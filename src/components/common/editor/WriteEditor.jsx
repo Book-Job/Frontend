@@ -5,7 +5,7 @@ import EditorToolbar from './EditorToolbar'
 import ImageBubbleMenu from './ImageBubbleMenu'
 import useEditorInstance from '../../../hooks/writePost/useEditorInstance'
 import { EditorContent } from '@tiptap/react'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 
@@ -86,5 +86,5 @@ const WriteEditor = forwardRef(({ value, initialContent, onChange, onAddFileId }
     </div>
   )
 })
-WriteEditor.displayName = 'WriteEditor';
+WriteEditor.displayName = 'WriteEditor'
 export default WriteEditor

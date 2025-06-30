@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 
 const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   const [code, setCode] = useState('')

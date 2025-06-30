@@ -5,7 +5,7 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import LastFormLine from '../../../common/components/LastFormLine'
 import Spinner from '../../../../../components/web/Spinner'
-import ToastService from '../../../../../utils/toastService'
+import ToastService from '../../../../../services/toast/ToastService'
 import WriteRecruitmentPostingForm from './../../components/form/WriteRecruitmentPostingForm'
 
 const EditRecruitmentPostPage = () => {

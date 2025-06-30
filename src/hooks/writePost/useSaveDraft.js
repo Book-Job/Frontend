@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import ToastService from '../../utils/toastService'
+import ToastService from '../../services/toast/ToastService'
 
 const useSaveDraft = () => {
   const navigate = useNavigate()
@@ -36,15 +36,17 @@ const useSaveDraft = () => {
           updatedDrafts = updatedDrafts
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .slice(0, 10)
-          ToastService.info('최대 10개까지만 저장 가능합니다. 오래된 항목이 삭제되었습니다.')
+          ToastService.info(
+            '임시 저장은 최대 10개까지만 가능합니다.\n가장 오래된 항목이 삭제되었습니다.',
+          )
         }
         localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
-        ToastService.success('게시글이 임시 저장되었습니다.')
+        ToastService.success('임시 저장 완료! \n나중에 다시 이어서 작성할 수 있어요.')
         navigate(redirectPath)
         return newDraft.id
       } catch (error) {
         console.error('임시 저장 실패:', error)
-        ToastService.error('임시 저장에 실패했습니다.')
+        ToastService.error('임시 저장에 문제가 발생했어요. 잠시 후 다시 시도해주세요.')
         return null
       }
     },

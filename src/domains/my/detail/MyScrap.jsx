@@ -9,7 +9,7 @@ import Spinner from '../../../components/web/Spinner'
 import PostSortDropDown from '../../../components/common/PostSortDropDown'
 import useIsMobile from '../../../hooks/header/useIsMobile'
 import useScrapStore from '../../job/scrap/store/useScrapStore'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 
 const MyScrap = () => {
   const { scraps, loadScraps } = useScrapStore()

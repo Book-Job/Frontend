@@ -35,17 +35,13 @@ const FreeBoard = ({
   }
 
   return (
-    <div
-      className='w-full max-w-md sm:max-w-[350px] md:max-w-[400px] mx-auto'
-      onClick={goToDetailPage}
-    >
+    <div className='relative w-full' onClick={goToDetailPage}>
       <div
         className='
         flex flex-col h-full
-        border border-[#D6D6D6]
+        border border-[#D6D6D6] 
         rounded-[10px]
         px-4 sm:px-5 pt-5 pb-4
-        mb-4
         justify-between cursor-pointer
         bg-white
         shadow-sm

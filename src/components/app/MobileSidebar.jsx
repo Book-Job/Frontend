@@ -62,13 +62,13 @@ const MobileSidebar = ({ onClose }) => {
     onClose()
   }
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 z-20'>
+    <div className='fixed inset-0 z-20 bg-black bg-opacity-50 backdrop-blur-sm'>
       <div className='bg-white w-[250px] h-full absolute right-0 top-0 rounded-tl-2xl rounded-bl-2xl'>
         <button
           onClick={onClose}
-          className='absolute top-6 left-6 text-xl text-gray-600 hover:text-main-pink transition-colors'
+          className='absolute text-xl text-gray-600 transition-colors top-6 left-6 hover:text-main-pink'
         >
-          <img src={cancel} alt='닫기' />
+          <img src={cancel} alt='닫기' className='w-3 h-3' />
         </button>
         <div className='flex flex-col gap-2 text-left mt-[97px]'>
           {menus.map((menu) => {

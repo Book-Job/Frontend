@@ -15,7 +15,7 @@ import useScrapStore from '../../domains/job/scrap/store/useScrapStore'
 import { employmentTypes } from '../../domains/job/common/utils/employmentTypes'
 import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
-import ToastService from '../../utils/toastService'
+import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
@@ -70,7 +70,7 @@ const WorkBoard = ({
   }
   return (
     <>
-      <div className='w-full h-[200px] mb-3 mt-3 relative'>
+      <div className='w-full h-[200px] relative'>
         <button
           className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
           onClick={handleToggleScrap}
@@ -96,11 +96,11 @@ const WorkBoard = ({
           </div>
           <h3
             onClick={onClick}
-            className='flex font-bold line-clamp-2 text-sm sm:text-base md:text-lg mb-1'
+            className='flex mb-1 text-sm font-bold line-clamp-2 sm:text-base md:text-lg'
           >
             {title}
           </h3>
-          <div className='flex-row text-dark-gray text-xs sm:text-sm md:text-base'>
+          <div className='flex-row text-xs text-dark-gray sm:text-sm md:text-base'>
             <div onClick={onClick} className='flex justify-end font-bold'>
               {name}
             </div>

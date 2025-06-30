@@ -12,7 +12,9 @@ import WorkPlace from './WorkPlace'
 import Experience from './Experience'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
+import ToastService from '../../../../../services/toast/ToastService'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore.js'
+import { validateExperience } from '../../write/utils/validateExperience'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
@@ -25,7 +27,6 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
     control,
     handleSubmit,
     watch,
-    getValues,
     formState: { errors },
   } = useForm({
     selectedFreeDraft: {
@@ -45,10 +46,17 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
   }, [selectedFreeDraft, user, reset, editorRef])
 
   const handleFormSubmit = (formData) => {
+    const { valid, message } = validateExperience(formData.experienceMin, formData.experienceMax)
+    if (!valid) {
+      ToastService.error(message)
+      return
+    }
     if (formData.closingDate && !formData.closingDate.includes('T')) {
       formData.closingDate = `${formData.closingDate}T00:00:00`
     }
+
     onSubmit(formData)
+
     if (selectedFreeDraft) {
       deleteFreeDraft(selectedFreeDraft.id)
       clearSelectedFreeDraft()
@@ -79,7 +87,7 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
       </div>
       {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>
-        <Experience register={register} errors={errors} />
+        <Experience register={register} errors={errors} watch={watch} control={control} />
       </div>
       {!isMobile && <JobFormLine />}
       <div className='my-[30px]'>

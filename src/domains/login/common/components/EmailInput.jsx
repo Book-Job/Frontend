@@ -91,7 +91,7 @@ const EmailInput = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex flex-row max-w-[575px] gap-2'>
+        <div className='flex w-full flex-row max-w-[575px] gap-2'>
           <div className='flex-1'>
             <LabelWithInput
               label='이메일'

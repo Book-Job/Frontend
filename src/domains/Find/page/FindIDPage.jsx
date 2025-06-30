@@ -9,7 +9,7 @@ import useIsMobile from '../../../hooks/header/useIsMobile'
 import EmailInput from '../../login/common/components/EmailInput'
 import { postFindIDEmail, postFindIDEmailCode } from '../services/useFindIDServices'
 import useFindIDStore from '../../../store/find/useFindIDStore'
-import ToastService from '../../../utils/toastService'
+import ToastService from '../../../services/toast/ToastService'
 
 const FindIDPage = () => {
   const {

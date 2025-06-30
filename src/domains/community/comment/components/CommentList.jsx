@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useCommentStore from '../store/useCommentStore'
 import Spinner from '../../../../components/web/Spinner'
-import ToastService from '../../../../utils/toastService'
+import ToastService from '../../../../services/toast/ToastService'
 import useBestStore from '../../../../store/main/useBestStore'
 
 const CommentList = ({ boardId }) => {
