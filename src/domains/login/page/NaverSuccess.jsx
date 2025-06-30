@@ -5,7 +5,7 @@ import Spinner from '../../../components/web/Spinner'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import useAuthStore from '../../../store/login/useAuthStore'
 import confetti from 'canvas-confetti'
-import { CELEBRATION_CONFETTI } from '../../../constants/animations'
+import { fireCelebrationConfetti } from '../../../constants/animations'
 
 const NaverSuccess = () => {
   const { socialLogin } = useAuthStore()
@@ -16,7 +16,7 @@ const NaverSuccess = () => {
         const response = await socialLogin()
         if (response.data && response.data.message === 'success') {
           ToastService.success('네이버 계정으로 로그인되었습니다.')
-          confetti(CELEBRATION_CONFETTI)
+          fireCelebrationConfetti()
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
           throw new Error(response.data.error || '사용자 정보 요청 실패')
@@ -31,7 +31,7 @@ const NaverSuccess = () => {
 
   return (
     <div className='flex flex-col'>
-      네이버 로그인 처리 중...
+      <p className='text-lg text-dark-gray'>네이버 계정으로 로그인 중입니다...</p>
       <div className='flex justify-center w-full'>
         <Spinner size={48} color='main-pink' />
       </div>
