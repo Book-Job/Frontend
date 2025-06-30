@@ -47,7 +47,9 @@ const FreeBoard = ({
         shadow-sm
         transition
         hover:shadow-md
+        
       '
+      
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-base font-bold truncate sm:text-lg'>{title}</div>
@@ -69,7 +71,8 @@ const FreeBoard = ({
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
-                className='z-10 text-xs font-medium cursor-pointer hover:underline sm:text-sm'
+                className='z-10 text-xs font-medium cursor-pointer hover:underline sm:text-sm bg-blend-darken'
+                title='작성한 글 모두보기'
               >
                 {name}
               </span>

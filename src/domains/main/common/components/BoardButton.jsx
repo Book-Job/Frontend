@@ -36,14 +36,13 @@ const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
           onClick={() => {
             handleRefresh()
           }}
-          className='flex items-center justify-end w-full mt-1 '
+          className='flex items-center justify-end w-full mt-1 bg-blend-darken'
+          title='최신 정보로 업데이트'
         >
           <div className='w-3 h-3 mr-1 mb-[1px] sm:w-4 sm:h-4'>
-            <img src={commonTime} alt='commonTime' className='w-3 h-3' />
+            <img src={commonTime} alt='commonTime' className='w-4 h-4' />
           </div>
-          <p className='text-sm font-semibold sm:text-base text-dark-gray hover:text-light-gray'>
-            {formattedDate} 기준
-          </p>
+          <p className='text-sm font-semibold sm:text-base text-dark-gray'>{formattedDate} 기준</p>
         </button>
       </div>
     </div>
