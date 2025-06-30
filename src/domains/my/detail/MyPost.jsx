@@ -44,7 +44,7 @@ const MyPost = () => {
             <Spinner size={48} color='main-pink' />
           </div>
         ) : posts.length === 0 ? (
-          <p className='text-dark-gray'>작성 글이 없습니다.</p>
+          <p className='text-dark-gray mt-12'>첫 글을 작성해보세요! </p>
         ) : (choiceBoard === '자유게시판' ? freeError : jobError) ? (
           <div className='flex flex-col text-center text-red-500'>
             {choiceBoard === '자유게시판' ? freeError : jobError}
