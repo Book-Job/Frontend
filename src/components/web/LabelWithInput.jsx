@@ -15,7 +15,7 @@ const LabelWithInput = forwardRef(({ placeholder, label, size, ...rest }, ref) =
       <input
         type='text'
         placeholder={placeholder}
-        className={`${LabelWithInputBoxSize[size]} border border-dark-gray rounded px-4 sm:text-base text-sm text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
+        className={`${LabelWithInputBoxSize[size]} border border-dark-gray rounded sm:px-4 px-2 sm:text-base text-sm text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
         ref={ref}
         {...rest}
       />
