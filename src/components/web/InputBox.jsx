@@ -12,7 +12,7 @@ const InputBox = forwardRef(({ placeholder, size, ...rest }, ref) => {
     <div className='flex flex-col items-start justify-center w-full line-clamp-1'>
       <input
         placeholder={placeholder}
-        className={`${InputBoxSize[size]} border border-dark-gray rounded px-4 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none `}
+        className={`${InputBoxSize[size]} border border-dark-gray rounded sm:px-4 px-2 sm:text-base text-sm text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none `}
         ref={ref}
         {...rest}
       />

@@ -122,17 +122,17 @@ const LoginForm = () => {
           <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between mt-6'>
-          <div className='flex items-center gap-2 text-base sm:text-xl'>
+          <div className='flex items-center gap-2 text-sm sm:text-base'>
             <input
               type='checkbox'
               name='SaveLoginID'
               checked={saveLoginID}
               onChange={handleSaveLoginID}
-              className='flex w-6 h-6 cursor-pointer'
+              className='flex w-5 h-5 cursor-pointer'
             />
             아이디 저장
           </div>
-          <div className='flex gap-3 text-base font-medium sm:text-xl'>
+          <div className='flex gap-3 text-sm font-medium sm:text-base'>
             <button type='button' onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>
               아이디 찾기
             </button>
