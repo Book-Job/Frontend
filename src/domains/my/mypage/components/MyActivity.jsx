@@ -24,12 +24,10 @@ const MyActivity = () => {
             className='flex items-center gap-8 sm:flex-col'
             onClick={() => navigate(activity.link)}
           >
-            <div className='bg-[#FDF8FA] sm:w-[100px] sm:h-[100px] w-[70px] h-[70px] rounded-full items-center flex justify-center hover:animate-pulse transition'>
+            <div className='bg-[#FDF8FA] sm:w-[100px] sm:h-[100px] w-[70px] h-[70px] rounded-full items-center flex justify-center hover:scale-110 transition'>
               <img src={activity.icon} alt={activity.alt} className='object-contain w-1/2 h-1/2' />
             </div>
-            <p className='text-lg font-medium transition sm:text-2xl hover:scale-110'>
-              {activity.text}
-            </p>
+            <p className='text-lg font-medium transition sm:text-2xl '>{activity.text}</p>
           </button>
         ))}
       </div>
