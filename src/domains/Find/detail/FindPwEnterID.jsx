@@ -66,7 +66,7 @@ const FindPwEnterID = () => {
   const formContent = (
     <div className='w-full'>
       <div className='flex justify-start text-3xl font-bold'>임시비밀번호 발급</div>
-      <form className='flex-auto mt-8' onSubmit={handleSubmit(onSubmit)}>
+      <form className='mt-8 ' onSubmit={handleSubmit(onSubmit)}>
         <LabelWithInput
           label='아이디'
           type='text'
@@ -91,7 +91,7 @@ const FindPwEnterID = () => {
             </p>
           )}
         </div>
-        <div className='flex items-end mt-6'>
+        <div className='mt-2 sm:mt-5'>
           <Button
             size='biggest'
             label='다음'

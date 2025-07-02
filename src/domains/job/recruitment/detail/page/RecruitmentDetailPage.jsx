@@ -76,7 +76,7 @@ const RecruitmentDetailPage = () => {
   }
 
   return (
-    <div className='w-full max-w-3xl px-4 mx-auto sm:px-8 md:px-12 lg:px-20 xl:px-0'>
+    <div className='w-full max-w-[940px] mx-auto '>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
         <span className='font-semibold text-base sm:text-xl md:text-2xl truncate max-w-[70%]'>
           {data.nickname}

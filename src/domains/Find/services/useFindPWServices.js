@@ -4,10 +4,6 @@ export const getFindPW = async (ID) => {
   try {
     const response = await authApi.get('/auth/exist-id', {
       params: { loginId: ID },
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
     })
     return response
   } catch (error) {
@@ -18,16 +14,7 @@ export const getFindPW = async (ID) => {
 
 export const postFindPWEmail = async (email) => {
   try {
-    const response = await authApi.post(
-      '/auth/email-verification/pw',
-      { email: email },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/email-verification/pw', { email: email })
     return response
   } catch (error) {
     console.error('PW찾기 email인증 보냄 오류:', error)
@@ -37,20 +24,11 @@ export const postFindPWEmail = async (email) => {
 
 export const postTemPW = async ({ userEmail, code }) => {
   try {
-    const response = await authApi.post(
-      '/auth/email-verification/pw/temp',
-      {
-        email: userEmail,
-        code: code,
-        reason: '비밀번호 찾기',
-      },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/email-verification/pw/temp', {
+      email: userEmail,
+      code: code,
+      reason: '비밀번호 찾기',
+    })
     return response
   } catch (error) {
     console.error('PW찾기 email인증 보냄 오류:', error)

@@ -10,11 +10,11 @@ const Button = ({
   className = '',
 }) => {
   const buttonSize = {
-    small: 'w-full max-w-[148px] h-[58px]',
-    semiMedium: 'w-full max-w-[205px] h-[58px]',
-    medium: 'w-full max-w-[332px] h-[58px]',
-    big: 'w-full max-w-[532px] h-[58px]',
-    biggest: 'w-full max-w-[575px] h-[58px]',
+    small: 'w-full max-w-[148px] h-[56px]',
+    semiMedium: 'w-full max-w-[205px] h-[56px]',
+    medium: 'w-full max-w-[332px] h-[56px]',
+    big: 'w-full max-w-[532px] h-[56px]',
+    biggest: 'w-full max-w-[575px] h-[56px]',
   }
 
   return (
@@ -24,7 +24,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <span className='font-bold text-[20px] text-white'>{label}</span>
+      <span className='text-base font-bold text-white sm:text-lg'>{label}</span>
     </button>
   )
 }

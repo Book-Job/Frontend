@@ -24,11 +24,10 @@ const SearchBar = ({ onSearch, placeholder, className }) => {
   }
 
   return (
-    // sm:max-w-[500px] md:max-w-[700px] lg:max-w-[940px]
     <form
       role='search'
       className={`flex items-center border border-light-gray bg-lightBlueGray w-full
-    h-[40px] sm:h-[60px] rounded-md mt-4 max-w-xs sm:max-w-[940px]
+    h-[40px] sm:h-[56px] rounded-md mt-4 max-w-xs sm:max-w-[940px]
     shadow-sm hover:shadow-md transition-shadow duration-200 px-2 ${className ?? ''}`}
       onSubmit={(e) => {
         e.preventDefault()
@@ -52,7 +51,7 @@ const SearchBar = ({ onSearch, placeholder, className }) => {
       <button
         type='button'
         onClick={input ? handleClear : () => onSearch(input)}
-        className='ml-2 focus:outline-none'
+        className='mx-2 focus:outline-none'
       >
         <img
           src={input ? cancelIcon : searchIcon}
