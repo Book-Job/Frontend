@@ -3,10 +3,10 @@ import { forwardRef } from 'react'
 
 const LabelWithInput = forwardRef(({ placeholder, label, size, ...rest }, ref) => {
   const LabelWithInputBoxSize = {
-    small: 'w-full max-w-[234px] h-[58px]',
-    medium: 'w-full max-w-[419px] h-[58px]',
-    big: 'w-full max-w-[532px] h-[58px]',
-    biggest: 'w-full max-w-[575px] h-[58px]',
+    small: 'w-full max-w-[234px] h-[56px]',
+    medium: 'w-full max-w-[419px] h-[56px]',
+    big: 'w-full max-w-[532px] h-[56px]',
+    biggest: 'w-full max-w-[575px] h-[56px]',
   }
 
   return (

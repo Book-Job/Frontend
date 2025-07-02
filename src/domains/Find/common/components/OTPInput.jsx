@@ -60,7 +60,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
           onChange={(e) => setCode(e.target.value)}
           placeholder={placeholder}
           disabled={isExpired}
-          className=' border border-dark-gray rounded px-4 sm:text-base text-sm text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none w-full max-w-[575px] h-[58px]'
+          className=' border border-dark-gray rounded px-4 sm:text-base text-sm text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none w-full max-w-[575px] h-[56px]'
         />
         {startTimer && !isExpired && (
           <div className='absolute flex items-center right-6'>

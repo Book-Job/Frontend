@@ -18,6 +18,6 @@ describe('InputBox 컴포넌트', () => {
   it('올바른 크기 클래스가 적용된다', () => {
     render(<InputBox type='email' placeholder='이메일 입력' size='medium' />)
     const input = screen.getByPlaceholderText('이메일 입력')
-    expect(input).toHaveClass('w-full max-w-[424px] h-[58px]')
+    expect(input).toHaveClass('w-full max-w-[424px] h-[56px]')
   })
 })
