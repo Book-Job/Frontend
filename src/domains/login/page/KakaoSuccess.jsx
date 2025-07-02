@@ -7,7 +7,7 @@ import useAuthStore from '../../../store/login/useAuthStore'
 import { fireCelebrationConfetti } from '../../../constants/animations'
 
 const KakaoSuccess = () => {
-  const { socialLogin } = useAuthStore()
+  const { socialLogin, justSignedUp, setJustSignedUp } = useAuthStore()
   const navigate = useNavigate()
   useEffect(() => {
     const fetchUserData = async () => {
@@ -15,7 +15,12 @@ const KakaoSuccess = () => {
         const response = await socialLogin()
         if (response.data && response.data.message === 'success') {
           ToastService.success('카카오 계정으로 로그인되었습니다.')
-          fireCelebrationConfetti()
+
+          if (justSignedUp) {
+            fireCelebrationConfetti()
+            setJustSignedUp(false)
+          }
+
           navigate(ROUTER_PATHS.MAIN_PAGE)
         } else {
           throw new Error(response.data.error || '사용자 정보 요청 실패')
