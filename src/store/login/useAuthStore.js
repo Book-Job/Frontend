@@ -12,6 +12,8 @@ const useAuthStore = create((set) => ({
   isAuthenticated: false,
   accessToken: null,
   resetToken: null,
+  justSignedUp: false,
+  setJustSignedUp: (value) => set({ justSignedUp: value }),
 
   initialize: async () => {
     const token = localStorage.getItem('Authorization')
