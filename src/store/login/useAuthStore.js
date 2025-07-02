@@ -12,6 +12,8 @@ const useAuthStore = create((set) => ({
   isAuthenticated: false,
   accessToken: null,
   resetToken: null,
+  justSignedUp: false,
+  setJustSignedUp: (value) => set({ justSignedUp: value }),
 
   initialize: async () => {
     const token = localStorage.getItem('Authorization')
@@ -32,6 +34,7 @@ const useAuthStore = create((set) => ({
               isAuthenticated: true,
               accessToken: token,
               resetToken,
+              justSignedUp: true,
             })
           } else {
             throw new Error('사용자 정보 가져오기 실패')
