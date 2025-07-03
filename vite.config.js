@@ -9,8 +9,7 @@ export default defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'script', // 서비스 워커 수동 등록 시도
-      // injectRegister: false,
+      injectRegister: false,
       pwaAssets: {
         disabled: false,
         config: true,
