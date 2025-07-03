@@ -44,6 +44,19 @@ const MainPage = () => {
         image='https://book-job.co.kr/metatag.png'
         url='https://book-job.co.kr'
       />
+
+      <div className='w-full px-4 sm:px-10 mt-8'>
+        <div className='max-w-3xl mx-auto text-left'>
+          <h1 className='text-2xl sm:text-3xl font-bold mb-4'>출판업계 구인구직 플랫폼, 북잡</h1>
+          <p className='text-base sm:text-lg text-gray-700 leading-relaxed'>
+            북잡은 출판사 채용 공고, 프리랜서 편집자·디자이너 구직 정보 등{' '}
+            <strong>출판 업계</strong>를 위한
+            <strong> 구인·구직 플랫폼</strong>입니다. 출판인들을 위한 자유게시판도 함께 운영하고
+            있어요.
+          </p>
+        </div>
+      </div>
+
       <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer' className='w-full'>
         <BannerExample className='w-full h-full' />
       </a>
