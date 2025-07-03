@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useIsMobile from '../../hooks/header/useIsMobile'
 
@@ -21,7 +21,7 @@ const Footer = ({ email, onClick }) => {
         )}
         <div className='flex flex-wrap items-center gap-3 text-sm text-left sm:gap-6 text-dark-gray'>
           <span className='font-semibold'>북잡</span>
-          {/* <span>대표 | 이신지</span> */}
+          <span>대표 | 이신지</span>
           <span>
             이메일 |{' '}
             <a
@@ -34,12 +34,12 @@ const Footer = ({ email, onClick }) => {
             </a>
           </span>
           <span className='flex gap-3 sm:gap-6'>
-            <a href='/terms' className='text-blue-600 underline'>
+            <Link to='/terms-of-service' className='text-blue-600 underline'>
               이용약관
-            </a>
-            <a href='/privacy' className='text-blue-600 underline'>
+            </Link>
+            <Link to='/privacy-policy' className='text-blue-600 underline'>
               개인정보처리방침
-            </a>
+            </Link>
           </span>
         </div>
 
