@@ -45,23 +45,10 @@ const MainPage = () => {
         url='https://book-job.co.kr'
       />
 
-      <div
-        aria-hidden='true'
-        style={{
-          position: 'absolute',
-          width: '1px',
-          height: '1px',
-          padding: 0,
-          margin: '-1px',
-          overflow: 'hidden',
-          clip: 'rect(0,0,0,0)',
-          whiteSpace: 'nowrap',
-          border: 0,
-        }}
-      >
+      <p className='sr-only'>
         북잡은 출판사 채용 공고, 프리랜서 편집자·디자이너 구직 정보 등 출판 업계를 위한 구인·구직
         플랫폼입니다. 출판인들을 위한 자유게시판도 함께 운영하고 있어요.
-      </div>
+      </p>
 
       <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer' className='w-full'>
         <BannerExample className='w-full h-full' />
