@@ -87,12 +87,12 @@ const Footer = ({ email, onClick }) => {
             </a>
           </span>
           <span className='flex gap-3 sm:gap-6'>
-            <a href='/terms' className='text-blue-600 underline'>
+            <Link to='/terms-of-service' className='text-blue-600 underline'>
               이용약관
-            </a>
-            <a href='/privacy' className='text-blue-600 underline'>
+            </Link>
+            <Link to='/privacy-policy' className='text-blue-600 underline'>
               개인정보처리방침
-            </a>
+            </Link>
           </span>
         </div>
         <div className='mt-4 text-xs text-dark-gray'>© 2025 BookJob. All rights reserved.</div>
