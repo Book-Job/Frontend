@@ -6,16 +6,7 @@ export const postFindIDEmail = async (fullEmail) => {
   }
 
   try {
-    const response = await publicApi.post(
-      '/auth/email-verification/id',
-      { email: fullEmail },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await publicApi.post('/auth/email-verification/id', { email: fullEmail })
     return response
   } catch (error) {
     console.error(
@@ -28,16 +19,11 @@ export const postFindIDEmail = async (fullEmail) => {
 
 export const postFindIDEmailCode = async ({ fullEmail, code }) => {
   try {
-    const response = await publicApi.post(
-      '/auth/email-verification/id/code',
-      { email: fullEmail, code: code, reason: '아이디 찾기' },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await publicApi.post('/auth/email-verification/id/code', {
+      email: fullEmail,
+      code: code,
+      reason: '아이디 찾기',
+    })
     return response
   } catch (error) {
     console.error('아이디 찾기 인증번호 확인 중 오류:', error)

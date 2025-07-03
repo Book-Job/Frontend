@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import issueFire from '../../../../assets/icons/common/common_issue_fire.svg'
 import comment from '../../../../assets/icons/common/comment.svg'
 import viewGray from '../../../../assets/icons/common/common_view_gray.svg'
 const BestList = ({ boardName, bestList }) => {
@@ -7,8 +6,20 @@ const BestList = ({ boardName, bestList }) => {
 
   return (
     <div className='flex flex-col w-full sm:max-w-[940px]'>
-      <div className='flex sm:mb-12 mb-7'>
-        <img src={issueFire} alt='issueFire' className='w-6 h-6 mr-3 sm:mr-5 ms:w-11 sm:h-11' />
+      <div className='flex items-center sm:mb-12 mb-7'>
+        <video
+          className="w-6 h-6 mr-1 sm:mr-2 sm:w-11 sm:h-11 bg-transparent bg-[url('https://cdn-icons-png.flaticon.com/512/17702/17702145.png')] bg-center bg-contain bg-no-repeat"
+          preload='auto'
+          loop='true'
+          autoPlay
+          muted='muted'
+        >
+          <source
+            src='https://cdn-icons-mp4.flaticon.com/512/17702/17702145.mp4'
+            type='video/mp4'
+          />
+          Your browser does not support the video tag.
+        </video>
         <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>

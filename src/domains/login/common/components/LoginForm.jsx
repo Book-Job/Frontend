@@ -98,7 +98,10 @@ const LoginForm = () => {
   return (
     <div className='flex flex-col items-center'>
       {isMobile ? null : <PageTitle title='로그인' />}
-      <form className='w-full max-w-[532px]' onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className='w-full max-w-[532px] sm:gap-3 gap-2 flex flex-col'
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className='flex w-full mt-11'>
           <InputBox
             placeholder='아이디'
@@ -110,7 +113,7 @@ const LoginForm = () => {
         {errors.userID && (
           <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
         )}
-        <div className='flex w-full mt-7'>
+        <div className='flex w-full'>
           <PwInputBox
             placeholder='비밀번호'
             size='big'
@@ -121,18 +124,18 @@ const LoginForm = () => {
         {errors.password && (
           <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
         )}
-        <div className='flex items-center justify-between mt-6'>
-          <div className='flex items-center gap-2 text-base sm:text-xl'>
+        <div className='flex items-center justify-between '>
+          <div className='flex items-center gap-2 text-sm sm:text-base'>
             <input
               type='checkbox'
               name='SaveLoginID'
               checked={saveLoginID}
               onChange={handleSaveLoginID}
-              className='flex w-6 h-6 cursor-pointer'
+              className='flex w-5 h-5 cursor-pointer'
             />
             아이디 저장
           </div>
-          <div className='flex gap-3 text-base font-medium sm:text-xl'>
+          <div className='flex gap-3 text-sm font-medium sm:text-base'>
             <button type='button' onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>
               아이디 찾기
             </button>
@@ -142,7 +145,7 @@ const LoginForm = () => {
             </button>
           </div>
         </div>
-        <div className='mt-6'>
+        <div className='mt-2'>
           <Button
             label='로그인'
             size='big'

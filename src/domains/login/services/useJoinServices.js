@@ -4,10 +4,6 @@ export const getJoinCheckId = async (nowUserID) => {
   try {
     const response = await authApi.get('/auth/check-id', {
       params: { loginId: nowUserID },
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
     })
     return response
   } catch (error) {
@@ -20,10 +16,6 @@ export const getJoinCheckNickname = async (nowUserNickname) => {
   try {
     const response = await authApi.get('/auth/check-nickname', {
       params: { nickname: nowUserNickname },
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
     })
     return response
   } catch (error) {
@@ -38,16 +30,7 @@ export const postJoinCheckEmail = async (fullEmail) => {
   }
 
   try {
-    const response = await authApi.post(
-      '/auth/emails',
-      { email: fullEmail },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/emails', { email: fullEmail })
     return response
   } catch (error) {
     console.error('email 중복 확인 중 오류 api:', error.response?.data?.message || error.message)
@@ -57,16 +40,11 @@ export const postJoinCheckEmail = async (fullEmail) => {
 
 export const postJoinCheckEmailNum = async ({ fullEmail, code }) => {
   try {
-    const response = await authApi.post(
-      '/auth/emails/code',
-      { email: fullEmail, code: code, reason: '회원가입' },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/emails/code', {
+      email: fullEmail,
+      code: code,
+      reason: '회원가입',
+    })
     return response
   } catch (error) {
     console.error('email 중복 확인 중 오류:', error)
@@ -86,21 +64,12 @@ export const postJoinData = async (filteredData) => {
     filteredData.password,
   )
   try {
-    const response = await authApi.post(
-      '/members/signup',
-      {
-        loginId: filteredData.userID,
-        nickname: filteredData.Nickname,
-        email: filteredData.email,
-        password: filteredData.password,
-      },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/members/signup', {
+      loginId: filteredData.userID,
+      nickname: filteredData.Nickname,
+      email: filteredData.email,
+      password: filteredData.password,
+    })
 
     return response
   } catch (error) {

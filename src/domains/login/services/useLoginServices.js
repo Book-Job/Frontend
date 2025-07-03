@@ -2,16 +2,10 @@ import { authApi } from '../../../services/api/axios'
 
 export const postLoginData = async (data) => {
   try {
-    const response = await authApi.post(
-      '/auth/login',
-      { loginId: data.userID, password: data.password },
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/login', {
+      loginId: data.userID,
+      password: data.password,
+    })
     return response
   } catch (error) {
     console.error('로그인 확인 중 오류:', error.response.data.message)
@@ -31,16 +25,7 @@ export const postLogout = async () => {
 
 export const refreshAccessToken = async () => {
   try {
-    const response = await authApi.post(
-      '/auth/refresh',
-      {},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    const response = await authApi.post('/auth/refresh')
     return response
   } catch (error) {
     console.error('11 토큰 갱신 오류:', error)

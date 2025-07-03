@@ -5,10 +5,10 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) => {
   const [showPassword, setShowPassword] = useState(false)
   const PwInputBoxSize = {
-    small: 'w-full max-w-[148px] h-[58px]',
-    medium: 'w-full max-w-[424px] h-[58px]',
-    big: 'w-full max-w-[532px] h-[58px]',
-    biggest: 'w-full max-w-[575px] h-[58px]',
+    small: 'w-full max-w-[148px] h-[56px]',
+    medium: 'w-full max-w-[424px] h-[56px]',
+    big: 'w-full max-w-[532px] h-[56px]',
+    biggest: 'w-full max-w-[575px] h-[56px]',
   }
 
   return (
@@ -16,7 +16,7 @@ const PwInputBox = forwardRef(({ placeholder, size = 'medium', ...rest }, ref) =
       <input
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
-        className={`${PwInputBoxSize[size]} border border-dark-gray rounded pl-4 pr-12 text-[18px] text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
+        className={`${PwInputBoxSize[size]} border border-dark-gray rounded sm:pl-4 pl-2 pr-12 sm:text-base text-sm text-black placeholder:text-dark-gray focus:border-main-pink focus:outline-none`}
         ref={ref}
         {...rest}
       />

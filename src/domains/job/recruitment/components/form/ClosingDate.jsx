@@ -24,7 +24,7 @@ const ClosingDate = ({ control }) => {
               type='date'
               aria-describedby='closingDateHelp'
               className='
-              w-full h-[58px] border border-dark-gray rounded px-4 text-black 
+              w-full h-[56px] border border-dark-gray rounded px-4 text-black 
               focus:border-main-pink focus:outline-none cursor-pointer appearance-none
               text-left
             '
@@ -33,6 +33,7 @@ const ClosingDate = ({ control }) => {
                 appearance: 'none',
                 textAlign: 'left',
                 paddingLeft: '16px',
+                textIndent: 0,
               }}
               min={minDate}
               value={dateValue}
@@ -42,7 +43,9 @@ const ClosingDate = ({ control }) => {
           )
         }}
       />
-      <p className='flex text-red-500 text-[13px] mt-1'>미선택시 상시채용으로 자동 입력됩니다.</p>
+      <p id='closingDateHelp' className='text-red-500 text-[13px] mt-1'>
+        미선택시 상시채용으로 자동 입력됩니다.
+      </p>
     </FormItem>
   )
 }

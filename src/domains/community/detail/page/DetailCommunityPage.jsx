@@ -89,7 +89,7 @@ const DetailCommunityPage = () => {
   if (!post) return <div className='mt-10 text-center text-gray-500'>게시글이 존재하지 않아요.</div>
 
   return (
-    <div className='w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-[100px] xl:px-[250px] py-6 sm:py-10'>
+    <div className='w-full max-w-[940px] mx-auto '>
       <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
         {post.title}
       </h1>

@@ -4,7 +4,7 @@ const EmploymentType = ({ register, errors }) => {
   return (
     <FormItem label='근무형태' dot={true} name='employmentType'>
       <select
-        className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
+        className='w-full h-[56px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
         {...register('employmentType', { required: '근무형태는 필수입니다' })}
       >
         <option value=''>선택하세요</option>

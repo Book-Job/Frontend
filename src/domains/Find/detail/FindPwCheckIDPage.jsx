@@ -166,7 +166,7 @@ const FindPwCheckIDPage = () => {
         <p className='flex'>본인확인 이메일 주소와 이력한 이메일 주소가 같아야,</p>
         <p className='flex'>임시비밀번호를 받을 수 있습니다.</p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-2 sm:gap-5'>
         <div className='flex flex-row gap-2 mt-7'>
           <div className='w-full'>
             <InputBox
@@ -205,7 +205,7 @@ const FindPwCheckIDPage = () => {
             onClick={handleEmailAuth}
           />
         </div>
-        <div className='mt-7'>
+        <div>
           <OTPInput
             size='biggest'
             placeholder='임시비밀번호를 입력해주세요'
@@ -223,7 +223,7 @@ const FindPwCheckIDPage = () => {
             )}
           </div>
         </div>
-        <div className='mt-7'>
+        <div>
           <Button
             type='submit'
             label='새로운 비밀번호 생성'

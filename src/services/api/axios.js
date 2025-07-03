@@ -9,6 +9,10 @@ export const authApi = axios.create({
 export const publicApi = axios.create({
   baseURL: 'https://api.bookjob.co.kr/api/v1',
   withCredentials: false,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 })
 
 let isRefreshing = false

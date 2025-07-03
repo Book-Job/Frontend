@@ -7,7 +7,7 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
     <div className='my-[30px]'>
       <FormItem label='직군' dot={true} register={register} name='jobCategory' required={true}>
         <select
-          className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
+          className='w-full h-[56px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
           {...register('jobCategory', { required: '직군은 필수입니다' })}
         >
           <option value=''>직군을 선택하세요</option>
@@ -36,7 +36,7 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
             type='text'
             placeholder='직군을 직접 입력하세요'
             {...register('customJobCategory', { required: '직군을 입력해야 합니다' })}
-            className='w-full h-[58px] border border-dark-gray rounded px-4 text-black focus:outline-none focus:border-main-pink'
+            className='w-full h-[56px] border border-dark-gray rounded px-4 text-black focus:outline-none focus:border-main-pink'
           />
         </FormItem>
       )}

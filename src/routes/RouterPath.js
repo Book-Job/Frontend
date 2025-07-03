@@ -32,6 +32,8 @@ const ROUTER_PATHS = {
   ERROR: '/error',
   KAKAO_SUCCESS: '/login/kakao/success',
   NAVER_SUCCESS: '/login/naver/success',
+  TERMS_OF_SERVICE: '/terms-of-service',
+  PRIVACY_POLICY: '/privacy-policy',
 }
 
 export default ROUTER_PATHS

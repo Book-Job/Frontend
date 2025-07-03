@@ -10,7 +10,7 @@ const getInputCommonProps = () => ({
   step: '1',
   pattern: '\\d*',
   className:
-    'h-[58px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none w-full',
+    'h-[56px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none w-full',
   onKeyDown: (e) => {
     if (['e', 'E', '+', '-', '.'].includes(e.key)) e.preventDefault()
   },

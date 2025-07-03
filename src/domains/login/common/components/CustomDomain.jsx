@@ -7,7 +7,7 @@ const CustomDomain = ({ customDomain, setCustomDomain, disabled }) => {
         placeholder='직접 입력'
         value={customDomain}
         onChange={(e) => setCustomDomain(e.target.value)}
-        className='border border-dark-gray rounded sm:px-4 text-center sm:text-base text-sm text-black placeholder:text-dark-gray h-[58px] focus:border-main-pink focus:outline-none w-full'
+        className='border border-dark-gray rounded sm:px-4 text-center sm:text-base text-sm text-black placeholder:text-dark-gray h-[56px] focus:border-main-pink focus:outline-none w-full'
         disabled={disabled}
       />
     </div>
