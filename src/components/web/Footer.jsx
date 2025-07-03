@@ -16,10 +16,10 @@ const Footer = ({ email, onClick }) => {
         <div className='max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0'>
           <nav className='flex items-center gap-3 text-sm text-dark-gray select-none'>
             <span className='font-semibold cursor-default'>북잡 </span>
-            <Link to='/privacy-policy' className='text-blue-600 underline'>
+            <Link to='/privacy-policy' className='text-dark-gray underline'>
               개인정보처리방침
             </Link>
-            <Link to='/terms-of-service' className='text-blue-600 underline'>
+            <Link to='/terms-of-service' className='text-dark-gray underline'>
               이용약관
             </Link>
           </nav>
@@ -87,11 +87,11 @@ const Footer = ({ email, onClick }) => {
             </a>
           </span>
           <span className='flex gap-3 sm:gap-6'>
-            <Link to='/terms-of-service' className='text-blue-600 underline'>
-              이용약관
-            </Link>
-            <Link to='/privacy-policy' className='text-blue-600 underline'>
+            <Link to='/privacy-policy' className='text-dark-gray underline'>
               개인정보처리방침
+            </Link>
+            <Link to='/terms-of-service' className='text-dark-gray underline'>
+              이용약관
             </Link>
           </span>
         </div>
