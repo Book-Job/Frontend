@@ -12,7 +12,9 @@ const BestList = ({ boardName, bestList }) => {
           preload='auto'
           loop={true}
           autoPlay
-          muted='muted'
+          muted
+          playsInline
+          controls={false}
         >
           <source
             src='https://cdn-icons-mp4.flaticon.com/512/17702/17702145.mp4'
