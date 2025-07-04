@@ -45,7 +45,7 @@ const MainPage = () => {
       }, 300)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [isAuthenticated])
 
   const handleDoNotShowToday = () => {
     const today = new Date().toDateString()
