@@ -30,6 +30,8 @@ import EditJobSeekPostPage from '../domains/job/search/edit/page/EditJobSeekPost
 import KakaoSuccess from '../domains/login/page/KakaoSuccess'
 import NaverSuccess from '../domains/login/page/NaverSuccess'
 import MyRecentList from '../domains/my/detail/MyRecentList'
+import TermsOfService from '../domains/policy/page/TermsOfService'
+import PrivacyPolicy from '../domains/policy/page/PrivacyPolicy'
 
 const routes = [
   {
@@ -195,6 +197,14 @@ const routes = [
   {
     path: ROUTER_PATHS.NAVER_SUCCESS,
     element: <NaverSuccess />,
+  },
+  {
+    path: ROUTER_PATHS.TERMS_OF_SERVICE,
+    element: <TermsOfService />,
+  },
+  {
+    path: ROUTER_PATHS.PRIVACY_POLICY,
+    element: <PrivacyPolicy />,
   },
 ]
 
