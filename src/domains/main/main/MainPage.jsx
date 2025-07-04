@@ -66,7 +66,7 @@ const MainPage = () => {
       <SeoHelmet
         title='북잡 - 출판인을 위한 구인·구직 플랫폼'
         description='출판업계 채용/구직 정보와 자유게시판을 북잡에서 확인해보세요.'
-        image='https://book-job.co.kr/metatag.png'
+        image='https://www.bookjob.co.kr/metatag.png'
         url='https://www.bookjob.co.kr'
       />
 
