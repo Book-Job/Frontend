@@ -2,91 +2,82 @@ import { useEffect, useRef, useState } from 'react'
 import useIsMobile from '../../hooks/header/useIsMobile'
 import favicon from '../../../public/favicon-144x144.png'
 import { IoClose } from 'react-icons/io5'
+
+const HIDE_ANIMATION_DURATION = 1000
+const SNOOZE_DURATION = 5000
+const LOCAL_STORAGE_KEY = 'pwaPopupHiddenDate'
+
 const PwaPopUp = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
-  const [showInstallButton, setShowInstallButton] = useState(false)
+  const [isDisplayAllowed, setIsDisplayAllowed] = useState(false)
   const [dontShowToday, setDontShowToday] = useState(false)
-  const [dontShow, setDontShow] = useState(false)
   const timerRef = useRef(null)
   const isMobile = useIsMobile()
 
-  console.log('PWA 1')
+  const isVisible = isDisplayAllowed && deferredPrompt
 
   useEffect(() => {
-    console.log('PWA 2')
-
-    // localStorage에서 오늘 팝업 숨김 여부 확인
-    const lastHiddenDate = localStorage.getItem('pwaPopupHidden')
+    const hiddenDate = localStorage.getItem(LOCAL_STORAGE_KEY)
     const today = new Date().toDateString()
-    if (lastHiddenDate !== today) {
-      setShowInstallButton(true)
+    if (hiddenDate !== today) {
+      setIsDisplayAllowed(true)
     }
 
     const handleBeforeInstallPrompt = (e) => {
-      console.log('PWA 3')
       e.preventDefault()
       setDeferredPrompt(e)
-      console.log('PWA 4')
     }
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-        console.log('PWA 7: 5분 뒤 버튼 재표시 끝')
-      }
+      clearTimeout(timerRef.current)
     }
   }, [])
 
+  const scheduleNextAppearance = () => {
+    setIsDisplayAllowed(false)
+
+    if (dontShowToday) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, new Date().toDateString())
+    } else {
+      console.log('PWA: 20분 뒤 다시 표시하도록 설정합니다.')
+      timerRef.current = setTimeout(() => {
+        setIsDisplayAllowed(true)
+      }, SNOOZE_DURATION)
+    }
+  }
+
+  const handleClose = () => {
+    scheduleNextAppearance()
+  }
+
   const handleInstallClick = async () => {
     if (!deferredPrompt) return
-    console.log('PWA 5')
 
+    console.log('설치 클릭')
     await deferredPrompt.prompt()
-    console.log('PWA 6')
-
     const { outcome } = await deferredPrompt.userChoice
+    console.log('설치 클릭2')
+
     if (outcome === 'accepted') {
+      setIsDisplayAllowed(false)
+      timerRef.current = setTimeout(() => {
+        setDeferredPrompt(null)
+      }, HIDE_ANIMATION_DURATION)
       console.log('사용자가 앱 설치를 수락했습니다.')
-      setShowInstallButton(false)
     } else {
       console.log('사용자가 앱 설치를 거부했습니다.')
-      if (!dontShowToday) {
-        timerRef.current = setTimeout(() => {
-          setShowInstallButton(true)
-          console.log('PWA 7: 5분 뒤 버튼 재표시')
-        }, 600000)
-      }
-    }
-
-    setDeferredPrompt(null)
-  }
-
-  const handleDontShowToday = (e) => {
-    setDontShowToday(e.target.checked)
-    console.log('PWA :하루동안 안보기 1')
-  }
-
-  const handleClose = (e) => {
-    if (dontShowToday) {
-      localStorage.setItem('pwaPopupHidden', new Date().toDateString())
-      setShowInstallButton(false)
-      console.log('PWA :하루동안 안보기 2')
-    } else {
-      console.log('PWA 7: 5분 뒤 버튼 재표시 시작')
-      setShowInstallButton(false)
-      timerRef.current = setTimeout(() => {
-        setShowInstallButton(true)
-        console.log('PWA 7: 5분 뒤 버튼 재표시 끝')
-      }, 600000)
+      scheduleNextAppearance()
     }
   }
 
-  const installPopup = isMobile ? (
+  console.log('deferredPrompt', deferredPrompt)
+
+  const MobilePopup = (
     <>
-      <div className='fixed z-50 w-full h-auto transition-all bottom-32'>
+      <div className='fixed z-50 w-full h-auto bottom-32'>
         {/* <div className='flex items-center px-2 pb-2 '>
         <label className='flex space-x-2 bg-white'>
           <input
@@ -98,16 +89,19 @@ const PwaPopUp = () => {
           <span className='text-xs'>오늘 하루 그만보기</span>
         </label>
       </div> */}
-        <div className='flex justify-end w-full'>
-          <button onClick={handleClose} className='mr-3 text-2xl'>
+        <div className='flex justify-start w-full'>
+          <button
+            onClick={handleClose}
+            className='flex items-center h-5 ml-3 text-xl bg-white text-zinc-700'
+          >
             <IoClose />
           </button>
         </div>
         <div className='flex items-center justify-between w-auto h-12 px-2 mx-4 bg-white border rounded-full border-main-pink'>
           <img src={favicon} alt='favicon' className='mx-2 w-7' />
-          <p className='px-1 text-xs'>
+          <p className='ml-3 text-sm'>
             <span className='font-bold text-main-pink'>bookjob</span>
-            <span className='flex-wrap'>을 앱 처럼 사용할 수 있습니다.</span>
+            <span>을 앱 처럼 사용해보세요.</span>
           </p>
           <button onClick={handleInstallClick} className='flex'>
             <span className='px-3 py-1 ml-3 rounded-full text-zinc-200 bg-main-pink shadow-l'>
@@ -116,13 +110,13 @@ const PwaPopUp = () => {
           </button>
         </div>
       </div>
-      <div className='fixed bottom-0 z-50 w-full h-auto transition-all'>
+      <div className='fixed bottom-0 z-50 w-full h-auto'>
         <div className='px-2 pb-1 bg-white'>
           <label className='flex gap-2'>
             <input
               type='checkbox'
               checked={dontShowToday}
-              onChange={handleDontShowToday}
+              onChange={(e) => setDontShowToday(e.target.checked)}
               className='form-checkbox'
             />
             <span className='text-xs'>오늘 하루 그만보기</span>
@@ -133,8 +127,8 @@ const PwaPopUp = () => {
             <IoClose />
           </button>
           <img src={favicon} alt='favicon' className='w-10 mx-2' />
-          <p className='px-1 text-sm text-white text-wrap text-start'>
-            앱 처럼 홈에서 바로가기 기능을 추가 할 수 있습니다.
+          <p className='flex-wrap px-1 text-sm text-white break-keep text-start'>
+            설치하면 한 번의 터치로 바로 접속할 수 있어요
           </p>
           <button onClick={handleInstallClick} className='flex'>
             <span className='px-5 py-2 ml-3 rounded-full text-zinc-200 bg-main-pink shadow-l'>
@@ -144,18 +138,19 @@ const PwaPopUp = () => {
         </div>
       </div>
     </>
-  ) : (
-    <div className='fixed z-50 flex flex-col items-start h-auto p-1 transition-all w-96 bottom-48 left-4'>
-      <div className='flex flex-col items-center w-full p-1 rounded-lg bg-zinc-800 h-28 '>
+  )
+  const DesktopPopup = (
+    <div className='fixed z-50 flex flex-col items-start h-auto p-1 w-96 bottom-48 left-4'>
+      <div className='flex flex-col items-center w-full h-[100px] p-1 rounded-lg bg-zinc-800 '>
         <button onClick={handleClose} className='flex justify-end w-full text-white'>
           <IoClose />
         </button>
-        <div className='flex flex-row items-center justify-between w-full p-2'>
-          <p className='flex flex-wrap gap-4 text-start'>
+        <div className='flex flex-row items-center justify-between w-full px-2 pb-1'>
+          <p className='flex gap-4 text-start'>
             <img src={favicon} alt='favicon' className='w-14 h-14 ' />
-            <span className='text-white'>
-              간편하게 홈 화면에
-              <br /> 바로가기 추가!
+            <span className='flex items-center text-white'>
+              홈 화면에 추가하고
+              <br />더 빠르게 이용하세요
             </span>
           </p>
           <button
@@ -170,7 +165,7 @@ const PwaPopUp = () => {
         <input
           type='checkbox'
           checked={dontShowToday}
-          onChange={handleDontShowToday}
+          onChange={(e) => setDontShowToday(e.target.checked)}
           className='form-checkbox'
         />
         <span className='text-sm'>오늘 하루 그만보기</span>
@@ -179,9 +174,13 @@ const PwaPopUp = () => {
   )
 
   return (
-    <div>
-      {/* {showInstallButton && installPopup} */}
-      {installPopup}
+    <div
+      className={`fixed z-50 bottom-0 transition-all duration-1000 ease-in-out w-full ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none '
+      }`}
+    >
+      {/* {isMobile ? MobilePopup : DesktopPopup} */}
+      {deferredPrompt && (isMobile ? MobilePopup : DesktopPopup)}
     </div>
   )
 }
