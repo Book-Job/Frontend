@@ -8,7 +8,7 @@ const NaverLogin = () => {
     <div className='w-full max-w-[532px] h-[56px] '>
       <button
         onClick={handleNaverLogin}
-        className='bg-[#03C75A] w-full h-full rounded-[5px] items-center flex flex-row px-8 relative'
+        className='bg-[#03C75A] w-full h-full rounded-[5px] items-center flex flex-row px-8 relative hover:shadow-[0px_13px_50px_-10px] hover:shadow-[#03C75A]/70 transition-all duration-500 '
       >
         <img src={navericon_s} alt='네이버 로그인' className='h-[30%] absolute' />
         <span className='flex-grow text-base text-center text-white sm:text-lg'>네이버 로그인</span>

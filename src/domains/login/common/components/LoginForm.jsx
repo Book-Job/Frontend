@@ -99,10 +99,10 @@ const LoginForm = () => {
     <div className='flex flex-col items-center'>
       {isMobile ? null : <PageTitle title='로그인' />}
       <form
-        className='w-full max-w-[532px] sm:gap-3 gap-2 flex flex-col'
+        className='w-full max-w-[532px] sm:gap-4 gap-4 flex flex-col'
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className='flex w-full mt-11'>
+        <div className='flex w-full'>
           <InputBox
             placeholder='아이디'
             size='big'
@@ -145,7 +145,7 @@ const LoginForm = () => {
             </button>
           </div>
         </div>
-        <div className='mt-2'>
+        <div className='mt-2 hover:shadow-[0px_13px_50px_-14px] hover:shadow-main-pink transition-all duration-500 '>
           <Button
             label='로그인'
             size='big'
