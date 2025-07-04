@@ -12,6 +12,8 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
     handleSubmit,
     formState: { errors, isValid },
     trigger,
+    setError,
+    clearErrors,
     getValues,
     reset,
     watch,
@@ -23,6 +25,8 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
   })
 
   const nowNickname = watch('nickname')
+  const hasNicknameChanged = nowNickname !== content
+  const isSaveButtonDisabled = !isValid || !hasNicknameChanged || nicknameCheckStatus !== 'success'
 
   const onSubmit = (data) => {
     if (onSave && nicknameCheckStatus === 'success') {
@@ -31,6 +35,26 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
       reset({ nickname: data.nickname })
       setNicknameCheckMessage('')
       setNicknameCheckStatus(null)
+    }
+  }
+
+  const handleDisabledSaveClick = () => {
+    clearErrors('nickname')
+    if (!hasNicknameChanged) {
+      setError('nickname', {
+        type: 'custom',
+        message: '변경 사항이 없습니다.',
+      })
+    } else if (nicknameCheckStatus !== 'success') {
+      setError('nickname', {
+        type: 'custom',
+        message: '닉네임 중복 확인을 먼저 완료해주세요.',
+      })
+    } else if (!isValid) {
+      setError('nickname', {
+        type: 'custom',
+        message: '닉네임 양식을 확인해주세요. (2~8자, 특수문자 제외)',
+      })
     }
   }
 
@@ -74,6 +98,10 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
   const handleInputChange = () => {
     if (nicknameCheckMessage) setNicknameCheckMessage('')
     if (nicknameCheckStatus) setNicknameCheckStatus(null)
+    // 사용자가 다시 입력을 시작하면, '변경 사항 없음' 에러를 포함한 모든 에러를 지웁니다.
+    if (errors.nickname) {
+      clearErrors('nickname')
+    }
   }
 
   return (
@@ -109,7 +137,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
               <button
                 onClick={handleCheckNickname}
                 disabled={!nowNickname || isCheckingNickname}
-                className={`text-${nowNickname ? 'main-pink' : 'light-gray'} font-bold px-2 rounded-[5px] hover:bg-main-pink/10 transition`}
+                className={`text-${nowNickname ? 'main-pink hover:bg-main-pink/10 ' : 'light-gray'} font-bold px-2 rounded-[5px] transition`}
               >
                 {isCheckingNickname ? (
                   <Spinner size={20} color='light-gray' />
@@ -119,13 +147,18 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
                   '중복확인'
                 )}
               </button>
-              <button
-                type='submit'
-                disabled={!isValid || nicknameCheckStatus !== 'success'}
-                className={`font-bold cursor-pointer text-${isValid && nicknameCheckStatus === 'success' ? 'main-pink' : 'dark-gray'} px-2 rounded-[5px] hover:bg-main-pink/10 transition`}
+              <span
+                onClick={() => isSaveButtonDisabled && handleDisabledSaveClick()}
+                className='relative'
               >
-                저장
-              </button>
+                <button
+                  type='submit'
+                  disabled={isSaveButtonDisabled}
+                  className={`font-bold cursor-pointer text-${!isSaveButtonDisabled ? 'main-pink' : 'dark-gray'} px-2 rounded-[5px] transition disabled:pointer-events-none `}
+                >
+                  저장
+                </button>
+              </span>
               <button
                 type='button'
                 onClick={handleCancel}
