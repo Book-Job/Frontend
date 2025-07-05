@@ -4,7 +4,7 @@ import favicon from '../../../public/favicon-144x144.png'
 import { IoClose } from 'react-icons/io5'
 
 const HIDE_ANIMATION_DURATION = 1000
-const SNOOZE_DURATION = 5000
+const SNOOZE_DURATION = 1000 * 60 * 5
 const LOCAL_STORAGE_KEY = 'pwaPopupHiddenDate'
 
 const PwaPopUp = () => {
@@ -42,7 +42,7 @@ const PwaPopUp = () => {
     if (dontShowToday) {
       localStorage.setItem(LOCAL_STORAGE_KEY, new Date().toDateString())
     } else {
-      console.log('PWA: 20분 뒤 다시 표시하도록 설정합니다.')
+      console.log('PWA: 5분 뒤 다시 표시하도록 설정합니다.')
       timerRef.current = setTimeout(() => {
         setIsDisplayAllowed(true)
       }, SNOOZE_DURATION)
@@ -56,7 +56,7 @@ const PwaPopUp = () => {
   const handleInstallClick = async () => {
     if (!deferredPrompt) return
 
-    console.log('설치 클릭')
+    console.log('설치 클릭1')
     await deferredPrompt.prompt()
     const { outcome } = await deferredPrompt.userChoice
     console.log('설치 클릭2')
@@ -179,7 +179,6 @@ const PwaPopUp = () => {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none '
       }`}
     >
-      {/* {isMobile ? MobilePopup : DesktopPopup} */}
       {deferredPrompt && (isMobile ? MobilePopup : DesktopPopup)}
     </div>
   )
