@@ -20,7 +20,7 @@ const JoinButton = () => {
       <Button
         size='big'
         label='회원가입'
-        className='bg-main-pink'
+        className='bg-main-pink hover:bg-dark-pink'
         onClick={() => navigate(ROUTER_PATHS.MEMBER_DATA_ENTRY)}
       />
     </div>

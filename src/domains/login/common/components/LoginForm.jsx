@@ -145,12 +145,13 @@ const LoginForm = () => {
             </button>
           </div>
         </div>
-        <div className='mt-2 hover:shadow-[0px_13px_50px_-14px] hover:shadow-main-pink transition-all duration-500 '>
+        <div className='mt-2'>
           <Button
             label='로그인'
             size='big'
             bgColor={isValid ? 'main-pink' : 'light-gray'}
             disabled={!isValid}
+            className={isValid ? `hover:bg-dark-pink` : `hover:none`}
             type='submit'
           />
         </div>
