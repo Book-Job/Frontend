@@ -54,10 +54,10 @@ const FindPwEnterID = () => {
       }
     } catch (error) {
       console.error('아이디 확인 중 오류:', error)
-      setIdCheckMessage(error?.message || '아이디디 확인 중 오류가 발생했습니다.')
+      setIdCheckMessage(error?.message || '아이디 확인 중 오류가 발생했습니다.')
       openModal({
         title: '아이디 확인 실패',
-        description: '이메일 확인 중 오류가 발생했습니다.',
+        description: '아이디 확인 중 오류가 발생했습니다.',
         buttonLabel: '확인',
         onButtonClick: null,
       })
@@ -70,7 +70,7 @@ const FindPwEnterID = () => {
         <LabelWithInput
           label='아이디'
           type='text'
-          placeholder='가입했던 이메일을 입력해주세요'
+          placeholder='로그인 아이디를 입력해 주세요'
           size='biggest'
           {...register('userID', {
             required: '아이디를 입력하세요',
