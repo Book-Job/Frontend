@@ -12,8 +12,13 @@ export default {
         'dark-gray': '#8e8e8e',
         'light-gray': '#d9d9d9',
         'main-pink': '#ec4899',
+        'dark-pink': '#dd4390',
         'hover-pink': '#DB2777',
         lightBlueGray: '#F3F3F3',
+        'naver-green': '#03C75A',
+        'naver-dark-Green': '#09aa5c',
+        'kakao-yellow': '#fee500',
+        'kakao-dark-yellow': '#fada0a',
       },
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],
@@ -30,7 +35,7 @@ export default {
       },
       screens: {
         sm: '640px',
-        md: '769px', // 기본값 768px → 800px로 변경
+        md: '769px',
         lg: '1024px',
         xl: '1280px',
         '2xl': '1536px',

@@ -25,7 +25,16 @@ export const postLogout = async () => {
 
 export const refreshAccessToken = async () => {
   try {
-    const response = await authApi.post('/auth/refresh')
+    const response = await authApi.post(
+      '/auth/refresh',
+      {},
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    )
     return response
   } catch (error) {
     console.error('11 토큰 갱신 오류:', error)

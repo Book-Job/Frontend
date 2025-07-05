@@ -2,12 +2,7 @@ import { publicApi } from '../../../services/api/axios'
 
 export const getFreeBest = async () => {
   try {
-    const response = await publicApi.get('/boards/best', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await publicApi.get('/boards/best')
     return response
   } catch (error) {
     console.error('자유 베스트 리스트 오류:', error)
@@ -17,12 +12,7 @@ export const getFreeBest = async () => {
 
 export const getJobBest = async () => {
   try {
-    const response = await publicApi.get('/job-posting/best', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await publicApi.get('/job-posting/best')
     return response
   } catch (error) {
     console.error('구인 베스트 리스트 오류:', error)
