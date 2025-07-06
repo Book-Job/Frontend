@@ -10,9 +10,11 @@ const BestList = ({ boardName, bestList }) => {
         <video
           className="w-6 h-6 mr-1 sm:mr-2 sm:w-11 sm:h-11 bg-transparent bg-[url('https://cdn-icons-png.flaticon.com/512/17702/17702145.png')] bg-center bg-contain bg-no-repeat"
           preload='auto'
-          loop='true'
+          loop={true}
           autoPlay
-          muted='muted'
+          muted
+          playsInline
+          controls={false}
         >
           <source
             src='https://cdn-icons-mp4.flaticon.com/512/17702/17702145.mp4'
