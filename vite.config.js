@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
-
 export default defineConfig({
   plugins: [
     react(),
@@ -14,12 +13,6 @@ export default defineConfig({
       pwaAssets: {
         disabled: false,
         config: true,
-      },
-      manifest: {
-        name: 'book-job',
-        short_name: 'book-job',
-        description: '구직활동과 커뮤니티를 한 곳에서',
-        theme_color: '#ffffff',
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],

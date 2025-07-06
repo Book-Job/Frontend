@@ -31,8 +31,8 @@ const CommunityMainPage = () => {
       <SeoHelmet
         title='북잡 | 출판업계 커뮤니티'
         description='출판업계 관련 정보와 소통을 위한 자유게시판입니다. 업계 종사자들의 다양한 이야기를 확인해보세요.'
-        image='https://book-job.co.kr/metatag.png'
-        url='https://book-job.co.kr/community'
+        image='https://www.bookjob.co.kr/metatag.png'
+        url='https://www.bookjob.co.kr/community'
       />
       <div className='w-full px-4'>
         <section className='flex justify-center w-full mt-7'>
