@@ -140,7 +140,7 @@ const FindPwCheckIDPage = () => {
   }
   const formContent = (
     <div className='w-full'>
-      <div className='flex text-3xl font-bold'>임시 비밀번호 발급</div>
+      <div className='flex text-3xl font-bold '>임시 비밀번호 발급</div>
       <div className='flex my-5 text-xl'>
         {isMobile ? (
           <div className='flex flex-col'>
@@ -163,18 +163,18 @@ const FindPwCheckIDPage = () => {
         )}
       </div>
       <div className='flex flex-col text-dark-gray'>
-        <p className='flex'>본인확인 이메일 주소와 이력한 이메일 주소가 같아야,</p>
-        <p className='flex'>임시비밀번호를 받을 수 있습니다.</p>
+        <p className='flex'>본인확인 이메일과 입력한 이메일이 동일할 시</p>
+        <p className='flex'>임시 비밀번호가 발급됩니다</p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-2 sm:gap-5'>
         <div className='flex flex-row gap-2 mt-7'>
           <div className='w-full'>
             <InputBox
               type='email'
-              placeholder='이메일 주소를 입려해주세요'
+              placeholder='이메일을 입력해주세요'
               size='medium'
               {...register('userEmail', {
-                required: '이메일 주소를 입력해주세요',
+                required: '이메일을 입력해주세요',
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                   message: '유효한 이메일 주소를 입력해주세요',
@@ -182,7 +182,7 @@ const FindPwCheckIDPage = () => {
                 onChange: handleInputChange,
               })}
             />
-            {errors.userEmail && (
+            {errors.userEmail && emailValue && (
               <p className='flex text-[14px] items-start text-red-500'>
                 {errors.userEmail.message}
               </p>
