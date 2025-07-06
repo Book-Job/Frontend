@@ -66,7 +66,6 @@ const PwaPopUp = () => {
       scheduleNextAppearance()
     }
   }
-  console.log('deferredPrompt :', deferredPrompt)
 
   const MobilePopup = (
     <>
