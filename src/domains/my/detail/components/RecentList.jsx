@@ -5,6 +5,7 @@ import FreeBoard from '../../../../components/web/FreeBoard'
 import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
 import MobileFreeBoard from '../../../../components/app/MobileFreeBoard'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+import { BsCardImage } from 'react-icons/bs'
 
 const RecentList = ({ sortedPosts }) => {
   const navigate = useNavigate()
@@ -16,8 +17,18 @@ const RecentList = ({ sortedPosts }) => {
   return (
     <div className='w-full sm:max-w-[940px] mx-auto '>
       <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-4 justify-items-center '>
-        {sortedPosts.map((post) =>
-          post.draftType !== 'community' ? (
+        {sortedPosts.map((post) => {
+          const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
+          const content =
+            strippedText.length === 0 ? (
+              <span className='flex items-center gap-1 text-gray-500'>
+                <BsCardImage className='text-lg' />
+                이미지 게시글입니다
+              </span>
+            ) : (
+              strippedText
+            )
+          return post.draftType !== 'community' ? (
             <WorkBoardComponent
               key={post.id}
               postId={post.id}
@@ -51,14 +62,14 @@ const RecentList = ({ sortedPosts }) => {
               key={post.id}
               boardId={post.id}
               title={post.title}
-              content={post.text}
+              content={content}
               name={post.nickname}
               date={formatDate(post.createdAt)}
               commentCount={post.commentCount}
               viewCount={post.viewCount}
             />
-          ),
-        )}
+          )
+        })}
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ const saveTOStorage = (postData, id, draftType) => {
     id,
     title: postData.title || '제목 없음',
     text: postData.text
-      ? DOMPurify.sanitize(postData.text, { ALLOWED_TAGS: [] }).slice(0, 30)
+      ? DOMPurify.sanitize(postData.text, { ALLOWED_TAGS: ['img'] })
       : '내용 없음',
     draftType: draftType || 'community',
     date: new Date().toISOString(),

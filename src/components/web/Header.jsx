@@ -86,7 +86,7 @@ const Header = () => {
   }
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 bg-white/50 flex h-auto md:h-[75px] items-center sm:justify-between xl:px-32 px-12 py-4 flex-row gap-4 backdrop-blur-lg
+      className={`w-full fixed top-0 left-0 z-50 bg-white/65 flex h-auto md:h-[75px] items-center sm:justify-between xl:px-32 px-12 py-4 flex-row gap-4 backdrop-blur-lg
       ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
     `}
     >
