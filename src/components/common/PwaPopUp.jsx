@@ -98,7 +98,7 @@ const PwaPopUp = () => {
         </div>
       </div> */}
 
-      <div className='fixed z-50 w-full h-auto bottom-4'>
+      <div className='fixed z-50 w-full h-auto bottom-9'>
         {/* <div className='flex items-center mx-4 mb-1'>
           <label className='flex space-x-2 bg-white'>
             <input
@@ -112,14 +112,14 @@ const PwaPopUp = () => {
         </div> */}
         <div
           onClick={handleInstallClick}
-          className='flex items-center w-auto h-12 px-2 mx-4 border rounded-md bg-black/85 backdrop-blur-sm '
+          className='flex items-center w-auto h-[60px] px-2 mx-4 rounded-lg bg-black/85 '
         >
-          <img src={favicon} alt='favicon' className='mx-2 w-7' />
+          <img src={favicon} alt='favicon' className='w-10 mx-2 rounded-lg' />
           <p className='flex items-center w-full ml-2 text-sm'>
             <span className='font-bold text-main-pink'>bookjob</span>
             <span className='ml-1 text-white'>앱 처럼 보기.</span>
           </p>
-          <button onClick={handleClose} className='flex items-center h-full text-xl text-white'>
+          <button onClick={handleClose} className='flex items-center h-full text-2xl text-white'>
             <IoClose />
           </button>
         </div>
@@ -155,8 +155,8 @@ const PwaPopUp = () => {
     </>
   )
   const DesktopPopup = (
-    <div className='fixed z-50 flex flex-col items-start h-auto p-1 w-96 bottom-44 left-4'>
-      <div className='flex flex-col items-center w-full h-[100px] p-1 rounded-lg bg-black/85 backdrop-blur-sm'>
+    <div className='fixed z-50 flex flex-col items-start h-auto p-1 w-96 bottom-5 left-4'>
+      <div className='flex flex-col items-center w-full h-[100px] p-1 rounded-lg bg-black/85'>
         <button onClick={handleClose} className='flex justify-end w-full text-white'>
           <IoClose />
         </button>
@@ -176,7 +176,7 @@ const PwaPopUp = () => {
           </button>
         </div>
       </div>
-      <label className='flex w-full gap-2 px-2 bg-white'>
+      <label className='flex gap-2 px-2'>
         <input
           type='checkbox'
           checked={dontShowToday}

@@ -8,7 +8,7 @@ import ScrollBtn from '../components/common/ScrollAndWriteButton'
 const Layout = ({ children, headerType, label, noMargin = false }) => {
   const isMobile = useIsMobile()
 
-  const headerHeight = isMobile ? (headerType === 'main' ? 70 : 0) : 100
+  const headerHeight = isMobile ? (headerType === 'main' ? 55 : 0) : 75
 
   return (
     <div className='flex flex-col min-h-screen'>

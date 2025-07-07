@@ -71,7 +71,7 @@ const MobileMainHeader = () => {
 
   return (
     <div
-      className={`flex w-full h-[70px] px-5 items-center justify-between fixed top-0 left-0 bg-white z-50
+      className={`flex w-full h-[55px] px-5 items-center justify-between fixed top-0 left-0 bg-white z-50
         ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
       `}
     >
