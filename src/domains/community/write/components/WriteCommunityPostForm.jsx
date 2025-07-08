@@ -91,18 +91,24 @@ const WriteCommunityPostForm = () => {
       title: formValues.title || '',
       text: editorHTML || '',
     }
-    handleSaveDraft({
-      formData,
-      draftType: 'community',
-    })
-      .then((draftId) => {
-        if (draftId) {
-          navigate(ROUTER_PATHS.MY_DRAFTS)
-        }
+    if (selectedFreeDraft) {
+      useFreeDraftStore.getState().updateFreeDraft(selectedFreeDraft.id, formData)
+      navigate(ROUTER_PATHS.MY_DRAFTS)
+    } else {
+      handleSaveDraft({
+        formData,
+        draftType: 'community',
       })
-      .catch((error) => {
-        console.error('Save draft error:', error)
-      })
+        .then((draftId) => {
+          if (draftId) {
+            navigate(ROUTER_PATHS.MY_DRAFTS)
+          }
+        })
+        .catch((error) => {
+          console.error('Save draft error:', error)
+          ToastService.error('임시 저장에 실패했습니다.')
+        })
+    }
   }
 
   return (
