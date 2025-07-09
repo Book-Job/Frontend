@@ -79,7 +79,7 @@ const JobMainPage = () => {
   }, [location.state])
 
   return (
-    <div className='w-full px-4'>
+    <div className='w-full'>
       <section className='flex justify-center w-full mt-7 '>
         <SeoHelmet
           title='북잡 | 출판업계 구인 & 구직'

@@ -26,6 +26,7 @@ const AppRoutes = () => {
                 headerType={isMain ? 'main' : 'sub'}
                 label={route.label}
                 noMargin={route.noMargin}
+                paddingX={route.paddingX}
               >
                 {content}
               </Layout>

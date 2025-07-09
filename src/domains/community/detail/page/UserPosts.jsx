@@ -68,15 +68,14 @@ const UserPosts = () => {
         {nickname ?? '닉네임 없음'}님이 작성한 글
       </span>
 
-      <div className='flex flex-col gap-3 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
+      <div className='flex flex-col max-w-[940px] w-full mx-auto'>
         <div className='w-full h-[1px] bg-black' />
-
-        <table className='w-full text-left border-collapse'>
+        <table className='w-full border-collapse'>
           <thead>
-            <tr className='border-b border-dark-gray text-[14px] pb-3'>
+            <tr className='pb-3 text-sm border-b border-dark-gray '>
               <th className='py-3'>No</th>
               <th className='py-3'>제목</th>
-              <th className='py-3'>
+              <th className='py-3 '>
                 <button
                   onClick={toggleArrow}
                   className='flex items-center gap-1 focus:outline-none'
@@ -100,7 +99,10 @@ const UserPosts = () => {
                 className={index !== sortedPosts.length - 1 ? 'border-b border-light-gray' : ''}
               >
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{index + 1}</td>
-                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{post.title}</td>
+                {/* <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{post.title}</td> */}
+                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>
+                  {post.title.length > 20 ? `${post.title.slice(0, 20)}...` : post.title}
+                </td>
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>
                   {new Date(post.createdAt).toLocaleDateString()}
                 </td>

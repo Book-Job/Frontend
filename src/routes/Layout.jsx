@@ -5,7 +5,7 @@ import useIsMobile from '../hooks/header/useIsMobile'
 import Footer from './../components/web/Footer'
 import ScrollBtn from '../components/common/ScrollAndWriteButton'
 
-const Layout = ({ children, headerType, label, noMargin = false }) => {
+const Layout = ({ children, headerType, label, noMargin = false, paddingX = false }) => {
   const isMobile = useIsMobile()
 
   const headerHeight = isMobile ? (headerType === 'main' ? 55 : 0) : 85
@@ -24,7 +24,11 @@ const Layout = ({ children, headerType, label, noMargin = false }) => {
 
       <main
         className={`flex flex-col flex-1 ${
-          noMargin ? 'mb-4 sm:mb-10' : 'm-4 sm:m-10 justify-center'
+          noMargin
+            ? 'mb-4 sm:mb-10'
+            : paddingX
+              ? 'mb-4 sm:mb-10 px-5'
+              : 'm-4 sm:m-10 justify-center'
         }`}
         style={{ paddingTop: `${headerHeight}px` }}
       >

@@ -16,7 +16,7 @@ const RecentList = ({ sortedPosts }) => {
   const FreeBoardComponent = isMobile ? MobileFreeBoard : FreeBoard
   return (
     <div className='w-full sm:max-w-[940px] mx-auto '>
-      <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-4 justify-items-center '>
+      <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[940px] justify-items-center '>
         {sortedPosts.map((post) => {
           const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
           const content =

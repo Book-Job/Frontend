@@ -158,26 +158,6 @@ const Header = () => {
               </span>
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-3' />
             </button>
-            {/* {isDropdownOpen && (
-              <ul className='absolute sm:top-12 md:top-14 right-6 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
-                {options.map((option) => (
-                  <li
-                    key={option.value}
-                    onClick={() => !option.disabled && handleOptionChange(option.value)}
-                    className='px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200'
-                  >
-                    {option.value === 'default' ? (
-                      <div className='flex items-center'>
-                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
-                        {option.label}
-                      </div>
-                    ) : (
-                      option.label
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )} */}
           </div>
         ) : (
           <span className='flex gap-8 text-sm sm:text-base md:text-sm xl:text-lg'>
