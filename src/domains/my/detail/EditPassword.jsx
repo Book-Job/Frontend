@@ -78,7 +78,9 @@ const EditPassword = () => {
   }
   const formContent = (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-      <div className='flex justify-start text-3xl font-bold'>비밀번호 입력</div>
+      <div className='flex justify-start text-3xl font-bold'>
+        {isMobile ? null : '비밀번호 입력'}
+      </div>
       <div className='flex-auto mt-8'>
         <div className='mb-[11px] sm:text-[20px] text-base font-bold text-start'>비밀번호</div>
         <PwInputBox

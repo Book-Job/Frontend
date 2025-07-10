@@ -7,10 +7,16 @@ import { createJobSeekPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
 import useSaveDraft from '../../../../../hooks/writePost/useSaveDraft'
 import { useEffect, useRef } from 'react'
+import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
+import { useNavigate } from 'react-router-dom'
+import ToastService from '../../../../../services/toast/ToastService'
+import ROUTER_PATHS from '../../../../../routes/RouterPath'
 
 const WriteJobSearchPostPage = () => {
+  const { selectedFreeDraft } = useFreeDraftStore()
   const handleSubmitForm = usePostSubmit(createJobSeekPost)
   const { handleSaveDraft } = useSaveDraft()
+  const navigate = useNavigate()
   const editorRef = useRef(null)
 
   useEffect(() => {
@@ -23,6 +29,7 @@ const WriteJobSearchPostPage = () => {
     const form = document.getElementById('job-search-post-form')
     if (!form) {
       console.error('Form not found')
+      ToastService.error('저장할 내용이 없습니다.')
       return
     }
     const contentElement = form.querySelector('[name="text"]')
@@ -37,10 +44,18 @@ const WriteJobSearchPostPage = () => {
       contactEmail: form.querySelector('[name="contactEmail"]').value,
       text: content,
     }
-    handleSaveDraft({
-      formData: formValues,
-      draftType: 'jobSeekings',
-    })
+    if (selectedFreeDraft) {
+      useFreeDraftStore.getState().updateFreeDraft(selectedFreeDraft.id, formValues)
+      navigate(ROUTER_PATHS.MY_DRAFTS)
+    } else {
+      handleSaveDraft({
+        formData: formValues,
+        draftType: 'jobSeekings',
+      }).catch((error) => {
+        console.error('Save draft error:', error)
+        ToastService.error('임시 저장에 실패했습니다.')
+      })
+    }
   }
 
   return (

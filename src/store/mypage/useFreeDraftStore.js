@@ -24,6 +24,17 @@ const useFreeDraftStore = create((set, get) => ({
   },
   clearSelectedFreeDraft: () => set({ selectedFreeDraft: null }),
   getDraftEditorState: (draft) => draft.text || '',
+  updateFreeDraft: (draftId, updatedData) => {
+    const updatedDrafts = get().drafts.map((draft) =>
+      draft.id === draftId ? { ...draft, ...updatedData } : draft,
+    )
+    localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
+    set({
+      drafts: updatedDrafts,
+      selectedFreeDraft: { ...get().selectedFreeDraft, ...updatedData },
+    })
+    ToastService.success('임시 저장글이 수정되었어요.')
+  },
 }))
 
 export default useFreeDraftStore

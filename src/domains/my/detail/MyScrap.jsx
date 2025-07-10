@@ -64,12 +64,12 @@ const MyScrap = () => {
       )}
 
       {sortedPosts.length > 0 && (
-        <div className='flex justify-end max-w-[932px] pr-4 mx-auto mb-2'>
+        <div className='flex justify-end max-w-[940px] mx-auto mb-2'>
           <PostSortDropDown onSortChange={setSort} />
         </div>
       )}
 
-      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[932px] mx-auto justify-items-center px-4'>
+      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[940px] mx-auto justify-items-center'>
         {sortedPosts.map((post) => (
           <WorkBoard
             key={post.bookMarkId ?? post.entityId ?? post.id}

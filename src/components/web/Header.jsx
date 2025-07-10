@@ -86,7 +86,7 @@ const Header = () => {
   }
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 bg-white/50 flex h-auto md:h-[100px] items-center sm:justify-between xl:px-32 px-12 py-4 flex-row gap-4 backdrop-blur-lg
+      className={`w-full fixed top-0 left-0 z-50 bg-white/65 flex h-auto md:h-[85px] items-center sm:justify-between xl:px-32 px-12 py-4 flex-row gap-4 backdrop-blur-lg
       ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
     `}
     >
@@ -123,39 +123,41 @@ const Header = () => {
       </div>
       <div className='flex justify-end whitespace-nowrap'>
         {isAuthenticated && user ? (
-          <div className='relative' ref={dropdownRef}>
+          <div ref={dropdownRef} className='relative'>
             <button
               onClick={toggleDropdown}
-              className='flex items-center bg-[#F4F6FA] text-sm md:text-[16px] h-[44px] md:h-[52px] rounded-full px-6 font-bold'
+              className='flex items-center bg-[#F4F6FA] justify-center text-sm md:text-base h-11 md:h-12 rounded-full px-5 font-bold'
             >
               <img
                 src={babyChick}
                 alt='babyChick'
                 className='w-6 h-6 mr-3 md:w-7 md:h-7 hover:animate-move-left'
               />
-              <span>{user.nickname}님</span>
+              <span className='relative'>
+                {user.nickname}님
+                {isDropdownOpen && (
+                  <ul className='absolute top-9 md:top-10 font-normal left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+                    {options.map((option) => (
+                      <li
+                        key={option.value}
+                        onClick={() => !option.disabled && handleOptionChange(option.value)}
+                        className='px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200'
+                      >
+                        {option.value === 'default' ? (
+                          <div className='flex items-center'>
+                            <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
+                            {option.label}
+                          </div>
+                        ) : (
+                          option.label
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </span>
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-3' />
             </button>
-            {isDropdownOpen && (
-              <ul className='absolute top-14 right-4 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
-                {options.map((option) => (
-                  <li
-                    key={option.value}
-                    onClick={() => !option.disabled && handleOptionChange(option.value)}
-                    className='px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200'
-                  >
-                    {option.value === 'default' ? (
-                      <div className='flex items-center'>
-                        <img src={babyChick} alt='babyChick' className='w-5 h-5 mr-2' />
-                        {option.label}
-                      </div>
-                    ) : (
-                      option.label
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         ) : (
           <span className='flex gap-8 text-sm sm:text-base md:text-sm xl:text-lg'>
