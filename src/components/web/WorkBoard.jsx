@@ -83,7 +83,7 @@ const WorkBoard = ({
             style={{ opacity: loading ? 0.5 : 1 }}
           />
         </button>
-        <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
+        <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer '>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 && <TagIcon label='인기 글' icon={popular} />}
             {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
@@ -96,7 +96,7 @@ const WorkBoard = ({
           </div>
           <h3
             onClick={onClick}
-            className='flex mb-1 text-sm font-bold line-clamp-2 sm:text-base md:text-lg'
+            className='mb-1 text-sm font-bold truncate sm:text-base md:text-lg text-start'
           >
             {title}
           </h3>
