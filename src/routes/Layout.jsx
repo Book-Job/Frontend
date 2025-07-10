@@ -4,6 +4,7 @@ import MobileMainHeader from '../components/app/MobileMainHeader'
 import useIsMobile from '../hooks/header/useIsMobile'
 import Footer from './../components/web/Footer'
 import ScrollBtn from '../components/common/ScrollAndWriteButton'
+import PropTypes from 'prop-types'
 
 const Layout = ({ children, headerType, label, noMargin = false, paddingX = false }) => {
   const isMobile = useIsMobile()
@@ -39,5 +40,11 @@ const Layout = ({ children, headerType, label, noMargin = false, paddingX = fals
     </div>
   )
 }
-
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  headerType: PropTypes.string,
+  label: PropTypes.string,
+  noMargin: PropTypes.bool,
+  paddingX: PropTypes.bool,
+}
 export default Layout

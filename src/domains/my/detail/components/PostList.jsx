@@ -159,7 +159,6 @@ const PostList = ({ boardData }) => {
                 <td>{index + 1}</td>
                 <td className='truncate max-w-[50px]'>
                   {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
-                  {/* {item.title} */}
                 </td>
                 <td className='text-nowrap'>{item.createdAt.split('T')[0]}</td>
                 {item.recruitmentCategory !== undefined &&
