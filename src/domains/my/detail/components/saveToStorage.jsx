@@ -12,9 +12,7 @@ const saveTOStorage = (postData, id, draftType) => {
           ALLOWED_TAGS: ['img'],
           ALLOWED_ATTR: ['src', 'alt'],
         })
-      : // text: postData.text
-        //   ? DOMPurify.sanitize(postData.text, { ALLOWED_TAGS: ['img'] })
-        '내용 없음',
+      : '내용 없음',
     draftType: draftType || 'community',
     date: new Date().toISOString(),
     ...(postData.viewCount && { viewCount: postData.viewCount }),
