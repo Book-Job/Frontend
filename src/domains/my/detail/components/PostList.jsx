@@ -117,14 +117,14 @@ const PostList = ({ boardData }) => {
         </div>
       </div>
       <div className='border border-b-black'></div>
-      <table className='w-full text-sm'>
-        <thead className='border-b'>
-          <tr className='h-12'>
-            <th className='w-10'>
+      <table className='w-full text-sm border-collapse'>
+        <thead>
+          <tr className='h-12 border-b'>
+            <th className='w-6 sm:w-10 '>
               <input type='checkbox' checked={isAllChecked} onChange={toggleAll} />
             </th>
-            <th>No</th>
-            <th>제목</th>
+            <th className='w-7 sm:w-10'>No</th>
+            <th className='w-1/4 sm:w-1/2'>제목</th>
             <th>
               <button onClick={handleSortToggle}>
                 <PostSortDropDown onSortChange={setSort} className='hidden' />
@@ -139,13 +139,16 @@ const PostList = ({ boardData }) => {
               sortedBoardData.some((item) => item.commentCount !== undefined) && <th>댓글</th>}
             {Array.isArray(sortedBoardData) &&
               sortedBoardData.some((item) => item.viewCount !== undefined) && <th>조회수</th>}
-            <th>삭제</th>
+            <th className='w-7 sm:w-10'>삭제</th>
           </tr>
         </thead>
         <tbody>
           {Array.isArray(sortedBoardData) && sortedBoardData.length > 0 ? (
             sortedBoardData.map((item, index) => (
-              <tr key={item.boardId || item.recruitmentId} className='h-12 border-b'>
+              <tr
+                key={item.boardId || item.recruitmentId}
+                className='h-12 text-xs border-b sm:text-sm'
+              >
                 <td>
                   <input
                     type='checkbox'
@@ -154,26 +157,19 @@ const PostList = ({ boardData }) => {
                   />
                 </td>
                 <td>{index + 1}</td>
-                <td>{item.title}</td>
-                <td>{item.createdAt.split('T')[0]}</td>
+                <td className='truncate max-w-[50px]'>
+                  {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
+                  {/* {item.title} */}
+                </td>
+                <td className='text-nowrap'>{item.createdAt.split('T')[0]}</td>
                 {item.recruitmentCategory !== undefined &&
                   (item.recruitmentCategory === 'JOB_POSTING' ? (
                     <td>
-                      <BoardCategory
-                        label={'구인'}
-                        bgColor={'#EBF7FF'}
-                        labelColor={'#2563EB'}
-                        width={'60px'}
-                      />
+                      <BoardCategory label={'구인'} />
                     </td>
                   ) : (
                     <td>
-                      <BoardCategory
-                        label={'구직'}
-                        bgColor={'#FFEFEB'}
-                        labelColor={'#DC2626'}
-                        width={'60px'}
-                      />
+                      <BoardCategory label={'구직'} />
                     </td>
                   ))}
                 {item.commentCount !== undefined && (

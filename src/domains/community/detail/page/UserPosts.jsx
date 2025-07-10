@@ -74,8 +74,8 @@ const UserPosts = () => {
           <thead>
             <tr className='pb-3 text-sm border-b border-dark-gray '>
               <th className='py-3'>No</th>
-              <th className='py-3'>제목</th>
-              <th className='py-3 '>
+              <th className='w-1/4 py-3 sm:w-1/2'>제목</th>
+              <th className='flex justify-center py-3'>
                 <button
                   onClick={toggleArrow}
                   className='flex items-center gap-1 focus:outline-none'
@@ -99,11 +99,10 @@ const UserPosts = () => {
                 className={index !== sortedPosts.length - 1 ? 'border-b border-light-gray' : ''}
               >
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{index + 1}</td>
-                {/* <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{post.title}</td> */}
-                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>
+                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px] truncate max-w-[50px]'>
                   {post.title.length > 20 ? `${post.title.slice(0, 20)}...` : post.title}
                 </td>
-                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>
+                <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px] text-nowrap'>
                   {new Date(post.createdAt).toLocaleDateString()}
                 </td>
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{post.nickname}</td>
