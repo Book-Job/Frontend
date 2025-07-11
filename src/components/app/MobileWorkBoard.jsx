@@ -85,6 +85,7 @@ const MobileWorkBoard = ({
             }}
             disabled={loading}
             aria-label={scrapped ? '스크랩 해제' : '스크랩'}
+            title={scrapped ? '스크랩 해제' : '스크랩'}
           >
             <img
               src={bookmarkIcon}
