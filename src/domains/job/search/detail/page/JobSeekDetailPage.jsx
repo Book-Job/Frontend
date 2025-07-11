@@ -147,7 +147,7 @@ const JobSeekDetailPage = () => {
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />
-      <h2 className='flex self-start text-lg font-bold sm:text-xl mt-7'>관련 글</h2>
+      <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl mt-7'>관련 글</h2>
       <RelatedJobSearchPosts currentId={id} />
     </div>
   )
