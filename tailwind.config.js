@@ -19,6 +19,7 @@ export default {
         'naver-dark-Green': '#09aa5c',
         'kakao-yellow': '#fee500',
         'kakao-dark-yellow': '#fada0a',
+        'error-red': '#ef4444',
       },
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],
