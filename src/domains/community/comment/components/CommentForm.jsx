@@ -65,12 +65,12 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
           className='
             h-[44px] sm:h-[50px]
             w-full
-            px-3 py-2 pr-[70px]
+            px-3 py-2 pr-[60px]
             border border-dark-gray rounded-[5px]
             focus:outline-none focus:border-main-pink
             placeholder:text-dark-gray
             text-base
-            placeholder:text-xs 
+            placeholder:text-sm
             
           '
         />
