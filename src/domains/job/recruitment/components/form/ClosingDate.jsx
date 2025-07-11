@@ -29,7 +29,7 @@ const ClosingDate = ({ control }) => {
               text-left
             '
               style={{
-                WebkitAppearance: 'none',
+                WebkitAppearance: 'textfield',
                 appearance: 'none',
                 textAlign: 'left',
                 paddingLeft: '16px',
