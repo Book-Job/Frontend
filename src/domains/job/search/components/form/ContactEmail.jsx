@@ -6,7 +6,7 @@ const ContactEmail = ({ register, errors }) => {
       <JobInputBox placeholder='연락 가능한 이메일을 적어주세요' {...register('contactEmail')} />
       <div className='flex items-start'>
         {errors.contactEmail && (
-          <span className='text-red-500 text-[14px] mt-1'>{errors.contactEmail.message}</span>
+          <span className='text-error-red text-sm mt-1'>{errors.contactEmail.message}</span>
         )}
       </div>
     </FormItem>

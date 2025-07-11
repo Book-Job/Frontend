@@ -85,7 +85,7 @@ const DetailCommunityPage = () => {
     ToastService.warn('이 사용자를 차단합니다.')
   }
 
-  if (error) return <div className='mt-10 text-center text-red-500'>오류가 발생했어요.</div>
+  if (error) return <div className='mt-10 text-center text-error-red'>오류가 발생했어요.</div>
   if (!post) return <div className='mt-10 text-center text-gray-500'>게시글이 존재하지 않아요.</div>
 
   return (

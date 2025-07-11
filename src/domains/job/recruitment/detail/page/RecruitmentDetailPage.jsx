@@ -47,7 +47,7 @@ const RecruitmentDetailPage = () => {
       </div>
     )
   }
-  if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
+  if (error) return <p className='text-center text-error-red'>존재하지 않는 게시글입니다.</p>
   if (!data) return <p className='text-center text-dark-gray'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {

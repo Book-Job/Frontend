@@ -43,9 +43,9 @@ const ClosingDate = ({ control }) => {
           )
         }}
       />
-      <p id='closingDateHelp' className='text-red-500 text-[13px] mt-1'>
+      <div id='closingDateHelp' className='w-full text-left text-error-red text-sm mt-1'>
         미선택시 상시채용으로 자동 입력됩니다.
-      </p>
+      </div>
     </FormItem>
   )
 }

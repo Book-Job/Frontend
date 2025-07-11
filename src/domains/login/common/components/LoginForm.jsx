@@ -111,7 +111,7 @@ const LoginForm = () => {
           />
         </div>
         {errors.userID && (
-          <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
+          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.userID.message}</p>
         )}
         <div className='flex w-full'>
           <PwInputBox
@@ -122,7 +122,7 @@ const LoginForm = () => {
           />
         </div>
         {errors.password && (
-          <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
+          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between '>
           <label className='flex items-center gap-2 text-sm cursor-pointer sm:text-base'>

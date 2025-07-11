@@ -29,7 +29,8 @@ const EditJobSeekPostPage = () => {
       </div>
     )
   }
-  if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
+  if (error)
+    return <p className='text-center text-error-red text-sm'>존재하지 않는 게시글입니다.</p>
 
   const defaultValues = {
     ...data,

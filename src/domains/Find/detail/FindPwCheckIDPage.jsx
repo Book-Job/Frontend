@@ -183,13 +183,11 @@ const FindPwCheckIDPage = () => {
               })}
             />
             {errors.userEmail && emailValue && (
-              <p className='flex text-[14px] items-start text-red-500'>
-                {errors.userEmail.message}
-              </p>
+              <p className='flex text-sm items-start text-error-red'>{errors.userEmail.message}</p>
             )}
             {emailCheckMessage && (
               <p
-                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} flex items-start text-[14px]`}
+                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-error-red'} flex items-start text-sm`}
                 aria-live='polite'
               >
                 {emailCheckMessage}
@@ -215,7 +213,7 @@ const FindPwCheckIDPage = () => {
           <div className='flex items-start'>
             {emailCodeMessage && (
               <p
-                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                className={`${validationStatusTemPW === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
                 aria-live='polite'
               >
                 {emailCodeMessage}

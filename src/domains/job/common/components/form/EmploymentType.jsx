@@ -16,7 +16,7 @@ const EmploymentType = ({ register, errors }) => {
       </select>
       <div className='flex items-start'>
         {errors.employmentType && (
-          <span className='text-red-500 text-[14px] mt-1'>근무형태 선택은 필수입니다.</span>
+          <span className='text-error-red text-sm mt-1'>근무형태 선택은 필수입니다.</span>
         )}
       </div>
     </FormItem>

@@ -36,7 +36,7 @@ const MyPage = () => {
           <Spinner size={48} color='main-pink' />
         </div>
       ) : error ? (
-        <div className='text-center text-red-500'>{error}</div>
+        <div className='text-center text-sm text-error-red'>{error}</div>
       ) : userData ? (
         <>
           <MyData userID={userData.data.nickname} email={userData.data.email} />

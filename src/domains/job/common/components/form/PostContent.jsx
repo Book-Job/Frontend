@@ -23,7 +23,7 @@ const PostContent = ({ control, errors, editorRef }) => {
           <div className='w-full'>
             <WriteEditor value={field.value ?? ''} onChange={field.onChange} ref={editorRef} />
             {errors.text && (
-              <span className='text-red-500 text-[14px] mt-1 block text-left'>
+              <span className='text-error-red text-sm mt-1 block text-left'>
                 {errors.text.message}
               </span>
             )}

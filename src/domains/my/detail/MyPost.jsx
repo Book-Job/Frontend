@@ -46,7 +46,7 @@ const MyPost = () => {
         ) : posts.length === 0 ? (
           <p className='mt-12 text-dark-gray'>첫 글을 작성해보세요! </p>
         ) : (choiceBoard === '자유게시판' ? freeError : jobError) ? (
-          <div className='flex flex-col text-center text-red-500'>
+          <div className='flex flex-col text-center text-error-red'>
             {choiceBoard === '자유게시판' ? freeError : jobError}
             <button
               onClick={() =>

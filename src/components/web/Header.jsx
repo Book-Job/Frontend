@@ -93,7 +93,7 @@ const Header = () => {
       <div className='flex flex-row items-center gap-5 xl:gap-20 md:gap-10 '>
         <span
           onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-          className='text-2xl cursor-pointer text-main-pink md:text-4xl font-logo'
+          className='text-2xl cursor-pointer text-main-pink md:text-3xl font-logo'
         >
           bookjob
         </span>
