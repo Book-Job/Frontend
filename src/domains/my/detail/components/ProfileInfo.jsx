@@ -189,12 +189,12 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
       {(errors.nickname || serverError || nicknameCheckMessage) && (
         <div className='flex items-start mt-1'>
           {errors.nickname && (
-            <p className='text-sm text-red-500' aria-live='polite'>
+            <p className='text-sm text-error-red' aria-live='polite'>
               {errors.nickname.message}
             </p>
           )}
           {serverError && (
-            <p className='text-sm text-red-500' aria-live='polite'>
+            <p className='text-sm text-error-red' aria-live='polite'>
               {serverError}
             </p>
           )}
@@ -203,7 +203,7 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
       {nicknameCheckMessage && (
         <p
           className={`text-sm flex justify-start ${
-            nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'
+            nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'
           }`}
           aria-live='polite'
         >

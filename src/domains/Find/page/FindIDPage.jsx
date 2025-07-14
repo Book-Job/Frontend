@@ -25,7 +25,7 @@ const FindIDPage = () => {
   const [isCheckingEmail, setIsCheckingEmail] = useState(false)
   const { setFindID } = useFindIDStore()
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     if (validationStatus === 'success') {
       navigate(ROUTER_PATHS.FIND_ID_COMPLETE_PAGE)
     }

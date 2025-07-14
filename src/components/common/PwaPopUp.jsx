@@ -68,95 +68,36 @@ const PwaPopUp = () => {
   }
 
   const MobilePopup = (
-    <>
-      {/* <div className='fixed z-50 w-full h-auto bottom-32'>
-        <div className='flex items-center justify-between w-full px-4'>
-          <label className='flex gap-2 bg-white'>
-            <input
-              type='checkbox'
-              checked={dontShowToday}
-              onChange={(e) => setDontShowToday(e.target.checked)}
-              className='form-checkbox'
-            />
-            <span className='text-xs'>오늘 하루 그만보기</span>
-          </label>
-          <button onClick={handleClose} className='flex items-center text-xl text-black bg-white'>
-            <IoClose />
-          </button>
-        </div>
-        <div className='flex items-center justify-between w-auto h-12 px-2 mx-4 bg-white border rounded-full border-main-pink'>
-          <img src={favicon} alt='favicon' className='mx-2 w-7' />
-          <p className='ml-3 text-sm'>
-            <span className='font-bold text-main-pink'>bookjob</span>
-            <span>을 앱 처럼 사용해보세요.</span>
-          </p>
-          <button onClick={handleInstallClick} className='flex'>
-            <span className='px-3 py-1 ml-3 rounded-full text-zinc-200 bg-main-pink shadow-l'>
-              Install
-            </span>
-          </button>
-        </div>
-      </div> */}
-
-      <div className='fixed z-50 w-full h-auto bottom-4'>
-        {/* <div className='flex items-center mx-4 mb-1'>
-          <label className='flex space-x-2 bg-white'>
-            <input
-              type='checkbox'
-              checked={dontShowToday}
-              onChange={(e) => setDontShowToday(e.target.checked)}
-              className='form-checkbox'
-            />
-            <span className='text-xs'>오늘 하루 그만보기</span>
-          </label>
-        </div> */}
-        <div
-          onClick={handleInstallClick}
-          className='flex items-center w-auto h-12 px-2 mx-4 border rounded-md bg-black/85 backdrop-blur-sm '
-        >
-          <img src={favicon} alt='favicon' className='mx-2 w-7' />
-          <p className='flex items-center w-full ml-2 text-sm'>
-            <span className='font-bold text-main-pink'>bookjob</span>
-            <span className='ml-1 text-white'>앱 처럼 보기.</span>
-          </p>
-          <button onClick={handleClose} className='flex items-center h-full text-xl text-white'>
-            <IoClose />
-          </button>
-        </div>
+    <div className='fixed z-50 w-full h-auto bottom-9'>
+      <div className='flex items-center mx-4 mb-1'>
+        <label className='flex space-x-2 bg-white'>
+          <input
+            type='checkbox'
+            checked={dontShowToday}
+            onChange={(e) => setDontShowToday(e.target.checked)}
+            className='form-checkbox'
+          />
+          <span className='text-xs'>오늘 하루 그만보기</span>
+        </label>
       </div>
-
-      {/* <div className='fixed bottom-0 z-50 w-full h-auto'>
-        <div className='px-2 pb-1 bg-white'>
-          <label className='flex gap-2'>
-            <input
-              type='checkbox'
-              checked={dontShowToday}
-              onChange={(e) => setDontShowToday(e.target.checked)}
-              className='form-checkbox'
-            />
-            <span className='text-xs'>오늘 하루 그만보기</span>
-          </label>
-        </div>
-        <div className='flex items-center justify-between w-full h-24 pb-4 pl-2 pr-4 bg-zinc-800'>
-          <button onClick={handleClose} className='text-2xl text-white'>
-            <IoClose />
-          </button>
-          <img src={favicon} alt='favicon' className='w-10 mx-2' />
-          <p className='flex-wrap px-1 text-sm text-white break-keep text-start'>
-            설치하면 한 번의 터치로 바로 접속할 수 있어요
-          </p>
-          <button onClick={handleInstallClick} className='flex'>
-            <span className='px-5 py-2 ml-3 rounded-full text-zinc-200 bg-main-pink shadow-l'>
-              Install
-            </span>
-          </button>
-        </div>
-      </div> */}
-    </>
+      <div
+        onClick={handleInstallClick}
+        className='flex items-center w-auto h-[60px] px-2 mx-4 rounded-lg bg-black/85 '
+      >
+        <img src={favicon} alt='favicon' className='w-10 mx-2 rounded-lg' />
+        <p className='flex items-center w-full ml-2 text-sm'>
+          <span className='font-bold text-main-pink'>bookjob</span>
+          <span className='ml-1 text-white'>앱 처럼 보기.</span>
+        </p>
+        <button onClick={handleClose} className='flex items-center h-full text-2xl text-white'>
+          <IoClose />
+        </button>
+      </div>
+    </div>
   )
   const DesktopPopup = (
-    <div className='fixed z-50 flex flex-col items-start h-auto p-1 w-96 bottom-44 left-4'>
-      <div className='flex flex-col items-center w-full h-[100px] p-1 rounded-lg bg-black/85 backdrop-blur-sm'>
+    <div className='fixed z-50 flex flex-col items-start h-auto p-1 w-96 bottom-5 left-4'>
+      <div className='flex flex-col items-center w-full h-[100px] p-1 rounded-lg bg-black/85'>
         <button onClick={handleClose} className='flex justify-end w-full text-white'>
           <IoClose />
         </button>
@@ -176,7 +117,7 @@ const PwaPopUp = () => {
           </button>
         </div>
       </div>
-      <label className='flex w-full gap-2 px-2 bg-white'>
+      <label className='flex gap-2 px-2'>
         <input
           type='checkbox'
           checked={dontShowToday}
@@ -192,11 +133,9 @@ const PwaPopUp = () => {
     <div
       className={`fixed z-50 bottom-0 transition-all duration-1000 ease-in-out w-full ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none '
-        // isVisible ? 'opacity-0 translate-y-5 pointer-events-none ' : 'opacity-100 translate-y-0' //테스트용
       }`}
     >
-      {deferredPrompt && (isMobile ? MobilePopup : DesktopPopup)}
-      {/* {isMobile ? MobilePopup : DesktopPopup} //테스트용 */}
+      {deferredPrompt && (isMobile ? MobilePopup : null)}
     </div>
   )
 }

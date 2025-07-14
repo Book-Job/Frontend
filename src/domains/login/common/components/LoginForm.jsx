@@ -111,7 +111,7 @@ const LoginForm = () => {
           />
         </div>
         {errors.userID && (
-          <p className='flex items-start ml-4 text-red-500'>{errors.userID.message}</p>
+          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.userID.message}</p>
         )}
         <div className='flex w-full'>
           <PwInputBox
@@ -122,10 +122,10 @@ const LoginForm = () => {
           />
         </div>
         {errors.password && (
-          <p className='flex items-start ml-4 text-red-500'>{errors.password.message}</p>
+          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.password.message}</p>
         )}
         <div className='flex items-center justify-between '>
-          <div className='flex items-center gap-2 text-sm sm:text-base'>
+          <label className='flex items-center gap-2 text-sm cursor-pointer sm:text-base'>
             <input
               type='checkbox'
               name='SaveLoginID'
@@ -134,7 +134,7 @@ const LoginForm = () => {
               className='flex w-5 h-5 cursor-pointer'
             />
             아이디 저장
-          </div>
+          </label>
           <div className='flex gap-3 text-sm font-medium sm:text-base'>
             <button type='button' onClick={() => navigate(ROUTER_PATHS.FIND_ID)}>
               아이디 찾기

@@ -13,9 +13,11 @@ import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useSaveDraft from '../../../../hooks/writePost/useSaveDraft'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+import useTitleValidation from '../../../../hooks/writePost/useTitleValidation'
 
 const WriteCommunityPostForm = () => {
   const { user } = useAuthStore()
+  const titleValidation = useTitleValidation()
   const isMobile = useIsMobile()
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const navigate = useNavigate()
@@ -91,18 +93,24 @@ const WriteCommunityPostForm = () => {
       title: formValues.title || '',
       text: editorHTML || '',
     }
-    handleSaveDraft({
-      formData,
-      draftType: 'community',
-    })
-      .then((draftId) => {
-        if (draftId) {
-          navigate(ROUTER_PATHS.MY_DRAFTS)
-        }
+    if (selectedFreeDraft) {
+      useFreeDraftStore.getState().updateFreeDraft(selectedFreeDraft.id, formData)
+      navigate(ROUTER_PATHS.MY_DRAFTS)
+    } else {
+      handleSaveDraft({
+        formData,
+        draftType: 'community',
       })
-      .catch((error) => {
-        console.error('Save draft error:', error)
-      })
+        .then((draftId) => {
+          if (draftId) {
+            navigate(ROUTER_PATHS.MY_DRAFTS)
+          }
+        })
+        .catch((error) => {
+          console.error('Save draft error:', error)
+          ToastService.error('임시 저장에 실패했습니다.')
+        })
+    }
   }
 
   return (
@@ -116,7 +124,7 @@ const WriteCommunityPostForm = () => {
               className='self-start w-full'
             />
             {errors.nickname && (
-              <span className='self-start text-red-500 text-[14px] mt-1'>닉네임은 필수입니다</span>
+              <span className='self-start text-error-red text-sm mt-1'>닉네임은 필수입니다</span>
             )}
           </div>
         </FormItem>
@@ -127,12 +135,12 @@ const WriteCommunityPostForm = () => {
         <FormItem label='글 제목' dot={true}>
           <div className='flex flex-col w-full'>
             <JobInputBox
-              {...register('title', { required: true })}
+              {...register('title', titleValidation)}
               placeholder='글 제목을 입력하세요'
               className='w-full'
             />
             {errors.title && (
-              <span className='self-start mt-1 text-xs text-red-500'>제목은 필수입니다</span>
+              <span className='self-start mt-1 text-sm text-error-red'>{errors.title.message}</span>
             )}
           </div>
         </FormItem>
@@ -149,7 +157,7 @@ const WriteCommunityPostForm = () => {
             placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
-            <span className='self-start block mt-1 text-xs text-left text-red-500'>
+            <span className='self-start block mt-1 text-sm text-left text-error-red'>
               내용은 필수입니다
             </span>
           ) : null}

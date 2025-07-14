@@ -29,9 +29,9 @@ const BestList = ({ boardName, bestList }) => {
           return (
             <div key={index} className='flex items-center'>
               <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-              <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3'>
+              <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden white-space-nowrap'>
                 <button
-                  className='justify-start w-auto line-clamp-1'
+                  className='w-10/12 text-start line-clamp-1'
                   onClick={
                     boardId
                       ? () => navigate(`/community/post/${boardId}`)

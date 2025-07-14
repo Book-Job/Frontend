@@ -140,10 +140,10 @@ const EmailInput = ({
           </div>
 
           <div className='flex items-start'>
-            {errors.emailId && <p className='text-red-500 text-[14px]'>{errors.emailId.message}</p>}
+            {errors.emailId && <p className='text-error-red text-sm'>{errors.emailId.message}</p>}
             {emailCheckMessage && (
               <p
-                className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+                className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
               >
                 {emailCheckMessage}
               </p>

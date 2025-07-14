@@ -19,7 +19,7 @@ const NewPasswordInput = ({ register, errors, watch }) => {
           />
           <div className='flex items-start'>
             {errors.newPassword && (
-              <p className='text-red-500 text-[14px]'>{errors.newPassword.message}</p>
+              <p className='text-error-red text-sm'>{errors.newPassword.message}</p>
             )}
           </div>
         </div>
@@ -35,7 +35,7 @@ const NewPasswordInput = ({ register, errors, watch }) => {
           />
           <div className='flex items-start'>
             {errors.passwordCheck && (
-              <p className='text-red-500 text-[14px]'>{errors.passwordCheck.message}</p>
+              <p className='text-error-red text-sm'>{errors.passwordCheck.message}</p>
             )}
           </div>
         </div>

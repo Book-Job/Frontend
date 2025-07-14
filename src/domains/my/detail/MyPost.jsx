@@ -37,16 +37,16 @@ const MyPost = () => {
 
   return (
     <div className='w-full'>
-      <div className='sm:max-w-[940px] mx-auto px-4'>
+      <div className='sm:max-w-[940px] mx-auto'>
         <MyPostHead choiceBoard={choiceBoard} />
         {isLoading && posts.length === 0 ? (
           <div className='flex justify-center items-center h-[100px]'>
             <Spinner size={48} color='main-pink' />
           </div>
         ) : posts.length === 0 ? (
-          <p className='text-dark-gray mt-12'>첫 글을 작성해보세요! </p>
+          <p className='mt-12 text-dark-gray'>첫 글을 작성해보세요! </p>
         ) : (choiceBoard === '자유게시판' ? freeError : jobError) ? (
-          <div className='flex flex-col text-center text-red-500'>
+          <div className='flex flex-col text-center text-error-red'>
             {choiceBoard === '자유게시판' ? freeError : jobError}
             <button
               onClick={() =>

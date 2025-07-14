@@ -20,7 +20,7 @@ const ImageBubbleMenu = ({ editor }) => {
           e.preventDefault()
           editor.chain().focus().deleteSelection().run()
         }}
-        className='bg-white text-red-500 hover:text-red-700 border border-gray-300 rounded-full w-6 h-6 flex items-center justify-center shadow-md'
+        className='bg-white text-error-red hover:text-red-700 border border-gray-300 rounded-full w-6 h-6 flex items-center justify-center shadow-md'
         title='이미지 삭제'
       >
         <FaTimes size={12} />

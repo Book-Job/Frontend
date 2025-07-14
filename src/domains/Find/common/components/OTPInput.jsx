@@ -72,13 +72,13 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
                   isExpired || !code ? 'bg-gray-400 cursor-not-allowed' : 'hover:text-hover-pink'
                 }`}
               >
-                <span className='text-red-500'>{formatTime(timeLeft)}</span>{' '}
+                <span className='text-error-red'>{formatTime(timeLeft)}</span>{' '}
                 <span className='px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'>
                   인증
                 </span>
               </button>
             ) : (
-              <p className='text-red-500'>{formatTime(timeLeft)}</p>
+              <p className='text-error-red'>{formatTime(timeLeft)}</p>
             )}
           </div>
         )}

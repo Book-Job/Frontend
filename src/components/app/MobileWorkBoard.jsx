@@ -85,6 +85,7 @@ const MobileWorkBoard = ({
             }}
             disabled={loading}
             aria-label={scrapped ? '스크랩 해제' : '스크랩'}
+            title={scrapped ? '스크랩 해제' : '스크랩'}
           >
             <img
               src={bookmarkIcon}
@@ -104,7 +105,7 @@ const MobileWorkBoard = ({
               <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />
             )}
           </div>
-          <h3 className='self-start mb-2 text-base font-bold sm:text-lg line-clamp-2'>{title}</h3>
+          <h3 className='self-start mb-2 text-base font-bold sm:text-lg line-clamp-1'>{title}</h3>
           <div className='flex flex-col mt-auto text-xs text-dark-gray sm:text-sm'>
             <div className='flex justify-end mb-1 font-bold'>{name}</div>
             <hr className='my-1 border-dark-gray' />

@@ -73,12 +73,13 @@ const routes = [
   {
     path: ROUTER_PATHS.USER_POST,
     element: <UserPosts />,
+    paddingX: true,
   },
 
   {
     path: ROUTER_PATHS.JOB_MAIN,
     element: <JobMainPage />,
-    noMargin: true,
+    paddingX: true,
   },
   {
     path: ROUTER_PATHS.WRITE_RECRUITMENT_POST,
@@ -166,25 +167,25 @@ const routes = [
     path: ROUTER_PATHS.MY_SCRAP,
     element: <MyScrap />,
     label: '스크랩',
-    noMargin: true,
+    paddingX: true,
   },
   {
     path: ROUTER_PATHS.MY_POST,
     element: <MyPost />,
     label: '내가 작성한 글',
-    noMargin: true,
+    paddingX: true,
   },
   {
     path: ROUTER_PATHS.MY_RECENT_LIST,
     element: <MyRecentList />,
     label: '최근본 목록',
-    noMargin: true,
+    paddingX: true,
   },
   {
     path: ROUTER_PATHS.MY_DRAFTS,
     element: <MyDrafts />,
     label: '임시저장 글',
-    noMargin: true,
+    paddingX: true,
   },
   {
     path: '*',

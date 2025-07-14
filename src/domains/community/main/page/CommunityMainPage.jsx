@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import BannerExample from '../../../../components/common/BannerExample'
+import Banner from '../../../../components/common/Banner'
 import SearchBar from '../../../../components/web/SearchBar'
 import PostSortDropDown from '../../../../components/common/PostSortDropDown'
 import FreeBoard from '../../../../components/web/FreeBoard'
@@ -27,7 +27,7 @@ const CommunityMainPage = () => {
 
   return (
     <>
-      <BannerExample />
+      <Banner />
       <SeoHelmet
         title='북잡 | 출판업계 커뮤니티'
         description='출판업계 관련 정보와 소통을 위한 자유게시판입니다. 업계 종사자들의 다양한 이야기를 확인해보세요.'

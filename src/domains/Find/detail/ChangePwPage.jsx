@@ -73,7 +73,9 @@ const ChangePwPage = () => {
   const formContent = (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-        <div className='flex justify-start text-3xl font-bold mb-9'>비밀번호 변경</div>
+        <div className='flex justify-start text-3xl font-bold mb-9'>
+          {isMobile ? null : '비밀번호 변경'}
+        </div>
         <NewPasswordInput register={register} errors={errors} watch={watch} />
         <div className='mt-8'>
           <Button

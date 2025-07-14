@@ -81,10 +81,10 @@ const FindPwEnterID = () => {
           })}
         />
         <div className='flex items-start'>
-          {errors.userID && <p className='text-red-500 text-[14px]'>{errors.userID.message}</p>}
+          {errors.userID && <p className='text-error-red text-sm'>{errors.userID.message}</p>}
           {idCheckMessage && (
             <p
-              className={`${idCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              className={`${idCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
               aria-live='polite'
             >
               {idCheckMessage}

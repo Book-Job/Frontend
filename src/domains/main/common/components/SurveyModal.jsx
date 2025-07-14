@@ -1,6 +1,6 @@
 import { CUSTOMER_INQUIRY } from '../../../../utils/urls'
-import app_banner from '../../../../assets/banner/app_banner.png'
-import web_banner from '../../../../assets/banner/web_banner.png'
+import app_banner from '../../../../assets/banner/app_banner.jpg'
+import web_banner from '../../../../assets/banner/web_banner.jpg'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 
 export default function SurveyModal({ isOpen, onClose, onDoNotShowToday }) {

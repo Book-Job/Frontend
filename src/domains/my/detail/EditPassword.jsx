@@ -78,7 +78,9 @@ const EditPassword = () => {
   }
   const formContent = (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-      <div className='flex justify-start text-3xl font-bold'>비밀번호 입력</div>
+      <div className='flex justify-start text-3xl font-bold'>
+        {isMobile ? null : '비밀번호 입력'}
+      </div>
       <div className='flex-auto mt-8'>
         <div className='mb-[11px] sm:text-[20px] text-base font-bold text-start'>비밀번호</div>
         <PwInputBox
@@ -89,11 +91,9 @@ const EditPassword = () => {
         />
       </div>
       <div className='flex items-start'>
-        {errors.userPW && <p className='text-red-500 text-[14px]'>{errors.userPW.message}</p>}
+        {errors.userPW && <p className='text-error-red text-sm'>{errors.userPW.message}</p>}
         {serverMessage.message && (
-          <p
-            className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
-          >
+          <p className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-error-red'} text-sm`}>
             {serverMessage.message}
           </p>
         )}

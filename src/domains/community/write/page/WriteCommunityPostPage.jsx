@@ -10,9 +10,7 @@ const WriteCommunityPost = () => {
       <h1 className='hidden sm:block text-3xl font-bold self-start mt-[50px]'>
         자유게시판 글 등록
       </h1>
-      <p className='text-[14px] sm:text-base font-bold text-red-500 self-end'>
-        닉네임 수정이 가능합니다.
-      </p>
+      <p className='text-sm font-bold text-error-red self-end'>닉네임 수정이 가능합니다.</p>
       <section>
         <WriteFormLine />
         <WriteCommunityPostForm />
