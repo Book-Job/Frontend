@@ -87,10 +87,10 @@ const MembershipPwCheck = ({ isOpen, onClose, onButtonClick, onSuccessAction }) 
           </div>
         </div>
         <div className='flex items-start'>
-          {errors.userPW && <p className='text-red-500 text-[14px]'>{errors.userPW.message}</p>}
+          {errors.userPW && <p className='text-error-red text-sm'>{errors.userPW.message}</p>}
           {serverMessage.message && (
             <p
-              className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+              className={`${serverMessage.isSuccess ? 'text-blue-500' : 'text-error-red'} text-sm`}
             >
               {serverMessage.message}
             </p>

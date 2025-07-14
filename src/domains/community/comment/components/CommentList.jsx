@@ -28,14 +28,6 @@ const CommentList = ({ boardId }) => {
     }
   }
 
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-[300px]'>
-        <Spinner size={48} color='main-pink' />
-      </div>
-    )
-  }
-
   const handleEditClick = (commentId, text) => {
     setEditingCommentId(commentId)
     setEditContent(text)
@@ -57,8 +49,16 @@ const CommentList = ({ boardId }) => {
     }
   }
 
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-[300px]'>
+        <Spinner size={48} color='main-pink' />
+      </div>
+    )
+  }
+
   if (!comments || comments.length === 0) {
-    return <p className='mt-4 mb-4 text-gray-500'>아직 작성된 댓글이 없습니다.</p>
+    return <p className='mt-4 mb-4 text-dark-gray text-sm'>아직 작성된 댓글이 없습니다.</p>
   }
 
   return (
@@ -70,16 +70,18 @@ const CommentList = ({ boardId }) => {
         } else if (comment.isAuthentic) {
           nicknameColor = 'text-black'
         }
+
         return (
           <div key={comment.commentId}>
             <div className='px-4 py-3'>
               <div className='flex items-center justify-between mb-1'>
                 <span className={`font-semibold ${nicknameColor}`}>{comment.nickname}</span>
               </div>
+
               {editingCommentId === comment.commentId ? (
-                <div className='flex items-center gap-2'>
+                <div className='flex flex-wrap items-center gap-2'>
                   <input
-                    className='flex-1 px-2 py-1 border border-gray-300 rounded'
+                    className='w-full sm:w-auto flex-1 min-w-[0] px-2 py-1 border border-light-gray rounded'
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
                     maxLength={200}
@@ -101,13 +103,14 @@ const CommentList = ({ boardId }) => {
                   </button>
                 </div>
               ) : (
-                <p className='flex items-center justify-between mb-1 text-gray-700 whitespace-pre-wrap'>
+                <p className='flex items-center text-left justify-between mb-1 text-gray-700 whitespace-pre-wrap'>
                   {comment.text}
                 </p>
               )}
+
               <div className='flex justify-between items-center text-[13px] text-dark-gray'>
                 <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
-                {comment.isWriter && (
+                {comment.isWriter && editingCommentId !== comment.commentId && (
                   <div className='flex gap-2'>
                     <button
                       className='text-main-pink hover:underline'

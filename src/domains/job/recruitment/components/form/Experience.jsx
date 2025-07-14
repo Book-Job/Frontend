@@ -46,7 +46,7 @@ const Experience = ({ register, errors, control }) => {
           })}
         />
         {errors.experienceMin && (
-          <span className='block w-full text-left text-red-500 text-[14px] mt-1'>
+          <span className='block w-full text-left text-error-red text-sm mt-1'>
             {errors.experienceMin.message}
           </span>
         )}
@@ -72,7 +72,7 @@ const Experience = ({ register, errors, control }) => {
           })}
         />
         {errors.experienceMax && (
-          <span className='block w-full text-left text-red-500 text-[14px] mt-1'>
+          <span className='block w-full text-left text-error-red text-sm mt-1'>
             {errors.experienceMax.message}
           </span>
         )}

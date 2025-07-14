@@ -72,9 +72,12 @@ const WorkBoard = ({
     <>
       <div className='w-full h-[200px] relative'>
         <button
+          onClick={() => {
+            handleToggleScrap()
+          }}
           className='absolute top-[-2px] right-3 z-10 bg-transparent border-none p-0'
-          onClick={handleToggleScrap}
           aria-label={scrapped ? '스크랩 해제' : '스크랩'}
+          title={scrapped ? '스크랩 해제' : '스크랩'}
         >
           <img
             src={bookmarkIcon}
@@ -83,6 +86,7 @@ const WorkBoard = ({
             style={{ opacity: loading ? 0.5 : 1 }}
           />
         </button>
+
         <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer '>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 && <TagIcon label='인기 글' icon={popular} />}

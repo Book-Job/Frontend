@@ -91,10 +91,10 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch, setValidat
         </div>
       </div>
       <div className='flex items-start'>
-        {errors.Nickname && <p className='text-red-500 text-[14px]'>{errors.Nickname.message}</p>}
+        {errors.Nickname && <p className='text-error-red text-sm'>{errors.Nickname.message}</p>}
         {nicknameCheckMessage && (
           <p
-            className={`${nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-red-500'} text-[14px]`}
+            className={`${nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
           >
             {nicknameCheckMessage}
           </p>

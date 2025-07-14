@@ -11,7 +11,7 @@ const WorkExperience = ({ register, errors }) => {
 
       <div className='flex items-start'>
         {errors.experience && (
-          <span className='text-red-500 text-[14px] mt-1'>{errors.experience.message}</span>
+          <span className='text-error-red text-sm mt-1'>{errors.experience.message}</span>
         )}
       </div>
     </FormItem>

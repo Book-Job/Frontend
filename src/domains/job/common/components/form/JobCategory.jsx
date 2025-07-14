@@ -19,7 +19,7 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
         </select>
         <div className='flex items-start'>
           {errors.jobCategory && (
-            <span className='text-red-500 text-[14px] mt-1'>직군 선택은 필수입니다.</span>
+            <span className='text-error-red text-sm mt-1'>직군 선택은 필수입니다.</span>
           )}
         </div>
       </FormItem>

@@ -3,7 +3,7 @@ import BestList from '../common/components/BestList'
 import BoardButton from '../common/components/BoardButton'
 import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
-import BannerExample from '../../../components/common/BannerExample'
+import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
 import SurveyModal from '../common/components/SurveyModal'
 import { CUSTOMER_INQUIRY } from '../../../utils/urls'
@@ -77,7 +77,7 @@ const MainPage = () => {
         </p>
 
         <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer' className='w-full'>
-          <BannerExample className='w-full h-full' />
+          <Banner className='w-full h-full' />
         </a>
 
         <div className='w-full px-4 my-6 sm:px-10 sm:my-10'>
@@ -92,7 +92,7 @@ const MainPage = () => {
           {isLoading ? (
             <Spinner size={48} color='main-pink' />
           ) : error ? (
-            <div className='flex flex-col text-center text-red-500'>
+            <div className='flex flex-col text-center text-error-red'>
               {error}
               <button
                 onClick={() => (selectedBoard === '자유게시판' ? fetchFreeBest() : fetchJobBest())}

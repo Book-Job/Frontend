@@ -47,7 +47,7 @@ const JobSeekDetailPage = () => {
       </div>
     )
   }
-  if (error) return <p className='text-center text-red-500'>존재하지 않는 게시글입니다.</p>
+  if (error) return <p className='text-center text-error-red'>존재하지 않는 게시글입니다.</p>
   if (!data) return <p className='text-center text-gray-500'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
@@ -147,7 +147,7 @@ const JobSeekDetailPage = () => {
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />
-      <h2 className='flex self-start text-lg font-bold sm:text-xl mt-7'>관련 글</h2>
+      <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl mt-7'>관련 글</h2>
       <RelatedJobSearchPosts currentId={id} />
     </div>
   )
