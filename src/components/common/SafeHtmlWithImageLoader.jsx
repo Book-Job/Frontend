@@ -17,7 +17,10 @@ const SafeHtmlWithImageLoader = ({ html }) => {
     }
 
     let loadedCount = 0
+    let isCancelled = false
+
     const handleLoad = () => {
+      if (isCancelled) return
       loadedCount++
       if (loadedCount === images.length) {
         setIsImagesLoading(false)
@@ -34,6 +37,7 @@ const SafeHtmlWithImageLoader = ({ html }) => {
     })
 
     return () => {
+      isCancelled = true
       images.forEach((img) => {
         img.removeEventListener('load', handleLoad)
         img.removeEventListener('error', handleLoad)
