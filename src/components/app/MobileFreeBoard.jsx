@@ -41,7 +41,7 @@ const MobileFreeBoard = ({
           <div className='text-[18px] font-bold line-clamp-2'>{title}</div>
           <div className='mt-2 text-sm sm:text-base line-clamp-1'>
             {isImagePost ? (
-              <span className='flex items-center gap-1 text-gray-500'>
+              <span className='flex items-center gap-1 text-dark-gray'>
                 <BsCardImage className='text-lg' />
                 이미지 게시글입니다
               </span>

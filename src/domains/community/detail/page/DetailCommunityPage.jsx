@@ -82,7 +82,8 @@ const DetailCommunityPage = () => {
   const handleCancelEdit = () => setIsEditing(false)
 
   if (error) return <div className='mt-10 text-center text-error-red'>오류가 발생했어요.</div>
-  if (!post) return <div className='mt-10 text-center text-gray-500'>게시글이 존재하지 않아요.</div>
+  if (!post)
+    return <div className='mt-10 text-center text-dark-gray'>게시글이 존재하지 않아요.</div>
 
   return (
     <div className='w-full max-w-[940px] mx-auto '>
