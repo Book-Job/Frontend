@@ -76,7 +76,24 @@ const RecruitmentDetailPage = () => {
   }
 
   const handleExternalLink = (url) => {
-    const safeUrl = url.startsWith('http') ? url : `https://${url}`
+    if (!url || typeof url !== 'string' || url.trim() === '') {
+      return
+    }
+
+    const trimmedUrl = url.trim()
+
+    if (/^(javascript|data|vbscript):/i.test(trimmedUrl)) {
+      ToastService.error('허용되지 않는 링크입니다.')
+      return
+    }
+    const safeUrl = /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+    try {
+      new URL(safeUrl)
+    } catch {
+      ToastService.error('유효하지 않은 링크입니다.')
+      return
+    }
+
     const isConfirmed = window.confirm(
       '외부 사이트로 이동합니다. 악성 링크일 수 있으니 주의하세요.\n계속하시겠습니까?',
     )
