@@ -64,10 +64,22 @@ const WorkBoard = ({
       } else {
         ToastService.info('스크랩이 해제되었습니다.')
       }
-    } catch {
-      ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
+    } catch (error) {
+      if (error?.response?.status === 401) {
+        openModal({
+          title: '로그인이 필요합니다',
+          description: '세션이 만료되었거나 로그인되지 않았습니다.\n로그인 페이지로 이동할까요?',
+          buttonLabel: '로그인하기',
+          onButtonClick: (navigate) => {
+            navigate(ROUTER_PATHS.LOGIN_MAIN)
+          },
+        })
+      } else {
+        ToastService.error('스크랩 처리 중 오류가 발생했습니다.')
+      }
     }
   }
+
   return (
     <>
       <div className='w-full h-[200px] relative'>
