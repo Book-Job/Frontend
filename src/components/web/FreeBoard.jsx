@@ -49,11 +49,10 @@ const FreeBoard = ({
         hover:shadow-md
         
       '
-      
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
           <div className='text-base font-bold truncate sm:text-lg line-clamp-1'>{title}</div>
-          <div className='mt-2 text-sm sm:text-base line-clamp-1'>
+          <div className='mt-2 text-sm sm:text-base line-clamp-2'>
             {isImagePost ? (
               <span className='flex items-center gap-1 text-gray-500'>
                 <BsCardImage className='text-lg' />

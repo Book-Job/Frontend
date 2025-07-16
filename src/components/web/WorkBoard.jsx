@@ -87,7 +87,7 @@ const WorkBoard = ({
           />
         </button>
 
-        <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer '>
+        <div className='flex flex-col h-full border border-[#D6D6D6] rounded-[10px] px-[18px] pt-[15px] pb-[10px] justify-between cursor-pointer'>
           <div className='flex flex-wrap gap-2 mb-2'>
             {popular1 && <TagIcon label='인기 글' icon={popular} />}
             {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
@@ -100,7 +100,8 @@ const WorkBoard = ({
           </div>
           <h3
             onClick={onClick}
-            className='mb-1 text-sm font-bold truncate sm:text-base md:text-lg text-start'
+            className='mb-1 text-sm font-bold text-start sm:text-base md:text-lg 
+            line-clamp-2 leading-snug overflow-hidden break-words'
           >
             {title}
           </h3>
