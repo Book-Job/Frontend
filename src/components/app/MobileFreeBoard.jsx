@@ -38,10 +38,10 @@ const MobileFreeBoard = ({
     <div className='w-full max-w-xs min-h-[140px] mb-3' onClick={goToDetailPage}>
       <div className='flex flex-col h-full  border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer text-left'>
         <div className='flex-row' onClick={onClick}>
-          <div className='text-[18px] font-bold line-clamp-1'>{title}</div>
+          <div className='text-[18px] font-bold line-clamp-2'>{title}</div>
           <div className='mt-2 text-sm sm:text-base line-clamp-1'>
             {isImagePost ? (
-              <span className='flex items-center gap-1 text-gray-500'>
+              <span className='flex items-center gap-1 text-dark-gray'>
                 <BsCardImage className='text-lg' />
                 이미지 게시글입니다
               </span>

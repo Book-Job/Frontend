@@ -75,6 +75,33 @@ const RecruitmentDetailPage = () => {
     }
   }
 
+  const handleExternalLink = (url) => {
+    if (!url || typeof url !== 'string' || url.trim() === '') {
+      return
+    }
+
+    const trimmedUrl = url.trim()
+
+    if (/^(javascript|data|vbscript):/i.test(trimmedUrl)) {
+      ToastService.error('허용되지 않는 링크입니다.')
+      return
+    }
+    const safeUrl = /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+    try {
+      new URL(safeUrl)
+    } catch {
+      ToastService.error('유효하지 않은 링크입니다.')
+      return
+    }
+
+    const isConfirmed = window.confirm(
+      '외부 사이트로 이동합니다. 악성 링크일 수 있으니 주의하세요.\n계속하시겠습니까?',
+    )
+    if (isConfirmed) {
+      window.open(safeUrl, '_blank')
+    }
+  }
+
   return (
     <div className='w-full max-w-[940px] mx-auto '>
       <div className='flex flex-row items-center justify-between gap-2 mt-6'>
@@ -124,11 +151,23 @@ const RecruitmentDetailPage = () => {
             '지원 마감일',
             data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용',
           ],
-          ['자사 웹사이트', data.websiteUrl],
+          ['링크', data.websiteUrl],
         ].map(([label, value]) => (
           <div key={label} className='grid grid-cols-[6rem_1fr] items-start gap-x-2'>
             <dt className='text-sm font-semibold text-left text-dark-gray sm:text-base'>{label}</dt>
-            <dd className='text-sm text-left break-words sm:text-base'>{value}</dd>
+            <dd className='text-sm text-left break-words sm:text-base'>
+              {label === '링크' && value ? (
+                <button
+                  type='button'
+                  onClick={() => handleExternalLink(value)}
+                  className='underline hover:opacity-80'
+                >
+                  바로가기
+                </button>
+              ) : (
+                value
+              )}
+            </dd>
           </div>
         ))}
       </dl>

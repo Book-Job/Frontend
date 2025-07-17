@@ -21,7 +21,7 @@ const RecentList = ({ sortedPosts }) => {
           const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
           const content =
             strippedText.length === 0 ? (
-              <span className='flex items-center gap-1 text-gray-500'>
+              <span className='flex items-center gap-1 text-dark-gray'>
                 <BsCardImage className='text-lg' />
                 이미지 게시글입니다
               </span>

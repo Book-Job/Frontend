@@ -38,14 +38,20 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
     }
   }
 
+  const handleChange = (e) => {
+    const value = e.target.value.slice(0, 8)
+    setNickname(value)
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
       className='flex flex-col w-full gap-2 mt-4 mb-4 sm:flex-row sm:gap-3'
     >
       <input
+        maxLength={8}
         value={nickname}
-        onChange={(e) => setNickname(e.target.value)}
+        onChange={handleChange}
         placeholder='닉네임'
         className='
           w-full sm:w-[150px]
@@ -61,7 +67,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
         <input
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder='자유게시판에서는 닉네임 수정이 가능합니다.'
+          placeholder='자유게시판에서는 닉네임 수정이 가능합니다(최대 8자)'
           className='
             h-[44px] sm:h-[50px]
             w-full
@@ -70,6 +76,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
             focus:outline-none focus:border-main-pink
             placeholder:text-dark-gray
             text-base
+            text-left
             placeholder:text-sm
             
           '

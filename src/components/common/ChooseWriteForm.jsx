@@ -29,7 +29,7 @@ const ChooseWriteForm = ({ onSelect, onClose }) => {
             구직
           </button>
         </div>
-        <button className='mt-4 text-sm text-gray-500 hover:text-gray-700' onClick={onClose}>
+        <button className='mt-4 text-sm text-dark-gray hover:text-gray-700' onClick={onClose}>
           닫기
         </button>
       </div>
