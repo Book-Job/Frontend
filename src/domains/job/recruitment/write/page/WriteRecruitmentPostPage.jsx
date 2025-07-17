@@ -59,9 +59,11 @@ const WriteRecruitmentPostPage = () => {
       })
     }
   }
+
   const defaultValues = selectedFreeDraft
     ? { ...selectedFreeDraft, writer: selectedFreeDraft.writer || '' }
     : {}
+
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
