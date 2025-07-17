@@ -130,7 +130,7 @@ const TermsOfService = () => {
           </p>
         </div>
 
-        <p className='pt-6 mt-10 text-sm text-gray-500 border-t'>
+        <p className='pt-6 mt-10 text-sm border-t text-dark-gray'>
           부칙: 본 약관은 2025년 7월 3일부터 시행합니다.
         </p>
       </div>

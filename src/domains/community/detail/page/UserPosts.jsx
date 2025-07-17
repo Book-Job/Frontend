@@ -125,7 +125,7 @@ const UserPosts = () => {
           </div>
         )}
         {!hasMore && (
-          <div className='my-6 text-center text-gray-500'>더 이상 불러올 게시글이 없습니다.</div>
+          <div className='my-6 text-center text-dark-gray'>더 이상 불러올 게시글이 없습니다.</div>
         )}
       </div>
     </div>

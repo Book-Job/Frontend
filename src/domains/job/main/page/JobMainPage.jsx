@@ -113,7 +113,7 @@ const JobMainPage = () => {
 
         {hasSearched && searchResults.length === 0 && (
           <div className='flex justify-center items-center min-h-[300px] w-full'>
-            <p className='text-lg text-gray-500'>검색 결과가 없습니다.</p>
+            <p className='text-lg text-dark-gray'>검색 결과가 없습니다.</p>
           </div>
         )}
 

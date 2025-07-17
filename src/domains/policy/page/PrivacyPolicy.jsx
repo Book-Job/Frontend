@@ -108,7 +108,7 @@ const PrivacyPolicy = () => {
           <p className='mt-2'>• 이메일: bookjob.help@gmail.com</p>
         </div>
 
-        <p className='pt-6 mt-10 text-sm text-gray-500 border-t'>
+        <p className='pt-6 mt-10 text-sm border-t text-dark-gray'>
           본 개인정보처리방침은 2025년 7월 3일부터 시행됩니다.
         </p>
       </div>
