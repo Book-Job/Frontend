@@ -16,7 +16,7 @@ import ToastService from '../../../../../services/toast/ToastService'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore.js'
 import { validateExperience } from '../../write/utils/validateExperience'
 
-const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
+const WriteRecruitmentPostingForm = ({ onSubmit, editorRef, defaultValues }) => {
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
   const { user } = useAuthStore()
   const isMobile = useIsMobile()
@@ -29,21 +29,30 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef }) => {
     watch,
     formState: { errors },
   } = useForm({
-    selectedFreeDraft: {
+    defaultValues: {
       writer: user?.nickname || '',
-      ...selectedFreeDraft,
+      title: '',
+      closingDate: '',
+      websiteUrl: '',
+      location: '',
+      jobCategory: '',
+      employmentType: '',
+      experienceMin: '',
+      experienceMax: '',
+      text: '',
+      ...defaultValues,
     },
   })
 
   useEffect(() => {
-    if (selectedFreeDraft && user?.nickname) {
-      const writerToSet = selectedFreeDraft.writer || user.nickname
+    if (defaultValues && user?.nickname) {
+      const writerToSet = defaultValues.writer || user.nickname
       reset({
-        ...selectedFreeDraft,
+        ...defaultValues,
         writer: writerToSet,
       })
     }
-  }, [selectedFreeDraft, user, reset, editorRef])
+  }, [user, reset, defaultValues])
 
   const handleFormSubmit = (formData) => {
     const { valid, message } = validateExperience(formData.experienceMin, formData.experienceMax)
