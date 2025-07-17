@@ -19,6 +19,7 @@ import ToastService from '../../../../../services/toast/ToastService'
 import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
+import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 
 const JobSeekDetailPage = () => {
   const { user } = useAuthStore()
@@ -29,6 +30,7 @@ const JobSeekDetailPage = () => {
   const currentUrl = window.location.href
   const navigate = useNavigate()
   const hasSaved = useRef(false)
+  const { clearSelectedFreeDraft } = useFreeDraftStore()
 
   useEffect(() => {
     if (data && !hasSaved.current) {
@@ -51,6 +53,7 @@ const JobSeekDetailPage = () => {
   if (!data) return <p className='text-center text-dark-gray'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
+    clearSelectedFreeDraft()
     navigate(ROUTER_PATHS.JOB_SEARCH_POST_EDIT.replace(':id', id))
   }
 
