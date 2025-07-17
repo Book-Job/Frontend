@@ -1,8 +1,8 @@
-import iOS_install1 from '/public/ios-install1.jpg'
-import iOS_install2 from '/public/ios-install2.jpg'
-import iOS_install3 from '/public/ios-install3.jpg'
-import iOS_install4 from '/public/ios-install4.jpg'
-import android_install5 from '/public/android-install5.png'
+import iOS_install1 from '../../../assets/icons/common/ios-install1.jpg'
+import iOS_install2 from '../../../assets/icons/common/ios-install2.jpg'
+import iOS_install3 from '../../../assets/icons/common/ios-install3.jpg'
+import iOS_install4 from '../../../assets/icons/common/ios-install4.jpg'
+import android_install from '../../../assets/icons/common/android-install.png'
 const InstallMethod = () => {
   return (
     <section className='flex flex-col w-full max-w-[940px] mx-auto'>
@@ -69,14 +69,14 @@ const InstallMethod = () => {
             2. 안드로이드에서 홈화면에 바로가기 설치 방법
           </h2>
           <ul className='pl-6 mt-2 space-y-1 list-disc'>
-            <li className='className="break-words whitespace-normal'>
+            <li className='break-words whitespace-normal'>
               화면 하단 알림 버튼을 눌러 홈 화면에 추가합니다.
             </li>
           </ul>
           <ol className='flex flex-row pl-6 mt-10 list-decimal list-outside'>
             <li>
               <img
-                src={android_install5}
+                src={android_install}
                 alt='안드로이드 설치 가이드'
                 className='w-[300px] h-[600px] object-contain'
               />
