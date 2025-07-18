@@ -3,7 +3,6 @@ import ROUTER_PATHS from '../../routes/RouterPath'
 import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
-import othersite from '../../assets/icons/common/common_tag_othersite.svg'
 import popular from '../../assets/icons/common/common_tag_popular.svg'
 import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
@@ -29,7 +28,6 @@ const WorkBoard = ({
   popular1,
   joboffer1,
   jobsearch1,
-  othersite1,
   employmentType,
   experienceLabel,
   view,
