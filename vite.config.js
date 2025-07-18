@@ -19,9 +19,14 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [
+          new RegExp('^https://www\\.google-analytics\\.com/'),
+          new RegExp('^https://www\\.googletagmanager\\.com/'),
+        ],
       },
       devOptions: {
-        enabled: true,
+        enabled: process.env.NODE_ENV === 'production',
         navigateFallback: 'index.html',
         suppressWarnings: true,
         type: 'module',
