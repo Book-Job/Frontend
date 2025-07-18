@@ -15,6 +15,7 @@ import useIsMobile from '../../../../../hooks/header/useIsMobile.js'
 import ToastService from '../../../../../services/toast/ToastService'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore.js'
 import { validateExperience } from '../../write/utils/validateExperience'
+import PropTypes from 'prop-types'
 
 const WriteRecruitmentPostingForm = ({ onSubmit, editorRef, defaultValues }) => {
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
@@ -106,4 +107,9 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef, defaultValues }) => 
   )
 }
 
+WriteRecruitmentPostingForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  editorRef: PropTypes.object.isRequired,
+  defaultValues: PropTypes.object,
+}
 export default WriteRecruitmentPostingForm

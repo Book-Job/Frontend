@@ -11,6 +11,7 @@ import ContactEmail from './form/ContactEmail'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import useFreeDraftStore from '../../../../store/mypage/useFreeDraftStore'
+import PropTypes from 'prop-types'
 
 const WriteJobSearchPostingForm = ({ onSubmit, editorRef, defaultValues }) => {
   const { selectedFreeDraft, deleteFreeDraft, clearSelectedFreeDraft } = useFreeDraftStore()
@@ -20,7 +21,6 @@ const WriteJobSearchPostingForm = ({ onSubmit, editorRef, defaultValues }) => {
     register,
     handleSubmit,
     watch,
-    setValue,
     control,
     reset,
     formState: { errors },
@@ -96,4 +96,9 @@ const WriteJobSearchPostingForm = ({ onSubmit, editorRef, defaultValues }) => {
   )
 }
 
+WriteJobSearchPostingForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  editorRef: PropTypes.object.isRequired,
+  defaultValues: PropTypes.object,
+}
 export default WriteJobSearchPostingForm
