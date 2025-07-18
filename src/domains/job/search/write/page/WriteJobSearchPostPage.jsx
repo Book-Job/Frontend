@@ -58,6 +58,10 @@ const WriteJobSearchPostPage = () => {
     }
   }
 
+  const defaultValues = selectedFreeDraft
+    ? { ...selectedFreeDraft, writer: selectedFreeDraft.writer || '' }
+    : {}
+
   return (
     <>
       <div className='flex flex-col gap-4 max-w-[1440px] w-full px-4 sm:px-10 lg:px-[250px] mx-auto'>
@@ -66,7 +70,11 @@ const WriteJobSearchPostPage = () => {
           닉네임과 이메일은 회원가입 시 입력한 정보로 자동 설정됩니다.
         </div>
         <WriteFormLine />
-        <WriteJobSearchPostingForm onSubmit={handleSubmitForm} editorRef={editorRef} />
+        <WriteJobSearchPostingForm
+          onSubmit={handleSubmitForm}
+          editorRef={editorRef}
+          defaultValues={defaultValues}
+        />
         <LastFormLine />
         <div className='flex justify-end mb-[131px]'>
           <Button

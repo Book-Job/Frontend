@@ -19,6 +19,7 @@ import ToastService from '../../../../../services/toast/ToastService'
 import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
+import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
@@ -28,6 +29,7 @@ const RecruitmentDetailPage = () => {
   const isScrapped = Boolean(scraps[id])
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
+  const { clearSelectedFreeDraft } = useFreeDraftStore()
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -51,6 +53,7 @@ const RecruitmentDetailPage = () => {
   if (!data) return <p className='text-center text-dark-gray'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
+    clearSelectedFreeDraft()
     navigate(ROUTER_PATHS.RECRUITMENT_POST_EDIT.replace(':id', id))
   }
 

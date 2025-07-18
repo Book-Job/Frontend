@@ -20,7 +20,6 @@ const useFreeDraftStore = create((set, get) => ({
     const updatedDrafts = get().drafts.filter((draft) => draft.id !== draftId)
     localStorage.setItem('drafts', JSON.stringify(updatedDrafts))
     set({ drafts: updatedDrafts })
-    ToastService.success('임시 저장글이 삭제되었어요.')
   },
   clearSelectedFreeDraft: () => set({ selectedFreeDraft: null }),
   getDraftEditorState: (draft) => draft.text || '',
