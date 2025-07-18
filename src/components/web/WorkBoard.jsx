@@ -17,6 +17,7 @@ import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
 import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
+  if (value === 'UNKNOWN') return '무관'
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
@@ -107,7 +108,7 @@ const WorkBoard = ({
             {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
             {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
             {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
-            {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
+
             {employmentType && (
               <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />
             )}

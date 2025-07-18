@@ -17,6 +17,7 @@ import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
 import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
+  if (value === 'UNKNOWN') return '무관'
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
