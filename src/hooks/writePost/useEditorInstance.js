@@ -15,21 +15,28 @@ const useEditorInstance = ({ initialContent, onChange, onPasteImage }) => {
         class:
           'tiptap prose text-left prose-lg min-h-[300px] border border-dark-gray rounded-md p-4 focus:outline-none bg-white',
       },
-      handlePaste: async (event) => {
+      handlePaste: (view, event) => {
         const items = event.clipboardData?.items
         if (!items) return false
+
         for (const item of items) {
           if (item.type.startsWith('image/')) {
             const file = item.getAsFile()
             if (file) {
-              try {
-                const url = await onPasteImage(file)
-                editor.chain().focus().setImage({ src: url }).run()
-              } catch (error) {}
+              onPasteImage(file)
+                .then((url) => {
+                  view.dispatch(
+                    view.state.tr.replaceSelectionWith(
+                      view.state.schema.nodes.image.create({ src: url }),
+                    ),
+                  )
+                })
+                .catch(() => {})
               return true
             }
           }
         }
+
         return false
       },
     },
