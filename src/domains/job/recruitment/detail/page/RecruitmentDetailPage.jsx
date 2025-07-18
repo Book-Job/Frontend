@@ -148,7 +148,12 @@ const RecruitmentDetailPage = () => {
         {[
           ['근무형태', getEmploymentTypeLabel(data.employmentType)],
           ['경력', `${data.experienceMin}년 ~ ${data.experienceMax}년`],
-          ['근무지역', data.location],
+          [
+            '근무지역',
+            !data.location || data.location.trim().toUpperCase() === 'UNKNOWN'
+              ? '협의'
+              : data.location,
+          ],
           ['직군', getJobCategoryLabel(data.jobCategory)],
           [
             '지원 마감일',
