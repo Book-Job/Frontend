@@ -32,6 +32,7 @@ import NaverSuccess from '../domains/login/page/NaverSuccess'
 import MyRecentList from '../domains/my/detail/MyRecentList'
 import TermsOfService from '../domains/policy/page/TermsOfService'
 import PrivacyPolicy from '../domains/policy/page/PrivacyPolicy'
+import InstallMethod from '../domains/policy/page/InstallMethod'
 
 const routes = [
   {
@@ -206,6 +207,10 @@ const routes = [
   {
     path: ROUTER_PATHS.PRIVACY_POLICY,
     element: <PrivacyPolicy />,
+  },
+  {
+    path: ROUTER_PATHS.INSTALL_METHOD,
+    element: <InstallMethod />,
   },
 ]
 

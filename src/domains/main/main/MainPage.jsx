@@ -6,8 +6,8 @@ import Spinner from '../../../components/web/Spinner'
 import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
 import SurveyModal from '../common/components/SurveyModal'
-import { CUSTOMER_INQUIRY } from '../../../utils/urls'
 import useAuthStore from '../../../store/login/useAuthStore'
+import ROUTER_PATHS from '../../../routes/RouterPath'
 const MainPage = () => {
   const { isAuthenticated } = useAuthStore()
   const [selectedBoard, setSelectedBoard] = useState('자유게시판')
@@ -76,7 +76,12 @@ const MainPage = () => {
           플랫폼입니다. 출판인들을 위한 자유게시판도 함께 운영하고 있어요.
         </p>
 
-        <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer' className='w-full'>
+        <a
+          href={ROUTER_PATHS.INSTALL_METHOD}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='w-full'
+        >
           <Banner className='w-full h-full' />
         </a>
 

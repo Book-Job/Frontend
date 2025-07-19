@@ -1,9 +1,7 @@
-import React from 'react'
-
 const TermsOfService = () => {
   return (
     <section className='flex flex-col w-full max-w-[940px] mx-auto'>
-      <h1 className='text-3xl sm:text-4xl font-bold mb-10 text-left'>북잡 이용약관</h1>
+      <h1 className='mb-10 text-3xl font-bold text-left sm:text-4xl'>북잡 이용약관</h1>
 
       <div className='space-y-10 text-base sm:text-[17px] leading-relaxed text-left'>
         <div>
@@ -14,7 +12,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제1조 (목적)
           </h2>
           <p>
@@ -24,10 +22,10 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제2조 (정의)
           </h2>
-          <ul className='list-disc pl-6 space-y-1'>
+          <ul className='pl-6 space-y-1 list-disc'>
             <li>
               “서비스”란 북잡 웹사이트 및 모바일 웹 등 회사가 제공하는 기능 일체를 의미합니다.
             </li>
@@ -37,7 +35,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제3조 (약관의 효력 및 변경)
           </h2>
           <p>
@@ -47,7 +45,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제4조 (회원가입)
           </h2>
           <p>
@@ -57,10 +55,10 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제5조 (회원의 의무)
           </h2>
-          <ul className='list-disc pl-6 space-y-1'>
+          <ul className='pl-6 space-y-1 list-disc'>
             <li>타인의 정보를 도용하거나 허위 정보를 입력해서는 안 됩니다.</li>
             <li>타인을 비방하거나 명예를 훼손하는 게시물을 작성해서는 안 됩니다.</li>
             <li>서비스를 상업적 목적으로 이용하거나 광고성 정보를 무단 게시해서는 안 됩니다.</li>
@@ -68,7 +66,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제6조 (서비스의 제공 및 변경)
           </h2>
           <p>
@@ -78,14 +76,14 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제7조 (게시물의 관리)
           </h2>
           <p>
             회원이 작성한 게시물의 책임은 작성자에게 있으며, 회사는 다음과 같은 경우 게시물을
             삭제하거나 숨길 수 있습니다:
           </p>
-          <ul className='list-disc pl-6 space-y-1 mt-2'>
+          <ul className='pl-6 mt-2 space-y-1 list-disc'>
             <li>불법적이거나 타인의 권리를 침해하는 경우</li>
             <li>욕설, 음란물, 혐오 표현이 포함된 경우</li>
             <li>도배, 광고, 홍보성 게시물인 경우</li>
@@ -93,7 +91,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제8조 (구인·구직 관련 면책)
           </h2>
           <p>
@@ -103,7 +101,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제9조 (계정 탈퇴 및 삭제)
           </h2>
           <p>
@@ -113,7 +111,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제10조 (면책조항)
           </h2>
           <p>
@@ -123,7 +121,7 @@ const TermsOfService = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제11조 (관할법원 및 준거법)
           </h2>
           <p>
@@ -132,7 +130,7 @@ const TermsOfService = () => {
           </p>
         </div>
 
-        <p className='text-sm text-dark-gray pt-6 border-t mt-10'>
+        <p className='pt-6 mt-10 text-sm border-t text-dark-gray'>
           부칙: 본 약관은 2025년 7월 3일부터 시행합니다.
         </p>
       </div>

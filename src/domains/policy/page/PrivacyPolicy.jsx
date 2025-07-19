@@ -1,9 +1,7 @@
-import React from 'react'
-
 const PrivacyPolicy = () => {
   return (
     <section className='flex flex-col w-full max-w-[940px] mx-auto'>
-      <h1 className='text-3xl sm:text-4xl font-bold mb-10 text-left'>개인정보처리방침</h1>
+      <h1 className='mb-10 text-3xl font-bold text-left sm:text-4xl'>개인정보처리방침</h1>
 
       <div className='space-y-10 text-base sm:text-[17px] leading-relaxed text-left'>
         <div>
@@ -15,11 +13,11 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             1. 수집하는 개인정보 항목
           </h2>
           <p>회사는 다음의 개인정보를 수집할 수 있습니다:</p>
-          <ul className='list-disc pl-6 space-y-1 mt-2'>
+          <ul className='pl-6 mt-2 space-y-1 list-disc'>
             <li>소셜 로그인 시 제공되는 식별자 정보 (이메일, 이름, 프로필 이미지 등)</li>
             <li>커뮤니티 활동 시 작성한 게시글, 댓글 등의 내용</li>
             <li>서비스 이용 기록, 접속 로그, 쿠키, IP 주소</li>
@@ -27,7 +25,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             2. 개인정보 수집 방법
           </h2>
           <p>
@@ -37,10 +35,10 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             3. 개인정보 이용 목적
           </h2>
-          <ul className='list-disc pl-6 space-y-1'>
+          <ul className='pl-6 space-y-1 list-disc'>
             <li>회원 식별 및 서비스 이용을 위한 인증</li>
             <li>게시글/댓글 작성 등 커뮤니티 기능 제공</li>
             <li>서비스 개선, 오류 분석 및 고객 응대</li>
@@ -49,7 +47,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             4. 개인정보 보유 및 이용기간
           </h2>
           <p>
@@ -59,7 +57,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             5. 개인정보 제3자 제공
           </h2>
           <p>
@@ -69,7 +67,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             6. 개인정보 처리 위탁
           </h2>
           <p>
@@ -79,10 +77,10 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             7. 이용자의 권리와 행사 방법
           </h2>
-          <ul className='list-disc pl-6 space-y-1'>
+          <ul className='pl-6 space-y-1 list-disc'>
             <li>이용자는 언제든지 자신의 개인정보를 열람, 수정, 삭제할 수 있습니다.</li>
             <li>탈퇴 후에도 게시글/댓글 등 콘텐츠는 삭제되지 않으며, 사전 삭제가 필요합니다.</li>
             <li>요청은 이메일을 통해 접수받으며, 지체 없이 조치합니다.</li>
@@ -90,7 +88,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             8. 쿠키(Cookie)의 사용
           </h2>
           <p>
@@ -100,7 +98,7 @@ const PrivacyPolicy = () => {
         </div>
 
         <div>
-          <h2 className='text-xl font-semibold mb-2 border-l-4 border-main-pink pl-3'>
+          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             9. 개인정보 보호 책임자
           </h2>
           <p>
@@ -110,7 +108,7 @@ const PrivacyPolicy = () => {
           <p className='mt-2'>• 이메일: bookjob.help@gmail.com</p>
         </div>
 
-        <p className='text-sm text-dark-gray pt-6 border-t mt-10'>
+        <p className='pt-6 mt-10 text-sm border-t text-dark-gray'>
           본 개인정보처리방침은 2025년 7월 3일부터 시행됩니다.
         </p>
       </div>
