@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
+import joboffer from '../../assets/icons/common/common_tag_joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
 import popular from '../../assets/icons/common/common_tag_popular.svg'
