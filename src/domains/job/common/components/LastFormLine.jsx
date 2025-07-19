@@ -4,7 +4,7 @@ const LastFormLine = () => {
       className='
         w-full
         max-w-[940px]
-        h-[1px]
+        h-[2px]
         bg-dark-gray
         mt-4 sm:mt-6
         mb-3 sm:mb-4

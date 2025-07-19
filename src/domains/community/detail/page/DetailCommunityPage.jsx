@@ -81,12 +81,9 @@ const DetailCommunityPage = () => {
 
   const handleCancelEdit = () => setIsEditing(false)
 
-  const handleBlockUserClick = () => {
-    ToastService.warn('이 사용자를 차단합니다.')
-  }
-
   if (error) return <div className='mt-10 text-center text-error-red'>오류가 발생했어요.</div>
-  if (!post) return <div className='mt-10 text-center text-gray-500'>게시글이 존재하지 않아요.</div>
+  if (!post)
+    return <div className='mt-10 text-center text-dark-gray'>게시글이 존재하지 않아요.</div>
 
   return (
     <div className='w-full max-w-[940px] mx-auto '>
@@ -127,13 +124,7 @@ const DetailCommunityPage = () => {
             </>
           )}
         </div>
-      ) : (
-        <div className='flex justify-end gap-4 mt-4 mb-2'>
-          <button className='text-dark-gray text-[13px]' onClick={handleBlockUserClick}>
-            차단
-          </button>
-        </div>
-      )}
+      ) : null}
 
       <LastFormLine />
 

@@ -58,7 +58,7 @@ const CommunityMainPage = () => {
                 <Spinner size={48} color='main-pink' />
               </div>
             ) : hasSearched && displayedPosts.length === 0 ? (
-              <div className='my-10 text-lg text-center text-gray-500'>
+              <div className='my-10 text-lg text-center text-dark-gray'>
                 검색어와 일치하는 결과가 없습니다.
               </div>
             ) : (
@@ -82,7 +82,7 @@ const CommunityMainPage = () => {
                       const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
                       const content =
                         strippedText.length === 0 ? (
-                          <span className='flex items-center gap-1 text-gray-500'>
+                          <span className='flex items-center gap-1 text-dark-gray'>
                             <BsCardImage className='text-lg' />
                             이미지 게시글입니다
                           </span>
@@ -123,7 +123,7 @@ const CommunityMainPage = () => {
                 </InfiniteScrollList>
 
                 {!hasMore && !loading && !hasSearched && (
-                  <div className='my-6 text-center text-gray-500'>
+                  <div className='my-6 text-center text-dark-gray'>
                     더 이상 불러올 게시글이 없습니다.
                   </div>
                 )}

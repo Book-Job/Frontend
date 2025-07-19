@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
-import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
+import joboffer from '../../assets/icons/common/common_tag_joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
-import othersite from '../../assets/icons/common/common_tag_othersite.svg'
 import popular from '../../assets/icons/common/common_tag_popular.svg'
 import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
@@ -17,6 +16,7 @@ import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
 import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
+  if (value === 'UNKNOWN') return '무관'
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
@@ -105,7 +105,9 @@ const MobileWorkBoard = ({
               <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />
             )}
           </div>
-          <h3 className='self-start mb-2 text-base font-bold sm:text-lg line-clamp-1'>{title}</h3>
+          <h3 className='self-start mb-2 text-base font-bold sm:text-lg line-clamp-2 text-left'>
+            {title}
+          </h3>
           <div className='flex flex-col mt-auto text-xs text-dark-gray sm:text-sm'>
             <div className='flex justify-end mb-1 font-bold'>{name}</div>
             <hr className='my-1 border-dark-gray' />

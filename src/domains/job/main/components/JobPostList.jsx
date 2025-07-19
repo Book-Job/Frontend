@@ -3,6 +3,7 @@ import MobileWorkBoard from '../../../../components/app/MobileWorkBoard'
 import useAuthStore from '../../../../store/login/useAuthStore'
 import getExperienceLabel from '../../common/utils/getExperienceLabel'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
+import { getExperienceLabelFromExperience } from '../../common/utils/getExperienceLabelFromExperience'
 
 const JobPostList = ({ posts, navigate }) => {
   const { user } = useAuthStore()
@@ -20,7 +21,10 @@ const JobPostList = ({ posts, navigate }) => {
           like: post.like,
           popular1: post.popular1,
           joboffer1: post.joboffer1,
-          experienceLabel: getExperienceLabel(post.experienceMin, post.experienceMax),
+          experienceLabel:
+            post.experience != null
+              ? getExperienceLabelFromExperience(post.experience)
+              : getExperienceLabel(post.experienceMin, post.experienceMax),
           jobsearch1: post.jobsearch1,
           othersite1: post.othersite1,
           worktype1: post.worktype1,

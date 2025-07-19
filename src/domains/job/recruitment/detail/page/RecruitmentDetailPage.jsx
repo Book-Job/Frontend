@@ -19,6 +19,7 @@ import ToastService from '../../../../../services/toast/ToastService'
 import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
+import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
@@ -28,6 +29,7 @@ const RecruitmentDetailPage = () => {
   const isScrapped = Boolean(scraps[id])
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
+  const { clearSelectedFreeDraft } = useFreeDraftStore()
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -51,6 +53,7 @@ const RecruitmentDetailPage = () => {
   if (!data) return <p className='text-center text-dark-gray'>게시글이 없습니다.</p>
 
   const handleEditClick = () => {
+    clearSelectedFreeDraft()
     navigate(ROUTER_PATHS.RECRUITMENT_POST_EDIT.replace(':id', id))
   }
 
@@ -72,6 +75,33 @@ const RecruitmentDetailPage = () => {
       await toggleScrap(id, 'JOB_POSTING')
     } catch (error) {
       console.error('오류')
+    }
+  }
+
+  const handleExternalLink = (url) => {
+    if (!url || typeof url !== 'string' || url.trim() === '') {
+      return
+    }
+
+    const trimmedUrl = url.trim()
+
+    if (/^(javascript|data|vbscript):/i.test(trimmedUrl)) {
+      ToastService.error('허용되지 않는 링크입니다.')
+      return
+    }
+    const safeUrl = /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+    try {
+      new URL(safeUrl)
+    } catch {
+      ToastService.error('유효하지 않은 링크입니다.')
+      return
+    }
+
+    const isConfirmed = window.confirm(
+      '외부 사이트로 이동합니다. 악성 링크일 수 있으니 주의하세요.\n계속하시겠습니까?',
+    )
+    if (isConfirmed) {
+      window.open(safeUrl, '_blank')
     }
   }
 
@@ -116,23 +146,49 @@ const RecruitmentDetailPage = () => {
       <DetailPostLine />
       <dl className='grid grid-cols-1 my-5 sm:grid-cols-2 gap-x-8 gap-y-5'>
         {[
-          ['근무형태', getEmploymentTypeLabel(data.employmentType)],
-          ['경력', `${data.experienceMin}년 ~ ${data.experienceMax}년`],
-          ['근무지역', data.location],
+          [
+            '근무형태',
+            !data.employmentType || data.employmentType === 'UNKNOWN'
+              ? '협의'
+              : getEmploymentTypeLabel(data.employmentType),
+          ],
+          [
+            '경력',
+            data.experienceMin === 0 && data.experienceMax === 0
+              ? '경력무관'
+              : `${data.experienceMin}년 ~ ${data.experienceMax}년`,
+          ],
+          [
+            '근무지역',
+            !data.location || data.location.trim().toUpperCase() === 'UNKNOWN'
+              ? '협의'
+              : data.location,
+          ],
           ['직군', getJobCategoryLabel(data.jobCategory)],
           [
             '지원 마감일',
             data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용',
           ],
-          ['자사 웹사이트', data.websiteUrl],
+          ['링크', data.websiteUrl],
         ].map(([label, value]) => (
           <div key={label} className='grid grid-cols-[6rem_1fr] items-start gap-x-2'>
             <dt className='text-sm font-semibold text-left text-dark-gray sm:text-base'>{label}</dt>
-            <dd className='text-sm text-left break-words sm:text-base'>{value}</dd>
+            <dd className='text-sm text-left break-words sm:text-base'>
+              {label === '링크' && value ? (
+                <button
+                  type='button'
+                  onClick={() => handleExternalLink(value)}
+                  className='underline hover:opacity-80'
+                >
+                  바로가기
+                </button>
+              ) : (
+                value
+              )}
+            </dd>
           </div>
         ))}
       </dl>
-
       <LastFormLine />
       <div className='flex justify-end gap-2 mb-4 ml-0 mr-0 sm:ml-5 sm:mr-3'>
         <MobileShare
