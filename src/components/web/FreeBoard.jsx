@@ -51,7 +51,9 @@ const FreeBoard = ({
       '
       >
         <div className='flex flex-col items-start text-left' onClick={onClick}>
-          <div className='text-base font-bold truncate sm:text-lg line-clamp-1'>{title}</div>
+          <h3 className='overflow-hidden text-base font-bold leading-snug break-words sm:text-lg line-clamp-2'>
+            {title}
+          </h3>
           <div className='mt-2 text-sm sm:text-base line-clamp-2'>
             {isImagePost ? (
               <span className='flex items-center gap-1 text-dark-gray'>
