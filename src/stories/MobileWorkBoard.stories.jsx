@@ -15,9 +15,9 @@ export default {
     date: '2020-11-11',
     like: true,
     popular1: true,
+    joboffer1: true,
     history1: true,
     jobsearch1: true,
-    othersite1: true,
     worktype1: true,
   },
 }
