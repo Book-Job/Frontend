@@ -9,8 +9,7 @@ export default defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-      // injectRegister: false,
-      injectRegister: 'auto',
+      injectRegister: false,
       pwaAssets: {
         disabled: false,
         config: true,

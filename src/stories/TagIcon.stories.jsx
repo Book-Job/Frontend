@@ -1,8 +1,7 @@
 import TagIcon from '../components/web/TagIcon'
-import joboffer from '../assets/icons/common/common_tag_ joboffer.svg'
+import joboffer from '../assets/icons/common/common_tag_joboffer.svg'
 import history from '../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../assets/icons/common/common_tag_jobsearch.svg'
-import othersite from '../assets/icons/common/common_tag_othersite.svg'
 import popular from '../assets/icons/common/common_tag_popular.svg'
 import worktype from '../assets/icons/common/common_tag_worktype.svg'
 export default {
@@ -14,7 +13,7 @@ export default {
   argTypes: {
     icon: {
       control: 'select',
-      options: [joboffer, history, jobsearch, othersite, popular, worktype],
+      options: [joboffer, history, jobsearch, popular, worktype],
     },
     label: { control: 'text' },
   },
@@ -37,12 +36,6 @@ export const JobSearch = Template.bind({})
 JobSearch.args = {
   label: '구직',
   icon: jobsearch,
-}
-
-export const OtherSite = Template.bind({})
-OtherSite.args = {
-  label: '외부 사이트',
-  icon: othersite,
 }
 
 export const Popular = Template.bind({})

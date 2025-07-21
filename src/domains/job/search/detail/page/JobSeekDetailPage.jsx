@@ -118,10 +118,15 @@ const JobSeekDetailPage = () => {
       <DetailPostLine />
       <dl className='grid my-5 gap-y-4'>
         {[
-          ['근무형태', getEmploymentTypeLabel(data.employmentType)],
+          [
+            '근무형태',
+            !data.employmentType || data.employmentType === 'UNKNOWN'
+              ? '협의'
+              : getEmploymentTypeLabel(data.employmentType),
+          ],
           ['직군', getJobCategoryLabel(data.jobCategory)],
           ['경력', data.experience],
-          ['연락가능한 이메일', data.contactEmail],
+          ['연락가능한 이메일', data.contactEmail?.trim() ? data.contactEmail : '-'],
         ].map(([label, value]) => (
           <div
             key={label}

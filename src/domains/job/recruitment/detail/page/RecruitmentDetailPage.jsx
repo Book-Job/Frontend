@@ -146,9 +146,24 @@ const RecruitmentDetailPage = () => {
       <DetailPostLine />
       <dl className='grid grid-cols-1 my-5 sm:grid-cols-2 gap-x-8 gap-y-5'>
         {[
-          ['근무형태', getEmploymentTypeLabel(data.employmentType)],
-          ['경력', `${data.experienceMin}년 ~ ${data.experienceMax}년`],
-          ['근무지역', data.location],
+          [
+            '근무형태',
+            !data.employmentType || data.employmentType === 'UNKNOWN'
+              ? '협의'
+              : getEmploymentTypeLabel(data.employmentType),
+          ],
+          [
+            '경력',
+            data.experienceMin === 0 && data.experienceMax === 0
+              ? '경력무관'
+              : `${data.experienceMin}년 ~ ${data.experienceMax}년`,
+          ],
+          [
+            '근무지역',
+            !data.location || data.location.trim().toUpperCase() === 'UNKNOWN'
+              ? '협의'
+              : data.location,
+          ],
           ['직군', getJobCategoryLabel(data.jobCategory)],
           [
             '지원 마감일',
@@ -174,7 +189,6 @@ const RecruitmentDetailPage = () => {
           </div>
         ))}
       </dl>
-
       <LastFormLine />
       <div className='flex justify-end gap-2 mb-4 ml-0 mr-0 sm:ml-5 sm:mr-3'>
         <MobileShare

@@ -18,7 +18,6 @@ export default {
     joboffer1: true,
     history1: true,
     jobsearch1: true,
-    othersite1: true,
     worktype1: true,
   },
 }
@@ -37,6 +36,5 @@ Test.args = {
   joboffer1: true,
   history1: true,
   jobsearch1: true,
-  othersite1: true,
   worktype1: true,
 }
