@@ -61,8 +61,15 @@ const WriteRecruitmentPostingForm = ({ onSubmit, editorRef, defaultValues }) => 
       ToastService.error(message)
       return
     }
-    if (formData.closingDate && !formData.closingDate.includes('T')) {
-      formData.closingDate = `${formData.closingDate}T00:00:00`
+    if (formData.closingDate) {
+      const closingDateStr =
+        typeof formData.closingDate === 'string'
+          ? formData.closingDate
+          : String(formData.closingDate)
+
+      if (!closingDateStr.includes('T')) {
+        formData.closingDate = `${closingDateStr}T00:00:00`
+      }
     }
 
     onSubmit(formData)
