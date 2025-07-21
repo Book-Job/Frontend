@@ -34,6 +34,7 @@ const ROUTER_PATHS = {
   NAVER_SUCCESS: '/login/naver/success',
   TERMS_OF_SERVICE: '/terms-of-service',
   PRIVACY_POLICY: '/privacy-policy',
+  INSTALL_METHOD: '/install-method',
 }
 
 export default ROUTER_PATHS

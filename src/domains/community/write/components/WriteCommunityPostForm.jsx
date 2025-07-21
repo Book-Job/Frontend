@@ -119,12 +119,28 @@ const WriteCommunityPostForm = () => {
         <FormItem label='닉네임' dot={true}>
           <div className='flex flex-col w-full'>
             <JobInputBox
-              {...register('nickname', { required: true })}
+              {...register('nickname', {
+                required: '닉네임은 필수입니다.',
+                minLength: {
+                  value: 2,
+                  message: '닉네임은 최소 2자 이상이어야 합니다.',
+                },
+                maxLength: {
+                  value: 8,
+                  message: '닉네임은 최대 8자까지 가능합니다.',
+                },
+                pattern: {
+                  value: /^[A-Za-z0-9가-힣]+$/,
+                  message: '닉네임은 영문, 숫자, 한글만 사용 가능합니다.',
+                },
+              })}
               placeholder='닉네임을 입력하세요'
               className='self-start w-full'
             />
             {errors.nickname && (
-              <span className='self-start text-error-red text-sm mt-1'>닉네임은 필수입니다</span>
+              <span className='self-start mt-1 text-sm text-error-red'>
+                {errors.nickname.message}
+              </span>
             )}
           </div>
         </FormItem>
