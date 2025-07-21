@@ -154,7 +154,7 @@ const JobSeekDetailPage = () => {
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div
-        className='block mt-4 mb-10 text-[15px] sm:text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
+        className='block mt-4 mb-10 text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
       />
       <LastFormLine />

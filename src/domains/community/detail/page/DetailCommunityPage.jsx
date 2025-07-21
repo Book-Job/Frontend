@@ -153,7 +153,7 @@ const DetailCommunityPage = () => {
           />
         ) : (
           <div
-            className='text-[15px] sm:text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
+            className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
           />
         )}
