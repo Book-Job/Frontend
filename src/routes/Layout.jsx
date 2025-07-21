@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 const Layout = ({ children, headerType, label, noMargin = false, paddingX = false }) => {
   const isMobile = useIsMobile()
 
-  const headerHeight = isMobile ? (headerType === 'main' ? 55 : 0) : 85
+  const headerHeight = isMobile ? (headerType === 'main' ? 56 : 0) : 85
 
   return (
     <div className='flex flex-col min-h-screen'>
