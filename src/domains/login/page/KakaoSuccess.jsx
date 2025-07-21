@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ToastService from '../../../services/toast/ToastService'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 import Spinner from '../../../components/web/Spinner'
@@ -7,9 +7,16 @@ import useAuthStore from '../../../store/login/useAuthStore'
 import { fireCelebrationConfetti } from '../../../constants/animations'
 
 const KakaoSuccess = () => {
-  const { socialLogin, justSignedUp, setJustSignedUp } = useAuthStore()
+  const location = useLocation()
   const navigate = useNavigate()
+  const { socialLogin, justSignedUp, setJustSignedUp } = useAuthStore()
+
   useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    if (params.get('isNew') === 'true') {
+      setJustSignedUp(true)
+    }
+
     const fetchUserData = async () => {
       try {
         const response = await socialLogin()
@@ -30,7 +37,7 @@ const KakaoSuccess = () => {
       }
     }
     fetchUserData()
-  }, [])
+  }, [location, justSignedUp, navigate, socialLogin, setJustSignedUp])
 
   return (
     <div className='flex flex-col'>
