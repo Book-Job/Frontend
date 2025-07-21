@@ -58,6 +58,9 @@ const RecruitmentDetailPage = () => {
   }
 
   const handleDeleteClick = async () => {
+    const confirmed = window.confirm('삭제 후 복원이 불가능합니다. 정말 삭제하시겠습니까?')
+    if (!confirmed) return
+
     try {
       await deleteRecruitmentPost(id)
       ToastService.success('성공적으로 삭제되었습니다.')
