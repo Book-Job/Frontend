@@ -98,7 +98,6 @@ const ProfileInfo = ({ title, content, edit, text, onSave, serverError, onCheckN
   const handleInputChange = () => {
     if (nicknameCheckMessage) setNicknameCheckMessage('')
     if (nicknameCheckStatus) setNicknameCheckStatus(null)
-    // 사용자가 다시 입력을 시작하면, '변경 사항 없음' 에러를 포함한 모든 에러를 지웁니다.
     if (errors.nickname) {
       clearErrors('nickname')
     }
