@@ -136,7 +136,7 @@ const Header = () => {
               <span className='relative'>
                 {user.nickname}님
                 {isDropdownOpen && (
-                  <ul className='absolute top-9 md:top-10 font-normal left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+                  <ul className='absolute top-9 w-28 md:top-10 font-normal left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
                     {options.map((option) => (
                       <li
                         key={option.value}

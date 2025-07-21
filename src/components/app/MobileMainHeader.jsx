@@ -93,12 +93,12 @@ const MobileMainHeader = () => {
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-2' />
             </button>
             {isDropdownOpen && (
-              <ul className='absolute top-8 left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+              <ul className='absolute top-8 w-28 left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
                 {options.map((option) => (
                   <li
                     key={option.value}
                     onClick={() => !option.disabled && handleOptionChange(option.value)}
-                    className={`px-3 py-2 cursor-pointer rounded-md hover:bg-gray-200 ${
+                    className={`px-4 py-2 cursor-pointer rounded-md hover:bg-gray-200 ${
                       option.disabled ? 'text-dark-gray' : ''
                     }`}
                   >
