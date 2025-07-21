@@ -25,46 +25,50 @@ const BestList = ({ boardName, bestList }) => {
         <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
-        {bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
-          return (
-            <div key={index} className='flex items-center'>
-              <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-              <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden white-space-nowrap'>
-                <button
-                  className='w-10/12 text-start line-clamp-1'
-                  onClick={
-                    boardId
-                      ? () => navigate(`/community/post/${boardId}`)
-                      : () => navigate(`/job/recruitment/post/${jobPostingId}`)
-                  }
-                >
-                  {title}
-                </button>
-                <div className='flex flex-row items-center justify-between sm:min-w-14 min-w-10'>
-                  {boardId ? (
-                    <>
-                      <img
-                        src={comment}
-                        alt='comment'
-                        className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
-                      />
-                      {commentCount}
-                    </>
-                  ) : (
-                    <>
-                      <img
-                        src={viewGray}
-                        alt='viewCount'
-                        className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
-                      />
-                      {viewCount}
-                    </>
-                  )}
+        {bestList.length !== 0 ? (
+          bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
+            return (
+              <div key={index} className='flex items-center'>
+                <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
+                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden white-space-nowrap'>
+                  <button
+                    className='w-10/12 text-start line-clamp-1'
+                    onClick={
+                      boardId
+                        ? () => navigate(`/community/post/${boardId}`)
+                        : () => navigate(`/job/recruitment/post/${jobPostingId}`)
+                    }
+                  >
+                    {title}
+                  </button>
+                  <div className='flex flex-row items-center justify-between sm:min-w-14 min-w-10'>
+                    {boardId ? (
+                      <>
+                        <img
+                          src={comment}
+                          alt='comment'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
+                        />
+                        {commentCount}
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          src={viewGray}
+                          alt='viewCount'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
+                        />
+                        {viewCount}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })
+        ) : (
+          <div className='my-6 text-center text-dark-gray'>게시글이 없습니다.</div>
+        )}
       </div>
     </div>
   )
