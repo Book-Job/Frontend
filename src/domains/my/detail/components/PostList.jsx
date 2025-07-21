@@ -9,6 +9,7 @@ import ToastService from '../../../../services/toast/ToastService'
 import useWriteModalStore from '../../../../store/modal/useWriteModalStore'
 import { useQueryClient } from '@tanstack/react-query'
 import PostSortDropDown from '../../../../components/common/PostSortDropDown'
+import { useNavigate } from 'react-router-dom'
 
 const PostList = ({ boardData }) => {
   const [checkedItems, setCheckedItems] = useState([])
@@ -17,6 +18,7 @@ const PostList = ({ boardData }) => {
   const { setShowModal } = useWriteModalStore()
   const queryClient = useQueryClient()
   const [sort, setSort] = useState('latest')
+  const navigate = useNavigate()
 
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>
@@ -100,6 +102,14 @@ const PostList = ({ boardData }) => {
     setSort((prev) => (prev === 'latest' ? 'oldest' : 'latest'))
   }
 
+  const goToDetailPage = (Id, Category) => {
+    if (Category === 'JOB_POSTING') {
+      navigate(`/job/recruitment/post/${Id}`)
+    } else if (Category === 'JOB_SEEKING') {
+      navigate(`/job/job-seek/post/${Id}`)
+    } else navigate(`/community/post/${Id}`)
+  }
+
   return (
     <div>
       <div className='sm:text-[30px] font-bold flex justify-start mb-[20px] mt-10 text-[20px]'>
@@ -158,7 +168,13 @@ const PostList = ({ boardData }) => {
                 </td>
                 <td>{index + 1}</td>
                 <td className='truncate max-w-[50px]'>
-                  {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
+                  <button
+                    onClick={() => {
+                      goToDetailPage(item.boardId || item.recruitmentId, item.recruitmentCategory)
+                    }}
+                  >
+                    {item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}
+                  </button>
                 </td>
                 <td className='text-nowrap'>{item.createdAt.split('T')[0]}</td>
                 {item.recruitmentCategory !== undefined &&
