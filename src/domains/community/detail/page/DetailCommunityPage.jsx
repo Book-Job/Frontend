@@ -90,7 +90,9 @@ const DetailCommunityPage = () => {
       <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
         {post.title}
       </h1>
-      <div className='text-[15px] text-dark-gray mb-2 text-left break-words'>{post.nickname}</div>
+      <div className='text-[15px] sm:text-[20px] text-dark-gray mb-2 text-left break-words'>
+        {post.nickname}
+      </div>
 
       {post?.isWriter ? (
         <div className='flex justify-end gap-4 mt-4 mb-2'>
@@ -148,7 +150,7 @@ const DetailCommunityPage = () => {
           />
         ) : (
           <div
-            className='text-left break-words whitespace-pre-line'
+            className='text-[15px] sm:text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
           />
         )}
