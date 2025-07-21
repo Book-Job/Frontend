@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import ROUTER_PATHS from '../../routes/RouterPath'
-import joboffer from '../../assets/icons/common/common_tag_ joboffer.svg'
+import joboffer from '../../assets/icons/common/common_tag_joboffer.svg'
 import history from '../../assets/icons/common/common_tag_history.svg'
 import jobsearch from '../../assets/icons/common/common_tag_jobsearch.svg'
-import othersite from '../../assets/icons/common/common_tag_othersite.svg'
 import popular from '../../assets/icons/common/common_tag_popular.svg'
 import worktype from '../../assets/icons/common/common_tag_worktype.svg'
 import viewPink from '../../assets/icons/common/common_view_pink.svg'
@@ -17,6 +16,7 @@ import useModalStore from '../../store/modal/useModalStore'
 import useAuthStore from '../../store/login/useAuthStore'
 import ToastService from '../../services/toast/ToastService'
 const getEmploymentLabel = (value) => {
+  if (value === 'UNKNOWN') return '무관'
   const found = employmentTypes.find((item) => item.value === value)
   return found ? found.label : value
 }
@@ -28,7 +28,6 @@ const WorkBoard = ({
   popular1,
   joboffer1,
   jobsearch1,
-  othersite1,
   employmentType,
   experienceLabel,
   view,
@@ -107,7 +106,7 @@ const WorkBoard = ({
             {joboffer1 && <TagIcon label='구인' icon={joboffer} />}
             {experienceLabel && <TagIcon label={experienceLabel} icon={history} />}
             {jobsearch1 && <TagIcon label='구직' icon={jobsearch} />}
-            {othersite1 && <TagIcon label='외부 사이트' icon={othersite} />}
+
             {employmentType && (
               <TagIcon label={getEmploymentLabel(employmentType)} icon={worktype} />
             )}

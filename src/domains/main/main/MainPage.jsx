@@ -10,7 +10,7 @@ import useAuthStore from '../../../store/login/useAuthStore'
 import ROUTER_PATHS from '../../../routes/RouterPath'
 const MainPage = () => {
   const { isAuthenticated } = useAuthStore()
-  const [selectedBoard, setSelectedBoard] = useState('자유게시판')
+  const [selectedBoard, setSelectedBoard] = useState('구인구직')
   const [isSurveyOpen, setIsSurveyOpen] = useState(false)
 
   const {

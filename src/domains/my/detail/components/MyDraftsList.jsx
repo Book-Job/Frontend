@@ -4,6 +4,7 @@ import BoardCategory from './../../../../components/web/BoardCategory'
 import { BsCardImage } from 'react-icons/bs'
 import PostSortDropDown from '../../../../components/common/PostSortDropDown'
 import { useMemo, useState } from 'react'
+import ToastService from '../../../../services/toast/ToastService'
 
 const MyDraftsList = ({ draftsListData, onDraftClick }) => {
   const { deleteFreeDraft } = useFreeDraftStore()
@@ -77,6 +78,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
                   onClick={(e) => {
                     e.stopPropagation()
                     deleteFreeDraft(item.id)
+                    ToastService.success('임시 저장글이 삭제되었어요.')
                   }}
                 >
                   삭제
