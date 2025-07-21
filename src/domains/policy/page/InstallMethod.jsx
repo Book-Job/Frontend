@@ -1,7 +1,6 @@
 import iOS_install1 from '../../../assets/icons/common/ios-install1.jpg'
 import iOS_install2 from '../../../assets/icons/common/ios-install2.jpg'
 import iOS_install3 from '../../../assets/icons/common/ios-install3.jpg'
-import iOS_install4 from '../../../assets/icons/common/ios-install4.jpg'
 import android_install from '../../../assets/icons/common/android-install.png'
 const InstallMethod = () => {
   return (
@@ -34,9 +33,9 @@ const InstallMethod = () => {
             </li>
             <li>
               <img
-                src={iOS_install3}
-                alt='iOS 설치 가이드 두 번째 단계'
-                className='w-[300px] h-[600px]'
+                src={iOS_install1}
+                alt='iOS 설치 가이드 네 번째 단계'
+                className='w-[300px] h-[600px] object-contain'
               />
             </li>
           </ol>
@@ -49,7 +48,7 @@ const InstallMethod = () => {
           <ol className='flex flex-row flex-wrap gap-10 pl-6 list-decimal list-outside'>
             <li>
               <img
-                src={iOS_install4}
+                src={iOS_install3}
                 alt='iOS 설치 가이드 세 번째 단계'
                 className='w-[300px] h-[600px] object-contain'
               />

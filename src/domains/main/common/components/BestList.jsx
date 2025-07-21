@@ -3,7 +3,6 @@ import comment from '../../../../assets/icons/common/comment.svg'
 import viewGray from '../../../../assets/icons/common/common_view_gray.svg'
 const BestList = ({ boardName, bestList }) => {
   const navigate = useNavigate()
-  console.log('bestList:', bestList)
 
   return (
     <div className='flex flex-col w-full sm:max-w-[940px]'>
