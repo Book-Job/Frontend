@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import foldArrow from '../../../../assets/icons/common/common_fold_arrow.svg'
 import spreadArrow from '../../../../assets/icons/common/common_spread_arrow.svg'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getAllPosts } from '../../service/postService'
 import BoardCategory from '../../../../components/web/BoardCategory'
 import Spinner from '../../../../components/web/Spinner'
@@ -14,6 +14,7 @@ const UserPosts = () => {
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
   const [isFolded, setIsFolded] = useState(true)
+  const navigate = useNavigate()
 
   const toggleArrow = () => {
     setIsFolded((prev) => !prev)
@@ -62,6 +63,10 @@ const UserPosts = () => {
     return isFolded ? dateB - dateA : dateA - dateB
   })
 
+  const goToDetailPage = (Id) => {
+    navigate(`/community/post/${Id}`)
+  }
+
   return (
     <div className='flex flex-col'>
       <span className='sm:text-[30px] text-[24px] block mb-[60px] mt-[20px]'>
@@ -100,7 +105,13 @@ const UserPosts = () => {
               >
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{index + 1}</td>
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px] truncate max-w-[50px]'>
-                  {post.title.length > 20 ? `${post.title.slice(0, 20)}...` : post.title}
+                  <button
+                    onClick={() => {
+                      goToDetailPage(post.boardId)
+                    }}
+                  >
+                    {post.title.length > 20 ? `${post.title.slice(0, 20)}...` : post.title}
+                  </button>
                 </td>
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px] text-nowrap'>
                   {new Date(post.createdAt).toLocaleDateString()}

@@ -103,8 +103,6 @@ const PostList = ({ boardData }) => {
   }
 
   const goToDetailPage = (Id, Category) => {
-    console.log('Id :', Id)
-    console.log('Category :', Category)
     if (Category === 'JOB_POSTING') {
       navigate(`/job/recruitment/post/${Id}`)
     } else if (Category === 'JOB_SEEKING') {
