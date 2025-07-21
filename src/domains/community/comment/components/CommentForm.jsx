@@ -77,7 +77,6 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
             placeholder:text-dark-gray
             text-base
             text-left
-            placeholder:text-sm
             
           '
         />
