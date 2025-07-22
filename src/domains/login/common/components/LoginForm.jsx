@@ -102,28 +102,28 @@ const LoginForm = () => {
         className='w-full max-w-[532px] sm:gap-4 gap-4 flex flex-col'
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className='flex w-full'>
+        <div className='flex flex-col w-full'>
           <InputBox
             placeholder='아이디'
             size='big'
             {...register('userID', { required: '아이디를 입력하세요' })}
             aria-label='아이디 입력'
           />
+          {errors.userID && (
+            <p className='flex items-start text-sm text-error-red'>{errors.userID.message}</p>
+          )}
         </div>
-        {errors.userID && (
-          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.userID.message}</p>
-        )}
-        <div className='flex w-full'>
+        <div className='flex flex-col w-full'>
           <PwInputBox
             placeholder='비밀번호'
             size='big'
             {...register('password', { required: '비밀번호를 입력하세요' })}
             aria-label='비밀번호 입력'
           />
+          {errors.password && (
+            <p className='flex items-start text-sm text-error-red'>{errors.password.message}</p>
+          )}
         </div>
-        {errors.password && (
-          <p className='flex items-start ml-4 text-error-red text-sm'>{errors.password.message}</p>
-        )}
         <div className='flex items-center justify-between '>
           <label className='flex items-center gap-2 text-sm cursor-pointer sm:text-base'>
             <input
