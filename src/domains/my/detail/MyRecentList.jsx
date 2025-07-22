@@ -25,9 +25,9 @@ const MyRecentList = () => {
 
   return (
     <div>
-      <div className='sm:mt-10'>{isMobile ? null : <PageTitle title={'최근본 목록'} />}</div>
+      <div className='sm:mt-10'>{isMobile ? null : <PageTitle title={'최근 본 목록'} />}</div>
       {sortedPosts.length === 0 && (
-        <div className='items-center text-center text-dark-gray'>최근 본 글이 없습니다.</div>
+        <div className='items-center mt-20 text-center text-dark-gray'>최근 본 글이 없습니다.</div>
       )}
       {sortedPosts.length > 0 && (
         <>

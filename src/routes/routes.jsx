@@ -179,7 +179,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_RECENT_LIST,
     element: <MyRecentList />,
-    label: '최근본 목록',
+    label: '최근 본 목록',
     paddingX: true,
   },
   {
