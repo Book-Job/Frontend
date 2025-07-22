@@ -16,7 +16,6 @@ import {
 import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import ToastService from '../../../../services/toast/ToastService'
-import confetti from 'canvas-confetti'
 import { fireCelebrationConfetti } from '../../../../constants/animations'
 
 const JoinForm = () => {
