@@ -87,7 +87,6 @@ const EmailInput = ({
     if (emailCheckStatus) setEmailCheckStatus(null)
     setStartTimer(false)
   }
-  console.log('errors.emailId.message', errors)
 
   return (
     <div className='flex flex-col gap-2'>
