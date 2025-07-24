@@ -52,6 +52,16 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
     onVerify(code)
   }
 
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 640,
+  )
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <div className='w-full max-w-[575px] sm:flex-row flex-col flex gap-2'>
       <div className='relative flex items-center w-full'>
@@ -70,7 +80,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
       <Button
         label={'인증확인'}
         bgColor={code ? 'main-pink' : 'light-gray'}
-        size={window.innerWidth >= 640 ? 'small' : 'biggest'}
+        size={windowWidth >= 640 ? 'small' : 'biggest'}
         onClick={handleVerify}
         disabled={!code}
       />
