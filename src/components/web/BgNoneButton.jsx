@@ -11,7 +11,6 @@ const BgNoneButton = ({
 }) => {
   const buttonSize = {
     small: 'w-full max-w-[148px] h-[56px]',
-    semiMedium: 'w-full max-w-[205px] h-[56px]',
     medium: 'w-full max-w-[332px] h-[56px]',
     big: 'w-full max-w-[532px] h-[56px]',
     biggest: 'w-full max-w-[575px] h-[56px]',
