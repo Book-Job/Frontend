@@ -34,6 +34,8 @@ Button.propTypes = {
   bgColor: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 }
 
 export default Button

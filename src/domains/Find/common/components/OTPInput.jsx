@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import ToastService from '../../../../services/toast/ToastService'
+import Button from '../../../../components/web/Button'
 
 const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   const [code, setCode] = useState('')
@@ -52,7 +53,7 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
   }
 
   return (
-    <div className='w-full max-w-[575px]'>
+    <div className='w-full max-w-[575px] sm:flex-row flex-col flex gap-2'>
       <div className='relative flex items-center w-full'>
         <input
           type='text'
@@ -60,29 +61,19 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
           onChange={(e) => setCode(e.target.value)}
           placeholder={placeholder}
           disabled={isExpired}
-          className=' border border-dark-gray rounded px-4 sm:text-base text-sm text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none w-full max-w-[575px] h-[56px]'
+          className=' border border-dark-gray rounded sm:px-4 px-2 sm:text-base text-sm text-black placeholder:text-gray-8e8e8e focus:border-main-pink focus:outline-none w-full max-w-[575px] h-[56px]'
         />
         {startTimer && !isExpired && (
-          <div className='absolute flex items-center right-6'>
-            {code ? (
-              <button
-                onClick={handleVerify}
-                disabled={isExpired || !code}
-                className={`text-main-pink ${
-                  isExpired || !code ? 'bg-gray-400 cursor-not-allowed' : 'hover:text-hover-pink'
-                }`}
-              >
-                <span className='text-error-red'>{formatTime(timeLeft)}</span>{' '}
-                <span className='px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'>
-                  인증
-                </span>
-              </button>
-            ) : (
-              <p className='text-error-red'>{formatTime(timeLeft)}</p>
-            )}
-          </div>
+          <p className='absolute right-6 text-error-red'>{formatTime(timeLeft)}</p>
         )}
       </div>
+      <Button
+        label={'인증확인'}
+        bgColor={code ? 'main-pink' : 'light-gray'}
+        size={window.innerWidth >= 640 ? 'small' : 'biggest'}
+        onClick={handleVerify}
+        disabled={!code}
+      />
     </div>
   )
 }
