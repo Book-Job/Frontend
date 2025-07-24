@@ -67,7 +67,7 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
         <input
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder='자유게시판에서는 닉네임 수정이 가능합니다(최대 8자)'
+          placeholder='댓글을 작성해 주세요'
           className='
             h-[44px] sm:h-[50px]
             w-full
@@ -77,7 +77,6 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
             placeholder:text-dark-gray
             text-base
             text-left
-            placeholder:text-sm
             
           '
         />

@@ -104,10 +104,7 @@ const TermsOfService = () => {
           <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
             제9조 (계정 탈퇴 및 삭제)
           </h2>
-          <p>
-            회원은 언제든지 서비스 내에서 탈퇴할 수 있으며, 탈퇴 시 계정 정보는 삭제됩니다. 단,
-            게시물은 삭제되지 않으며 원할 경우 탈퇴 전 삭제해야 합니다.
-          </p>
+          <p>회원은 언제든지 서비스 내에서 탈퇴할 수 있으며, 탈퇴 시 계정 정보는 삭제됩니다.</p>
         </div>
 
         <div>
@@ -119,20 +116,6 @@ const TermsOfService = () => {
             않습니다.
           </p>
         </div>
-
-        <div>
-          <h2 className='pl-3 mb-2 text-xl font-semibold border-l-4 border-main-pink'>
-            제11조 (관할법원 및 준거법)
-          </h2>
-          <p>
-            이 약관은 대한민국 법령에 따라 해석되며, 분쟁 발생 시 회사 소재지의 관할 법원을 제1심
-            전속관할 법원으로 합니다.
-          </p>
-        </div>
-
-        <p className='pt-6 mt-10 text-sm border-t text-dark-gray'>
-          부칙: 본 약관은 2025년 7월 3일부터 시행합니다.
-        </p>
       </div>
     </section>
   )

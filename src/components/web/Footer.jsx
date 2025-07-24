@@ -47,7 +47,6 @@ const Footer = ({ email, onClick }) => {
             id='company-info'
             className='max-w-7xl mx-auto mt-2 text-xs sm:text-sm text-gray-600 text-center sm:text-left space-y-1 select-text'
           >
-            <p>대표 | 이신지</p>
             <p>
               이메일 |{' '}
               <a href={`mailto:${email}`} className='text-blue-600 underline'>

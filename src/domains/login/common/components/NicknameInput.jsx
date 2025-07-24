@@ -47,13 +47,11 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch, setValidat
     }
   }
 
-  const buttonLabel = isCheckingNickname ? (
-    <Spinner size={30} color={'light-gray'} />
-  ) : nicknameCheckStatus === 'success' ? (
-    '사용가능'
-  ) : (
-    '중복확인'
-  )
+  const buttonLabel = isCheckingNickname
+    ? '확인 중...'
+    : nicknameCheckStatus === 'success'
+      ? '사용가능'
+      : '중복확인'
 
   const handleInputChange = (e) => {
     if (nicknameCheckMessage) setNicknameCheckMessage('')
@@ -91,7 +89,7 @@ const NicknameInput = ({ register, errors, trigger, getValues, watch, setValidat
         </div>
       </div>
       <div className='flex items-start'>
-        {errors.Nickname && <p className='text-error-red text-sm'>{errors.Nickname.message}</p>}
+        {errors.Nickname && <p className='text-sm text-error-red'>{errors.Nickname.message}</p>}
         {nicknameCheckMessage && (
           <p
             className={`${nicknameCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}

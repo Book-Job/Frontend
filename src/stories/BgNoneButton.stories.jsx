@@ -1,9 +1,9 @@
-import Button from '../components/web/Button'
 import { action } from '@storybook/addon-actions'
+import BgNoneButton from '../components/web/BgNoneButton'
 
 export default {
-  title: 'Components/web/Button',
-  component: Button,
+  title: 'Components/web/BgNoneButton',
+  component: BgNoneButton,
   parameters: {
     layout: 'centered',
   },
@@ -19,13 +19,13 @@ export default {
   },
 }
 
-const Template = (args) => <Button {...args} />
+const Template = (args) => <BgNoneButton {...args} />
 
 export const Small = Template.bind({})
 Small.args = {
   label: '작은 버튼',
   size: 'small',
-  bgColor: '#d9d9d9',
+  textColor: '#000000',
   onClick: action('클릭액션'),
 }
 
@@ -33,7 +33,7 @@ export const Default = Template.bind({})
 Default.args = {
   label: '기본 버튼',
   size: 'medium',
-  bgColor: '#d9d9d9',
+  textColor: 'main-pink',
   onClick: action('클릭액션'),
 }
 
@@ -41,7 +41,7 @@ export const Big = Template.bind({})
 Big.args = {
   label: '큰 버튼',
   size: 'big',
-  bgColor: '#d9d9d9',
+  textColor: 'hover-pink',
   onClick: action('클릭액션'),
 }
 
@@ -49,6 +49,6 @@ export const Biggest = Template.bind({})
 Biggest.args = {
   label: '가장 큰 버튼',
   size: 'biggest',
-  bgColor: '#d9d9d9',
+  textColor: '#4964ff',
   onClick: action('클릭액션'),
 }

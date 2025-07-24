@@ -35,7 +35,7 @@ const MobileMainHeader = () => {
   const options = [
     ...(isAuthenticated
       ? [
-          { value: 'mypage', label: '마이페이지' },
+          { value: 'mypage', label: '내 정보' },
           { value: 'logout', label: '로그아웃' },
         ]
       : [
@@ -93,7 +93,7 @@ const MobileMainHeader = () => {
               <img src={arrowDown} alt='arrowDown' className='w-4 h-4 ml-2' />
             </button>
             {isDropdownOpen && (
-              <ul className='absolute top-8 w-28 left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
+              <ul className='absolute top-8 w-24 left-1/2 -translate-x-1/2 bg-[#F4F6FA] border border-light-gray rounded-md shadow-md z-20'>
                 {options.map((option) => (
                   <li
                     key={option.value}

@@ -79,7 +79,7 @@ const EmailInput = ({
       ? '확인 중...'
       : emailCheckStatus === 'success'
         ? '사용가능'
-        : '인증확인')
+        : '이메일 인증 발송')
 
   const handleInputChange = () => {
     if (emailCheckMessage) setEmailCheckMessage('')
@@ -91,56 +91,44 @@ const EmailInput = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex w-full flex-row max-w-[575px] gap-2'>
-          <div className='flex-1'>
-            <LabelWithInput
-              label='이메일'
-              type='text'
-              placeholder='ex) bookjob'
-              size='medium'
-              {...register('emailId', {
-                required: '이메일을 입력하세요',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+$/,
-                  message: '유효한 이메일 형식을 입력하세요',
-                },
-                onChange: handleInputChange,
-              })}
-            />
+        <div>
+          <div className='flex w-full flex-row max-w-[575px] gap-2'>
+            <div className='flex-1'>
+              <LabelWithInput
+                label='이메일'
+                type='text'
+                placeholder='ex) bookjob'
+                size='medium'
+                {...register('emailId', {
+                  required: '이메일을 입력하세요',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+$/,
+                    message: '유효한 이메일 형식을 입력하세요',
+                  },
+                  onChange: handleInputChange,
+                })}
+              />
+            </div>
+            <span className='flex items-center pt-8 text-2xl'>@</span>
+            <div className='flex flex-1 max-w-[148px]'>
+              <DomainSelector
+                domain={isCustom ? customDomain : domain}
+                isCustom={isCustom}
+                setDomain={setDomain}
+                setIsCustom={setIsCustom}
+                setCustomDomain={setCustomDomain}
+              />
+            </div>
+            <div className=' flex flex-1 max-w-[148px]'>
+              <CustomDomain
+                customDomain={customDomain}
+                setCustomDomain={setCustomDomain}
+                disabled={!isCustom}
+              />
+            </div>
           </div>
-          <span className='flex items-center pt-8 text-2xl'>@</span>
-          <div className='flex flex-1 max-w-[148px]'>
-            <DomainSelector
-              domain={isCustom ? customDomain : domain}
-              isCustom={isCustom}
-              setDomain={setDomain}
-              setIsCustom={setIsCustom}
-              setCustomDomain={setCustomDomain}
-            />
-          </div>
-          <div className=' flex flex-1 max-w-[148px]'>
-            <CustomDomain
-              customDomain={customDomain}
-              setCustomDomain={setCustomDomain}
-              disabled={!isCustom}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className='flex flex-col w-full gap-2 sm:flex-row'>
-        <div className='flex flex-col w-full'>
-          <div className='w-full'>
-            <OTPInput
-              size='biggest'
-              placeholder='이메일로 전송된 인증코드를 입력해주세요'
-              startTimer={startTimer}
-              onVerify={(code) => handleIsExpiredEmail(code)}
-            />
-          </div>
-
           <div className='flex items-start'>
-            {errors.emailId && <p className='text-error-red text-sm'>{errors.emailId.message}</p>}
+            {errors.emailId && <p className='text-sm text-error-red'>{errors.emailId.message}</p>}
             {emailCheckMessage && (
               <p
                 className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
@@ -150,25 +138,45 @@ const EmailInput = ({
             )}
           </div>
         </div>
-
-        <div className='flex min-w-[148px]'>
-          <Button
-            size='biggest'
-            label={buttonLabel}
-            bgColor={
-              emailId && !externalIsCheckingEmail && !(isCustom && !customDomain.trim())
-                ? 'main-pink'
-                : 'light-gray'
-            }
-            onClick={handleCheckEmail}
-            disabled={
-              !emailId ||
-              externalIsCheckingEmail ||
-              (isCustom && !customDomain.trim()) ||
-              emailCheckStatus === 'success' ||
-              startTimer
-            }
-          />
+      </div>
+      <div className='flex min-w-[148px]'>
+        <Button
+          size='biggest'
+          label={buttonLabel}
+          bgColor={
+            emailId && !externalIsCheckingEmail && !(isCustom && !customDomain.trim())
+              ? 'main-pink'
+              : 'light-gray'
+          }
+          onClick={handleCheckEmail}
+          disabled={
+            !emailId ||
+            externalIsCheckingEmail ||
+            (isCustom && !customDomain.trim()) ||
+            emailCheckStatus === 'success' ||
+            startTimer
+          }
+        />
+      </div>
+      <div className='flex flex-col w-full gap-2 sm:flex-row'>
+        <div className='flex flex-col w-full'>
+          <div className='w-full'>
+            <OTPInput
+              size='sm:biggest '
+              placeholder='이메일로 전송된 인증코드를 입력해주세요'
+              startTimer={startTimer}
+              onVerify={(code) => handleIsExpiredEmail(code)}
+            />
+          </div>
+          <div className='flex items-start'>
+            {emailCodeMessage && (
+              <p
+                className={`${emailCheckStatus === 'success' ? 'text-blue-500' : 'text-error-red'} text-sm`}
+              >
+                {emailCodeMessage}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

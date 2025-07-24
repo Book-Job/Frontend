@@ -130,9 +130,17 @@ const EditProfile = () => {
     ? 'font-bold text-dark-gray px-3 py-1'
     : 'font-bold text-main-pink px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition'
 
+  const pwChangButtonName =
+    user.provider === 'BOOKJOB'
+      ? '변경'
+      : user.provider === 'KAKAO'
+        ? '카카오에 연결되어 있습니다.'
+        : '네이버에 연결되어 있습니다.'
+  console.log('user', user)
+
   return (
     <div>
-      {isMobile ? null : <PageTitle title={'내 정보'} />}
+      {isMobile ? null : <PageTitle title={'회원정보 수정'} />}
       <div className='flex justify-center'>
         <div className='w-[580px]'>
           <div className='flex flex-col w-full gap-10 sm:gap-14 '>
@@ -157,7 +165,7 @@ const EditProfile = () => {
                 onClick={() => navigate(ROUTER_PATHS.MY_EDIT_PW)}
                 disabled={!loginProvider}
               >
-                변경
+                {pwChangButtonName}
               </button>
             </div>
             <div className='flex justify-between gap-4'>
