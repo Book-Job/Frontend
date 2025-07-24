@@ -64,6 +64,9 @@ const DetailCommunityPage = () => {
   }
 
   const handleDeleteClick = async () => {
+    const confirmed = window.confirm('삭제 후 복원이 불가능합니다. 정말 삭제하시겠습니까?')
+    if (!confirmed) return
+
     try {
       await deletePost(id)
       ToastService.success('성공적으로 삭제되었습니다.')
@@ -90,7 +93,7 @@ const DetailCommunityPage = () => {
       <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
         {post.title}
       </h1>
-      <div className='text-sm sm:text-[15px] text-gray-600 mb-2 text-left break-words'>
+      <div className='text-[15px] sm:text-[20px] text-dark-gray mb-2 text-left break-words'>
         {post.nickname}
       </div>
 
@@ -150,7 +153,7 @@ const DetailCommunityPage = () => {
           />
         ) : (
           <div
-            className='text-left break-words whitespace-pre-line'
+            className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
           />
         )}

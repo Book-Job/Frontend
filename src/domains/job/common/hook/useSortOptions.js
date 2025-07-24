@@ -1,12 +1,8 @@
-import useIsMobile from '../../../../hooks/header/useIsMobile'
-
 export default function useSortOptions() {
-  const isMobile = useIsMobile()
-
   const recruitmentSortOptions = [
-    { value: 'latest', label: isMobile ? '최신' : '최신순' },
-    { value: 'popular', label: isMobile ? '인기' : '인기순' },
-    { value: 'closing_soon', label: isMobile ? '마감' : '마감임박순' },
+    { value: 'latest', label: '최신순' },
+    { value: 'popular', label: '인기순' },
+    { value: 'closing_soon', label: '마감임박순' },
   ]
 
   const seekingSortOptions = [
