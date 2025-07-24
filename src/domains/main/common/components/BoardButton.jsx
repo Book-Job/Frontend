@@ -36,7 +36,7 @@ const BoardButton = ({ onBoardSelect, selectedBoard, handleRefresh }) => {
           onClick={() => {
             handleRefresh()
           }}
-          className='flex items-center justify-end w-full mt-1 bg-blend-darken'
+          className='flex items-center justify-end w-full mt-3 bg-blend-darken'
           title='최신 정보로 업데이트'
         >
           <div className='w-3 h-3 mr-1 mb-[1px] sm:w-4 sm:h-4'>

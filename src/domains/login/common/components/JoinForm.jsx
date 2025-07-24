@@ -16,7 +16,6 @@ import {
 import { useNavigate } from 'react-router-dom'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 import ToastService from '../../../../services/toast/ToastService'
-import confetti from 'canvas-confetti'
 import { fireCelebrationConfetti } from '../../../../constants/animations'
 
 const JoinForm = () => {
@@ -73,7 +72,7 @@ const JoinForm = () => {
       if (response.data && response.data.message === 'success') {
         fireCelebrationConfetti()
         ToastService.success('회원가입을 축하합니다!')
-        navigate(ROUTER_PATHS.MAIN_PAGE)
+        navigate(ROUTER_PATHS.LOGIN_MAIN)
       } else {
         openModal({
           title: '회원가입 실패',

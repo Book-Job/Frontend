@@ -1,7 +1,6 @@
 import WriteFormLine from '../../../../../components/web/WriteFormLine'
 import WriteJobSearchPostingForm from '../../components/WriteJobSearchPostingForm'
 import LastFormLine from '../../../common/components/LastFormLine'
-import Button from '../../../../../components/web/Button'
 import PinkButton from '../../../../../components/web/PinkButton'
 import { createJobSeekPost } from '../../../common/service/postService'
 import { usePostSubmit } from '../../../common/hook/usePostSubmit'
@@ -11,6 +10,7 @@ import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 import { useNavigate } from 'react-router-dom'
 import ToastService from '../../../../../services/toast/ToastService'
 import ROUTER_PATHS from '../../../../../routes/RouterPath'
+import BgNoneButton from '../../../../../components/web/BgNoneButton'
 
 const WriteJobSearchPostPage = () => {
   const { selectedFreeDraft } = useFreeDraftStore()
@@ -76,14 +76,9 @@ const WriteJobSearchPostPage = () => {
           defaultValues={defaultValues}
         />
         <LastFormLine />
-        <div className='flex justify-end mb-[131px]'>
-          <Button
-            size='small'
-            label='임시저장'
-            className='mr-[14px]'
-            onClick={handleSaveDraftClick}
-          />
-          <PinkButton label='저장' type='submit' form='job-search-post-form' />
+        <div className='flex justify-end mb-[131px] gap-4'>
+          <BgNoneButton label='임시저장' onClick={handleSaveDraftClick} />
+          <PinkButton label='등록' type='submit' form='job-search-post-form' />
         </div>
       </div>
     </>

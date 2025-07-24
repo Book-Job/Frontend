@@ -24,9 +24,9 @@ const BestList = ({ boardName, bestList }) => {
         </video>
         <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
-        {bestList.length !== 0 ? (
-          bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
+      {bestList.length !== 0 ? (
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
+          {bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
             return (
               <div key={index} className='flex items-center'>
                 <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
@@ -65,11 +65,11 @@ const BestList = ({ boardName, bestList }) => {
                 </div>
               </div>
             )
-          })
-        ) : (
-          <div className='my-6 text-center text-dark-gray'>게시글이 없습니다.</div>
-        )}
-      </div>
+          })}
+        </div>
+      ) : (
+        <div className='my-6 text-center text-dark-gray'>게시글이 없습니다.</div>
+      )}
     </div>
   )
 }

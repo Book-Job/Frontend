@@ -146,14 +146,14 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_PAGE,
     element: <MyPage />,
-    label: '내정보',
+    label: '내 정보',
     noMargin: true,
     isProtected: true,
   },
   {
     path: ROUTER_PATHS.MY_EDIT_PROFILE,
     element: <EditProfile />,
-    label: '내 정보',
+    label: '회원정보 수정',
   },
   {
     path: ROUTER_PATHS.MY_EDIT_PW,
@@ -179,7 +179,7 @@ const routes = [
   {
     path: ROUTER_PATHS.MY_RECENT_LIST,
     element: <MyRecentList />,
-    label: '최근본 목록',
+    label: '최근 본 목록',
     paddingX: true,
   },
   {
