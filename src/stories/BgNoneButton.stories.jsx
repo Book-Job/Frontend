@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions'
 import BgNoneButton from '../components/web/BgNoneButton'
 
 export default {
-  title: 'Components/web/Button',
+  title: 'Components/web/BgNoneButton',
   component: BgNoneButton,
   parameters: {
     layout: 'centered',

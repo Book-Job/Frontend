@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from '../components/web/Button'
 import { action } from '@storybook/addon-actions'
 
