@@ -12,7 +12,7 @@ export default {
       control: 'select',
       options: ['small', 'medium', 'big', 'biggest'],
     },
-    bgColor: {
+    textColor: {
       control: 'color',
     },
     label: { control: 'text' },
