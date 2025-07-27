@@ -14,7 +14,7 @@ export default function SurveyModal({ isOpen, onClose, onDoNotShowToday }) {
         <a href={CUSTOMER_INQUIRY} target='_blank' rel='noopener noreferrer'>
           <img
             src={isMobile ? app_banner : web_banner}
-            alt='설문조사 배너'
+            alt='설문조사 모달'
             className='w-full rounded-xl shadow-xl object-cover'
           />
         </a>
