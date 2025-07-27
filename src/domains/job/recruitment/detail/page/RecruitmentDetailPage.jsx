@@ -207,7 +207,7 @@ const RecruitmentDetailPage = () => {
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
       <div className='block mt-4 mb-10 text-[16px] leading-relaxed text-left break-words whitespace-pre-line'>
-        <ContentRenderer html={DOMPurify.sanitize(data.text)} />
+        <ContentRenderer html={data.text} />
       </div>
       <LastFormLine />
       <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl'>관련 글</h2>
