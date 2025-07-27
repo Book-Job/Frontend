@@ -17,8 +17,8 @@ import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../services/toast/ToastService'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
-import DOMPurify from 'dompurify'
 import { saveTOStorage } from '../../../my/detail/components/saveToStorage'
+import ContentRenderer from '../../../../components/common/ContentRenderer'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
@@ -152,10 +152,9 @@ const DetailCommunityPage = () => {
             onAddFileId={(fileId) => {}}
           />
         ) : (
-          <div
-            className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
-          />
+          <div className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'>
+            <ContentRenderer html={post.text} />
+          </div>
         )}
       </div>
 
