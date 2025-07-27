@@ -47,20 +47,22 @@ const CommunityMainPage = () => {
 
         <div className='flex flex-col w-full max-w-[940px] mx-auto'>
           <div className='flex items-center justify-center w-full mt-6 mb-3'>
-            <div className='flex justify-end w-full sm:max-w-[940px] max-w-xs '>
+            <div className='flex justify-end w-full sm:max-w-[940px] max-w-xs'>
               <PostSortDropDown onSortChange={setSortOrder} />
             </div>
           </div>
 
           <div className='overflow-x-auto'>
-            {!posts.length && (loading || searchLoading) ? (
+            {(loading || searchLoading) && !rawPosts.length ? (
               <div className='flex justify-center items-center h-[300px]'>
                 <Spinner size={48} color='main-pink' />
               </div>
             ) : hasSearched && displayedPosts.length === 0 ? (
-              <div className='my-10 text-lg text-center text-dark-gray'>
+              <div className='my-10 text-base text-center text-dark-gray'>
                 검색어와 일치하는 결과가 없습니다.
               </div>
+            ) : !hasSearched && displayedPosts.length === 0 ? (
+              <div className='my-10 text-base text-center text-dark-gray'>게시글이 없습니다.</div>
             ) : (
               <>
                 <InfiniteScrollList
@@ -122,7 +124,7 @@ const CommunityMainPage = () => {
                   </div>
                 </InfiniteScrollList>
 
-                {!hasMore && !loading && !hasSearched && (
+                {!hasMore && !loading && !hasSearched && displayedPosts.length > 0 && (
                   <div className='my-6 text-center text-dark-gray'>
                     더 이상 불러올 게시글이 없습니다.
                   </div>
