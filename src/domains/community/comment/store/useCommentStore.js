@@ -6,7 +6,7 @@ import {
   getAllComment,
 } from '../../service/commentService'
 
-const useCommentStore = create((set, get) => ({
+const useCommentStore = create((set) => ({
   comments: [],
   loading: false,
   error: null,
