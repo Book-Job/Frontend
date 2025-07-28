@@ -1,27 +1,20 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { getDetailPost } from '../../service/postService'
 
 const useDetailPost = (id) => {
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const hasFetched = useRef(false)
 
-  const refetch = useCallback(async () => {
-    if (hasFetched.current) {
-      return
-    }
-    hasFetched.current = true
+  const fetchPost = useCallback(async () => {
     setLoading(true)
-
     try {
       const data = await getDetailPost(id)
       setPost(data)
       setError(null)
-      return data
     } catch (err) {
       setError(err)
-      return null
+      setPost(null)
     } finally {
       setLoading(false)
     }
@@ -29,11 +22,11 @@ const useDetailPost = (id) => {
 
   useEffect(() => {
     if (id) {
-      refetch()
+      fetchPost()
     }
-  }, [id, refetch])
+  }, [id, fetchPost])
 
-  return { post, loading, error, refetch }
+  return { post, loading, error, setPost }
 }
 
 export default useDetailPost
