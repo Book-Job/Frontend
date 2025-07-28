@@ -2,6 +2,15 @@ import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
+import HardBreak from '@tiptap/extension-hard-break'
+
+const CustomHardBreak = HardBreak.extend({
+  addKeyboardShortcuts() {
+    return {
+      Enter: () => this.editor.commands.setHardBreak(),
+    }
+  },
+})
 
 const useEditorInstance = ({ initialContent, onChange, onPasteImage }) => {
   return useEditor({
@@ -12,11 +21,12 @@ const useEditorInstance = ({ initialContent, onChange, onPasteImage }) => {
             class: 'mb-2',
           },
         },
-        hardBreak: {
-          keepMarks: false,
-          HTMLAttributes: {
-            class: 'line-break',
-          },
+        hardBreak: false,
+      }),
+      CustomHardBreak.configure({
+        keepMarks: true,
+        HTMLAttributes: {
+          class: 'line-break',
         },
       }),
       Image,
