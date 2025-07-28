@@ -9,12 +9,13 @@ const useEditorInstance = ({ initialContent, onChange, onPasteImage }) => {
       StarterKit.configure({
         paragraph: {
           HTMLAttributes: {
-            style: 'white-space: pre-wrap;',
+            class: 'mb-2',
           },
         },
         hardBreak: {
+          keepMarks: false,
           HTMLAttributes: {
-            style: 'white-space: pre-wrap;',
+            class: 'line-break',
           },
         },
       }),
@@ -31,8 +32,7 @@ const useEditorInstance = ({ initialContent, onChange, onPasteImage }) => {
     editorProps: {
       attributes: {
         class:
-          'tiptap text-left text-lg min-h-[300px] border border-dark-gray rounded-md p-4 focus:outline-none bg-white whitespace-pre-wrap',
-        style: 'white-space: pre-wrap;',
+          'tiptap text-left text-lg min-h-[300px] border border-dark-gray rounded-md p-4 focus:outline-none bg-white prose-content',
       },
       handlePaste: (view, event) => {
         const items = event.clipboardData?.items

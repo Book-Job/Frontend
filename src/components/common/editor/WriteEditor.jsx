@@ -80,7 +80,7 @@ const WriteEditor = forwardRef(({ value, initialContent, onChange, onAddFileId }
   return (
     <div>
       <EditorToolbar editor={editor} />
-      <EditorContent editor={editor} className='text-[16px] whitespace-pre-wrap' />
+      <EditorContent editor={editor} className='text-[16px]' />
       <ImageBubbleMenu editor={editor} />
       <input id='file-input' type='file' accept='image/*' onChange={handleFileChange} hidden />
     </div>
