@@ -16,10 +16,10 @@ import ROUTER_PATHS from '../../../../../routes/RouterPath'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useScrapStore from '../../../scrap/store/useScrapStore'
 import ToastService from '../../../../../services/toast/ToastService'
-import DOMPurify from 'dompurify'
 import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
+import ContentRenderer from '../../../../../components/common/ContentRenderer'
 
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
@@ -205,10 +205,9 @@ const RecruitmentDetailPage = () => {
         />
         <MobileShare label={data.viewCount} icon={viewPink} textColor='text-main-pink' />
       </div>
-      <div
-        className='block mt-4 mb-10 text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.text) }}
-      />
+      <div className='block mt-4 mb-10 text-[16px] leading-relaxed text-left break-words whitespace-pre-line'>
+        <ContentRenderer html={data.text} />
+      </div>
       <LastFormLine />
       <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl'>관련 글</h2>
       <RelatedRecruitmentPosts currentId={id} />

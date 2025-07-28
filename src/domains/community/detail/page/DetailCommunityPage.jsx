@@ -17,12 +17,12 @@ import RelatedPosts from '../components/RelatedPosts'
 import ToastService from '../../../../services/toast/ToastService'
 import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
-import DOMPurify from 'dompurify'
 import { saveTOStorage } from '../../../my/detail/components/saveToStorage'
+import ContentRenderer from '../../../../components/common/ContentRenderer'
 
 const DetailCommunityPage = () => {
   const { id } = useParams()
-  const { post, loading, error, refetch } = useDetailPost(id)
+  const { post, loading, error, setPost } = useDetailPost(id)
   const navigate = useNavigate()
   const [isEditing, setIsEditing] = useState(false)
   const [isCommentOpen, setIsCommentOpen] = useState(true)
@@ -30,6 +30,7 @@ const DetailCommunityPage = () => {
   const fetchComments = useCommentStore((state) => state.fetchComments)
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
+  const hasFetched = useRef(false)
 
   const {
     content,
@@ -37,13 +38,20 @@ const DetailCommunityPage = () => {
     loading: editLoading,
     error: editError,
     handleSubmit,
-  } = useEditPost(id, refetch)
+  } = useEditPost(id, post?.text || '')
 
   useEffect(() => {
-    if (id) {
-      fetchComments(id)
-    }
+    hasFetched.current = false
   }, [id])
+
+  useEffect(() => {
+    if (!id) return
+    if (!hasFetched.current) {
+      console.log('fetchComments called', id)
+      fetchComments(id)
+      hasFetched.current = true
+    }
+  }, [id, fetchComments])
 
   useEffect(() => {
     if (post && !hasSaved.current) {
@@ -84,6 +92,13 @@ const DetailCommunityPage = () => {
 
   const handleCancelEdit = () => setIsEditing(false)
 
+  const onSaveSuccess = (newText) => {
+    setPost((prevPost) => ({
+      ...prevPost,
+      text: newText,
+    }))
+  }
+
   if (error) return <div className='mt-10 text-center text-error-red'>오류가 발생했어요.</div>
   if (!post)
     return <div className='mt-10 text-center text-dark-gray'>게시글이 존재하지 않아요.</div>
@@ -115,7 +130,7 @@ const DetailCommunityPage = () => {
                 onClick={async (e) => {
                   await handleSubmit(e)
                   setIsEditing(false)
-                  await refetch()
+                  onSaveSuccess(content)
                 }}
                 disabled={editLoading}
               >
@@ -152,10 +167,9 @@ const DetailCommunityPage = () => {
             onAddFileId={(fileId) => {}}
           />
         ) : (
-          <div
-            className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.text) }}
-          />
+          <div className='text-[16px] leading-relaxed text-left break-words whitespace-pre-line'>
+            <ContentRenderer html={post.text} />
+          </div>
         )}
       </div>
 

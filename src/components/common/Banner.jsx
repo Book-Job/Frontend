@@ -6,11 +6,11 @@ const Banner = ({ className = '' }) => {
   return (
     <div
       className={`block cursor-pointer overflow-hidden ${className}`}
-      aria-label='설문조사 폼으로 이동'
+      aria-label='pwa 설명 페이지로 이동하는 배너'
     >
       <img
         src={isMobile ? MobileBanner : WebBanner}
-        alt='설문조사 참여 안내 배너'
+        alt='pwa 설명 페이지로 이동하는 배너'
         className='w-full h-auto transition-transform duration-300 ease-in-out hover:scale-105'
       />
     </div>
