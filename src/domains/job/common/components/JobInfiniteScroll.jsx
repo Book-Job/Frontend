@@ -45,7 +45,7 @@ const JobInfiniteScroll = ({
         ))}
 
       {!hasNextPage && posts.length > 0 && (
-        <div className='flex justify-center items-center py-8 text-dark-gray text-sm'>
+        <div className='flex justify-center items-center py-8 text-dark-gray text-base'>
           더 이상 불러올 게시물이 없습니다.
         </div>
       )}

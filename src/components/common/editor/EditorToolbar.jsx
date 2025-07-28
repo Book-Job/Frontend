@@ -6,7 +6,7 @@ const EditorToolbar = ({ editor }) => {
   const isActive = (format) => editor.isActive(format)
   const buttonClass = (active) =>
     `px-3 py-1 rounded border ${
-      active ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+      active ? 'bg-main-pink text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
     }`
 
   return (

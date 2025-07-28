@@ -69,7 +69,7 @@ const MyScrap = () => {
         </div>
       )}
 
-      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[940px] mx-auto justify-items-center'>
+      <div className='hidden sm:grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[940px] mx-auto mt-5 justify-items-center'>
         {sortedPosts.map((post) => (
           <WorkBoard
             key={post.bookMarkId ?? post.entityId ?? post.id}
@@ -103,7 +103,7 @@ const MyScrap = () => {
         ))}
       </div>
 
-      <div className='flex flex-wrap block gap-4 mx-4 sm:hidden'>
+      <div className='flex flex-wrap gap-4 mx-4 sm:hidden mt-5'>
         {sortedPosts.map((post) => (
           <MobileWorkBoard
             key={post.bookMarkId ?? post.entityId ?? post.id}

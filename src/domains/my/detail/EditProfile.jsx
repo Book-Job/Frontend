@@ -134,8 +134,8 @@ const EditProfile = () => {
     user.provider === 'BOOKJOB'
       ? '변경'
       : user.provider === 'KAKAO'
-        ? '카카오에 연결되어 있습니다.'
-        : '네이버에 연결되어 있습니다.'
+        ? '카카오 계정으로 로그인 중'
+        : '네이버 계정으로 로그인 중'
   console.log('user', user)
 
   return (
