@@ -116,7 +116,7 @@ const WriteCommunityPostForm = () => {
   return (
     <form id='community-post-form' onSubmit={handleSubmit(onSubmit)}>
       <div className='my-[30px]'>
-        <FormItem label='닉네임' dot={true}>
+        <FormItem htmlFor='nickname' label='닉네임' dot={true}>
           <div className='flex flex-col w-full'>
             <JobInputBox
               {...register('nickname', {
@@ -138,7 +138,7 @@ const WriteCommunityPostForm = () => {
               className='self-start w-full'
             />
             {errors.nickname && (
-              <span className='self-start mt-1 text-sm text-error-red'>
+              <span role='alert' className='self-start mt-1 text-sm text-error-red'>
                 {errors.nickname.message}
               </span>
             )}
@@ -166,6 +166,9 @@ const WriteCommunityPostForm = () => {
       <div className='my-[30px]'>
         <FormItem label='내용' dot={true}>
           <WriteEditor
+            role='textbox'
+            aria-multiline='true'
+            aria-placeholder='내용을 입력하세요'
             initialContent={content}
             onChange={handleChange}
             value={content}
