@@ -35,7 +35,8 @@ const RelatedPosts = ({ currentId }) => {
       ) : posts.length === 0 ? (
         <p className='text-dark-gray'>관련 글이 없습니다.</p>
       ) : (
-        <div
+        <section
+          aria-label='관련 글 목록'
           className={
             isMobile
               ? 'flex flex-col gap-3'
@@ -48,7 +49,7 @@ const RelatedPosts = ({ currentId }) => {
             const isImagePost = strippedText.length === 0
 
             return (
-              <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+              <article key={post.boardId} className='w-full max-w-xs mx-auto'>
                 {isMobile ? (
                   <MobileFreeBoard
                     boardId={post.boardId}
@@ -72,10 +73,10 @@ const RelatedPosts = ({ currentId }) => {
                     viewCount={post.viewCount}
                   />
                 )}
-              </div>
+              </article>
             )
           })}
-        </div>
+        </section>
       )}
     </InfiniteScrollList>
   )
