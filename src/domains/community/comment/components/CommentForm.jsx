@@ -46,53 +46,68 @@ const CommentForm = ({ boardId, onCommentAdded }) => {
   return (
     <form
       onSubmit={handleSubmit}
+      aria-labelledby='comment-form-title'
       className='flex flex-col w-full gap-2 mt-4 mb-4 sm:flex-row sm:gap-3'
     >
-      <input
-        maxLength={8}
-        value={nickname}
-        onChange={handleChange}
-        placeholder='닉네임'
-        className='
-          w-full sm:w-[150px]
-          h-[44px] sm:h-[50px]
-          px-3 py-2
-          border border-dark-gray rounded-[5px]
-          focus:outline-none focus:border-main-pink
-          placeholder:text-dark-gray
-          text-base
-        '
-      />
-      <div className='relative w-full'>
+      <fieldset className='flex flex-col sm:flex-row gap-2 sm:gap-3 w-full'>
+        <legend id='comment-form-title' className='sr-only'>
+          댓글 작성 폼
+        </legend>
+
+        <label className='sr-only' htmlFor='nickname'>
+          닉네임
+        </label>
         <input
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder='댓글을 작성해 주세요'
+          id='nickname'
+          maxLength={8}
+          value={nickname}
+          onChange={handleChange}
+          placeholder='닉네임'
           className='
+            w-full sm:w-[150px]
             h-[44px] sm:h-[50px]
-            w-full
-            px-3 py-2 pr-[60px]
+            px-3 py-2
             border border-dark-gray rounded-[5px]
             focus:outline-none focus:border-main-pink
             placeholder:text-dark-gray
             text-base
-            text-left
-            
           '
         />
-        <button
-          type='submit'
-          className='
-            absolute top-1/2 right-2 -translate-y-1/2
-            text-[15px] text-main-pink font-semibold
-            px-3 py-1 rounded-[5px]
-            hover:bg-main-pink/10 transition
-            h-[36px]
-          '
-        >
-          등록
-        </button>
-      </div>
+
+        <div className='relative w-full'>
+          <label className='sr-only' htmlFor='comment-content'>
+            댓글
+          </label>
+          <input
+            id='comment-content'
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder='댓글을 작성해 주세요'
+            className='
+              h-[44px] sm:h-[50px]
+              w-full
+              px-3 py-2 pr-[60px]
+              border border-dark-gray rounded-[5px]
+              focus:outline-none focus:border-main-pink
+              placeholder:text-dark-gray
+              text-base
+              text-left
+            '
+          />
+          <button
+            type='submit'
+            className='
+              absolute top-1/2 right-2 -translate-y-1/2
+              text-[15px] text-main-pink font-semibold
+              px-3 py-1 rounded-[5px]
+              hover:bg-main-pink/10 transition
+              h-[36px]
+            '
+          >
+            등록
+          </button>
+        </div>
+      </fieldset>
     </form>
   )
 }

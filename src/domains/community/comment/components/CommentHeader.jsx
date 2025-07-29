@@ -5,17 +5,17 @@ import pencil from '../../../../assets/icons/common/common_pencil.svg'
 const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
   return (
     <header className='flex justify-between'>
-      <section className='flex items-center' aria-label='댓글 수'>
-        <strong className='text-main-pink'>{commentCount}개의 댓글</strong>
-        <img src={pencil} alt='연필 아이콘' className='w-4 ml-2' />
+      <section aria-labelledby='comment-count-title' className='flex items-center'>
+        <h2 id='comment-count-title' className='text-main-pink font-bold text-base'>
+          {commentCount}개의 댓글
+        </h2>
+        <img src={pencil} alt='댓글 작성 아이콘' className='w-4 ml-2' />
       </section>
-      <nav
-        className='flex items-center text-[14px] cursor-pointer'
-        aria-label='댓글 토글'
-        onClick={toggleOpen}
-      >
+
+      <div className='flex items-center text-[14px]'>
         <button
           type='button'
+          onClick={toggleOpen}
           className='flex items-center mx-2'
           aria-expanded={isOpen}
           aria-controls='comment-list'
@@ -23,11 +23,11 @@ const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
           <span>{isOpen ? '댓글 닫기' : '댓글 열기'}</span>
           <img
             src={isOpen ? foldComment : spreadComment}
-            alt='댓글 토글 아이콘'
+            alt={isOpen ? '댓글 닫기 아이콘' : '댓글 열기 아이콘'}
             className='w-3 ml-1 h-3'
           />
         </button>
-      </nav>
+      </div>
     </header>
   )
 }

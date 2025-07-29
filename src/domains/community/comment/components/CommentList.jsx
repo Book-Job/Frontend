@@ -72,16 +72,16 @@ const CommentList = ({ boardId }) => {
         }
 
         return (
-          <div key={comment.commentId}>
+          <article key={comment.commentId}>
             <div className='px-4 py-3'>
               <div className='flex items-center justify-between mb-1'>
-                <span className={`font-semibold ${nicknameColor}`}>{comment.nickname}</span>
+                <strong className={`font-semibold ${nicknameColor}`}>{comment.nickname}</strong>
               </div>
 
               {editingCommentId === comment.commentId ? (
                 <div className='flex flex-wrap items-center gap-2'>
                   <input
-                    className='w-full sm:w-auto flex-1 min-w-[0] px-2 py-1 border border-light-gray rounded'
+                    className='w-full sm:w-auto flex-1 min-w-[0] px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink mb-2'
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
                     maxLength={200}
@@ -103,22 +103,30 @@ const CommentList = ({ boardId }) => {
                   </button>
                 </div>
               ) : (
-                <p className='flex items-center text-left justify-between mb-1 text-gray-700 whitespace-pre-wrap'>
+                <p
+                  className='flex items-center text-left justify-between mb-1 whitespace-pre-wrap'
+                  aria-label={`작성한 댓글: ${comment.text}`}
+                >
                   {comment.text}
                 </p>
               )}
 
               <div className='flex justify-between items-center text-[13px] text-dark-gray'>
-                <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                <time dateTime={new Date(comment.createdAt).toISOString()}>
+                  {new Date(comment.createdAt).toLocaleDateString()}
+                </time>
+
                 {comment.isWriter && editingCommentId !== comment.commentId && (
                   <div className='flex gap-2'>
                     <button
+                      aria-label='댓글 수정'
                       className='text-main-pink hover:underline'
                       onClick={() => handleEditClick(comment.commentId, comment.text)}
                     >
                       수정
                     </button>
                     <button
+                      aria-label='댓글 삭제'
                       className='text-main-pink hover:underline'
                       onClick={() => handleDelete(boardId, comment.commentId)}
                       disabled={loading || deletingId === comment.commentId}
@@ -134,7 +142,7 @@ const CommentList = ({ boardId }) => {
               </div>
             </div>
             {index !== comments.length - 1 && <hr className='mx-4 border-t border-light-gray' />}
-          </div>
+          </article>
         )
       })}
     </div>
