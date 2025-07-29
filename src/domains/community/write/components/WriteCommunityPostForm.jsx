@@ -168,12 +168,12 @@ const WriteCommunityPostForm = () => {
           <WriteEditor
             role='textbox'
             aria-multiline='true'
-            aria-placeholder='내용을 입력하세요'
+            aria-label='내용 입력 영역'
+            placeholder='내용을 입력하세요'
             initialContent={content}
             onChange={handleChange}
             value={content}
             ref={editorRef}
-            placeholder='내용을 입력하세요'
           />
           {!content || content.trim() === '' ? (
             <span className='self-start block mt-1 text-sm text-left text-error-red'>
