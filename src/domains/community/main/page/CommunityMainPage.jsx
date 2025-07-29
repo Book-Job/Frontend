@@ -34,8 +34,8 @@ const CommunityMainPage = () => {
         image='https://www.bookjob.co.kr/metatag.png'
         url='https://www.bookjob.co.kr/community'
       />
-      <div className='w-full px-4'>
-        <section className='flex justify-center w-full mt-7'>
+      <main className='w-full px-4'>
+        <section className='flex justify-center w-full mt-7' aria-label='게시글 검색'>
           <div className='w-full max-w-[940px] justify-center flex'>
             <SearchBar
               onSearch={handleSearch}
@@ -45,7 +45,7 @@ const CommunityMainPage = () => {
           </div>
         </section>
 
-        <div className='flex flex-col w-full max-w-[940px] mx-auto'>
+        <section className='flex flex-col w-full max-w-[940px] mx-auto' aria-label='게시글 목록'>
           <div className='flex items-center justify-center w-full mt-6 mb-3'>
             <div className='flex justify-end w-full sm:max-w-[940px] max-w-xs'>
               <PostSortDropDown onSortChange={setSortOrder} />
@@ -93,9 +93,11 @@ const CommunityMainPage = () => {
                         )
 
                       return (
-                        <div
+                        <article
                           key={`${post.boardId}-${post.createdAt}`}
                           className='flex justify-center w-full'
+                          tabIndex={0}
+                          aria-label={`게시글 제목: ${post.title}, 작성자: ${post.nickname}, 작성일: ${new Date(post.createdAt).toLocaleDateString()}`}
                         >
                           {isMobile ? (
                             <MobileFreeBoard
@@ -118,7 +120,7 @@ const CommunityMainPage = () => {
                               viewCount={post.viewCount}
                             />
                           )}
-                        </div>
+                        </article>
                       )
                     })}
                   </div>
@@ -132,8 +134,8 @@ const CommunityMainPage = () => {
               </>
             )}
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   )
 }
