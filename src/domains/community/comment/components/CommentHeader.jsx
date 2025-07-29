@@ -14,8 +14,6 @@ const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
         aria-label='댓글 토글'
         onClick={toggleOpen}
       >
-        <span className='mr-3'>본문보기</span>
-        <span> | </span>
         <button
           type='button'
           className='flex items-center mx-2'
