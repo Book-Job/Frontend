@@ -16,7 +16,7 @@ const WriteCommunityPost = () => {
         <WriteCommunityPostForm />
         <LastFormLine />
       </section>
-      <section className='flex justify-end gap-4'>
+      <section className='flex justify-end gap-4' aria-label='글 작성 버튼 그룹'>
         <BgNoneButton
           label='임시저장'
           onClick={() => {
