@@ -5,7 +5,7 @@ import useTitleValidation from '../../../../../hooks/writePost/useTitleValidatio
 const PostTitle = ({ register, errors }) => {
   const titleValidation = useTitleValidation()
   return (
-    <FormItem label='글 제목' dot={true} register={register} name='title' required={true}>
+    <FormItem label='글 제목' dot={true}>
       <JobInputBox
         {...register('title', titleValidation)}
         placeholder='글 제목을 입력하세요'
