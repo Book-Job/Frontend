@@ -10,7 +10,7 @@ const JoinButton = () => {
 
   return (
     <div className=''>
-      <div className='mb-20'>
+      <div className='mb-12 sm:mb-20'>
         {isMobile ? (
           <PageTitle subTitle={'아직 bookjob 회원이 아니신가요?'} />
         ) : (
