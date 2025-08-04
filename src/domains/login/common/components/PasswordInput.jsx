@@ -12,13 +12,13 @@ const PasswordInput = ({ register, errors, watch }) => {
             {...register('password', {
               required: '비밀번호를 입력하세요',
               pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^()_-]{8,}$/,
                 message: '비밀번호는 영문, 숫자 포함 8자 이상이어야 합니다.',
               },
             })}
           />
           <div className='flex items-start'>
-            {errors.password && <p className='text-error-red text-sm'>{errors.password.message}</p>}
+            {errors.password && <p className='text-sm text-error-red'>{errors.password.message}</p>}
           </div>
         </div>
         <div>
@@ -32,7 +32,7 @@ const PasswordInput = ({ register, errors, watch }) => {
           />
           <div className='flex items-start'>
             {errors.passwordCheck && (
-              <p className='text-error-red text-sm'>{errors.passwordCheck.message}</p>
+              <p className='text-sm text-error-red'>{errors.passwordCheck.message}</p>
             )}
           </div>
         </div>
