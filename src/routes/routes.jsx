@@ -70,6 +70,7 @@ const routes = [
     path: '/community/post/:id',
     element: <DetailCommunityPage />,
     isProtected: true,
+    // paddingX: true,
   },
   {
     path: ROUTER_PATHS.USER_POST,
@@ -93,6 +94,7 @@ const routes = [
     element: <RecruitmentDetailPage />,
     label: '구인 상세 글',
     isProtected: true,
+    // paddingX: true,
   },
   {
     path: '/job/recruitment/edit/:id',

@@ -48,9 +48,10 @@ const RelatedPosts = ({ currentId }) => {
             const isImagePost = strippedText.length === 0
 
             return (
-              <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+              <>
                 {isMobile ? (
                   <MobileFreeBoard
+                    key={post.boardId}
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
@@ -62,6 +63,7 @@ const RelatedPosts = ({ currentId }) => {
                   />
                 ) : (
                   <FreeBoard
+                    key={post.boardId}
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
@@ -72,7 +74,7 @@ const RelatedPosts = ({ currentId }) => {
                     viewCount={post.viewCount}
                   />
                 )}
-              </div>
+              </>
             )
           })}
         </div>
