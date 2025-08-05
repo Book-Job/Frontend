@@ -69,7 +69,7 @@ const RecentList = ({ sortedPosts }) => {
               content={content}
               name={post.nickname}
               date={formatDate(post.createdAt)}
-              commentCount={post.commentCount}
+              commentCount={post.commentCount || 0}
               viewCount={post.viewCount}
             />
           )
