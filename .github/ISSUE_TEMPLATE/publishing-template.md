@@ -1,9 +1,10 @@
 ---
 name: Publishing template
 about: Suggest a style for this project
-title: '[publishing]'
+title: "[publishing]"
 labels: "\U0001F3A8 Publishing"
 assignees: ''
+
 ---
 
 ## 🎨 어떤 페이지인가요? (피그마 화면 첨부해주세요)

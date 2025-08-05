@@ -35,7 +35,7 @@ const MobileFreeBoard = ({
   }
 
   return (
-    <div className='w-full max-w-xs min-h-[140px] mb-3' onClick={goToDetailPage}>
+    <div className='w-full max-w-xs min-h-[140px]' onClick={goToDetailPage}>
       <div className='flex flex-col h-full  border border-light-gray rounded-[10px] px-[20px] pt-[20px] pb-[16px] justify-between cursor-pointer text-left'>
         <div className='flex-row' onClick={onClick}>
           <div className='text-[18px] font-bold line-clamp-2'>{title}</div>
@@ -56,7 +56,7 @@ const MobileFreeBoard = ({
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
-                className='cursor-pointer hover:underline z-10 text-sm font-medium'
+                className='z-10 text-sm font-medium cursor-pointer hover:underline'
               >
                 {name}
               </span>
@@ -71,7 +71,7 @@ const MobileFreeBoard = ({
               )}
             </div>
           </div>
-          <hr className='border-dark-gray my-1' />
+          <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
             {date}
             <MobileShare label={viewCount} textColor='text-main-pink' icon={viewPink} />

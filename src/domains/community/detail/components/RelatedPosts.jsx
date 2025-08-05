@@ -39,7 +39,7 @@ const RelatedPosts = ({ currentId }) => {
           className={
             isMobile
               ? 'flex flex-col gap-3'
-              : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'
+              : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
           }
         >
           {posts.map((post) => {
@@ -48,9 +48,10 @@ const RelatedPosts = ({ currentId }) => {
             const isImagePost = strippedText.length === 0
 
             return (
-              <div key={post.boardId} className='w-full max-w-xs mx-auto'>
+              <>
                 {isMobile ? (
                   <MobileFreeBoard
+                    key={post.boardId}
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
@@ -62,6 +63,7 @@ const RelatedPosts = ({ currentId }) => {
                   />
                 ) : (
                   <FreeBoard
+                    key={post.boardId}
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
@@ -72,7 +74,7 @@ const RelatedPosts = ({ currentId }) => {
                     viewCount={post.viewCount}
                   />
                 )}
-              </div>
+              </>
             )
           })}
         </div>
