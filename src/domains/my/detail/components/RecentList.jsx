@@ -15,8 +15,12 @@ const RecentList = ({ sortedPosts }) => {
   const WorkBoardComponent = isMobile ? MobileWorkBoard : WorkBoard
   const FreeBoardComponent = isMobile ? MobileFreeBoard : FreeBoard
   return (
-    <div className='w-full sm:max-w-[940px] mx-auto '>
-      <div className='grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 max-w-[940px] justify-items-center '>
+    <div className='w-full sm:max-w-[940px] mx-auto justify-items-center'>
+      <div
+        className={
+          isMobile ? 'flex flex-col gap-3' : 'grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-6 '
+        }
+      >
         {sortedPosts.map((post) => {
           const strippedText = post.text.replace(/<[^>]*>/g, '').trim()
           const content =
@@ -65,7 +69,7 @@ const RecentList = ({ sortedPosts }) => {
               content={content}
               name={post.nickname}
               date={formatDate(post.createdAt)}
-              commentCount={post.commentCount}
+              commentCount={post.commentCount || 0}
               viewCount={post.viewCount}
             />
           )
