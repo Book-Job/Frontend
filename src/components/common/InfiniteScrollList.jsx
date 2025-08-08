@@ -32,10 +32,8 @@ const InfiniteScrollList = ({ children, onIntersect, disabled }) => {
 
   return (
     <>
-      <div className='w-full sm:max-w-[940px] mx-auto justify-items-center'>
-        {children}
-        <div ref={loaderRef} className='w-full' />
-      </div>
+      {children}
+      <div ref={loaderRef} className='w-full' />
     </>
   )
 }
