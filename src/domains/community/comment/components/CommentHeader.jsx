@@ -14,8 +14,6 @@ const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
         aria-label='댓글 토글'
         onClick={toggleOpen}
       >
-        <span className='mr-3'>본문보기</span>
-        <span> | </span>
         <button
           type='button'
           className='flex items-center mx-2'
@@ -26,7 +24,7 @@ const CommentHeader = ({ commentCount, isOpen, toggleOpen }) => {
           <img
             src={isOpen ? foldComment : spreadComment}
             alt='댓글 토글 아이콘'
-            className='w-3 ml-1 h-3'
+            className='w-3 h-3 ml-1'
           />
         </button>
       </nav>
