@@ -31,7 +31,7 @@ const MyRecentList = () => {
       )}
       {sortedPosts.length > 0 && (
         <>
-          <div className='flex justify-end mx-auto sm:mt-0 my-3 sm:max-w-[940px] max-w-xs'>
+          <div className='flex justify-end mx-auto sm:mt-0 mb-4 sm:max-w-[940px] max-w-xs'>
             <PostSortDropDown onSortChange={setSort} />
           </div>
           <RecentList sortedPosts={sortedPosts} />
