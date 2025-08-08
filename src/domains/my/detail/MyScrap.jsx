@@ -85,7 +85,7 @@ const MyScrap = () => {
             othersite1={post.othersite1 || false}
             worktype1={post.worktype1 || post.employmentType}
             employmentType={post.employmentType}
-            view={post.viewCount || post.view}
+            view={post.viewCount || post.view || 0}
             userId={loggedInUserId}
             initialScrapped={!!scraps[post.entityId || post.id]}
             type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
@@ -103,7 +103,7 @@ const MyScrap = () => {
         ))}
       </div>
 
-      <div className='flex flex-wrap gap-4 mx-4 sm:hidden mt-5'>
+      <div className='flex flex-wrap gap-4 mx-4 mt-5 sm:hidden'>
         {sortedPosts.map((post) => (
           <MobileWorkBoard
             key={post.bookMarkId ?? post.entityId ?? post.id}
@@ -119,7 +119,7 @@ const MyScrap = () => {
             othersite1={post.othersite1 || false}
             worktype1={post.worktype1 || post.employmentType}
             employmentType={post.employmentType}
-            view={post.viewCount || post.view}
+            view={post.viewCount || post.view || 0}
             userId={loggedInUserId}
             initialScrapped={!!scraps[post.entityId || post.id]}
             type={post.joboffer1 ? 'JOB_POSTING' : post.jobsearch1 ? 'JOB_SEEKING' : 'UNKNOWN'}
