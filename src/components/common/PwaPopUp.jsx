@@ -80,15 +80,14 @@ const PwaPopUp = () => {
           <span className='text-xs'>오늘 하루 그만보기</span>
         </label>
       </div>
-      <div
-        onClick={handleInstallClick}
-        className='flex items-center w-auto h-[60px] px-2 mx-4 rounded-lg bg-black/85 '
-      >
-        <img src={favicon} alt='favicon' className='w-10 mx-2 rounded-lg' />
-        <p className='flex items-center w-full ml-2 text-sm'>
-          <span className='font-bold text-main-pink'>bookjob</span>
-          <span className='ml-1 text-white'>앱 처럼 보기.</span>
-        </p>
+      <div className='flex w-auto h-[60px] px-2 mx-4 rounded-lg bg-black/85 '>
+        <div onClick={handleInstallClick} className='flex items-center w-full h-[60px]'>
+          <img src={favicon} alt='favicon' className='w-10 mx-2 rounded-lg' />
+          <p className='flex items-center w-full ml-2 text-sm'>
+            <span className='font-bold text-main-pink'>bookjob</span>
+            <span className='ml-1 text-white'>앱 처럼 보기.</span>
+          </p>
+        </div>
         <button onClick={handleClose} className='flex items-center h-full text-2xl text-white'>
           <IoClose />
         </button>

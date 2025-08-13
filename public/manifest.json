@@ -1,6 +1,6 @@
 {
-  "name": "book-job",
-  "short_name": "book-job",
+  "name": "BookJob",
+  "short_name": "BookJob",
   "description": "구직활동과 커뮤니티를 한 곳에서",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
