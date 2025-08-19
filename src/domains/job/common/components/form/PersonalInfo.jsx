@@ -10,6 +10,8 @@ const PersonalInfo = ({ register }) => {
     <>
       <FormItem label='닉네임' dot={true} name='writer'>
         <JobInputBox
+          id='writer'
+          aria-label='닉네임 (읽기 전용)'
           {...register('writer')}
           value={user?.nickname ?? ''}
           readOnly

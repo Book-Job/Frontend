@@ -4,9 +4,10 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
   const jobCategory = watch('jobCategory')
 
   return (
-    <div className='my-[30px]'>
+    <section className='my-[30px]'>
       <FormItem label='직군' dot={true} register={register} name='jobCategory' required={true}>
         <select
+          id='jobCategory'
           className='w-full h-[56px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
           {...register('jobCategory', { required: '직군은 필수입니다' })}
         >
@@ -19,7 +20,9 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
         </select>
         <div className='flex items-start'>
           {errors.jobCategory && (
-            <span className='text-error-red text-sm mt-1'>직군 선택은 필수입니다.</span>
+            <span className='text-error-red text-sm mt-1' role='alert'>
+              직군 선택은 필수입니다.
+            </span>
           )}
         </div>
       </FormItem>
@@ -40,7 +43,7 @@ const JobCategory = ({ register, errors, setValue, watch }) => {
           />
         </FormItem>
       )}
-    </div>
+    </section>
   )
 }
 
