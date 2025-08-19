@@ -38,7 +38,7 @@ const MyDraftsList = ({ draftsListData, onDraftClick }) => {
     })
   }, [draftsListData, sort])
   return (
-    <div className='w-full sm:max-w-[940px] mx-auto px-4 sm:px-10'>
+    <div className='w-full sm:max-w-[940px] mx-auto'>
       {sortedDrafts.length > 0 && (
         <div className='flex justify-end mx-auto'>
           <PostSortDropDown onSortChange={setSort} />

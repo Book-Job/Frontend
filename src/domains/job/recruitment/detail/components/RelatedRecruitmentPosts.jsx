@@ -37,7 +37,7 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
       ) : posts.length === 0 ? (
         <p className='text-dark-gray'>관련 채용 글이 없습니다.</p>
       ) : (
-        <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           <JobPostList posts={posts} navigate={navigate} />
         </div>
       )}
@@ -49,7 +49,7 @@ const RelatedRecruitmentPosts = ({ currentId }) => {
       )}
 
       {!hasNextPage && posts.length > 0 && (
-        <div className='flex justify-center items-center py-8 text-dark-gray text-sm'>
+        <div className='flex items-center justify-center py-8 text-sm text-dark-gray'>
           더 이상 불러올 게시물이 없습니다.
         </div>
       )}

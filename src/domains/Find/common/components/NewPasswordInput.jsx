@@ -12,14 +12,14 @@ const NewPasswordInput = ({ register, errors, watch }) => {
             {...register('newPassword', {
               required: '새로 사용할 비밀번호를 입력하세요',
               pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^()_-]{8,}$/,
                 message: '비밀번호는 영문과 숫자를 포함하여 최소 8자 이상이어야 합니다.',
               },
             })}
           />
           <div className='flex items-start'>
             {errors.newPassword && (
-              <p className='text-error-red text-sm'>{errors.newPassword.message}</p>
+              <p className='text-sm text-error-red'>{errors.newPassword.message}</p>
             )}
           </div>
         </div>
@@ -35,7 +35,7 @@ const NewPasswordInput = ({ register, errors, watch }) => {
           />
           <div className='flex items-start'>
             {errors.passwordCheck && (
-              <p className='text-error-red text-sm'>{errors.passwordCheck.message}</p>
+              <p className='text-sm text-error-red'>{errors.passwordCheck.message}</p>
             )}
           </div>
         </div>

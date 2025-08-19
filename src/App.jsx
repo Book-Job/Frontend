@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
 import PageScrollToTop from './components/common/PageScrollToTop'
 import { useEffect } from 'react'
@@ -12,7 +12,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import PwaPopUp from './components/common/PwaPopUp'
 
 const queryClient = new QueryClient()
-
 function App() {
   useEffect(() => {
     useAuthStore.getState().initialize()

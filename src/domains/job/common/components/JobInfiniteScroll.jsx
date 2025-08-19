@@ -33,7 +33,7 @@ const JobInfiniteScroll = ({
       {renderList ? (
         renderList(posts)
       ) : (
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl'>
+        <div className='grid max-w-6xl grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           <JobPostList posts={posts} navigate={navigate} />
         </div>
       )}
@@ -45,7 +45,7 @@ const JobInfiniteScroll = ({
         ))}
 
       {!hasNextPage && posts.length > 0 && (
-        <div className='flex justify-center items-center py-8 text-dark-gray text-base'>
+        <div className='flex items-center justify-center py-8 text-base text-dark-gray'>
           더 이상 불러올 게시물이 없습니다.
         </div>
       )}

@@ -9,8 +9,8 @@ const JoinButton = () => {
   const isMobile = useIsMobile()
 
   return (
-    <div className=''>
-      <div className='mb-20'>
+    <>
+      <div className='mb-20 sm:mb-10'>
         {isMobile ? (
           <PageTitle subTitle={'아직 bookjob 회원이 아니신가요?'} />
         ) : (
@@ -23,7 +23,7 @@ const JoinButton = () => {
         className='bg-main-pink hover:bg-dark-pink'
         onClick={() => navigate(ROUTER_PATHS.MEMBER_DATA_ENTRY)}
       />
-    </div>
+    </>
   )
 }
 
