@@ -130,9 +130,6 @@ const UserPosts = () => {
               </tr>
             ))}
           </tbody>
-          <tr>
-            <td colSpan='5' className='border-b border-dark-gray'></td>
-          </tr>
         </table>
 
         {loading && (

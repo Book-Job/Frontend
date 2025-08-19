@@ -11,11 +11,13 @@ import InfiniteScrollList from '../../../../components/common/InfiniteScrollList
 import useCommunityPosts from '../hook/useCommunityPosts'
 import SeoHelmet from '../../../../components/common/SeoHelmet'
 import { BsCardImage } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
 const CommunityMainPage = () => {
   const { posts, loading, hasMore, loadMore } = useCommunityPosts()
   const [sortOrder, setSortOrder] = useState('latest')
   const isMobile = useIsMobile()
+  const navigate = useNavigate()
   const { searchResults, searchLoading, hasSearched, handleSearch } = useSearchPosts()
 
   const rawPosts = hasSearched ? searchResults : posts
@@ -97,7 +99,14 @@ const CommunityMainPage = () => {
                           key={`${post.boardId}-${post.createdAt}`}
                           className='flex justify-center w-full'
                           tabIndex={0}
+                          role='link'
                           aria-label={`게시글 제목: ${post.title}, 작성자: ${post.nickname}, 작성일: ${new Date(post.createdAt).toLocaleDateString()}`}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              navigate(`/community/post/${post.boardId}`)
+                            }
+                          }}
                         >
                           {isMobile ? (
                             <MobileFreeBoard

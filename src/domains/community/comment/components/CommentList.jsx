@@ -103,10 +103,7 @@ const CommentList = ({ boardId }) => {
                   </button>
                 </div>
               ) : (
-                <p
-                  className='flex items-center text-left justify-between mb-1 whitespace-pre-wrap'
-                  aria-label={`작성한 댓글: ${comment.text}`}
-                >
+                <p className='flex items-center text-left justify-between mb-1 whitespace-pre-wrap'>
                   {comment.text}
                 </p>
               )}
