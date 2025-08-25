@@ -33,7 +33,6 @@ import MyRecentList from '../domains/my/detail/MyRecentList'
 import TermsOfService from '../domains/policy/page/TermsOfService'
 import PrivacyPolicy from '../domains/policy/page/PrivacyPolicy'
 import InstallMethod from '../domains/policy/page/InstallMethod'
-import { element } from 'prop-types'
 import ServerErrorPage from '../domains/error/page/ServerErrorPage'
 
 const routes = [
