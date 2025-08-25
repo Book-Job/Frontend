@@ -30,6 +30,7 @@ const ROUTER_PATHS = {
   MY_RECENT_LIST: '/my-page/my-recent-list',
   MY_DRAFTS: '/my-page/my-drafts',
   ERROR: '/error',
+  SERVER_ERROR: '/server-error',
   KAKAO_SUCCESS: '/login/kakao/success',
   NAVER_SUCCESS: '/login/naver/success',
   TERMS_OF_SERVICE: '/terms-of-service',
