@@ -4,6 +4,7 @@ const EmploymentType = ({ register, errors }) => {
   return (
     <FormItem label='근무형태' dot={true} name='employmentType'>
       <select
+        id='employmentType'
         className='w-full h-[56px] border border-dark-gray rounded px-4 text-black focus:border-main-pink focus:outline-none cursor-pointer'
         {...register('employmentType', { required: '근무형태는 필수입니다' })}
       >
@@ -16,7 +17,9 @@ const EmploymentType = ({ register, errors }) => {
       </select>
       <div className='flex items-start'>
         {errors.employmentType && (
-          <span className='text-error-red text-sm mt-1'>근무형태 선택은 필수입니다.</span>
+          <span className='text-error-red text-sm mt-1' role='alert'>
+            근무형태 선택은 필수입니다.
+          </span>
         )}
       </div>
     </FormItem>

@@ -159,7 +159,7 @@ const JoinForm = () => {
       }
     } catch (error) {
       console.error('인증번호 확인 중 오류:', error)
-      setEmailCheckMessage('인증번호가 일치하지 않습니다.')
+      setEmailCodeMessage(error.message)
       setEmailCheckStatus('error')
       setValidation('error')
       trigger('emailId')

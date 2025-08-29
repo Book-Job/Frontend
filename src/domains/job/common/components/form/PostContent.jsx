@@ -21,7 +21,14 @@ const PostContent = ({ control, errors, editorRef }) => {
         }}
         render={({ field }) => (
           <div className='w-full'>
-            <WriteEditor value={field.value ?? ''} onChange={field.onChange} ref={editorRef} />
+            <WriteEditor
+              value={field.value ?? ''}
+              onChange={field.onChange}
+              ref={editorRef}
+              role='textbox'
+              aria-multiline='true'
+              aria-label='내용 입력 영역'
+            />
             {errors.text && (
               <span className='text-error-red text-sm mt-1 block text-left'>
                 {errors.text.message}

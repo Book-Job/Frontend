@@ -69,18 +69,22 @@ const UserPosts = () => {
 
   return (
     <div className='flex flex-col'>
-      <span className='sm:text-[30px] text-[24px] block mb-[60px] mt-[20px]'>
+      <h2 className='sm:text-[30px] text-[24px] block mb-[60px] mt-[20px]'>
         {nickname ?? '닉네임 없음'}님이 작성한 글
-      </span>
+      </h2>
 
       <div className='flex flex-col max-w-[940px] w-full mx-auto'>
         <div className='w-full h-[1px] bg-black' />
-        <table className='w-full border-collapse'>
+        <table className='w-full border-collapse border-b border-dark-gray'>
           <thead>
             <tr className='pb-3 text-sm border-b border-dark-gray '>
-              <th className='py-3'>No</th>
-              <th className='w-1/4 py-3 sm:w-1/2'>제목</th>
-              <th className='flex justify-center py-3'>
+              <th scope='col' className='py-3'>
+                No
+              </th>
+              <th scope='col' className='w-1/4 py-3 sm:w-1/2'>
+                제목
+              </th>
+              <th scope='col' className='flex justify-center py-3'>
                 <button
                   onClick={toggleArrow}
                   className='flex items-center gap-1 focus:outline-none'
@@ -93,8 +97,12 @@ const UserPosts = () => {
                   />
                 </button>
               </th>
-              <th className='py-3'>글쓴이</th>
-              <th className='py-3'>카테고리</th>
+              <th scope='col' className='py-3'>
+                글쓴이
+              </th>
+              <th scope='col' className='py-3'>
+                카테고리
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -106,9 +114,8 @@ const UserPosts = () => {
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px]'>{index + 1}</td>
                 <td className='py-3 text-[12px] sm:text-[14px] lg:text-[14px] truncate max-w-[50px]'>
                   <button
-                    onClick={() => {
-                      goToDetailPage(post.boardId)
-                    }}
+                    onClick={() => goToDetailPage(post.boardId)}
+                    aria-label={`게시글 제목: ${post.title}`}
                   >
                     {post.title.length > 20 ? `${post.title.slice(0, 20)}...` : post.title}
                   </button>
@@ -123,20 +130,17 @@ const UserPosts = () => {
               </tr>
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan='5' className='border-b border-dark-gray'></td>
-            </tr>
-          </tfoot>
         </table>
 
         {loading && (
-          <div className='flex justify-center mt-40'>
+          <div role='status' aria-live='polite' className='flex justify-center mt-40'>
             <Spinner size={48} color='main-pink' />
           </div>
         )}
         {!hasMore && (
-          <div className='my-6 text-center text-dark-gray'>더 이상 불러올 게시글이 없습니다.</div>
+          <p className='my-6 text-center text-dark-gray' role='alert'>
+            더 이상 불러올 게시글이 없습니다.
+          </p>
         )}
       </div>
     </div>
