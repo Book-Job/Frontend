@@ -53,14 +53,6 @@ export const postJoinCheckEmailNum = async ({ fullEmail, code }) => {
 }
 
 export const postJoinData = async (filteredData) => {
-  // console.error(
-  //   'loginId:',
-  //   filteredData.userID,
-  //   'nickname:',
-  //   filteredData.Nickname,
-  //   'email:',
-  //   filteredData.email,
-  // )
   try {
     const response = await authApi.post('/members/signup', {
       loginId: filteredData.userID,
