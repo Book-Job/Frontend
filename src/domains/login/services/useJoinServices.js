@@ -47,8 +47,8 @@ export const postJoinCheckEmailNum = async ({ fullEmail, code }) => {
     })
     return response
   } catch (error) {
-    console.error('email 중복 확인 중 오류:', error)
-    throw new Error(error)
+    console.error('email 중복 확인 중 오류:', error.response.data.message)
+    throw new Error(error.response.data.message)
   }
 }
 
