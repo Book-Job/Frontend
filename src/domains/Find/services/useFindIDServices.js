@@ -27,6 +27,6 @@ export const postFindIDEmailCode = async ({ fullEmail, code }) => {
     return response
   } catch (error) {
     console.error('아이디 찾기 인증번호 확인 중 오류:', error)
-    throw new Error(error)
+    throw new Error(error.response?.data?.message || error.message)
   }
 }

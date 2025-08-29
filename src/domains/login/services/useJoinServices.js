@@ -7,8 +7,8 @@ export const getJoinCheckId = async (nowUserID) => {
     })
     return response
   } catch (error) {
-    console.error('ID 중복 확인 중 오류 api:', error.response.data.message)
-    throw new Error(error.response.data.message)
+    console.error('ID 중복 확인 중 오류 api:', error.response?.data?.message || error.message)
+    throw new Error(error.response?.data?.message || error.message)
   }
 }
 
@@ -19,8 +19,8 @@ export const getJoinCheckNickname = async (nowUserNickname) => {
     })
     return response
   } catch (error) {
-    console.error('Nickname 중복 확인 중 오류 api:', error.response.data.message)
-    throw new Error(error.response.data.message)
+    console.error('Nickname 중복 확인 중 오류 api:', error.response?.data?.message || error.message)
+    throw new Error(error.response?.data?.message || error.message)
   }
 }
 
@@ -47,22 +47,12 @@ export const postJoinCheckEmailNum = async ({ fullEmail, code }) => {
     })
     return response
   } catch (error) {
-    console.error('email 중복 확인 중 오류:', error)
-    throw new Error(error)
+    console.error('email 중복 확인 중 오류:', error.response?.data?.message || error.message)
+    throw new Error(error.response?.data?.message || error.message)
   }
 }
 
 export const postJoinData = async (filteredData) => {
-  console.error(
-    'loginId:',
-    filteredData.userID,
-    'nickname:',
-    filteredData.Nickname,
-    'email:',
-    filteredData.email,
-    'password:',
-    filteredData.password,
-  )
   try {
     const response = await authApi.post('/members/signup', {
       loginId: filteredData.userID,
@@ -73,7 +63,9 @@ export const postJoinData = async (filteredData) => {
 
     return response
   } catch (error) {
-    console.error('회원가입 중 오류:', error)
-    throw new Error(error)
+    console.error('회원가입 중 오류:', error.message)
+    throw new Error(
+      error.response?.data?.message || error.message || '회원가입 중 오류가 발생했습니다.',
+    )
   }
 }

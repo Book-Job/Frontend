@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-export const MAX_TITLE_LENGTH = 30
+export const MAX_TITLE_LENGTH = 50
 
 export default function useTitleValidation() {
   return {
