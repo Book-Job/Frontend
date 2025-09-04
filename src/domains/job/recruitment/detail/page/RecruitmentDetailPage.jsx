@@ -181,7 +181,7 @@ const RecruitmentDetailPage = () => {
                 <button
                   type='button'
                   onClick={() => handleExternalLink(value)}
-                  className='underline hover:opacity-80'
+                  className='underline text-link-color hover:opacity-80'
                 >
                   바로가기
                 </button>

@@ -20,6 +20,7 @@ export default {
         'kakao-yellow': '#fee500',
         'kakao-dark-yellow': '#fada0a',
         'error-red': '#ef4444',
+        'link-color': '#0099FF',
       },
       fontFamily: {
         logo: ['TTLaundryGothicB', 'sans-serif'],
