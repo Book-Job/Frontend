@@ -76,14 +76,7 @@ const MainPage = () => {
           플랫폼입니다. 출판인들을 위한 자유게시판도 함께 운영하고 있어요.
         </p>
 
-        <a
-          href={ROUTER_PATHS.INSTALL_METHOD}
-          target='_blank'
-          rel='noopener noreferrer'
-          className='w-full'
-        >
-          <Banner className='w-full h-full' />
-        </a>
+        <Banner className='w-full h-full' />
 
         <div className='w-full px-4 my-6 sm:px-10 sm:my-10'>
           <BoardButton
