@@ -190,18 +190,13 @@ const RecruitmentDetailPage = () => {
             <dt className='text-sm font-semibold text-left text-dark-gray sm:text-base'>{label}</dt>
             <dd className='text-sm text-left break-words sm:text-base'>
               {label === '링크' && value ? (
-                <a
-                  href={value || '#'}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleExternalLink(value)
-                  }}
-                  className='underline text-link-color hover:opacity-80 visited:text-amber-900'
+                <button
+                  type='button'
+                  onClick={() => handleExternalLink(value)}
+                  className='underline hover:opacity-80 text-link-color'
                 >
                   바로가기
-                </a>
+                </button>
               ) : (
                 value
               )}
