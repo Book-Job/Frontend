@@ -75,12 +75,9 @@ const MobileMainHeader = () => {
         ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
       `}
     >
-      <img
-        src={mainLogo}
-        alt='메인 로고'
-        onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-        className='h-auto cursor-pointer w-28'
-      />
+      <button type='button' onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}>
+        <img src={mainLogo} alt='메인 로고' className='h-auto w-28' />
+      </button>
       <div className='flex items-center text-base'>
         {isAuthenticated && user ? (
           <div className='relative' ref={dropdownRef}>

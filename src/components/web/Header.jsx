@@ -92,12 +92,9 @@ const Header = () => {
     `}
     >
       <div className='flex flex-row items-center gap-5 xl:gap-20 md:gap-10 '>
-        <img
-          src={mainLogo}
-          alt='메인 로고'
-          onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-          className='h-auto cursor-pointer w-28 md:w-[140px]'
-        />
+        <button type='button' onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}>
+          <img src={mainLogo} alt='메인 로고' className='h-auto w-28 md:w-[140px]' />
+        </button>
         <span className='flex gap-4 text-sm md:flex-row xl:gap-10 sm:text-base xl:text-lg'>
           {navButtons.map((item, index) =>
             item.external ? (
