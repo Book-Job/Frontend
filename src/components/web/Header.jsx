@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import babyChick from '../../assets/icons/common/common_babyChick.svg'
+import mainLogo from '../../assets/icons/common/main_logo.gif'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useAuthStore from '../../store/login/useAuthStore'
 import { useEffect, useRef, useState } from 'react'
@@ -91,12 +92,9 @@ const Header = () => {
     `}
     >
       <div className='flex flex-row items-center gap-5 xl:gap-20 md:gap-10 '>
-        <span
-          onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-          className='text-2xl cursor-pointer text-main-pink md:text-3xl font-logo'
-        >
-          bookjob
-        </span>
+        <button type='button' onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}>
+          <img src={mainLogo} alt='메인 로고' className='h-auto w-28 md:w-[140px]' />
+        </button>
         <span className='flex gap-4 text-sm md:flex-row xl:gap-10 sm:text-base xl:text-lg'>
           {navButtons.map((item, index) =>
             item.external ? (
