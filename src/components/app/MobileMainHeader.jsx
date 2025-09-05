@@ -7,7 +7,7 @@ import ROUTER_PATHS from '../../routes/RouterPath'
 import { useState, useRef, useEffect } from 'react'
 import MobileSidebar from './MobileSidebar'
 import useAuthStore from '../../store/login/useAuthStore'
-
+import mainLogo from '../../assets/icons/common/main_logo.gif'
 const MobileMainHeader = () => {
   const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -75,12 +75,9 @@ const MobileMainHeader = () => {
         ${hasShadow ? 'border-b border-gray-200 shadow-sm' : ''}
       `}
     >
-      <div
-        onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}
-        className='flex text-2xl font-bold cursor-pointer text-main-pink font-logo'
-      >
-        bookjob
-      </div>
+      <button type='button' onClick={() => navigate(ROUTER_PATHS.MAIN_PAGE)}>
+        <img src={mainLogo} alt='메인 로고' className='h-auto w-28' />
+      </button>
       <div className='flex items-center text-base'>
         {isAuthenticated && user ? (
           <div className='relative' ref={dropdownRef}>

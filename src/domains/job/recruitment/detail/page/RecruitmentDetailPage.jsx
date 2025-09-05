@@ -20,6 +20,9 @@ import { useEffect, useRef } from 'react'
 import { saveTOStorage } from '../../../../my/detail/components/saveToStorage'
 import useFreeDraftStore from '../../../../../store/mypage/useFreeDraftStore'
 import ContentRenderer from '../../../../../components/common/ContentRenderer'
+import writePencil from '../../../../../assets/icons/common/common_pencil2.svg'
+import PinkButton from '../../../../../components/web/PinkButton'
+import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
 
 const RecruitmentDetailPage = () => {
   const { user } = useAuthStore()
@@ -30,6 +33,7 @@ const RecruitmentDetailPage = () => {
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
   const { clearSelectedFreeDraft } = useFreeDraftStore()
+  const { setShowModal } = useWriteModalStore()
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -104,9 +108,17 @@ const RecruitmentDetailPage = () => {
       '외부 사이트로 이동합니다. 악성 링크일 수 있으니 주의하세요.\n계속하시겠습니까?',
     )
     if (isConfirmed) {
-      window.open(safeUrl, '_blank')
+      window.open(safeUrl, '_blank', 'noopener,noreferrer')
     }
   }
+
+  const handleCreatePostClick = () => setShowModal(true)
+
+  const writePencilIcon = (
+    <span className='flex flex-row justify-center gap-2 pr-2'>
+      <img src={writePencil} alt='글 작성 버튼' className='w-[25px] h-[25px]' />내 글도 등록하기
+    </span>
+  )
 
   return (
     <div className='w-full max-w-[940px] mx-auto '>
@@ -181,7 +193,7 @@ const RecruitmentDetailPage = () => {
                 <button
                   type='button'
                   onClick={() => handleExternalLink(value)}
-                  className='underline hover:opacity-80'
+                  className='underline hover:opacity-80 text-link-color'
                 >
                   바로가기
                 </button>
@@ -207,6 +219,9 @@ const RecruitmentDetailPage = () => {
       </div>
       <div className='block mt-4 mb-10 text-[16px] leading-relaxed text-left break-words whitespace-pre-line'>
         <ContentRenderer html={data.text} />
+      </div>
+      <div className='flex justify-end w-full'>
+        <PinkButton label={writePencilIcon} type='button' onClick={handleCreatePostClick} />
       </div>
       <LastFormLine />
       <h2 className='flex self-start my-5 text-lg font-bold sm:text-xl'>관련 글</h2>
