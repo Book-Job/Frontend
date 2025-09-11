@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
-import Modal from '../Modal'
 import coffee_event_modal from '../../../../../assets/banner/coffee_event_modal.jpg'
 import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
+import EventModal from '../EventModal'
 
 const CoffeeEvent = () => {
   const { setShowModal } = useWriteModalStore()
-  const [isSurveyOpen, setIsSurveyOpen] = useState(false)
+  const [isCoffeeOpen, setIsCoffeeOpen] = useState(false)
   const writeEvent = () => setShowModal(true)
 
   useEffect(() => {
     const today = new Date().toDateString()
-    const hideUntil = localStorage.getItem('hideSurveyPopupUntil_2')
+    const hideUntil = localStorage.getItem('hideCoffeePopupUntil')
 
     if (hideUntil !== today) {
       const timer = setTimeout(() => {
-        setIsSurveyOpen(true)
+        setIsCoffeeOpen(true)
       }, 300)
       return () => clearTimeout(timer)
     }
@@ -22,15 +22,15 @@ const CoffeeEvent = () => {
 
   const handleDoNotShowToday = () => {
     const today = new Date().toDateString()
-    localStorage.setItem('hideSurveyPopupUntil_2', today)
-    setIsSurveyOpen(false)
+    localStorage.setItem('hideCoffeePopupUntil', today)
+    setIsCoffeeOpen(false)
   }
 
   return (
     <div>
-      <Modal
-        isOpen={isSurveyOpen}
-        onClose={() => setIsSurveyOpen(false)}
+      <EventModal
+        isOpen={isCoffeeOpen}
+        onClose={() => setIsCoffeeOpen(false)}
         onDoNotShowToday={handleDoNotShowToday}
         image={coffee_event_modal}
         mobileImage={coffee_event_modal}

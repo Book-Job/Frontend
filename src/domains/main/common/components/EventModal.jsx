@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import useIsMobile from '../../../../hooks/header/useIsMobile'
 
-export default function Modal({
+export default function EventModal({
   isOpen,
   onClose,
   onDoNotShowToday,
@@ -57,14 +57,14 @@ export default function Modal({
   )
 }
 
-Modal.propTypes = {
+EventModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onDoNotShowToday: PropTypes.func,
   image: PropTypes.string.isRequired,
   mobileImage: PropTypes.string,
   link: PropTypes.string,
-  onClick: PropTypes.string,
+  onClick: PropTypes.func,
   alt: PropTypes.string,
   doNotShowText: PropTypes.string,
   children: PropTypes.node,

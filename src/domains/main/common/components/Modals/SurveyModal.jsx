@@ -1,9 +1,9 @@
-import { CUSTOMER_INQUIRY } from '../../../../utils/urls'
+import { CUSTOMER_INQUIRY } from '../../../../../utils/urls'
 import app_banner from '../../../../assets/banner/app_banner.jpg'
 import web_banner from '../../../../assets/banner/web_banner.jpg'
-import Modal from './Modal'
-import useAuthStore from '../../../../store/login/useAuthStore'
+import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useEffect, useState } from 'react'
+import EventModal from '../EventModal'
 
 export default function SurveyModal() {
   const { isAuthenticated } = useAuthStore()
@@ -32,7 +32,7 @@ export default function SurveyModal() {
   
   return (
     <div>
-      <Modal
+      <EventModal
         isOpen={isSurveyOpen}
         onClose={() => setIsSurveyOpen(false)}
         onDoNotShowToday={handleDoNotShowToday}
