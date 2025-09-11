@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Modal from '../Modal'
-import coffee_event_modal from '../../../../../assets/banner/coffee_event_modal.png'
+import coffee_event_modal from '../../../../../assets/banner/coffee_event_modal.jpg'
 import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
 
 const CoffeeEvent = () => {
