@@ -54,7 +54,7 @@ const FreeBoard = ({
           <h3 className='overflow-hidden text-base font-bold leading-snug break-words sm:text-lg line-clamp-2'>
             {title}
           </h3>
-          <div className='mt-2 text-sm sm:text-base line-clamp-2'>
+          <div className='mt-2 text-sm break-all sm:text-base line-clamp-2'>
             {isImagePost ? (
               <span className='flex items-center gap-1 text-dark-gray'>
                 <BsCardImage className='text-lg' />
