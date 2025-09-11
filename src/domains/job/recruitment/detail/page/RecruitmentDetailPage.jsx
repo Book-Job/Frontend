@@ -185,6 +185,7 @@ const RecruitmentDetailPage = () => {
             data.closingDate ? new Date(data.closingDate).toLocaleDateString('ko-KR') : '상시채용',
           ],
           ['링크', data.websiteUrl],
+          ['등록일', new Date(data.createdAt).toLocaleDateString('ko-KR')],
         ].map(([label, value]) => (
           <div key={label} className='grid grid-cols-[6rem_1fr] items-start gap-x-2'>
             <dt className='text-sm font-semibold text-left text-dark-gray sm:text-base'>{label}</dt>
