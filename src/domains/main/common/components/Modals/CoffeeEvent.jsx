@@ -9,7 +9,6 @@ const CoffeeEvent = () => {
 
   const writeEvent = () => {
     setIsCoffeeOpen(false)
-    if (typeof window !== 'undefined') window.__PROMO_MODAL_OPEN__ = false
     setShowModal(true)
   }
 
@@ -35,10 +34,7 @@ const CoffeeEvent = () => {
     <div>
       <EventModal
         isOpen={isCoffeeOpen}
-        onClose={() => {
-          setIsCoffeeOpen(false)
-          if (typeof window !== 'undefined') window.__PROMO_MODAL_OPEN__ = false
-        }}
+        onClose={() => setIsCoffeeOpen(false)}
         onDoNotShowToday={handleDoNotShowToday}
         image={coffee_event_modal}
         mobileImage={coffee_event_modal}
