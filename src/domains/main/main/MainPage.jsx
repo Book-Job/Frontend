@@ -6,12 +6,9 @@ import Spinner from '../../../components/web/Spinner'
 import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
 import SurveyModal from '../common/components/SurveyModal'
-import useAuthStore from '../../../store/login/useAuthStore'
-import ROUTER_PATHS from '../../../routes/RouterPath'
+import CoffeeEvent from '../common/components/Modals/CoffeeEvent'
 const MainPage = () => {
-  const { isAuthenticated } = useAuthStore()
   const [selectedBoard, setSelectedBoard] = useState('구인구직')
-  const [isSurveyOpen, setIsSurveyOpen] = useState(false)
 
   const {
     freeBest,
@@ -31,26 +28,6 @@ const MainPage = () => {
   const handleRefresh = () => {
     fetchFreeBest(true)
     fetchJobBest(true)
-  }
-
-  useEffect(() => {
-    if (!isAuthenticated) return
-
-    const today = new Date().toDateString()
-    const hideUntil = localStorage.getItem('hideSurveyPopupUntil')
-
-    if (hideUntil !== today) {
-      const timer = setTimeout(() => {
-        setIsSurveyOpen(true)
-      }, 300)
-      return () => clearTimeout(timer)
-    }
-  }, [isAuthenticated])
-
-  const handleDoNotShowToday = () => {
-    const today = new Date().toDateString()
-    localStorage.setItem('hideSurveyPopupUntil', today)
-    setIsSurveyOpen(false)
   }
 
   useEffect(() => {
@@ -104,11 +81,8 @@ const MainPage = () => {
           )}
         </div>
       </div>
-      <SurveyModal
-        isOpen={isSurveyOpen}
-        onClose={() => setIsSurveyOpen(false)}
-        onDoNotShowToday={handleDoNotShowToday}
-      />
+      <SurveyModal />
+      <CoffeeEvent />
     </>
   )
 }

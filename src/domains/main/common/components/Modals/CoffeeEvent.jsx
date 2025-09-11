@@ -1,20 +1,16 @@
-import { CUSTOMER_INQUIRY } from '../../../../utils/urls'
-import app_banner from '../../../../assets/banner/app_banner.jpg'
-import web_banner from '../../../../assets/banner/web_banner.jpg'
-import Modal from './Modal'
-import useAuthStore from '../../../../store/login/useAuthStore'
 import { useEffect, useState } from 'react'
+import Modal from '../Modal'
+import coffee_event_modal from '../../../../../assets/banner/coffee_event_modal.png'
+import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
 
-export default function SurveyModal() {
-  const { isAuthenticated } = useAuthStore()
-
+const CoffeeEvent = () => {
+  const { setShowModal } = useWriteModalStore()
   const [isSurveyOpen, setIsSurveyOpen] = useState(false)
+  const writeEvent = () => setShowModal(true)
 
   useEffect(() => {
-    if (!isAuthenticated) return
-
     const today = new Date().toDateString()
-    const hideUntil = localStorage.getItem('hideSurveyPopupUntil')
+    const hideUntil = localStorage.getItem('hideSurveyPopupUntil_2')
 
     if (hideUntil !== today) {
       const timer = setTimeout(() => {
@@ -22,26 +18,28 @@ export default function SurveyModal() {
       }, 300)
       return () => clearTimeout(timer)
     }
-  }, [isAuthenticated])
+  }, [])
 
   const handleDoNotShowToday = () => {
     const today = new Date().toDateString()
-    localStorage.setItem('hideSurveyPopupUntil', today)
+    localStorage.setItem('hideSurveyPopupUntil_2', today)
     setIsSurveyOpen(false)
   }
-  
+
   return (
     <div>
       <Modal
         isOpen={isSurveyOpen}
         onClose={() => setIsSurveyOpen(false)}
         onDoNotShowToday={handleDoNotShowToday}
-        image={web_banner}
-        mobileImage={app_banner}
-        link={CUSTOMER_INQUIRY}
-        alt='설문조사 배너'
+        image={coffee_event_modal}
+        mobileImage={coffee_event_modal}
+        onClick={writeEvent}
+        alt='커피 이벤트 배너'
         doNotShowText='오늘 하루 보지 않기'
       />
     </div>
   )
 }
+
+export default CoffeeEvent
