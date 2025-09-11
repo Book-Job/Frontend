@@ -30,7 +30,7 @@ const BestList = ({ boardName, bestList }) => {
             return (
               <div key={index} className='flex items-center hover:scale-105'>
                 <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden white-space-nowrap'>
+                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden'>
                   <button
                     className='w-10/12 break-all text-start line-clamp-1'
                     onClick={
