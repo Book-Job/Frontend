@@ -1,6 +1,6 @@
 import { CUSTOMER_INQUIRY } from '../../../../../utils/urls'
-import app_banner from '../../../../assets/banner/app_banner.jpg'
-import web_banner from '../../../../assets/banner/web_banner.jpg'
+import app_banner from '../../../../../assets/banner/app_banner.jpg'
+import web_banner from '../../../../../assets/banner/web_banner.jpg'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useEffect, useState } from 'react'
 import EventModal from '../EventModal'

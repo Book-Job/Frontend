@@ -6,7 +6,12 @@ import EventModal from '../EventModal'
 const CoffeeEvent = () => {
   const { setShowModal } = useWriteModalStore()
   const [isCoffeeOpen, setIsCoffeeOpen] = useState(false)
-  const writeEvent = () => setShowModal(true)
+
+  const writeEvent = () => {
+    setIsCoffeeOpen(false)
+    if (typeof window !== 'undefined') window.__PROMO_MODAL_OPEN__ = false
+    setShowModal(true)
+  }
 
   useEffect(() => {
     const today = new Date().toDateString()
@@ -30,7 +35,10 @@ const CoffeeEvent = () => {
     <div>
       <EventModal
         isOpen={isCoffeeOpen}
-        onClose={() => setIsCoffeeOpen(false)}
+        onClose={() => {
+          setIsCoffeeOpen(false)
+          if (typeof window !== 'undefined') window.__PROMO_MODAL_OPEN__ = false
+        }}
         onDoNotShowToday={handleDoNotShowToday}
         image={coffee_event_modal}
         mobileImage={coffee_event_modal}
