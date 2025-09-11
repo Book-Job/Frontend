@@ -108,12 +108,12 @@ const DetailCommunityPage = () => {
       <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
         {post.title}
       </h1>
-      <div className='text-[15px] sm:text-[20px] text-dark-gray mb-2 text-left break-words'>
-        {post.nickname}
+      <div className='flex items-center justify-between mb-2 text-dark-gray'>
+        <div className='text-[15px] sm:text-[20px] break-words'>{post.nickname}</div>
+        <div className='text-[14px] sm:text-[16px] break-words'>{post.createdAt.split('T')[0]}</div>
       </div>
-
       {post?.isWriter ? (
-        <div className='flex justify-end gap-4 mt-4 mb-2'>
+        <div className='flex justify-end gap-4 my-2'>
           {!isEditing ? (
             <>
               <button className='text-dark-gray text-[13px]' onClick={handleEditClick}>
@@ -143,7 +143,6 @@ const DetailCommunityPage = () => {
           )}
         </div>
       ) : null}
-
       <LastFormLine />
 
       <div className='flex flex-wrap justify-end gap-2 mb-4 ml-0 sm:ml-5'>

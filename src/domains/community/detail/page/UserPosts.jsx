@@ -75,7 +75,7 @@ const UserPosts = () => {
 
       <div className='flex flex-col max-w-[940px] w-full mx-auto'>
         <div className='w-full h-[1px] bg-black' />
-        <table className='w-full border-collapse border-b border-dark-gray'>
+        <table className='w-full border-b border-collapse border-dark-gray'>
           <thead>
             <tr className='pb-3 text-sm border-b border-dark-gray '>
               <th scope='col' className='py-3'>

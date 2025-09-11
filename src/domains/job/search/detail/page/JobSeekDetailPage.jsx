@@ -130,6 +130,7 @@ const JobSeekDetailPage = () => {
           ['직군', getJobCategoryLabel(data.jobCategory)],
           ['경력', data.experience],
           ['연락가능한 이메일', data.contactEmail?.trim() ? data.contactEmail : '-'],
+          ['등록일', new Date(data.createdAt).toLocaleDateString('ko-KR')],
         ].map(([label, value]) => (
           <div
             key={label}
