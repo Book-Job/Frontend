@@ -19,7 +19,7 @@ import WriteEditor from '../../../../components/common/editor/WriteEditor'
 import useEditPost from '../hook/useEditPost'
 import { saveTOStorage } from '../../../my/detail/components/saveToStorage'
 import ContentRenderer from '../../../../components/common/ContentRenderer'
-
+import LikeCount from '../../../../components/common/LikeCount'
 const DetailCommunityPage = () => {
   const { id } = useParams()
   const { post, loading, error, setPost } = useDetailPost(id)
@@ -31,7 +31,6 @@ const DetailCommunityPage = () => {
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
   const hasFetched = useRef(false)
-
   const {
     content,
     setContent,
@@ -47,7 +46,6 @@ const DetailCommunityPage = () => {
   useEffect(() => {
     if (!id) return
     if (!hasFetched.current) {
-      console.log('fetchComments called', id)
       fetchComments(id)
       hasFetched.current = true
     }
@@ -89,7 +87,6 @@ const DetailCommunityPage = () => {
     setContent(post.text || '')
     setIsEditing(true)
   }
-
   const handleCancelEdit = () => setIsEditing(false)
 
   const onSaveSuccess = (newText) => {
@@ -112,6 +109,14 @@ const DetailCommunityPage = () => {
         <div className='text-[15px] sm:text-[20px] break-words'>{post.nickname}</div>
         <div className='text-[14px] sm:text-[16px] break-words'>{post.createdAt.split('T')[0]}</div>
       </div>
+      {post && (
+        <LikeCount
+          id={id}
+          initialCount={post.likeCount ?? 0}
+          initialActive={false}
+          className='mt-2 text-dark-gray'
+        />
+      )}
       {post?.isWriter ? (
         <div className='flex justify-end gap-4 my-2'>
           {!isEditing ? (
