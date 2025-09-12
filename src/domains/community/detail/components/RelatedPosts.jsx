@@ -56,6 +56,7 @@ const RelatedPosts = ({ currentId }) => {
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
+                    likeCount={post.likeCount}
                     isImagePost={isImagePost}
                     name={post.nickname}
                     date={new Date(post.createdAt).toLocaleDateString()}
@@ -68,6 +69,7 @@ const RelatedPosts = ({ currentId }) => {
                     boardId={post.boardId}
                     title={post.title}
                     content={content}
+                    likeCount={post.likeCount}
                     isImagePost={isImagePost}
                     name={post.nickname}
                     date={new Date(post.createdAt).toLocaleDateString()}
