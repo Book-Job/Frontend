@@ -1,4 +1,6 @@
 import WebBanner from '../../assets/banner/pwa_banner.jpg'
+import PrizeBanner from '../../assets/banner/prize_banner.jpg'
+import PrizeBannerApp from '../../assets/banner/prize_banner_app.jpg'
 import WebCoffeeBanner from '../../assets/banner/coffee_event_banner.gif'
 import useIsMobile from '../../hooks/header/useIsMobile'
 import MobileBanner from '../../assets/banner/pwa_app_banner.jpg'
@@ -50,6 +52,11 @@ const Banner = ({ className = '' }) => {
             className='w-full h-auto transition-transform duration-300 ease-in-out hover:scale-105'
           />
         </a>
+        <img
+          src={isMobile ? PrizeBannerApp : PrizeBanner}
+          alt='이벤트 당첨 배너'
+          className='w-full h-auto'
+        />
       </Slider>
     </div>
   )
