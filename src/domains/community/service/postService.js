@@ -49,3 +49,15 @@ export const editPost = async (id, data) => {
     throw error
   }
 }
+
+export const toggleLike = async (boardId, active) => {
+  try {
+    const response = await authApi.put(`/boards/${boardId}/likes`, null, {
+      params: { active },
+    })
+    return response.data
+  } catch (error) {
+    console.error('좋아요 토글 실패:', error)
+    throw error
+  }
+}

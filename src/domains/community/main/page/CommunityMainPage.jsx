@@ -112,6 +112,7 @@ const CommunityMainPage = () => {
                             <MobileFreeBoard
                               boardId={post.boardId}
                               title={post.title}
+                              likeCount={post.likeCount}
                               content={content}
                               name={post.nickname}
                               date={new Date(post.createdAt).toLocaleDateString()}
@@ -124,6 +125,7 @@ const CommunityMainPage = () => {
                               title={post.title}
                               content={content}
                               name={post.nickname}
+                              likeCount={post.likeCount}
                               date={new Date(post.createdAt).toLocaleDateString()}
                               commentCount={post.commentCount}
                               viewCount={post.viewCount}
