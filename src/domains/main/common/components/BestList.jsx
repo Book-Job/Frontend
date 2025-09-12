@@ -30,9 +30,9 @@ const BestList = ({ boardName, bestList }) => {
             return (
               <div key={index} className='flex items-center hover:scale-105'>
                 <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden'>
+                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden min-w-0'>
                   <button
-                    className='w-10/12 break-all text-start line-clamp-1'
+                    className='flex-1 w-10/12 min-w-0 break-all truncate text-start line-clamp-1'
                     onClick={
                       boardId
                         ? () => navigate(`/community/post/${boardId}`)
@@ -41,7 +41,7 @@ const BestList = ({ boardName, bestList }) => {
                   >
                     {title}
                   </button>
-                  <div className='flex flex-row items-center justify-between sm:min-w-14 min-w-10'>
+                  <div className='flex items-center justify-between w-auto min-w-0 ml-2 shrink-0'>
                     {boardId ? (
                       <>
                         <img
@@ -50,6 +50,12 @@ const BestList = ({ boardName, bestList }) => {
                           className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
                         />
                         {commentCount}
+                        <img
+                          src={viewGray}
+                          alt='comment'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mx-2'
+                        />
+                        {viewCount}
                       </>
                     ) : (
                       <>
