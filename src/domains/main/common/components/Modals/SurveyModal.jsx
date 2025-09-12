@@ -5,6 +5,8 @@ import useAuthStore from '../../../../../store/login/useAuthStore'
 import { useEffect, useState } from 'react'
 import EventModal from '../EventModal'
 
+const PROMO_LOCK_KEY = '__PROMO_MODAL_OPEN__'
+
 export default function SurveyModal() {
   const { isAuthenticated } = useAuthStore()
 
@@ -18,8 +20,10 @@ export default function SurveyModal() {
 
     if (hideUntil !== today) {
       const timer = setTimeout(() => {
+        if (typeof window !== 'undefined' && window[PROMO_LOCK_KEY]) return
+        if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = true
         setIsSurveyOpen(true)
-      }, 300)
+      }, 5000)
       return () => clearTimeout(timer)
     }
   }, [isAuthenticated])
@@ -28,13 +32,17 @@ export default function SurveyModal() {
     const today = new Date().toDateString()
     localStorage.setItem('hideSurveyPopupUntil', today)
     setIsSurveyOpen(false)
+    if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = false
   }
-  
+
   return (
     <div>
       <EventModal
         isOpen={isSurveyOpen}
-        onClose={() => setIsSurveyOpen(false)}
+        onClose={() => {
+          setIsSurveyOpen(false)
+          if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = false
+        }}
         onDoNotShowToday={handleDoNotShowToday}
         image={web_banner}
         mobileImage={app_banner}

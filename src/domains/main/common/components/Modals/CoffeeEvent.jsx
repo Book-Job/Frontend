@@ -3,6 +3,8 @@ import coffee_event_modal from '../../../../../assets/banner/coffee_event_modal.
 import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
 import EventModal from '../EventModal'
 
+const PROMO_LOCK_KEY = '__PROMO_MODAL_OPEN__'
+
 const CoffeeEvent = () => {
   const { setShowModal } = useWriteModalStore()
   const [isCoffeeOpen, setIsCoffeeOpen] = useState(false)
@@ -18,6 +20,8 @@ const CoffeeEvent = () => {
 
     if (hideUntil !== today) {
       const timer = setTimeout(() => {
+        if (typeof window !== 'undefined' && window[PROMO_LOCK_KEY]) return
+        if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = true
         setIsCoffeeOpen(true)
       }, 300)
       return () => clearTimeout(timer)
@@ -28,13 +32,17 @@ const CoffeeEvent = () => {
     const today = new Date().toDateString()
     localStorage.setItem('hideCoffeePopupUntil', today)
     setIsCoffeeOpen(false)
+    if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = false
   }
 
   return (
     <div>
       <EventModal
         isOpen={isCoffeeOpen}
-        onClose={() => setIsCoffeeOpen(false)}
+        onClose={() => {
+          setIsCoffeeOpen(false)
+          if (typeof window !== 'undefined') window[PROMO_LOCK_KEY] = false
+        }}
         onDoNotShowToday={handleDoNotShowToday}
         image={coffee_event_modal}
         mobileImage={coffee_event_modal}
