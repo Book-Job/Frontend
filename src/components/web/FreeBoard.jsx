@@ -5,6 +5,7 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
 import { BsCardImage } from 'react-icons/bs'
+import LikeCount from '../common/LikeCount'
 
 const FreeBoard = ({
   boardId,
@@ -15,6 +16,7 @@ const FreeBoard = ({
   onClick,
   commentCount,
   viewCount,
+  likeCount,
   isImagePost,
 }) => {
   const [showButton, setShowButton] = useState(false)
@@ -68,7 +70,11 @@ const FreeBoard = ({
 
         <div className='mt-4 text-xs text-dark-gray sm:text-sm'>
           <div className='flex justify-between font-bold'>
-            <ShareViews label={commentCount} textColor='text-dark-gray' icon={comment} />
+            <div className='flex items-center gap-3'>
+              <ShareViews label={commentCount} textColor='text-dark-gray' icon={comment} />
+              <LikeCount count={likeCount} />
+            </div>
+
             <div className='relative inline-block'>
               <span
                 onClick={handleNameClick}
@@ -87,6 +93,7 @@ const FreeBoard = ({
               )}
             </div>
           </div>
+
           <hr className='my-1 border-dark-gray' />
           <div className='flex items-end justify-between'>
             {date}
@@ -106,6 +113,7 @@ FreeBoard.propTypes = {
   commentCount: PropTypes.number.isRequired,
   viewCount: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
+  likeCount: PropTypes.number.isRequired,
   isImagePost: PropTypes.bool,
   onClick: PropTypes.func,
 }
