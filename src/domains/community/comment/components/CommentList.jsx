@@ -77,7 +77,7 @@ const CommentList = ({ boardId }) => {
             <div className='px-4 py-3'>
               <div className='flex items-center justify-between mb-1'>
                 <strong className={`font-semibold ${nicknameColor}`}>{comment.nickname}</strong>
-                {/* <LikeCount count={comment.likeCount} className='text-dark-gray' /> 현재 댓글 count 안내려옴*/}
+                <LikeCount count={comment.likeCount} className='text-dark-gray text-sm' />
               </div>
 
               {editingCommentId === comment.commentId ? (
