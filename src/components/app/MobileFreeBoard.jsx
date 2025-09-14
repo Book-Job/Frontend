@@ -58,7 +58,7 @@ const MobileFreeBoard = ({
               <MobileShare label={commentCount} textColor='text-dark-gray' icon={comment} />
               <LikeCount count={likeCount} />
             </div>
-            <div className='relative inline-block'>
+            <div className='relative inline-block mt-1'>
               <span
                 onClick={handleNameClick}
                 className='z-10 text-sm font-medium cursor-pointer hover:underline'

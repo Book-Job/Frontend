@@ -29,12 +29,13 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
   }
 
   return (
-    <div
-      className={`flex items-center gap-1 mb-1 cursor-pointer ${className}`}
-      onClick={handleClick}
-    >
-      <img src={active ? GoodIcon : NotGoodIcon} alt='좋아요' className='w-5 h-5' />
-      <span className='flex mt-1'>{count}</span>
+    <div className={`flex items-center mb-1 cursor-pointer ${className}`} onClick={handleClick}>
+      <img
+        src={active ? GoodIcon : NotGoodIcon}
+        alt='좋아요'
+        className='w-4 h-4 mt-1 md:w-5 md:h-5'
+      />
+      <span className='flex mt-1 ml-1'>{count}</span>
     </div>
   )
 }
