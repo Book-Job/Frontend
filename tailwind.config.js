@@ -14,6 +14,7 @@ export default {
         'main-pink': '#ec4899',
         'dark-pink': '#dd4390',
         'hover-pink': '#DB2777',
+        'light-pink': '#FFFAFE',
         lightBlueGray: '#F3F3F3',
         'naver-green': '#03C75A',
         'naver-dark-Green': '#09aa5c',

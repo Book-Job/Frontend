@@ -222,6 +222,8 @@ const routes = [
     path: ROUTER_PATHS.ADMIN_MAIN,
     element: <AdminMain />,
     label: '관리자 메인',
+    noMargin: true,
+    isProtected: true,
   },
 ]
 
