@@ -22,7 +22,9 @@ const BestList = ({ boardName, bestList }) => {
           />
           Your browser does not support the video tag.
         </video>
-        <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
+        <div className='text-xl font-bold sm:text-3xl'>
+          {boardName} {boardName === '최신글' ? null : '베스트'}
+        </div>
       </div>
       {bestList.length !== 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
