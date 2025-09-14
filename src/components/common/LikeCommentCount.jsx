@@ -4,7 +4,7 @@ import GoodIcon from '../../assets/icons/common/common_good.svg'
 import NotGoodIcon from '../../assets/icons/common/common_good_before_icon.svg'
 import { toggleCommentLike } from '../../domains/community/service/commentService'
 
-const CommentLike = ({
+const LikeCommentCount = ({
   boardId,
   commentId,
   initialCount = 0,
@@ -46,7 +46,7 @@ const CommentLike = ({
   )
 }
 
-CommentLike.propTypes = {
+LikeCommentCount.propTypes = {
   boardId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   commentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   initialCount: PropTypes.number,

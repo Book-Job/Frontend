@@ -32,6 +32,8 @@ const DetailCommunityPage = () => {
   const hasSaved = useRef(false)
   const hasFetched = useRef(false)
   const {
+    title,
+    setTitle,
     content,
     setContent,
     loading: editLoading,
