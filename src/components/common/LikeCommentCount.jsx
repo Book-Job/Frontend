@@ -41,7 +41,7 @@ const LikeCommentCount = ({
         alt='좋아요'
         className='w-4 h-4 mt-1 md:w-5 md:h-5'
       />
-      <span className='flex mt-1 ml-1'>{count}</span>
+      <span className='flex mt-1 ml-1 text-dark-gray'>{count}</span>
     </div>
   )
 }
