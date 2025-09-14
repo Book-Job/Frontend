@@ -34,6 +34,7 @@ import TermsOfService from '../domains/policy/page/TermsOfService'
 import PrivacyPolicy from '../domains/policy/page/PrivacyPolicy'
 import InstallMethod from '../domains/policy/page/InstallMethod'
 import ServerErrorPage from '../domains/error/page/ServerErrorPage'
+import AdminMain from '../domains/admin/main/page/AdminMain'
 
 const routes = [
   {
@@ -216,6 +217,11 @@ const routes = [
   {
     path: ROUTER_PATHS.INSTALL_METHOD,
     element: <InstallMethod />,
+  },
+  {
+    path: ROUTER_PATHS.ADMIN_MAIN,
+    element: <AdminMain />,
+    label: '관리자 메인',
   },
 ]
 
