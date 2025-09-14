@@ -5,8 +5,8 @@ import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
 import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
-import SurveyModal from '../common/components/Modals/SurveyModal'
-import CoffeeEvent from '../common/components/Modals/CoffeeEvent'
+// import SurveyModal from '../common/components/Modals/SurveyModal'
+// import CoffeeEvent from '../common/components/Modals/CoffeeEvent'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('구인구직')
 
@@ -81,8 +81,8 @@ const MainPage = () => {
           )}
         </div>
       </div>
-      <SurveyModal />
-      <CoffeeEvent />
+      {/* <SurveyModal /> */}
+      {/* <CoffeeEvent /> */}
     </>
   )
 }

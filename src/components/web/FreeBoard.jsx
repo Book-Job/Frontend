@@ -37,7 +37,7 @@ const FreeBoard = ({
   }
 
   return (
-    <div className='relative w-full' onClick={goToDetailPage}>
+    <div className='relative w-full h-full' onClick={goToDetailPage}>
       <div
         className='
         flex flex-col h-full
