@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import useIsMobile from '../../../../hooks/header/useIsMobile'
+import useIsMobile from '../../../../../hooks/header/useIsMobile'
 
 export default function EventModal({
   isOpen,
