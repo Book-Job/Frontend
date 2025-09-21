@@ -2,9 +2,15 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 import GoodIcon from '../../assets/icons/common/common_good.svg'
 import NotGoodIcon from '../../assets/icons/common/common_good_before_icon.svg'
-import { toggleLike } from '../../domains/community/service/postService'
+import { toggleCommentLike } from '../../domains/community/service/commentService'
 
-const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) => {
+const LikeCommentCount = ({
+  boardId,
+  commentId,
+  initialCount = 0,
+  initialActive = false,
+  className,
+}) => {
   const [count, setCount] = useState(initialCount)
   const [active, setActive] = useState(initialActive)
   const [loading, setLoading] = useState(false)
@@ -17,7 +23,7 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
       const newActive = !active
       const newCount = newActive ? count + 1 : count - 1
 
-      await toggleLike(id, newActive)
+      await toggleCommentLike(boardId, commentId, newActive)
 
       setActive(newActive)
       setCount(newCount)
@@ -33,18 +39,19 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
       <img
         src={active ? GoodIcon : NotGoodIcon}
         alt='좋아요'
-        className='w-3 h-3 mt-1 md:w-4 md:h-4'
+        className='w-4 h-4 mt-1 md:w-5 md:h-5'
       />
-      <span className='flex mt-1 ml-1'>{count}</span>
+      <span className='flex mt-1 ml-1 text-dark-gray'>{count}</span>
     </div>
   )
 }
 
-LikeCount.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+LikeCommentCount.propTypes = {
+  boardId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  commentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   initialCount: PropTypes.number,
   initialActive: PropTypes.bool,
   className: PropTypes.string,
 }
 
-export default LikeCount
+export default LikeCommentCount
