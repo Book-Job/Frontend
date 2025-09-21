@@ -5,20 +5,22 @@ import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
 import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
-import SurveyModal from '../common/components/Modals/SurveyModal'
-import CoffeeEvent from '../common/components/Modals/CoffeeEvent'
 const MainPage = () => {
   const [selectedBoard, setSelectedBoard] = useState('구인구직')
 
   const {
     freeBest,
     jobBest,
+    jobNew,
     isFreeLoading,
     isJobLoading,
+    isJobNewLoading,
     freeError,
     jobError,
+    jobNewError,
     fetchFreeBest,
     fetchJobBest,
+    fetchJobNew,
   } = useBestStore()
 
   const handleBoardSelect = (boardName) => {
@@ -28,15 +30,27 @@ const MainPage = () => {
   const handleRefresh = () => {
     fetchFreeBest(true)
     fetchJobBest(true)
+    fetchJobNew(true)
   }
 
   useEffect(() => {
-    Promise.all([fetchFreeBest(), fetchJobBest()])
-  }, [fetchFreeBest, fetchJobBest])
+    Promise.all([fetchFreeBest(), fetchJobBest(), fetchJobNew()])
+  }, [fetchFreeBest, fetchJobBest, fetchJobNew])
 
-  const currentList = selectedBoard === '자유게시판' ? freeBest : jobBest
-  const isLoading = selectedBoard === '자유게시판' ? isFreeLoading : isJobLoading
-  const error = selectedBoard === '자유게시판' ? freeError : jobError
+  const currentList =
+    selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : jobNew
+  const isLoading =
+    selectedBoard === '자유게시판'
+      ? isFreeLoading
+      : selectedBoard === '구인구직'
+        ? isJobLoading
+        : isJobNewLoading
+  const error =
+    selectedBoard === '자유게시판'
+      ? freeError
+      : selectedBoard === '구인구직'
+        ? jobError
+        : jobNewError
 
   return (
     <>
@@ -70,7 +84,13 @@ const MainPage = () => {
             <div className='flex flex-col text-center text-error-red'>
               {error}
               <button
-                onClick={() => (selectedBoard === '자유게시판' ? fetchFreeBest() : fetchJobBest())}
+                onClick={() =>
+                  selectedBoard === '자유게시판'
+                    ? fetchFreeBest()
+                    : selectedBoard === '구인구직'
+                      ? fetchJobBest()
+                      : fetchJobNew()
+                }
                 className='ml-2 text-blue-500'
               >
                 재시도
@@ -81,8 +101,6 @@ const MainPage = () => {
           )}
         </div>
       </div>
-      <SurveyModal />
-      <CoffeeEvent />
     </>
   )
 }

@@ -4,6 +4,8 @@ import viewGray from '../../../../assets/icons/common/common_view_gray.svg'
 const BestList = ({ boardName, bestList }) => {
   const navigate = useNavigate()
 
+  console.log('boardName', boardName, 'bestList', bestList)
+
   return (
     <div className='flex flex-col w-full sm:max-w-[940px]'>
       <div className='flex items-center sm:mb-12 mb-7'>
@@ -22,26 +24,30 @@ const BestList = ({ boardName, bestList }) => {
           />
           Your browser does not support the video tag.
         </video>
-        <div className='text-xl font-bold sm:text-3xl'>{boardName} 베스트</div>
+        <div className='text-xl font-bold sm:text-3xl'>
+          {boardName} {boardName === '최신글' ? null : '베스트'}
+        </div>
       </div>
       {bestList.length !== 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
-          {bestList.map(({ title, boardId, jobPostingId, commentCount, viewCount }, index) => {
+          {bestList.map(({ title, boardId, jobPostingId, Id, commentCount, viewCount }, index) => {
             return (
               <div key={index} className='flex items-center hover:scale-105'>
                 <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden'>
+                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden min-w-0'>
                   <button
-                    className='w-10/12 break-all text-start line-clamp-1'
+                    className='flex-1 w-10/12 min-w-0 break-all truncate text-start line-clamp-1'
                     onClick={
                       boardId
                         ? () => navigate(`/community/post/${boardId}`)
-                        : () => navigate(`/job/recruitment/post/${jobPostingId}`)
+                        : jobPostingId
+                          ? () => navigate(`/job/recruitment/post/${jobPostingId}`)
+                          : () => navigate(`/job/recruitment/post/${Id}`)
                     }
                   >
                     {title}
                   </button>
-                  <div className='flex flex-row items-center justify-between sm:min-w-14 min-w-10'>
+                  <div className='flex items-center justify-between w-auto min-w-0 ml-2 shrink-0'>
                     {boardId ? (
                       <>
                         <img
@@ -50,6 +56,12 @@ const BestList = ({ boardName, bestList }) => {
                           className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
                         />
                         {commentCount}
+                        <img
+                          src={viewGray}
+                          alt='comment'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mx-2'
+                        />
+                        {viewCount}
                       </>
                     ) : (
                       <>

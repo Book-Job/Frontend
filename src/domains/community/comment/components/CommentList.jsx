@@ -3,8 +3,7 @@ import useCommentStore from '../store/useCommentStore'
 import Spinner from '../../../../components/web/Spinner'
 import ToastService from '../../../../services/toast/ToastService'
 import useBestStore from '../../../../store/main/useBestStore'
-import LikeCount from '../../../../components/common/LikeCount'
-
+import LikeCommentCount from '../../../../components/common/LikeCommentCount'
 const CommentList = ({ boardId }) => {
   const comments = useCommentStore((state) => state.comments)
   const deleteComment = useCommentStore((state) => state.deleteComment)
@@ -77,7 +76,12 @@ const CommentList = ({ boardId }) => {
             <div className='px-4 py-3'>
               <div className='flex items-center justify-between mb-1'>
                 <strong className={`font-semibold ${nicknameColor}`}>{comment.nickname}</strong>
-                {/* <LikeCount count={comment.likeCount} className='text-dark-gray' /> 현재 댓글 count 안내려옴*/}
+                <LikeCommentCount
+                  boardId={boardId}
+                  commentId={comment.commentId}
+                  initialCount={comment.likeCount}
+                  initialActive={false}
+                />
               </div>
 
               {editingCommentId === comment.commentId ? (

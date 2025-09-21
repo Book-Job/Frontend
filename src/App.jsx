@@ -10,6 +10,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import PwaPopUp from './components/common/PwaPopUp'
+import ModalManager from './domains/main/common/components/Modals/ModalManager';
 
 const queryClient = new QueryClient()
 function App() {
@@ -20,6 +21,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <PwaPopUp />
+      <ModalManager />
       <BrowserRouter>
         <ToastContainer
           position='bottom-center'
