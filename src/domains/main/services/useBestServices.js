@@ -19,3 +19,13 @@ export const getJobBest = async () => {
     throw new Error(error)
   }
 }
+
+export const getJobNewBest = async () => {
+  try {
+    const response = await publicApi.get('/job-posting', { params: { order: 'LATEST', size: 10 } })
+    return response
+  } catch (error) {
+    console.error('구인 신규글 리스트 오류:', error)
+    throw new Error(error)
+  }
+}

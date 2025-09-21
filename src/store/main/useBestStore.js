@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { getFreeBest, getJobBest } from '../../domains/main/services/useBestServices'
+import { getFreeBest, getJobBest, getJobNewBest } from '../../domains/main/services/useBestServices'
 import { persist } from 'zustand/middleware'
 
 const useBestStore = create(
@@ -7,12 +7,16 @@ const useBestStore = create(
     (set, get) => ({
       freeBest: [],
       jobBest: [],
+      jobNew: [],
       isFreeLoading: false,
       isJobLoading: false,
+      isJobNewLoading: false,
       freeError: null,
       jobError: null,
+      jobNewError: null,
       freeLastFetch: null,
       jobLastFetch: null,
+      jobNewLastFetch: null,
 
       fetchFreeBest: async (force = false) => {
         const state = get()
@@ -75,14 +79,47 @@ const useBestStore = create(
           set({ isJobLoading: false })
         }
       },
+
+      fetchJobNewBest: async (force = false) => {
+        const state = get()
+        if (!force && state.jobNewBest.length > 0 && state.jobNewLastFetch) {
+          const now = Date.now()
+          const cacheDuration = 5 * 60 * 1000
+          if (now - state.jobNewLastFetch < cacheDuration) {
+            return
+          }
+        }
+
+        set({ isJobNewLoading: true, jobNewError: null })
+        try {
+          const response = await getJobNewBest()
+          if (response.data && response.data.message === 'success') {
+            set({
+              jobNew: response.data.data || [],
+              jobNewLastFetch: Date.now(),
+            })
+          } else {
+            set({ jobNewError: '구인 신규글 리스트를 불러오지 못했습니다.' })
+            set({ jobNew: [] })
+          }
+        } catch (error) {
+          console.error('구인 신규글 리스트 오류:', error)
+          set({ jobNewError: '서버 오류가 발생했습니다.' })
+          set({ jobNew: [] })
+        } finally {
+          set({ isJobNewLoading: false })
+        }
+      },
     }),
     {
       name: 'best-store',
       partialize: (state) => ({
         freeBest: state.freeBest,
         jobBest: state.jobBest,
+        jobNewBest: state.jobNewBest,
         freeLastFetch: state.freeLastFetch,
         jobLastFetch: state.jobLastFetch,
+        jobNewLastFetch: state.jobNewLastFetch,
       }),
     },
   ),

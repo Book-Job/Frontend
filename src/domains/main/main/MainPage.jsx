@@ -11,12 +11,16 @@ const MainPage = () => {
   const {
     freeBest,
     jobBest,
+    jobNew,
     isFreeLoading,
     isJobLoading,
+    isJobNewLoading,
     freeError,
     jobError,
+    jobNewError,
     fetchFreeBest,
     fetchJobBest,
+    fetchJobNewBest,
   } = useBestStore()
 
   const handleBoardSelect = (boardName) => {
@@ -26,15 +30,27 @@ const MainPage = () => {
   const handleRefresh = () => {
     fetchFreeBest(true)
     fetchJobBest(true)
+    fetchJobNewBest(true)
   }
 
   useEffect(() => {
-    Promise.all([fetchFreeBest(), fetchJobBest()])
-  }, [fetchFreeBest, fetchJobBest])
+    Promise.all([fetchFreeBest(), fetchJobBest(), fetchJobNewBest()])
+  }, [fetchFreeBest, fetchJobBest, fetchJobNewBest])
 
-  const currentList = selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : freeBest
-  const isLoading = selectedBoard === '자유게시판' ? isFreeLoading : selectedBoard === '구인구직' ? isJobLoading : isFreeLoading
-  const error = selectedBoard === '자유게시판' ? freeError : selectedBoard === '구인구직' ? jobError : freeError
+  const currentList =
+    selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : jobNew
+  const isLoading =
+    selectedBoard === '자유게시판'
+      ? isFreeLoading
+      : selectedBoard === '구인구직'
+        ? isJobLoading
+        : isJobNewLoading
+  const error =
+    selectedBoard === '자유게시판'
+      ? freeError
+      : selectedBoard === '구인구직'
+        ? jobError
+        : jobNewError
 
   return (
     <>
@@ -68,7 +84,13 @@ const MainPage = () => {
             <div className='flex flex-col text-center text-error-red'>
               {error}
               <button
-                onClick={() => (selectedBoard === '자유게시판' ? fetchFreeBest() : fetchJobBest())}
+                onClick={() =>
+                  selectedBoard === '자유게시판'
+                    ? fetchFreeBest()
+                    : selectedBoard === '구인구직'
+                      ? fetchJobBest()
+                      : fetchJobNewBest()
+                }
                 className='ml-2 text-blue-500'
               >
                 재시도
