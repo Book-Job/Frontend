@@ -33,7 +33,7 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
       <img
         src={active ? GoodIcon : NotGoodIcon}
         alt='좋아요'
-        className='w-4 h-4 mt-1 md:w-5 md:h-5'
+        className='w-3 h-3 mt-1 md:w-4 md:h-4'
       />
       <span className='flex mt-1 ml-1'>{count}</span>
     </div>

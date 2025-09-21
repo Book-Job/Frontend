@@ -20,6 +20,7 @@ import useEditPost from '../hook/useEditPost'
 import { saveTOStorage } from '../../../my/detail/components/saveToStorage'
 import ContentRenderer from '../../../../components/common/ContentRenderer'
 import LikeCount from '../../../../components/common/LikeCount'
+
 const DetailCommunityPage = () => {
   const { id } = useParams()
   const { post, loading, error, setPost } = useDetailPost(id)
@@ -31,6 +32,7 @@ const DetailCommunityPage = () => {
   const currentUrl = window.location.href
   const hasSaved = useRef(false)
   const hasFetched = useRef(false)
+
   const {
     title,
     setTitle,
@@ -39,7 +41,7 @@ const DetailCommunityPage = () => {
     loading: editLoading,
     error: editError,
     handleSubmit,
-  } = useEditPost(id, post?.text || '')
+  } = useEditPost(id, post || {})
 
   useEffect(() => {
     hasFetched.current = false
@@ -86,14 +88,16 @@ const DetailCommunityPage = () => {
   }
 
   const handleEditClick = () => {
+    setTitle(post.title || '')
     setContent(post.text || '')
     setIsEditing(true)
   }
   const handleCancelEdit = () => setIsEditing(false)
 
-  const onSaveSuccess = (newText) => {
+  const onSaveSuccess = (newTitle, newText) => {
     setPost((prevPost) => ({
       ...prevPost,
+      title: newTitle,
       text: newText,
     }))
   }
@@ -104,13 +108,25 @@ const DetailCommunityPage = () => {
 
   return (
     <div className='w-full max-w-[940px] mx-auto '>
-      <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
-        {post.title}
-      </h1>
+      {isEditing ? (
+        <input
+          type='text'
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder='제목을 입력하세요'
+          className='w-full border p-2 text-2xl sm:text-3xl md:text-[35px] font-bold mb-4'
+        />
+      ) : (
+        <h1 className='text-2xl sm:text-3xl md:text-[35px] font-bold text-left mb-4 break-words'>
+          {post.title}
+        </h1>
+      )}
+
       <div className='flex items-center justify-between mb-2 text-dark-gray'>
         <div className='text-[15px] sm:text-[20px] break-words'>{post.nickname}</div>
         <div className='text-[14px] sm:text-[16px] break-words'>{post.createdAt.split('T')[0]}</div>
       </div>
+
       {post && (
         <LikeCount
           id={id}
@@ -119,6 +135,7 @@ const DetailCommunityPage = () => {
           className='mt-2 text-dark-gray'
         />
       )}
+
       {post?.isWriter ? (
         <div className='flex justify-end gap-4 my-2'>
           {!isEditing ? (
@@ -137,7 +154,7 @@ const DetailCommunityPage = () => {
                 onClick={async (e) => {
                   await handleSubmit(e)
                   setIsEditing(false)
-                  onSaveSuccess(content)
+                  onSaveSuccess(title, content)
                 }}
                 disabled={editLoading}
               >
@@ -150,6 +167,7 @@ const DetailCommunityPage = () => {
           )}
         </div>
       ) : null}
+
       <LastFormLine />
 
       <div className='flex flex-wrap justify-end gap-2 mb-4 ml-0 sm:ml-5'>
@@ -165,6 +183,7 @@ const DetailCommunityPage = () => {
           isShare={true}
         />
       </div>
+
       <div className='mb-10'>
         {isEditing ? (
           <WriteEditor
