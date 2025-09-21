@@ -1,15 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import comment from '../../../../assets/icons/common/comment.svg'
 import viewGray from '../../../../assets/icons/common/common_view_gray.svg'
-
 const BestList = ({ boardName, bestList }) => {
   const navigate = useNavigate()
 
   console.log('boardName', boardName, 'bestList', bestList)
-
-  // bestList가 배열인지 확인하고, "최신글"의 경우 jobPostings를 사용
-  const listToRender =
-    boardName === '최신글' && bestList?.jobPostings ? bestList.jobPostings : bestList
 
   return (
     <div className='flex flex-col w-full sm:max-w-[940px]'>
@@ -33,58 +28,56 @@ const BestList = ({ boardName, bestList }) => {
           {boardName} {boardName === '최신글' ? null : '베스트'}
         </div>
       </div>
-      {Array.isArray(listToRender) && listToRender.length !== 0 ? (
+      {bestList.length !== 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
-          {listToRender.map(
-            ({ title, boardId, jobPostingId, Id, commentCount, viewCount }, index) => {
-              return (
-                <div key={index} className='flex items-center hover:scale-105'>
-                  <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
-                  <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden min-w-0'>
-                    <button
-                      className='flex-1 w-10/12 min-w-0 break-all truncate text-start line-clamp-1'
-                      onClick={
-                        boardId
-                          ? () => navigate(`/community/post/${boardId}`)
-                          : jobPostingId
-                            ? () => navigate(`/job/recruitment/post/${jobPostingId}`)
-                            : () => navigate(`/job/recruitment/post/${Id}`)
-                      }
-                    >
-                      {title}
-                    </button>
-                    <div className='flex items-center justify-between w-auto min-w-0 ml-2 shrink-0'>
-                      {boardId ? (
-                        <>
-                          <img
-                            src={comment}
-                            alt='comment'
-                            className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
-                          />
-                          {commentCount}
-                          <img
-                            src={viewGray}
-                            alt='comment'
-                            className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mx-2'
-                          />
-                          {viewCount}
-                        </>
-                      ) : (
-                        <>
-                          <img
-                            src={viewGray}
-                            alt='viewCount'
-                            className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
-                          />
-                          {viewCount}
-                        </>
-                      )}
-                    </div>
+          {bestList.map(({ title, boardId, jobPostingId, Id, commentCount, viewCount }, index) => {
+            return (
+              <div key={index} className='flex items-center hover:scale-105'>
+                <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
+                <div className='flex sm:text-[20px] text-[15px] font-medium items-center justify-between w-full ml-3 overflow-hidden min-w-0'>
+                  <button
+                    className='flex-1 w-10/12 min-w-0 break-all truncate text-start line-clamp-1'
+                    onClick={
+                      boardId
+                        ? () => navigate(`/community/post/${boardId}`)
+                        : jobPostingId
+                          ? () => navigate(`/job/recruitment/post/${jobPostingId}`)
+                          : () => navigate(`/job/recruitment/post/${Id}`)
+                    }
+                  >
+                    {title}
+                  </button>
+                  <div className='flex items-center justify-between w-auto min-w-0 ml-2 shrink-0'>
+                    {boardId ? (
+                      <>
+                        <img
+                          src={comment}
+                          alt='comment'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
+                        />
+                        {commentCount}
+                        <img
+                          src={viewGray}
+                          alt='comment'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mx-2'
+                        />
+                        {viewCount}
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          src={viewGray}
+                          alt='viewCount'
+                          className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
+                        />
+                        {viewCount}
+                      </>
+                    )}
                   </div>
                 </div>
-              )
-            },
-          )}
+              </div>
+            )
+          })}
         </div>
       ) : (
         <div className='my-6 text-center text-dark-gray'>게시글이 없습니다.</div>

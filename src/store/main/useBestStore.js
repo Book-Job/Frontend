@@ -80,9 +80,9 @@ const useBestStore = create(
         }
       },
 
-      fetchJobNewBest: async (force = false) => {
+      fetchJobNew: async (force = false) => {
         const state = get()
-        if (!force && state.jobNewBest.length > 0 && state.jobNewLastFetch) {
+        if (!force && state.jobNew.length > 0 && state.jobNewLastFetch) {
           const now = Date.now()
           const cacheDuration = 5 * 60 * 1000
           if (now - state.jobNewLastFetch < cacheDuration) {
@@ -95,7 +95,7 @@ const useBestStore = create(
           const response = await getJobNewBest()
           if (response.data && response.data.message === 'success') {
             set({
-              jobNew: response.data.data || [],
+              jobNew: response.data.data?.jobPostings || [],
               jobNewLastFetch: Date.now(),
             })
           } else {
@@ -116,7 +116,7 @@ const useBestStore = create(
       partialize: (state) => ({
         freeBest: state.freeBest,
         jobBest: state.jobBest,
-        jobNewBest: state.jobNewBest,
+        jobNew: state.jobNew,
         freeLastFetch: state.freeLastFetch,
         jobLastFetch: state.jobLastFetch,
         jobNewLastFetch: state.jobNewLastFetch,

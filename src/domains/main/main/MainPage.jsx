@@ -20,7 +20,7 @@ const MainPage = () => {
     jobNewError,
     fetchFreeBest,
     fetchJobBest,
-    fetchJobNewBest,
+    fetchJobNew,
   } = useBestStore()
 
   const handleBoardSelect = (boardName) => {
@@ -30,12 +30,12 @@ const MainPage = () => {
   const handleRefresh = () => {
     fetchFreeBest(true)
     fetchJobBest(true)
-    fetchJobNewBest(true)
+    fetchJobNew(true)
   }
 
   useEffect(() => {
-    Promise.all([fetchFreeBest(), fetchJobBest(), fetchJobNewBest()])
-  }, [fetchFreeBest, fetchJobBest, fetchJobNewBest])
+    Promise.all([fetchFreeBest(), fetchJobBest(), fetchJobNew()])
+  }, [fetchFreeBest, fetchJobBest, fetchJobNew])
 
   const currentList =
     selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : jobNew
@@ -89,7 +89,7 @@ const MainPage = () => {
                     ? fetchFreeBest()
                     : selectedBoard === '구인구직'
                       ? fetchJobBest()
-                      : fetchJobNewBest()
+                      : fetchJobNew()
                 }
                 className='ml-2 text-blue-500'
               >
