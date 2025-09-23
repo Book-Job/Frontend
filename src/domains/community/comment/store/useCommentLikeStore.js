@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { toggleCommentLike as toggleCommentLikeApi } from '../domains/community/service/commentService'
+import { toggleCommentLike as toggleCommentLikeApi } from '../../service/commentService'
 
 const useCommentLikeStore = create((set, get) => ({
   likes: {},
