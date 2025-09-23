@@ -4,7 +4,7 @@ import GoodIcon from '../../assets/icons/common/common_good.svg'
 const LikeCountReadOnly = ({ count, className }) => {
   return (
     <div className={`flex items-center mb-1 ${className}`}>
-      <img src={GoodIcon} alt='좋아요' className='w-4 h-4 mt-1 md:w-4 md:h-4' />
+      <img src={GoodIcon} alt='좋아요' className='w-4 h-4 mt-1 md:w-5 md:h-5' />
       <span className='flex mt-1 ml-1'>{count}</span>
     </div>
   )
