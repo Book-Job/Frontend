@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import { toggleLike as toggleLikeApi } from '../domains/community/service/postService'
+import { toggleLike as toggleLikeApi } from '../service/postService'
 
-const useLikeStore = create((set, get) => ({
+const useLikeCountStore = create((set, get) => ({
   likes: {},
   setLike: (id, initialCount = 0, isLiked = false) => {
     set((state) => ({
@@ -33,4 +33,4 @@ const useLikeStore = create((set, get) => ({
   },
 }))
 
-export default useLikeStore
+export default useLikeCountStore
