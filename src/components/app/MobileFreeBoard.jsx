@@ -5,7 +5,7 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import MobileShare from './MobileShare'
 import { BsCardImage } from 'react-icons/bs'
-import LikeCount from '../common/LikeCount'
+import LikeCountReadOnly from '../common/LikeCountReadOnly'
 
 const MobileFreeBoard = ({
   boardId,
@@ -53,12 +53,12 @@ const MobileFreeBoard = ({
           </div>
         </div>
         <div className='flex-row  text-dark-gray text-[14px]'>
-          <div onClick={onClick} className='flex justify-between font-bold '>
+          <div onClick={onClick} className='flex justify-between font-bold'>
             <div className='flex items-center gap-3'>
               <MobileShare label={commentCount} textColor='text-dark-gray' icon={comment} />
-              <LikeCount count={likeCount} />
+              <LikeCountReadOnly count={likeCount} />
             </div>
-            <div className='relative inline-block'>
+            <div className='relative inline-block mt-1'>
               <span
                 onClick={handleNameClick}
                 className='z-10 text-sm font-medium cursor-pointer hover:underline'
