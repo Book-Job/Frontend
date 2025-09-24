@@ -1,7 +1,10 @@
 {
-  "redirects": [
+"redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "bookjob.vercel.app" }
+      ],
       "destination": "https://www.bookjob.co.kr/$1",
       "permanent": true
     }
