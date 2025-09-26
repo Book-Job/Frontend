@@ -31,3 +31,15 @@ export const editCommentService = async (boardId, commentId, content) => {
 export const deleteCommentService = async (boardId, commentId) => {
   return authApi.delete(`/boards/${boardId}/comments/${commentId}`)
 }
+
+export const toggleCommentLike = async (boardId, commentId, active) => {
+  try {
+    const response = await authApi.put(`/boards/${boardId}/comments/${commentId}/likes`, null, {
+      params: { active },
+    })
+    return response.data
+  } catch (error) {
+    console.error('댓글 좋아요 토글 실패:', error)
+    throw error
+  }
+}

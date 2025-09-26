@@ -5,7 +5,7 @@ import viewPink from '../../assets/icons/common/common_view_pink.svg'
 import comment from '../../assets/icons/common/comment.svg'
 import ShareViews from './ShareViews'
 import { BsCardImage } from 'react-icons/bs'
-import LikeCount from '../common/LikeCount'
+import LikeCountReadOnly from '../common/LikeCountReadOnly'
 
 const FreeBoard = ({
   boardId,
@@ -72,10 +72,10 @@ const FreeBoard = ({
           <div className='flex justify-between font-bold'>
             <div className='flex items-center gap-3'>
               <ShareViews label={commentCount} textColor='text-dark-gray' icon={comment} />
-              <LikeCount count={likeCount} />
+              <LikeCountReadOnly count={likeCount} />
             </div>
 
-            <div className='relative inline-block'>
+            <div className='relative inline-block mt-1'>
               <span
                 onClick={handleNameClick}
                 className='z-10 text-xs font-medium cursor-pointer hover:underline sm:text-sm bg-blend-darken'
