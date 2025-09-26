@@ -32,9 +32,16 @@ const MainPage = () => {
     Promise.all([fetchFreeBest(), fetchJobBest()])
   }, [fetchFreeBest, fetchJobBest])
 
-  const currentList = selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : freeBest
-  const isLoading = selectedBoard === '자유게시판' ? isFreeLoading : selectedBoard === '구인구직' ? isJobLoading : isFreeLoading
-  const error = selectedBoard === '자유게시판' ? freeError : selectedBoard === '구인구직' ? jobError : freeError
+  const currentList =
+    selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : freeBest
+  const isLoading =
+    selectedBoard === '자유게시판'
+      ? isFreeLoading
+      : selectedBoard === '구인구직'
+        ? isJobLoading
+        : isFreeLoading
+  const error =
+    selectedBoard === '자유게시판' ? freeError : selectedBoard === '구인구직' ? jobError : freeError
 
   return (
     <>

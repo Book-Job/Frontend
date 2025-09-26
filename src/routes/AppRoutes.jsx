@@ -4,7 +4,7 @@ import Layout from './Layout'
 import ProtectedRoute from './ProtectedRoute'
 
 const AppRoutes = () => {
-  const mainPaths = ['/', '/community', '/user-post', '/job']
+  const mainPaths = ['/', '/community', '/user-post', '/job', '/admin-main']
 
   return (
     <Routes>
