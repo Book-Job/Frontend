@@ -38,21 +38,12 @@ const MainPage = () => {
   }, [fetchFreeBest, fetchJobBest, fetchJobNew])
 
   const currentList =
-<<<<<<< HEAD
-    selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : freeBest
-=======
     selectedBoard === '자유게시판' ? freeBest : selectedBoard === '구인구직' ? jobBest : jobNew
->>>>>>> 93bbb42bf34fbf81f9a68d9c3f82ec25f88772b9
   const isLoading =
     selectedBoard === '자유게시판'
       ? isFreeLoading
       : selectedBoard === '구인구직'
         ? isJobLoading
-<<<<<<< HEAD
-        : isFreeLoading
-  const error =
-    selectedBoard === '자유게시판' ? freeError : selectedBoard === '구인구직' ? jobError : freeError
-=======
         : isJobNewLoading
   const error =
     selectedBoard === '자유게시판'
@@ -60,7 +51,6 @@ const MainPage = () => {
       : selectedBoard === '구인구직'
         ? jobError
         : jobNewError
->>>>>>> 93bbb42bf34fbf81f9a68d9c3f82ec25f88772b9
 
   return (
     <>

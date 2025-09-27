@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
-import ROUTER_PATHS from '../../routes/RouterPath'
 import AdminSideBarContent from '../../domains/admin/common/components/AdminSideBarContent'
 import { FiMenu } from 'react-icons/fi'
 const MobileAdminSidebar = ({ onGoHome, onClose, setHoveredMenu, setActiveMenu }) => {
