@@ -7,7 +7,7 @@ const AdminSideBarContent = () => {
   const navigate = useNavigate()
   const sidebarData = {
     '전체글 분석': [
-      { label: '작성글 분석', path: ROUTER_PATHS.ADMIN_MAIN },
+      { label: '작성글', path: ROUTER_PATHS.ADMIN_MAIN },
       { label: '댓글' },
       { label: '신고 글' },
     ],

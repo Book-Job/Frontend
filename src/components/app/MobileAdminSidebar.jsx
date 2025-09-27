@@ -31,18 +31,20 @@ const MobileAdminSidebar = ({ onGoHome, onClose, setHoveredMenu, setActiveMenu }
               `
 
         return (
-          <div
+          <button
             key={menu.label}
             onClick={() => handleMenuClick(menu)}
             onMouseEnter={() => setHoveredMenu(menu.label)}
             onMouseLeave={() => setHoveredMenu(null)}
             className={classNames}
+            type='button'
+            aria-label={menu.label}
           >
-            <div className=' flex w-[20px] h-[20px] ml-3 items-center justify-center text-xl'>
+            <span className=' flex w-[20px] h-[20px] ml-3 items-center justify-center text-xl'>
               {menu.icon}
-            </div>
+            </span>
             <span>{menu.label}</span>
-          </div>
+          </button>
         )
       })}
       <div className='px-6'>
