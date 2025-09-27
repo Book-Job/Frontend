@@ -82,7 +82,11 @@ const Header = () => {
         onButtonClick: () => useModalStore.getState().closeModal(),
       })
     } else if (nav) {
-      navigate(nav)
+      if (nav === ROUTER_PATHS.COMMUNITY || nav === ROUTER_PATHS.JOB_MAIN) {
+        window.location.href = nav
+      } else {
+        navigate(nav)
+      }
     }
   }
   return (
