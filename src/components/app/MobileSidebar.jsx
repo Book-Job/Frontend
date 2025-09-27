@@ -13,15 +13,19 @@ import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../routes/RouterPath'
 import useModalStore from '../../store/modal/useModalStore'
 import { HELP_DESK_URL } from '../../utils/urls'
+import adminIconGray from '../../assets/icons/common/common_admin_gray.svg'
+import adminIconPink from '../../assets/icons/common/common_admin_pink.svg'
+import MobileAdminSidebar from './MobileAdminSidebar'
 
 const MobileSidebar = ({ onClose }) => {
+  const [isAdminMode, setIsAdminMode] = useState(false)
   const [hoveredMenu, setHoveredMenu] = useState(null)
   const [activeMenu, setActiveMenu] = useState(null)
   const { openModal } = useModalStore()
 
   const navigate = useNavigate()
 
-  const menus = [
+  const normalMenus = [
     {
       label: '자유게시판',
       icon: { active: freeboardPink, inactive: freeboardGray },
@@ -43,7 +47,12 @@ const MobileSidebar = ({ onClose }) => {
       external: true,
       href: HELP_DESK_URL,
     },
+    {
+      label: '관리자',
+      icon: { active: adminIconPink, inactive: adminIconGray },
+    },
   ]
+
   const handleMenuClick = (menu) => {
     setActiveMenu(menu.label)
 
@@ -56,11 +65,19 @@ const MobileSidebar = ({ onClose }) => {
       })
       onClose()
       return
+    } else if (menu.label === '관리자') {
+      setIsAdminMode(true)
+      return
     }
-
     navigate(menu.path)
     onClose()
   }
+
+  const handleClose = () => {
+    setIsAdminMode(false)
+    onClose()
+  }
+
   return (
     <div className='fixed inset-0 z-20 bg-black bg-opacity-50 backdrop-blur-sm'>
       <div className='bg-white w-[250px] h-full absolute right-0 top-0 rounded-tl-2xl rounded-bl-2xl'>
@@ -70,30 +87,49 @@ const MobileSidebar = ({ onClose }) => {
         >
           <img src={cancel} alt='닫기' className='w-3 h-3' />
         </button>
-        <div className='flex flex-col gap-2 text-left mt-[97px]'>
-          {menus.map((menu) => {
-            const isActive = activeMenu === menu.label
-            const isHovered = hoveredMenu === menu.label
+        {!isAdminMode ? (
+          <div className='flex flex-col gap-2 text-left mt-[97px]'>
+            {normalMenus.map((menu) => {
+              const isActive = activeMenu === menu.label
+              const isHovered = hoveredMenu === menu.label
 
-            const classNames = `
+              const classNames = `
               group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300
               ${isHovered || isActive ? 'bg-[rgba(253,236,249,0.43)] text-main-pink' : 'text-gray-800'}
               hover:bg-[rgba(253,236,249,0.43)] hover:text-main-pink
             `
 
-            const iconSrc = isHovered || isActive ? menu.icon.active : menu.icon.inactive
+              const iconSrc = isHovered || isActive ? menu.icon.active : menu.icon.inactive
 
-            if (menu.external) {
+              if (menu.external) {
+                return (
+                  <a
+                    key={menu.label}
+                    href={menu.href}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    onMouseEnter={() => setHoveredMenu(menu.label)}
+                    onMouseLeave={() => setHoveredMenu(null)}
+                    className={classNames}
+                    onClick={onClose}
+                  >
+                    <img
+                      src={iconSrc}
+                      alt={`${menu.label} 아이콘`}
+                      className='w-[20px] h-[20px] ml-3'
+                    />
+                    <span>{menu.label}</span>
+                  </a>
+                )
+              }
+
               return (
-                <a
+                <div
                   key={menu.label}
-                  href={menu.href}
-                  target='_blank'
-                  rel='noopener noreferrer'
+                  onClick={() => handleMenuClick(menu)}
                   onMouseEnter={() => setHoveredMenu(menu.label)}
                   onMouseLeave={() => setHoveredMenu(null)}
                   className={classNames}
-                  onClick={onClose}
                 >
                   <img
                     src={iconSrc}
@@ -101,28 +137,20 @@ const MobileSidebar = ({ onClose }) => {
                     className='w-[20px] h-[20px] ml-3'
                   />
                   <span>{menu.label}</span>
-                </a>
+                </div>
               )
-            }
-
-            return (
-              <div
-                key={menu.label}
-                onClick={() => handleMenuClick(menu)}
-                onMouseEnter={() => setHoveredMenu(menu.label)}
-                onMouseLeave={() => setHoveredMenu(null)}
-                className={classNames}
-              >
-                <img
-                  src={iconSrc}
-                  alt={`${menu.label} 아이콘`}
-                  className='w-[20px] h-[20px] ml-3'
-                />
-                <span>{menu.label}</span>
-              </div>
-            )
-          })}
-        </div>
+            })}
+          </div>
+        ) : (
+          <MobileAdminSidebar
+            onGoHome={() => setIsAdminMode(false)}
+            onClose={handleClose}
+            hoveredMenu={hoveredMenu}
+            setHoveredMenu={setHoveredMenu}
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
+          />
+        )}
       </div>
     </div>
   )
