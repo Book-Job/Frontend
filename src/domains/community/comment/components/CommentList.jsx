@@ -1,18 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useCommentStore from '../store/useCommentStore'
 import Spinner from '../../../../components/web/Spinner'
 import ToastService from '../../../../services/toast/ToastService'
 import useBestStore from '../../../../store/main/useBestStore'
 import LikeCommentCount from '../../../../components/common/LikeCommentCount'
+import { postReply, getReply } from '../../service/commentService'
+import useAuthStore from '../../../../store/login/useAuthStore'
+
 const CommentList = ({ boardId }) => {
   const comments = useCommentStore((state) => state.comments)
   const deleteComment = useCommentStore((state) => state.deleteComment)
   const editComment = useCommentStore((state) => state.editComment)
+  const [replyNickname, setReplyNickname] = useState('')
   const loading = useCommentStore((state) => state.loading)
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
   const [deletingId, setDeletingId] = useState(null)
+  const [replyingCommentId, setReplyingCommentId] = useState(null)
+  const [replyContent, setReplyContent] = useState('')
   const { fetchFreeBest } = useBestStore()
+  const fetchComments = useCommentStore((state) => state.fetchComments)
+  const [repliesMap, setRepliesMap] = useState({})
+
+  const { user } = useAuthStore()
+
+  useEffect(() => {
+    if (user?.nickname) {
+      setReplyNickname(user.nickname)
+    }
+  }, [user])
 
   const handleDelete = async (boardId, commentId) => {
     try {
@@ -49,6 +65,45 @@ const CommentList = ({ boardId }) => {
     }
   }
 
+  const handleReplySubmit = async (parentId) => {
+    if (!replyNickname.trim()) {
+      ToastService.warning('닉네임을 입력해주세요.')
+      return
+    }
+    if (!replyContent.trim()) {
+      ToastService.warning('답글 내용을 입력하세요.')
+      return
+    }
+
+    try {
+      await postReply(boardId, parentId, { content: replyContent, nickname: replyNickname })
+
+      ToastService.success('답글이 등록되었습니다.')
+      setReplyingCommentId(null)
+      setReplyContent('')
+      setReplyNickname(user?.nickname || '')
+      fetchComments(boardId)
+      fetchFreeBest(true)
+    } catch (err) {
+      ToastService.error('답글 등록 중 오류 발생')
+      console.error(err)
+    }
+  }
+
+  const handleReplyToggle = async (commentId) => {
+    setReplyingCommentId(replyingCommentId === commentId ? null : commentId)
+
+    if (!repliesMap[commentId]) {
+      try {
+        const replies = await getReply(boardId, commentId)
+        console.log('대댓글 조회:', replies)
+        setRepliesMap((prev) => ({ ...prev, [commentId]: replies }))
+      } catch (err) {
+        console.error('대댓글 조회 실패', err)
+      }
+    }
+  }
+
   if (loading) {
     return (
       <div className='flex justify-center items-center h-[300px]'>
@@ -65,11 +120,8 @@ const CommentList = ({ boardId }) => {
     <div className='w-full mt-4 overflow-hidden border rounded-md border-dark-gray'>
       {comments.map((comment, index) => {
         let nicknameColor = 'text-dark-gray'
-        if (comment.isWriter) {
-          nicknameColor = 'text-main-pink'
-        } else if (comment.isAuthentic) {
-          nicknameColor = 'text-black'
-        }
+        if (comment.isWriter) nicknameColor = 'text-main-pink'
+        else if (comment.isAuthentic) nicknameColor = 'text-black'
 
         return (
           <article key={comment.commentId}>
@@ -119,30 +171,97 @@ const CommentList = ({ boardId }) => {
                   {new Date(comment.createdAt).toLocaleDateString()}
                 </time>
 
-                {comment.isWriter && editingCommentId !== comment.commentId && (
-                  <div className='flex gap-2'>
+                <div className='flex gap-2'>
+                  {comment.isWriter && editingCommentId !== comment.commentId && (
+                    <>
+                      <button
+                        aria-label='댓글 수정'
+                        className='text-main-pink hover:underline'
+                        onClick={() => handleEditClick(comment.commentId, comment.text)}
+                      >
+                        수정
+                      </button>
+                      <button
+                        aria-label='댓글 삭제'
+                        className='text-main-pink hover:underline'
+                        onClick={() => handleDelete(boardId, comment.commentId)}
+                        disabled={loading || deletingId === comment.commentId}
+                      >
+                        {deletingId === comment.commentId ? (
+                          <Spinner size={16} color='main-pink' />
+                        ) : (
+                          '삭제'
+                        )}
+                      </button>
+                    </>
+                  )}
+                  {editingCommentId !== comment.commentId && (
                     <button
-                      aria-label='댓글 수정'
-                      className='text-main-pink hover:underline'
-                      onClick={() => handleEditClick(comment.commentId, comment.text)}
+                      className='text-dark-gray hover:text-main-pink text-md font-bold'
+                      onClick={() => handleReplyToggle(comment.commentId)}
                     >
-                      수정
+                      답글
+                    </button>
+                  )}
+                </div>
+              </div>
+              {/* 대댓글 입력창 */}
+              {replyingCommentId === comment.commentId && (
+                <div className='flex flex-col gap-2 mt-2 pl-6'>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-dark-gray text-md'>↳</span>
+                    <input
+                      value={replyNickname}
+                      onChange={(e) => setReplyNickname(e.target.value)}
+                      placeholder='닉네임'
+                      className='w-20 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink'
+                    />
+                    <input
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                      placeholder='답글을 입력하세요'
+                      className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink'
+                    />
+                    <button
+                      className='text-sm text-main-pink font-semibold px-3 py-1 rounded-[5px] hover:bg-main-pink/10 transition h-[30px]'
+                      onClick={() => handleReplySubmit(comment.commentId)}
+                    >
+                      등록
                     </button>
                     <button
-                      aria-label='댓글 삭제'
-                      className='text-main-pink hover:underline'
-                      onClick={() => handleDelete(boardId, comment.commentId)}
-                      disabled={loading || deletingId === comment.commentId}
+                      className='text-dark-gray text-sm'
+                      onClick={() => setReplyingCommentId(null)}
                     >
-                      {deletingId === comment.commentId ? (
-                        <Spinner size={16} color='main-pink' />
-                      ) : (
-                        '삭제'
-                      )}
+                      취소
                     </button>
                   </div>
-                )}
-              </div>
+
+                  {/* 대댓글 리스트 */}
+                  {repliesMap[comment.commentId]?.length > 0 && (
+                    <div className='mt-2'>
+                      {repliesMap[comment.commentId].map((reply) => {
+                        const replyColor = reply.isWriter ? 'text-main-pink' : 'text-black'
+                        return (
+                          <div key={reply.commentId} className='mb-3 pl-6'>
+                            <div className='flex items-center gap-2'>
+                              <span className='text-gray-400'>↳</span>
+                              <strong className={`font-semibold ${replyColor}`}>
+                                {reply.nickname}
+                              </strong>
+                              <span className='text-xs text-gray-400'>
+                                {new Date(reply.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <p className='text-sm text-dark-gray whitespace-pre-wrap'>
+                              {reply.text}
+                            </p>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             {index !== comments.length - 1 && <hr className='mx-4 border-t border-light-gray' />}
           </article>
