@@ -9,7 +9,6 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
   const [active, setActive] = useState(initialActive)
   const [loading, setLoading] = useState(false)
 
-  // props 변경 시 state 동기화
   useEffect(() => {
     setCount(initialCount)
   }, [initialCount])
@@ -26,10 +25,8 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
       const newActive = !active
       const newCount = newActive ? count + 1 : count - 1
 
-      // 서버에 현재 상태 반영
       await toggleLike(id, newActive)
 
-      // 클릭 즉시 UI 업데이트
       setActive(newActive)
       setCount(newCount)
     } catch (error) {
