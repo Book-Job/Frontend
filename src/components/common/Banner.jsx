@@ -10,13 +10,16 @@ import useWriteModalStore from '../../store/modal/useWriteModalStore'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { useState } from 'react'
+
 const Banner = ({ className = '' }) => {
   const { setShowModal } = useWriteModalStore()
   const handleCreatePostClick = () => setShowModal(true)
   const isMobile = useIsMobile()
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 200,
     slidesToShow: 1,
@@ -25,11 +28,30 @@ const Banner = ({ className = '' }) => {
     autoplaySpeed: 4000,
     cssEase: 'ease-out',
     adaptiveHeight: true,
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
+    appendDots: (dots) => (
+      <div style={{ bottom: '10px' }}>
+        <ul style={{ margin: '0px', display: 'flex', justifyContent: 'center' }}>{dots}</ul>
+      </div>
+    ),
+    customPaging: (i) => (
+      <div
+        style={{
+          width: '8px',
+          height: '8px',
+          borderRadius: '50%',
+          backgroundColor: i === currentSlide ? '#ec4899' : '#ccc',
+          margin: '0 5px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s',
+        }}
+      />
+    ),
   }
 
   return (
     <div
-      className={`block cursor-pointer overflow-hidden ${className}`}
+      className={`block cursor-pointer overflow-hidden relative ${className}`}
       aria-label='pwa 설명 페이지로 이동하는 배너'
     >
       <Slider {...settings}>

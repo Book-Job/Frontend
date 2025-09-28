@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import GoodIcon from '../../assets/icons/common/common_good.svg'
+import GoodIcon from '../../assets/icons/common/common_good_before_icon.svg'
 
 const LikeCountReadOnly = ({ count, className }) => {
   return (
