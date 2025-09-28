@@ -23,9 +23,11 @@ const EmailInput = ({
   const [isCustom, setIsCustom] = useState(false)
   const [fullEmail, setFullEmail] = useState()
   const [startTimer, setStartTimer] = useState(false)
+  const [startRetransTimer, setStartRetransTimer] = useState(false)
   const [emailCheckMessage, setEmailCheckMessage] = useState('')
   const [emailCodeMessage, setEmailCodeMessage] = useState('')
   const [emailCheckStatus, setEmailCheckStatus] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(300)
 
   const emailId = watch('emailId') || ''
   const domainValue = isCustom ? customDomain : domain
@@ -36,11 +38,33 @@ const EmailInput = ({
     setFullEmail(emailFull)
   }, [emailId, domainValue, setValue])
 
-  const handleCheckEmail = async () => {
-    const isValEmail = await trigger('emailId')
-    if (!isValEmail) {
-      return
+  useEffect(() => {
+    let timer
+    if (startTimer && timeLeft > 0) {
+      timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000)
+    } else if (timeLeft === 0) {
+      setStartTimer(false)
+      setEmailCheckStatus('expired')
+      setEmailCodeMessage('인증번호가 만료되었습니다.')
+      setValidationStatus('error')
+      trigger('emailId')
     }
+    return () => clearInterval(timer)
+  }, [startTimer, timeLeft])
+
+  useEffect(() => {
+    let timer
+    if (startRetransTimer) {
+      timer = setTimeout(() => {
+        setStartRetransTimer(false)
+      }, 15000)
+    }
+    return () => clearTimeout(timer)
+  }, [startRetransTimer])
+
+  const handleCheckEmail = async () => {
+    const isValid = await trigger('emailId')
+    if (!isValid) return
 
     setEmailCheckMessage('')
     setEmailCheckStatus(null)
@@ -51,10 +75,12 @@ const EmailInput = ({
         setEmailCheckMessage,
         setEmailCodeMessage,
         setEmailCheckStatus,
-        setStartTimer,
+        () => setStartTimer(true),
         setValidationStatus,
         trigger,
       )
+      setStartRetransTimer(true)
+      setTimeLeft(300)
     }
   }
 
@@ -66,7 +92,7 @@ const EmailInput = ({
         setEmailCheckMessage,
         setEmailCodeMessage,
         setEmailCheckStatus,
-        setStartTimer,
+        () => setStartTimer(false),
         setValidationStatus,
         trigger,
       )
@@ -79,13 +105,17 @@ const EmailInput = ({
       ? '확인 중...'
       : emailCheckStatus === 'success'
         ? '사용가능'
-        : '이메일 인증 발송')
+        : startRetransTimer
+          ? '재전송 대기중'
+          : '이메일 인증 발송')
 
   const handleInputChange = () => {
     if (emailCheckMessage) setEmailCheckMessage('')
     if (emailCodeMessage) setEmailCodeMessage('')
     if (emailCheckStatus) setEmailCheckStatus(null)
     setStartTimer(false)
+    setStartRetransTimer(false)
+    setTimeLeft(300)
   }
 
   return (
@@ -154,7 +184,7 @@ const EmailInput = ({
             externalIsCheckingEmail ||
             (isCustom && !customDomain.trim()) ||
             emailCheckStatus === 'success' ||
-            startTimer
+            startRetransTimer
           }
         />
       </div>
@@ -165,6 +195,7 @@ const EmailInput = ({
               size='sm:biggest '
               placeholder='이메일로 전송된 인증코드를 입력해주세요'
               startTimer={startTimer}
+              timeLeft={timeLeft}
               onVerify={(code) => handleIsExpiredEmail(code)}
             />
           </div>
