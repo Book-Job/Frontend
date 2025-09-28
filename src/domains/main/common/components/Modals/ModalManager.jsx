@@ -48,11 +48,15 @@ export default function ModalManager() {
     handleClose()
   }
   const handleModalClick = (modalConfig) => {
-    if (modalConfig.onClick) {
-      modalConfig.onClick({ setShowModal })() 
-      handleClose()
-      setModalQueue([])
+    if (!modalConfig?.onClick) return
+
+    const handler = modalConfig.onClick({ setShowModal })
+    if (typeof handler === 'function') {
+      handler()
     }
+
+    handleClose()
+    setModalQueue([])
   }
 
   return (
