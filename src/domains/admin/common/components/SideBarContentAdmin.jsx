@@ -3,11 +3,11 @@ import { RiAdminFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
 import ROUTER_PATHS from '../../../../routes/RouterPath'
 
-const AdminSideBarContent = () => {
+const SideBarContentAdmin = () => {
   const navigate = useNavigate()
   const sidebarData = {
     '전체글 분석': [
-      { label: '작성글', path: ROUTER_PATHS.ADMIN_MAIN },
+      { label: '작성글', path: ROUTER_PATHS.POST_ADMIN },
       { label: '댓글' },
       { label: '신고 글' },
     ],
@@ -53,4 +53,4 @@ const AdminSideBarContent = () => {
   )
 }
 
-export default AdminSideBarContent
+export default SideBarContentAdmin

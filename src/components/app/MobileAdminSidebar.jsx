@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
-import AdminSideBarContent from '../../domains/admin/common/components/AdminSideBarContent'
 import { FiMenu } from 'react-icons/fi'
+import SideBarContentAdmin from '../../domains/admin/common/components/SideBarContentAdmin'
 const MobileAdminSidebar = ({ onGoHome, onClose, setHoveredMenu, setActiveMenu }) => {
   const navigate = useNavigate()
 
@@ -48,7 +48,7 @@ const MobileAdminSidebar = ({ onGoHome, onClose, setHoveredMenu, setActiveMenu }
         )
       })}
       <div className='px-6'>
-        <AdminSideBarContent />
+        <SideBarContentAdmin />
       </div>
     </div>
   )
