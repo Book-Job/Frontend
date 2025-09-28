@@ -47,7 +47,7 @@ const BestList = ({ boardName, bestList }) => {
                   >
                     {title}
                   </button>
-                  <div className='flex items-center justify-between w-auto min-w-0 ml-2 shrink-0'>
+                  <div className='flex items-center justify-between w-auto ml-2 shrink-0'>
                     {boardId ? (
                       <>
                         <img
@@ -55,13 +55,13 @@ const BestList = ({ boardName, bestList }) => {
                           alt='comment'
                           className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
                         />
-                        {commentCount}
+                        <span className='w-auto sm:min-w-10 min-w-8'>{commentCount}</span>
                         <img
                           src={viewGray}
                           alt='comment'
                           className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mx-2'
                         />
-                        {viewCount}
+                        <span className='w-auto sm:min-w-10 min-w-8'>{viewCount}</span>
                       </>
                     ) : (
                       <>
@@ -70,7 +70,7 @@ const BestList = ({ boardName, bestList }) => {
                           alt='viewCount'
                           className='sm:w-[19px] w-[15px] h-[13px] sm:h-[17px] mr-2'
                         />
-                        {viewCount}
+                        <span className='w-auto sm:min-w-10 min-w-8'>{viewCount}</span>
                       </>
                     )}
                   </div>
