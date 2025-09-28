@@ -22,7 +22,6 @@ const CommentList = ({ boardId }) => {
   const [editReplyContent, setEditReplyContent] = useState('')
   const [deletingReplyId, setDeletingReplyId] = useState(null)
   const { fetchFreeBest } = useBestStore()
-  const fetchComments = useCommentStore((state) => state.fetchComments)
   const [repliesMap, setRepliesMap] = useState({})
   const { user } = useAuthStore()
 
