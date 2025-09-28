@@ -43,3 +43,17 @@ export const toggleCommentLike = async (boardId, commentId, active) => {
     throw error
   }
 }
+
+export const postReply = async (boardId, parentCommentId, { content, nickname }) => {
+  const response = await authApi.post(`/boards/${boardId}/comments/${parentCommentId}`, {
+    content,
+    nickname,
+  })
+  return response.data
+}
+
+export const getReply = async (boardId, parentCommentId) => {
+  const response = await authApi.get(`/boards/${boardId}/comments/${parentCommentId}`)
+  console.log('대댓글 조회..', response.data)
+  return response.data?.data || []
+}
