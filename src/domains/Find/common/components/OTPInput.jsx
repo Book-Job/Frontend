@@ -1,37 +1,13 @@
 import { useEffect, useState } from 'react'
 import ToastService from '../../../../services/toast/ToastService'
 import Button from '../../../../components/web/Button'
+import PropTypes from 'prop-types'
 
-const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
+const OTPInput = ({ placeholder, startTimer, timeLeft, onVerify }) => {
   const [code, setCode] = useState('')
-  const [timeLeft, setTimeLeft] = useState(300)
-  const [isExpired, setIsExpired] = useState(true)
 
-  useEffect(() => {
-    if (!startTimer || isExpired) {
-      return
-    }
-    if (timeLeft <= 0) {
-      setIsExpired(true)
-      return
-    }
+  const isExpired = !startTimer || timeLeft <= 0
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1)
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [timeLeft, isExpired])
-
-  useEffect(() => {
-    if (!startTimer) {
-      setTimeLeft(300)
-      setIsExpired(true)
-      setCode('')
-    } else {
-      setIsExpired(false)
-    }
-  }, [startTimer])
   const formatTime = (seconds) => {
     const min = String(Math.floor(seconds / 60)).padStart(2, '0')
     const sec = String(seconds % 60).padStart(2, '0')
@@ -48,7 +24,6 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
       ToastService.info('인증번호를 입력해주세요.')
       return
     }
-
     onVerify(code)
   }
 
@@ -87,5 +62,11 @@ const OTPInput = ({ size, placeholder, startTimer, onVerify }) => {
     </div>
   )
 }
-
+OTPInput.propTypes = {
+  size: PropTypes.string,
+  placeholder: PropTypes.string,
+  startTimer: PropTypes.bool,
+  timeLeft: PropTypes.number.isRequired,
+  onVerify: PropTypes.func.isRequired,
+}
 export default OTPInput

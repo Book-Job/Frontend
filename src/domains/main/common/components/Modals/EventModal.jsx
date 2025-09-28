@@ -21,7 +21,7 @@ export default function EventModal({
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
       <div className='relative w-[90%] max-w-md'>
         {link ? (
-          <a href={link} target='_blank' rel='noopener noreferrer'>
+          <a href={link} target='_blank' onClick={() => onClose()} rel='noopener noreferrer'>
             <img
               src={isMobile && mobileImage ? mobileImage : image}
               alt={alt}

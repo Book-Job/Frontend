@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import EventModal from './EventModal'
 import useAuthStore from '../../../../../store/login/useAuthStore'
 import useWriteModalStore from '../../../../../store/modal/useWriteModalStore'
-import modalConfigs from './modalConfigs';
-
+import modalConfigs from './modalConfigs'
 
 const PROMO_LOCK_KEY = '__PROMO_MODAL_OPEN__'
 
@@ -48,6 +47,17 @@ export default function ModalManager() {
     localStorage.setItem(currentModal.doNotShowKey, today)
     handleClose()
   }
+  const handleModalClick = (modalConfig) => {
+    if (!modalConfig?.onClick) return
+
+    const handler = modalConfig.onClick({ setShowModal })
+    if (typeof handler === 'function') {
+      handler()
+    }
+
+    handleClose()
+    setModalQueue([])
+  }
 
   return (
     <div>
@@ -61,7 +71,7 @@ export default function ModalManager() {
           link={currentModal.link}
           alt={currentModal.alt}
           doNotShowText='오늘 하루 보지 않기'
-          onClick={currentModal.onClick ? currentModal.onClick({ setShowModal }) : undefined}
+          onClick={() => handleModalClick(currentModal)}
         />
       )}
     </div>
