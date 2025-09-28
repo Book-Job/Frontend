@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import GoodIcon from '../../assets/icons/common/common_good.svg'
 import NotGoodIcon from '../../assets/icons/common/common_good_before_icon.svg'
@@ -9,6 +9,15 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
   const [active, setActive] = useState(initialActive)
   const [loading, setLoading] = useState(false)
 
+  // props 변경 시 state 동기화
+  useEffect(() => {
+    setCount(initialCount)
+  }, [initialCount])
+
+  useEffect(() => {
+    setActive(initialActive)
+  }, [initialActive])
+
   const handleClick = async () => {
     if (loading) return
     setLoading(true)
@@ -17,8 +26,10 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
       const newActive = !active
       const newCount = newActive ? count + 1 : count - 1
 
+      // 서버에 현재 상태 반영
       await toggleLike(id, newActive)
 
+      // 클릭 즉시 UI 업데이트
       setActive(newActive)
       setCount(newCount)
     } catch (error) {
