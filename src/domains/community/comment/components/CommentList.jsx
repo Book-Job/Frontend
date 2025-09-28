@@ -75,7 +75,6 @@ const CommentList = ({ boardId }) => {
       setRepliesMap((prev) => ({ ...prev, [parentId]: updatedReplies }))
 
       setReplyContent('')
-      setReplyingCommentId(null)
     } catch (err) {
       ToastService.error('답글 등록 중 오류 발생')
       console.error(err)
@@ -133,7 +132,6 @@ const CommentList = ({ boardId }) => {
 
   const handleReplyToggle = async (commentId) => {
     if (replyingCommentId === commentId) {
-      setReplyingCommentId(null)
       setReplyContent('')
       return
     }
