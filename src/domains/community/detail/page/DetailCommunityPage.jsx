@@ -131,7 +131,7 @@ const DetailCommunityPage = () => {
         <LikeCount
           id={id}
           initialCount={post.likeCount ?? 0}
-          initialActive={false}
+          initialActive={post.isLiked}
           className='mt-2 text-dark-gray'
         />
       )}
