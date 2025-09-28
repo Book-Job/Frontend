@@ -133,6 +133,7 @@ const CommentList = ({ boardId }) => {
   const handleReplyToggle = async (commentId) => {
     if (replyingCommentId === commentId) {
       setReplyContent('')
+      setReplyingCommentId(null)
       return
     }
 
