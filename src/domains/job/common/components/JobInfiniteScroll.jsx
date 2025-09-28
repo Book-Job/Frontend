@@ -3,7 +3,6 @@ import InfiniteScrollList from '../../../../components/common/InfiniteScrollList
 import JobPostList from '../../main/components/JobPostList'
 import Spinner from '../../../../components/web/Spinner'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 const JobInfiniteScroll = ({
   fetcher,
@@ -19,7 +18,9 @@ const JobInfiniteScroll = ({
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['jobPosts', postType, order, refreshToken, searchKeyword],
-    queryFn: ({ pageParam = null }) => fetcher(pageParam, order, searchKeyword),
+    queryFn: ({ pageParam = null }) => {
+      return fetcher(pageParam, order, searchKeyword)
+    },
     getNextPageParam: (lastPage) => {
       const newPosts = lastPage?.[dataKey] ?? []
       return newPosts.length > 0 ? lastPage.lastId : undefined
@@ -27,13 +28,6 @@ const JobInfiniteScroll = ({
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
   })
-  useEffect(() => {
-    if (data) {
-      const lastPage = data.pages[data.pages.length - 1]
-      console.log('마지막 페이지 lastId:', lastPage?.lastId)
-      console.log('마지막 페이지 데이터:', lastPage?.[dataKey])
-    }
-  }, [data])
 
   const posts = data?.pages.flatMap((page) => page?.[dataKey] || []) || []
 
