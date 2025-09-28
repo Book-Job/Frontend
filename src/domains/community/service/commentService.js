@@ -54,6 +54,15 @@ export const postReply = async (boardId, parentCommentId, { content, nickname })
 
 export const getReply = async (boardId, parentCommentId) => {
   const response = await authApi.get(`/boards/${boardId}/comments/${parentCommentId}`)
-  console.log('대댓글 조회..', response.data)
   return response.data?.data || []
+}
+
+export const editReply = async (boardId, parentCommentId, replyId, content) => {
+  return authApi.patch(`/boards/${boardId}/comments/${parentCommentId}/${replyId}`, {
+    content,
+  })
+}
+
+export const deleteReply = async (boardId, parentCommentId, replyId) => {
+  return authApi.delete(`/boards/${boardId}/comments/${parentCommentId}/${replyId}`)
 }
