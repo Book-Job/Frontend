@@ -2,6 +2,7 @@ import useIsMobile from '../../../hooks/header/useIsMobile'
 import SideBarAdmin from '../common/components/SideBarAdmin'
 import PostCategoryButton from '../../../components/common/admin/PostCategoryButton'
 import DateFilterButtons from '../../../components/common/admin/DateFilterButtons'
+import PostListAdmin from '../common/components/PostListAdmin'
 
 const PostAdmin = () => {
   const isMobile = useIsMobile()
@@ -12,15 +13,19 @@ const PostAdmin = () => {
     <div>
       <div className='flex flex-row'>
         <div className='left-0 flex'>{isMobile ? null : <SideBarAdmin />}</div>
-        <div className='flex items-start justify-between w-full p-4'>
-          <span>
-            <PostCategoryButton categories={postcategories} />
-          </span>
-          <span>
-            <DateFilterButtons dateFilter={dateFilter} />
-          </span>
+        <div className='flex flex-col w-full'>
+          <div className='flex items-start justify-between w-full p-4'>
+            <span>
+              <PostCategoryButton categories={postcategories} />
+            </span>
+            <span>
+              <DateFilterButtons dateFilter={dateFilter} />
+            </span>
+          </div>
+          <div>
+            <PostListAdmin />
+          </div>
         </div>
-        <h1 className='bg-gray-300'>관리자 메인 페이지</h1>
       </div>
     </div>
   )
