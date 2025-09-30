@@ -84,6 +84,26 @@ const CommentList = ({ boardId }) => {
     setEditingReplyId(replyId)
     setEditReplyContent(text)
   }
+
+  useEffect(() => {
+    if (!comments || comments.length === 0) return
+
+    const fetchAllReplies = async () => {
+      try {
+        const allReplies = {}
+        for (const comment of comments) {
+          const replies = await getReply(boardId, comment.commentId)
+          allReplies[comment.commentId] = replies
+        }
+        setRepliesMap(allReplies)
+      } catch (err) {
+        console.error('대댓글 전체 조회 실패:', err)
+      }
+    }
+
+    fetchAllReplies()
+  }, [comments, boardId])
+
   const handleEditReplySubmit = async (replyId) => {
     if (!editReplyContent.trim()) return ToastService.warning('수정할 내용을 입력하세요.')
 
@@ -177,7 +197,7 @@ const CommentList = ({ boardId }) => {
                   boardId={boardId}
                   commentId={comment.commentId}
                   initialCount={comment.likeCount}
-                  initialActive={false}
+                  initialActive={comment.isLiked}
                 />
               </div>
 
