@@ -16,13 +16,12 @@ const CommentList = ({ boardId }) => {
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
   const [deletingId, setDeletingId] = useState(null)
-  const [replyingCommentId, setReplyingCommentId] = useState(null)
-  const [replyContent, setReplyContent] = useState('')
   const [editingReplyId, setEditingReplyId] = useState(null)
   const [editReplyContent, setEditReplyContent] = useState('')
   const [deletingReplyId, setDeletingReplyId] = useState(null)
   const { fetchFreeBest } = useBestStore()
   const [repliesMap, setRepliesMap] = useState({})
+  const [replyContentMap, setReplyContentMap] = useState({})
   const { user } = useAuthStore()
 
   useEffect(() => {
@@ -64,16 +63,17 @@ const CommentList = ({ boardId }) => {
 
   const handleReplySubmit = async (parentId) => {
     if (!replyNickname.trim()) return ToastService.warning('닉네임을 입력해주세요.')
-    if (!replyContent.trim()) return ToastService.warning('답글 내용을 입력하세요.')
+    const content = replyContentMap[parentId] || ''
+    if (!content.trim()) return ToastService.warning('답글 내용을 입력하세요.')
 
     try {
-      await postReply(boardId, parentId, { content: replyContent, nickname: replyNickname })
+      await postReply(boardId, parentId, { content, nickname: replyNickname })
       ToastService.success('답글이 등록되었습니다.')
 
       const updatedReplies = await getReply(boardId, parentId)
       setRepliesMap((prev) => ({ ...prev, [parentId]: updatedReplies }))
 
-      setReplyContent('')
+      setReplyContentMap((prev) => ({ ...prev, [parentId]: '' }))
     } catch (err) {
       ToastService.error('답글 등록 중 오류 발생')
       console.error(err)
@@ -84,6 +84,39 @@ const CommentList = ({ boardId }) => {
     setEditingReplyId(replyId)
     setEditReplyContent(text)
   }
+
+  useEffect(() => {
+    if (!comments || comments.length === 0) return
+
+    let isCancelled = false
+
+    const fetchAllReplies = async () => {
+      try {
+        const results = await Promise.all(
+          comments.map(async (comment) => {
+            const replies = await getReply(boardId, comment.commentId)
+            return [comment.commentId, replies]
+          }),
+        )
+
+        if (!isCancelled) {
+          const allReplies = Object.fromEntries(results)
+          setRepliesMap(allReplies)
+        }
+      } catch (err) {
+        if (!isCancelled) {
+          console.error('대댓글 전체 조회 실패:', err)
+        }
+      }
+    }
+
+    fetchAllReplies()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [boardId, comments.map((c) => c.commentId).join(',')])
+
   const handleEditReplySubmit = async (replyId) => {
     if (!editReplyContent.trim()) return ToastService.warning('수정할 내용을 입력하세요.')
 
@@ -129,26 +162,6 @@ const CommentList = ({ boardId }) => {
     }
   }
 
-  const handleReplyToggle = async (commentId) => {
-    if (replyingCommentId === commentId) {
-      setReplyContent('')
-      setReplyingCommentId(null)
-      return
-    }
-
-    setReplyingCommentId(commentId)
-    setReplyContent('')
-
-    if (!repliesMap[commentId]) {
-      try {
-        const replies = await getReply(boardId, commentId)
-        setRepliesMap((prev) => ({ ...prev, [commentId]: replies }))
-      } catch (err) {
-        console.error('대댓글 조회 실패', err)
-      }
-    }
-  }
-
   if (loading)
     return (
       <div className='flex justify-center items-center h-[300px]'>
@@ -177,7 +190,7 @@ const CommentList = ({ boardId }) => {
                   boardId={boardId}
                   commentId={comment.commentId}
                   initialCount={comment.likeCount}
-                  initialActive={false}
+                  initialActive={comment.isLiked}
                 />
               </div>
 
@@ -238,127 +251,116 @@ const CommentList = ({ boardId }) => {
                       </button>
                     </>
                   )}
-                  {editingCommentId !== comment.commentId && (
-                    <button
-                      className='text-dark-gray hover:text-main-pink text-md font-bold'
-                      onClick={() => handleReplyToggle(comment.commentId)}
-                    >
-                      답글
-                    </button>
-                  )}
                 </div>
               </div>
+              <div className='flex flex-col gap-3 mt-3 pl-6'>
+                <div className='flex items-center gap-2 bg-light-gray/20 px-3 py-2 rounded-lg'>
+                  <span className='text-dark-gray text-lg'>↳</span>
+                  <input
+                    value={replyNickname}
+                    onChange={(e) => setReplyNickname(e.target.value)}
+                    placeholder='닉네임'
+                    className='w-24 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
+                  />
+                  <input
+                    value={replyContentMap[comment.commentId] || ''}
+                    onChange={(e) =>
+                      setReplyContentMap((prev) => ({
+                        ...prev,
+                        [comment.commentId]: e.target.value,
+                      }))
+                    }
+                    placeholder='답글을 입력하세요'
+                    className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
+                  />
 
-              {replyingCommentId === comment.commentId && (
-                <div className='flex flex-col gap-3 mt-3 pl-6'>
-                  <div className='flex items-center gap-2 bg-light-gray/20 px-3 py-2 rounded-lg'>
-                    <span className='text-dark-gray text-lg'>↳</span>
-                    <input
-                      value={replyNickname}
-                      onChange={(e) => setReplyNickname(e.target.value)}
-                      placeholder='닉네임'
-                      className='w-24 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
-                    />
-                    <input
-                      value={replyContent}
-                      onChange={(e) => setReplyContent(e.target.value)}
-                      placeholder='답글을 입력하세요'
-                      className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
-                    />
-                    <button
-                      className='text-sm text-white bg-main-pink font-semibold px-3 py-1 rounded-md hover:bg-main-pink/90 transition'
-                      onClick={() => handleReplySubmit(comment.commentId)}
-                    >
-                      등록
-                    </button>
-                    <button
-                      className='text-dark-gray text-sm hover:underline'
-                      onClick={() => setReplyingCommentId(null)}
-                    >
-                      취소
-                    </button>
-                  </div>
-
-                  {repliesMap[comment.commentId]?.length > 0 && (
-                    <div className='flex flex-col gap-2'>
-                      {repliesMap[comment.commentId].map((reply) => {
-                        const replyColor = reply.isWriter ? 'text-main-pink' : 'text-black'
-
-                        return (
-                          <div key={reply.commentId} className='pl-6 border-l-2 border-light-gray'>
-                            <div className='flex items-center justify-between text-sm'>
-                              <div className='flex items-center gap-2'>
-                                <span className='text-dark-gray'>↳</span>
-                                <strong className={`font-medium ${replyColor}`}>
-                                  {reply.nickname}
-                                </strong>
-                              </div>
-                              <span className='text-xs text-dark-gray'>
-                                {new Date(reply.createdAt).toLocaleDateString()}
-                              </span>
-                            </div>
-
-                            {editingReplyId === reply.commentId ? (
-                              <div className='flex items-center gap-2 mt-1 ml-6'>
-                                <input
-                                  className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
-                                  value={editReplyContent}
-                                  onChange={(e) => setEditReplyContent(e.target.value)}
-                                  maxLength={200}
-                                />
-                                <button
-                                  className='text-main-pink text-xs hover:underline'
-                                  onClick={() => handleEditReplySubmit(reply.commentId)}
-                                >
-                                  저장
-                                </button>
-                                <button
-                                  className='text-dark-gray text-xs hover:underline'
-                                  onClick={() => {
-                                    setEditingReplyId(null)
-                                    setEditReplyContent('')
-                                  }}
-                                >
-                                  취소
-                                </button>
-                              </div>
-                            ) : (
-                              <div className='flex items-center justify-between ml-6 mt-1'>
-                                <p className='text-sm text-black whitespace-pre-wrap text-left'>
-                                  {reply.text}
-                                </p>
-                                {reply.isWriter && (
-                                  <div className='flex gap-2 text-xs ml-4'>
-                                    <button
-                                      className='text-main-pink hover:underline'
-                                      onClick={() =>
-                                        handleEditReplyClick(reply.commentId, reply.text)
-                                      }
-                                    >
-                                      수정
-                                    </button>
-                                    <button
-                                      className='text-main-pink hover:underline'
-                                      onClick={() => handleDeleteReply(reply.commentId)}
-                                      disabled={deletingReplyId === reply.commentId}
-                                    >
-                                      {deletingReplyId === reply.commentId ? (
-                                        <Spinner size={12} color='main-pink' />
-                                      ) : (
-                                        '삭제'
-                                      )}
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
+                  <button
+                    className='text-sm text-white bg-main-pink font-semibold px-3 py-1 rounded-md hover:bg-main-pink/90 transition'
+                    onClick={() => handleReplySubmit(comment.commentId)}
+                  >
+                    등록
+                  </button>
                 </div>
-              )}
+
+                {repliesMap[comment.commentId]?.length > 0 && (
+                  <div className='flex flex-col gap-2'>
+                    {repliesMap[comment.commentId].map((reply) => {
+                      const replyColor = reply.isWriter ? 'text-main-pink' : 'text-black'
+
+                      return (
+                        <div key={reply.commentId} className='pl-6 border-l-2 border-light-gray'>
+                          <div className='flex items-center justify-between text-sm'>
+                            <div className='flex items-center gap-2'>
+                              <span className='text-dark-gray'>↳</span>
+                              <strong className={`font-medium ${replyColor}`}>
+                                {reply.nickname}
+                              </strong>
+                            </div>
+                            <span className='text-xs text-dark-gray'>
+                              {new Date(reply.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          {editingReplyId === reply.commentId ? (
+                            <div className='flex items-center gap-2 mt-1 ml-6'>
+                              <input
+                                className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
+                                value={editReplyContent}
+                                onChange={(e) => setEditReplyContent(e.target.value)}
+                                maxLength={200}
+                              />
+                              <button
+                                className='text-main-pink text-xs hover:underline'
+                                onClick={() => handleEditReplySubmit(reply.commentId)}
+                              >
+                                저장
+                              </button>
+                              <button
+                                className='text-dark-gray text-xs hover:underline'
+                                onClick={() => {
+                                  setEditingReplyId(null)
+                                  setEditReplyContent('')
+                                }}
+                              >
+                                취소
+                              </button>
+                            </div>
+                          ) : (
+                            <div className='flex items-center justify-between ml-6 mt-1'>
+                              <p className='text-sm text-black whitespace-pre-wrap text-left'>
+                                {reply.text}
+                              </p>
+                              {reply.isWriter && (
+                                <div className='flex gap-2 text-xs ml-4'>
+                                  <button
+                                    className='text-main-pink hover:underline'
+                                    onClick={() =>
+                                      handleEditReplyClick(reply.commentId, reply.text)
+                                    }
+                                  >
+                                    수정
+                                  </button>
+                                  <button
+                                    className='text-main-pink hover:underline'
+                                    onClick={() => handleDeleteReply(reply.commentId)}
+                                    disabled={deletingReplyId === reply.commentId}
+                                  >
+                                    {deletingReplyId === reply.commentId ? (
+                                      <Spinner size={12} color='main-pink' />
+                                    ) : (
+                                      '삭제'
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
             {index !== comments.length - 1 && <hr className='mx-4 border-t border-light-gray' />}
           </article>
