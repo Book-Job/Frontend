@@ -16,7 +16,6 @@ const CommentList = ({ boardId }) => {
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [editContent, setEditContent] = useState('')
   const [deletingId, setDeletingId] = useState(null)
-  const [replyContent, setReplyContent] = useState('')
   const [editingReplyId, setEditingReplyId] = useState(null)
   const [editReplyContent, setEditReplyContent] = useState('')
   const [deletingReplyId, setDeletingReplyId] = useState(null)
@@ -89,23 +88,34 @@ const CommentList = ({ boardId }) => {
   useEffect(() => {
     if (!comments || comments.length === 0) return
 
+    let isCancelled = false
+
     const fetchAllReplies = async () => {
       try {
-        const allReplies = {}
-        await Promise.all(
+        const results = await Promise.all(
           comments.map(async (comment) => {
             const replies = await getReply(boardId, comment.commentId)
-            allReplies[comment.commentId] = replies
+            return [comment.commentId, replies]
           }),
         )
-        setRepliesMap(allReplies)
+
+        if (!isCancelled) {
+          const allReplies = Object.fromEntries(results)
+          setRepliesMap(allReplies)
+        }
       } catch (err) {
-        console.error('대댓글 전체 조회 실패:', err)
+        if (!isCancelled) {
+          console.error('대댓글 전체 조회 실패:', err)
+        }
       }
     }
 
     fetchAllReplies()
-  }, [comments, boardId])
+
+    return () => {
+      isCancelled = true
+    }
+  }, [boardId, comments.map((c) => c.commentId).join(',')])
 
   const handleEditReplySubmit = async (replyId) => {
     if (!editReplyContent.trim()) return ToastService.warning('수정할 내용을 입력하세요.')
