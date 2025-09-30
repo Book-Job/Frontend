@@ -22,6 +22,7 @@ const CommentList = ({ boardId }) => {
   const [deletingReplyId, setDeletingReplyId] = useState(null)
   const { fetchFreeBest } = useBestStore()
   const [repliesMap, setRepliesMap] = useState({})
+  const [replyContentMap, setReplyContentMap] = useState({})
   const { user } = useAuthStore()
 
   useEffect(() => {
@@ -63,16 +64,17 @@ const CommentList = ({ boardId }) => {
 
   const handleReplySubmit = async (parentId) => {
     if (!replyNickname.trim()) return ToastService.warning('닉네임을 입력해주세요.')
-    if (!replyContent.trim()) return ToastService.warning('답글 내용을 입력하세요.')
+    const content = replyContentMap[parentId] || ''
+    if (!content.trim()) return ToastService.warning('답글 내용을 입력하세요.')
 
     try {
-      await postReply(boardId, parentId, { content: replyContent, nickname: replyNickname })
+      await postReply(boardId, parentId, { content, nickname: replyNickname })
       ToastService.success('답글이 등록되었습니다.')
 
       const updatedReplies = await getReply(boardId, parentId)
       setRepliesMap((prev) => ({ ...prev, [parentId]: updatedReplies }))
 
-      setReplyContent('')
+      setReplyContentMap((prev) => ({ ...prev, [parentId]: '' }))
     } catch (err) {
       ToastService.error('답글 등록 중 오류 발생')
       console.error(err)
@@ -251,11 +253,17 @@ const CommentList = ({ boardId }) => {
                     className='w-24 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
                   />
                   <input
-                    value={replyContent}
-                    onChange={(e) => setReplyContent(e.target.value)}
+                    value={replyContentMap[comment.commentId] || ''}
+                    onChange={(e) =>
+                      setReplyContentMap((prev) => ({
+                        ...prev,
+                        [comment.commentId]: e.target.value,
+                      }))
+                    }
                     placeholder='답글을 입력하세요'
                     className='flex-1 px-2 py-1 border border-light-gray rounded focus:outline-none focus:border-main-pink text-sm'
                   />
+
                   <button
                     className='text-sm text-white bg-main-pink font-semibold px-3 py-1 rounded-md hover:bg-main-pink/90 transition'
                     onClick={() => handleReplySubmit(comment.commentId)}
