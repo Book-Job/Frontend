@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import GoodIcon from '../../assets/icons/common/common_good.svg'
 import NotGoodIcon from '../../assets/icons/common/common_good_before_icon.svg'
@@ -8,6 +8,14 @@ const LikeCount = ({ id, initialCount = 0, initialActive = false, className }) =
   const [count, setCount] = useState(initialCount)
   const [active, setActive] = useState(initialActive)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setCount(initialCount)
+  }, [initialCount])
+
+  useEffect(() => {
+    setActive(initialActive)
+  }, [initialActive])
 
   const handleClick = async () => {
     if (loading) return

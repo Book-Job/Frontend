@@ -12,12 +12,15 @@ const JobInfiniteScroll = ({
   renderList,
   loadingComponent,
   refreshToken,
+  searchKeyword,
 }) => {
   const navigate = useNavigate()
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['jobPosts', postType, order, refreshToken],
-    queryFn: ({ pageParam = null }) => fetcher(pageParam, order),
+    queryKey: ['jobPosts', postType, order, refreshToken, searchKeyword],
+    queryFn: ({ pageParam = null }) => {
+      return fetcher(pageParam, order, searchKeyword)
+    },
     getNextPageParam: (lastPage) => {
       const newPosts = lastPage?.[dataKey] ?? []
       return newPosts.length > 0 ? lastPage.lastId : undefined

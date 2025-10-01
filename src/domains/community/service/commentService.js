@@ -43,3 +43,26 @@ export const toggleCommentLike = async (boardId, commentId, active) => {
     throw error
   }
 }
+
+export const postReply = async (boardId, parentCommentId, { content, nickname }) => {
+  const response = await authApi.post(`/boards/${boardId}/comments/${parentCommentId}`, {
+    content,
+    nickname,
+  })
+  return response.data
+}
+
+export const getReply = async (boardId, parentCommentId) => {
+  const response = await authApi.get(`/boards/${boardId}/comments/${parentCommentId}`)
+  return response.data?.data || []
+}
+
+export const editReply = async (boardId, parentCommentId, replyId, content) => {
+  return authApi.patch(`/boards/${boardId}/comments/${parentCommentId}/${replyId}`, {
+    content,
+  })
+}
+
+export const deleteReply = async (boardId, parentCommentId, replyId) => {
+  return authApi.delete(`/boards/${boardId}/comments/${parentCommentId}/${replyId}`)
+}
