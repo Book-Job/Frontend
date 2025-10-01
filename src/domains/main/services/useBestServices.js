@@ -22,10 +22,46 @@ export const getJobBest = async () => {
 
 export const getJobNewBest = async () => {
   try {
-    const response = await publicApi.get('/job-posting', { params: { order: 'LATEST', size: 10 } })
-    return response
+    const desiredSize = 10
+    let allJobPostings = []
+    let lastId = null
+
+    while (allJobPostings.length < desiredSize) {
+      const params = {
+        order: 'LATEST',
+        size: desiredSize - allJobPostings.length,
+      }
+
+      if (lastId) {
+        params.last = lastId
+      }
+
+      const response = await publicApi.get('/job-posting', { params })
+      const data = response.data.data
+
+      if (data && data.jobPostings && data.jobPostings.length > 0) {
+        allJobPostings = [...allJobPostings, ...data.jobPostings]
+        lastId = data.lastId
+
+        if (!lastId) {
+          break
+        }
+      } else {
+        break
+      }
+    }
+    const finalJobPostings = allJobPostings.slice(0, desiredSize)
+    return {
+      data: {
+        message: 'success',
+        data: {
+          jobPostings: finalJobPostings,
+          lastId: lastId,
+        },
+      },
+    }
   } catch (error) {
     console.error('구인 신규글 리스트 오류:', error)
-    throw new Error(error)
+    throw error
   }
 }
