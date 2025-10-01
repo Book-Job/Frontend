@@ -5,8 +5,10 @@ import useBestStore from '../../../store/main/useBestStore'
 import Spinner from '../../../components/web/Spinner'
 import Banner from '../../../components/common/Banner'
 import SeoHelmet from '../../../components/common/SeoHelmet'
+import { useSearchParams } from 'react-router-dom'
 const MainPage = () => {
-  const [selectedBoard, setSelectedBoard] = useState('구인구직')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [selectedBoard, setSelectedBoard] = useState(searchParams.get('board') || '구인구직')
 
   const {
     freeBest,
@@ -25,6 +27,7 @@ const MainPage = () => {
 
   const handleBoardSelect = (boardName) => {
     setSelectedBoard(boardName)
+    setSearchParams({ board: boardName }) 
   }
 
   const handleRefresh = () => {
