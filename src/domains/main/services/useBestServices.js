@@ -47,6 +47,7 @@ export const getJobNewBest = async () => {
           break
         }
       } else {
+        lastId = null
         break
       }
     }
