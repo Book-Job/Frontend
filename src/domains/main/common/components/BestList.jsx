@@ -30,7 +30,7 @@ const BestList = ({ boardName, bestList }) => {
       </div>
       {bestList.length !== 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-x-20 sm:grid-flow-col sm:grid-rows-5'>
-          {bestList.map(({ title, boardId, jobPostingId, Id, commentCount, viewCount }, index) => {
+          {bestList.map(({ title, boardId, jobPostingId, id, commentCount, viewCount }, index) => {
             return (
               <div key={index} className='flex items-center hover:scale-105'>
                 <p className='w-5 sm:text-[20px] text-[15px] font-medium'>{index + 1}.</p>
@@ -42,7 +42,9 @@ const BestList = ({ boardName, bestList }) => {
                         ? () => navigate(`/community/post/${boardId}`)
                         : jobPostingId
                           ? () => navigate(`/job/recruitment/post/${jobPostingId}`)
-                          : () => navigate(`/job/recruitment/post/${Id}`)
+                          : id
+                            ? () => navigate(`/job/recruitment/post/${id}`)
+                            : null
                     }
                   >
                     {title}
