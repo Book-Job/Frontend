@@ -25,11 +25,7 @@ const Layout = ({ children, headerType, label, noMargin = false, paddingX = fals
 
       <main
         className={`flex flex-col flex-1 ${
-          noMargin
-            ? 'mb-4 sm:mb-10'
-            : paddingX
-              ? 'mb-4 sm:mb-10 px-5'
-              : 'm-4 sm:m-10 justify-center'
+          noMargin ? '' : paddingX ? 'mb-4 sm:mb-10 px-5' : 'm-4 sm:m-10 justify-center'
         }`}
         style={{ paddingTop: `${headerHeight}px` }}
       >

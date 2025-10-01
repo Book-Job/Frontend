@@ -36,6 +36,7 @@ const ROUTER_PATHS = {
   TERMS_OF_SERVICE: '/terms-of-service',
   PRIVACY_POLICY: '/privacy-policy',
   INSTALL_METHOD: '/install-method',
+  POST_ADMIN: '/post-admin',
 }
 
 export default ROUTER_PATHS
