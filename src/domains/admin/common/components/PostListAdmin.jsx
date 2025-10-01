@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import BoardCategory from '../../../../components/web/BoardCategory'
-import useBoardStore from '../../../../store/mypage/useBoardStore'
-import useWriteModalStore from '../../../../store/modal/useWriteModalStore'
 import PostSortDropDown from '../../../../components/common/PostSortDropDown'
 import PropTypes from 'prop-types'
 
 const PostListAdmin = () => {
-  const { setShowModal } = useWriteModalStore()
   const [sort, setSort] = useState('latest')
 
   return (
