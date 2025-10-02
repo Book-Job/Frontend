@@ -6,7 +6,7 @@ const BestList = ({ boardName, bestList }) => {
 
   return (
     <div className='flex flex-col w-full sm:max-w-[940px]'>
-      <div className='flex items-center sm:mb-12 mb-7'>
+      <div className='flex items-center sm:mb-7 mb-5'>
         <video
           className="w-6 h-6 mr-1 sm:mr-2 sm:w-11 sm:h-11 bg-transparent bg-[url('https://cdn-icons-png.flaticon.com/512/17702/17702145.png')] bg-center bg-contain bg-no-repeat"
           preload='auto'
