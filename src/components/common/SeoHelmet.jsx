@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet-async'
 const SeoHelmet = ({ title, description, image, url, noIndex = false }) => {
-  const isPreview = import.meta.env.VITE_VERCEL_ENV === 'preview'
-
   return (
     <Helmet>
       <title>{title}</title>
