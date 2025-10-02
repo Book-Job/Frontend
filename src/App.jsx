@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from './routes/AppRoutes'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import PageScrollToTop from './components/common/PageScrollToTop'
 import { useEffect } from 'react'
 import useAuthStore from './store/login/useAuthStore'
@@ -10,7 +11,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import PwaPopUp from './components/common/PwaPopUp'
-import ModalManager from './domains/main/common/components/Modals/ModalManager';
+import ModalManager from './domains/main/common/components/Modals/ModalManager'
 
 const queryClient = new QueryClient()
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <Modal />
       </BrowserRouter>
+      <SpeedInsights />
     </QueryClientProvider>
   )
 }
