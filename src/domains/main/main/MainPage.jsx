@@ -27,7 +27,7 @@ const MainPage = () => {
 
   const handleBoardSelect = (boardName) => {
     setSelectedBoard(boardName)
-    setSearchParams({ board: boardName }) 
+    setSearchParams({ board: boardName })
   }
 
   const handleRefresh = () => {
@@ -62,6 +62,7 @@ const MainPage = () => {
         description='출판업계 채용/구직 정보와 자유게시판을 북잡에서 확인해보세요.'
         image='https://www.bookjob.co.kr/metatag.png'
         url='https://www.bookjob.co.kr'
+        noIndex={import.meta.env.VITE_VERCEL_ENV === 'preview'}
       />
 
       <div className='flex flex-col items-center w-full'>
