@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async'
-
-const SeoHelmet = ({ title, description, image, url }) => {
+const SeoHelmet = ({ title, description, image, url, noIndex = false }) => {
   const isPreview = import.meta.env.VITE_VERCEL_ENV === 'preview'
 
   return (
     <Helmet>
       <title>{title}</title>
       <meta name='description' content={description} />
-      {isPreview && <meta name='robots' content='noindex' />}
+      {noIndex && <meta name='robots' content='noindex' />}
       <link rel='canonical' href={url} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
