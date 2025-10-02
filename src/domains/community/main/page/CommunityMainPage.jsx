@@ -35,6 +35,7 @@ const CommunityMainPage = () => {
         description='출판업계 관련 정보와 소통을 위한 자유게시판입니다. 업계 종사자들의 다양한 이야기를 확인해보세요.'
         image='https://www.bookjob.co.kr/metatag.png'
         url='https://www.bookjob.co.kr/community'
+        noIndex={import.meta.env.VITE_VERCEL_ENV === 'preview'}
       />
       <main className='w-full px-4'>
         <section className='flex justify-center w-full mt-7' aria-label='게시글 검색'>

@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import AppRoutes from './routes/AppRoutes'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import PageScrollToTop from './components/common/PageScrollToTop'
@@ -14,6 +15,7 @@ import PwaPopUp from './components/common/PwaPopUp'
 import ModalManager from './domains/main/common/components/Modals/ModalManager'
 
 const queryClient = new QueryClient()
+
 function App() {
   useEffect(() => {
     useAuthStore.getState().initialize()
@@ -21,6 +23,11 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Helmet>
+        <link rel='canonical' href='https://www.bookjob.co.kr' />
+        {import.meta.env.VITE_VERCEL_ENV === 'preview' && <meta name='robots' content='noindex' />}
+      </Helmet>
+
       <PwaPopUp />
       <ModalManager />
       <BrowserRouter>
