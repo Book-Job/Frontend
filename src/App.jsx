@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import AppRoutes from './routes/AppRoutes'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import PageScrollToTop from './components/common/PageScrollToTop'
