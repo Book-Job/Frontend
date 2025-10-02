@@ -48,6 +48,7 @@ const JobMainPage = () => {
           description='출판 업계의 구인 | 구직 공고를 한눈에 확인해보세요. 실시간으로 업데이트됩니다.'
           image='https://www.bookjob.co.kr/metatag.png'
           url='https://www.bookjob.co.kr/job'
+          noIndex={import.meta.env.VITE_VERCEL_ENV === 'preview'}
         />
         <div className='w-full max-w-[940px] justify-center flex'>
           <SearchBar placeholder='검색어를 입력하세요' onSearch={(value) => setKeyword(value)} />
